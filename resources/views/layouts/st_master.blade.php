@@ -8,9 +8,8 @@
     <title>Stusent Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/favicon.png') }}">
-
-      <!-- Datatable -->
-      <link href="{{ URL::to('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <!-- Datatable -->
+    <link href="{{ URL::to('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="{{ URL::to('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ URL::to('assets/css/skin.css') }}">
@@ -174,9 +173,7 @@
 	<script src="{{ URL::to('assets/js/custom.min.js') }}"></script>
 
     
-    <!-- Datatable -->
-    <script src="{{ URL::to('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::to('assets/js/plugins-init/datatables.init.js') }}"></script>
+    
 
 		
     <!-- Chart Morris plugin files -->
@@ -186,9 +183,13 @@
     <script src="{{ URL::to('assets/vendor/peity/jquery.peity.min.js') }}"></script>
 	<!-- Demo scripts -->
     <script src="{{ URL::to('assets/js/dashboard/dashboard-2.js') }}"></script>
+    <!-- Datatable -->
+    <script src="{{ URL::to('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ URL::to('assets/js/plugins-init/datatables.init.js') }}"></script>
 	<!-- Svganimation scripts -->
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
     <script src="{{ URL::to('assets/js/styleSwitcher.js') }}"></script>
+
 </body>
 </html>

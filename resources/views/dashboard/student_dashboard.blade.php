@@ -1,6 +1,4 @@
 @extends('layouts.st_master')
-
-
 {{-- @section('menu')
 @extends('sidebar.dashboard')
 @endsection --}}
@@ -20,11 +18,6 @@
                         <li><a href="index-3.html">Teachers</a></li>
                         <li><a href="index-3.html">Parents</a></li>
                     </ul>
-                </li>
-                <li><a class="ai-icon" href="event-management.html" aria-expanded="false">
-                        <i class="la la-calendar"></i>
-                        <span class="nav-text">Event Management</span>
-                    </a>
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-user"></i>
@@ -80,23 +73,6 @@
                     </ul>
                 </li>
                 
-                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="la la-plus-square-o"></i>
-                        <span class="nav-text">Plugins</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="uc-select2.html">Select 2</a></li>
-                        <li><a href="uc-nestable.html">Nestedable</a></li>
-                        <li><a href="uc-noui-slider.html">Noui Slider</a></li>
-                        <li><a href="uc-sweetalert.html">Sweet Alert</a></li>
-                        <li><a href="uc-toastr.html">Toastr</a></li>
-                        <li><a href="map-jqvmap.html">Jqv Map</a></li>
-                    </ul>
-                </li>
-                <li><a href="widget-basic.html" aria-expanded="false">
-                        <i class="la la-desktop"></i>
-                        <span class="nav-text">Widget</span>
-                    </a></li>
                 <li class="nav-label">Forms</li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-file-text"></i>
@@ -118,8 +94,6 @@
     <div class="content-body">
         <!-- row -->
         <div class="container-fluid">
-
-
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
@@ -134,14 +108,12 @@
                     </ol>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xl-3 col-xxl-3 col-sm-6">
                     <div class="widget-stat card">
                         <div class="card-body">
                             <div class="media ai-icon">
                                 <span class="mr-3">
-                                    <!-- <i class="ti-user"></i> -->
                                     <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" style="stroke-dasharray: 25, 45; stroke-dashoffset: 0;"></path>
                                         <path d="M8,7A4,4 0,1,1 16,7A4,4 0,1,1 8,7" style="stroke-dasharray: 26, 46; stroke-dashoffset: 0;"></path>
@@ -217,182 +189,6 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="row">
-               
-
-                <div class="col-xl-8 col-lg-8 col-xxl-8 col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Datatable</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="example2" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Student Name</th>
-                                            <th scope="col">Assigned Coach</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox2">
-                                                    <label class="custom-control-label" for="checkbox2"></label>
-                                                </div>
-                                            </td>
-                                            <td>Angelica Ramos</td>
-                                            <td>Ashton Cox</td>
-                                            <td>12 August 2020</td>
-                                            <td>10:15</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox3">
-                                                    <label class="custom-control-label" for="checkbox3"></label>
-                                                </div>
-                                            </td>
-                                            <td>Bradley Greer</td>
-                                            <td>Brenden Wagner</td>
-                                            <td>11 July 2020</td>
-                                            <td>10:00</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox4">
-                                                    <label class="custom-control-label" for="checkbox4"></label>
-                                                </div>
-                                            </td>
-                                            <td>Cedric Kelly</td>
-                                            <td>Brielle Williamson</td>
-                                            <td>10 May 2020</td>
-                                            <td>09:45</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox5">
-                                                    <label class="custom-control-label" for="checkbox5"></label>
-                                                </div>
-                                            </td>
-                                            <td>Caesar Vance</td>
-                                            <td>Herrod Chandler</td>
-                                            <td>09 April 2020</td>
-                                            <td>09:30</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox6">
-                                                    <label class="custom-control-label" for="checkbox6"></label>
-                                                </div>
-                                            </td>
-                                            <td>Rhona Davidson</td>
-                                            <td>Sonya Frost</td>
-                                            <td>08 March 2020</td>
-                                            <td>09:15</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox7">
-                                                    <label class="custom-control-label" for="checkbox7"></label>
-                                                </div>
-                                            </td>
-                                            <td>Bradley Greer</td>
-                                            <td>Brenden Wagner</td>
-                                            <td>11 July 2020</td>
-                                            <td>10:00</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
             
             <div class="row">
@@ -402,167 +198,95 @@
                             <h4 class="card-title">Student List</h4>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive recentOrderTable">
-                                <table class="table verticle-middle table-responsive-md">
+                            <div class="table-responsive">
+                                <table id="example" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th scope="col">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkAll">
-                                                    <label class="custom-control-label" for="checkAll"></label>
-                                                </div>
-                                            </th>
-                                            <th scope="col">Student Name</th>
-                                            <th scope="col">Assigned Coach</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Actions</th>
+                                            <th>ID</th>
+                                            <th>Exam Name</th>
+                                            <th>Grade</th>
+                                            <th>Percent</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox2">
-                                                    <label class="custom-control-label" for="checkbox2"></label>
-                                                </div>
-                                            </td>
-                                            <td>Angelica Ramos</td>
-                                            <td>Ashton Cox</td>
-                                            <td>12 August 2020</td>
-                                            <td>10:15</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>A</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2011/04/25</td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox3">
-                                                    <label class="custom-control-label" for="checkbox3"></label>
-                                                </div>
-                                            </td>
-                                            <td>Bradley Greer</td>
-                                            <td>Brenden Wagner</td>
-                                            <td>11 July 2020</td>
-                                            <td>10:00</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>B</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2011/07/25</td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox4">
-                                                    <label class="custom-control-label" for="checkbox4"></label>
-                                                </div>
-                                            </td>
-                                            <td>Cedric Kelly</td>
-                                            <td>Brielle Williamson</td>
-                                            <td>10 May 2020</td>
-                                            <td>09:45</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>C</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2009/01/12</td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox5">
-                                                    <label class="custom-control-label" for="checkbox5"></label>
-                                                </div>
-                                            </td>
-                                            <td>Caesar Vance</td>
-                                            <td>Herrod Chandler</td>
-                                            <td>09 April 2020</td>
-                                            <td>09:30</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>A</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox6">
-                                                    <label class="custom-control-label" for="checkbox6"></label>
-                                                </div>
-                                            </td>
-                                            <td>Rhona Davidson</td>
-                                            <td>Sonya Frost</td>
-                                            <td>08 March 2020</td>
-                                            <td>09:15</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>B</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox7">
-                                                    <label class="custom-control-label" for="checkbox7"></label>
-                                                </div>
-                                            </td>
-                                            <td>Bradley Greer</td>
-                                            <td>Brenden Wagner</td>
-                                            <td>11 July 2020</td>
-                                            <td>10:00</td>
-                                            <td>
-                                                <div class="dropdown custom-dropdown mb-0">
-                                                    <div data-toggle="dropdown">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Accept</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>C</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>D</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>C</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>A</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>B</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2012/03/29</td>
+                                          
+                                        </tr>
+                                        <tr>
+                                            <td>#0025</td>
+                                            <td>Class Test</td>
+                                            <td>C</td>
+                                            <td>99.00 > 100</td>
+                                            <td>2011/01/25</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -616,7 +340,7 @@
                                         </tr>
                                         <tr>
                                             <td>E-Mail:</td>
-                                            <td class="font-medium text-dark-medium">jessiarose@gmail.com</td>
+                                            <td class="font-medium text-dark-medium">soengsouy@gmail.com</td>
                                         </tr>
                                         <tr>
                                             <td>Admission Date:</td>
@@ -636,7 +360,7 @@
                                         </tr>
                                         <tr>
                                             <td>Adress:</td>
-                                            <td class="font-medium text-dark-medium">House #10, Road #6,
+                                            <td class="font-medium text-dark-medium">PP #10, Road #6,
                                                 Australia</td>
                                         </tr>
                                         <tr>
@@ -650,193 +374,211 @@
                     </div>
                 </div>
 
-                <div class="col-xl-12 col-lg-12 col-xxl-12 col-md-12">
-                    <div class="card profile-tab">
+                <div class="col-xl-4 col-xxl-4 col-lg-4 col-md-6">
+                    <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Salary Status</h4>
+                            <h5 class="card-title">Messages</h5>
                         </div>
-                        <div class="card-body custom-tab-1">
-                            <ul class="nav nav-tabs mb-3">
-                                <li class="nav-item"><a href="#my-posts" data-toggle="tab" class="nav-link pb-2 active show">Professors</a></li>
-                                <li class="nav-item"><a href="#about-me" data-toggle="tab" class="nav-link pb-2">Librarian</a></li>
-                                <li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link pb-2">Other</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="my-posts" class="tab-pane fade active show">
-                                    <div class="table-responsive">
-                                        <table class="table table-responsive-md">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Ammount</th>
-                                                    <th scope="col">Transaction ID</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic1.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Angelica Ramos</td>
-                                                    <td><span class="badge badge-rounded badge-success">Paid</span></td>
-                                                    <td>12 August 2020</td>
-                                                    <td>$100</td>
-                                                    <td>#42317</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic2.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Bradley Greer</td>
-                                                    <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                                    <td>11 July 2020</td>
-                                                    <td>$200</td>
-                                                    <td>#54682</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic3.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Cedric Kelly</td>
-                                                    <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                                    <td>10 May 2020</td>
-                                                    <td>$400</td>
-                                                    <td>#57894</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic4.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Caesar Vance</td>
-                                                    <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                                    <td>09 April 2020</td>
-                                                    <td>$300</td>
-                                                    <td>#57864</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic5.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Rhona Davidson</td>
-                                                    <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                                    <td>08 March 2020</td>
-                                                    <td>$500</td>
-                                                    <td>#56387</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                        <div class="card-body">
+                            <div id="DZ_W_Message" class="widget-message dz-scroll" style="height:350px;">
+                                <div class="media mb-3">
+                                    <img class="mr-3 rounded-circle" alt="image" width="50" src="{{URL::to('assets/images/avatar/1.jpg')}}">
+                                    <div class="media-body">
+                                        <h5>Jacob Tucker<small class="text-primary">April 29, 2018</small></h5>
+                                        <p class="mb-2">I shared this on my fb wall a few months back, and I thought.</p>
+                                        <a href="javascript:void()" class="btn btn-primary btn-sm d-inline-block px-3">Reply</a>
+                                        <a href="javascript:void()" class="btn btn-outline-danger btn-sm d-inline-block px-3">Delete</a>
                                     </div>
                                 </div>
-                                <div id="about-me" class="tab-pane fade">
-                                    <div class="table-responsive">
-                                        <table class="table table-responsive-md">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Ammount</th>
-                                                    <th scope="col">Transaction ID</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic6.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Angelica Ramos</td>
-                                                    <td><span class="badge badge-rounded badge-success">Paid</span></td>
-                                                    <td>12 August 2020</td>
-                                                    <td>$100</td>
-                                                    <td>#42317</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic7.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Bradley Greer</td>
-                                                    <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                                    <td>11 July 2020</td>
-                                                    <td>$200</td>
-                                                    <td>#54682</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic8.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Cedric Kelly</td>
-                                                    <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                                    <td>10 May 2020</td>
-                                                    <td>$400</td>
-                                                    <td>#57894</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic10.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Caesar Vance</td>
-                                                    <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                                    <td>09 April 2020</td>
-                                                    <td>$300</td>
-                                                    <td>#57864</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic9.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Rhona Davidson</td>
-                                                    <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                                    <td>08 March 2020</td>
-                                                    <td>$500</td>
-                                                    <td>#56387</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="media mb-3">
+                                    <img class="mr-3 rounded-circle" alt="image" width="50" src="{{URL::to('assets/images/avatar/2.jpg')}}">
+                                    <div class="media-body">
+                                        <h5>Noah Baldon <small class="text-primary">April 28, 2018</small></h5>
+                                        <p class="mb-2">I shared this on my fb wall a few months back, and I thought.</p>
+                                        <a href="javascript:void()" class="btn btn-primary btn-sm d-inline-block px-3">Reply</a>
+                                        <a href="javascript:void()" class="btn btn-outline-danger btn-sm d-inline-block px-3">Delete</a>
                                     </div>
                                 </div>
-                                <div id="profile-settings" class="tab-pane fade">
-                                    <div class="table-responsive">
-                                        <table class="table table-responsive-md">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Ammount</th>
-                                                    <th scope="col">Transaction ID</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic5.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Angelica Ramos</td>
-                                                    <td><span class="badge badge-rounded badge-success">Paid</span></td>
-                                                    <td>12 August 2020</td>
-                                                    <td>$100</td>
-                                                    <td>#42317</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic8.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Bradley Greer</td>
-                                                    <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                                    <td>11 July 2020</td>
-                                                    <td>$200</td>
-                                                    <td>#54682</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic6.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Cedric Kelly</td>
-                                                    <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                                    <td>10 May 2020</td>
-                                                    <td>$400</td>
-                                                    <td>#57894</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic2.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Caesar Vance</td>
-                                                    <td><span class="badge badge-rounded badge-danger">Unpaid</span></td>
-                                                    <td>09 April 2020</td>
-                                                    <td>$300</td>
-                                                    <td>#57864</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img src="{{ URL::to('assets/images/profile/education/pic7.jpg') }}" class="rounded-circle" width="35" alt=""></td>
-                                                    <td>Rhona Davidson</td>
-                                                    <td><span class="badge badge-rounded badge-warning">Pending</span></td>
-                                                    <td>08 March 2020</td>
-                                                    <td>$500</td>
-                                                    <td>#56387</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="media mb-3">
+                                    <img class="mr-3 rounded-circle" alt="image" width="50" src="{{URL::to('assets/images/avatar/3.jpg')}}">
+                                    <div class="media-body">
+                                        <h5>Muhammad Clay <small class="text-primary">March 24, 2020</small></h5>
+                                        <p class="mb-2">I shared this on my fb wall a few months back, and I thought.</p>
+                                        <a href="javascript:void()" class="btn btn-primary btn-sm d-inline-block px-3">Reply</a>
+                                        <a href="javascript:void()" class="btn btn-outline-danger btn-sm d-inline-block px-3">Delete</a>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <img class="mr-3 rounded-circle" alt="image" width="50" src="{{URL::to('assets/images/avatar/4.jpg')}}">
+                                    <div class="media-body">
+                                        <h5>William Logan <small class="text-primary">Dec 24, 2019</small></h5>
+                                        <p class="mb-2">I shared this on my fb wall a few months back, and I thought.</p>
+                                        <a href="javascript:void()" class="btn btn-primary btn-sm d-inline-block px-3">Reply</a>
+                                        <a href="javascript:void()" class="btn btn-outline-danger btn-sm d-inline-block px-3">Delete</a>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-xxl-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Speciality</h4>
+                        </div>
+                        <div class="card-body dz-scroll" style="height:350px;" id="DZ_W_Speciality">
+                            <div class="media mb-3 align-items-center dz-scroll" id="DZ_W_Speciality">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/20.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Certified</h5>
+                                    <span class="text-muted mb-0">Cold Laser Therapy</span>
+                                </div>
+                            </div>
+                            <div class="media mb-3 align-items-center">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/21.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Medication Laser</h5>
+                                    <span class="text-muted mb-0">Hair Lose Product</span>
+                                </div>
+                            </div>
+                            <div class="media mb-3 align-items-center">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/22.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Professional</h5>
+                                    <span class="text-muted mb-0">Certified Hair Lose Surgery</span>
+                                </div>
+                            </div>
+                            <div class="media mb-3 align-items-center">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/23.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Dentist Certified</h5>
+                                    <span class="text-muted mb-0">Dentist </span>
+                                </div>
+                            </div>
+                            <div class="media mb-3 align-items-center">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/21.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Medication Laser</h5>
+                                    <span class="text-muted mb-0">Hair Lose Product</span>
+                                </div>
+                            </div>
+                            <div class="media mb-3 align-items-center">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/22.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Professional</h5>
+                                    <span class="text-muted mb-0">Certified Hair Lose Surgery</span>
+                                </div>
+                            </div>
+                            <div class="media mb-3 align-items-center">
+                                <img class="mr-3 p-2 border" alt="image" width="40" src="{{URL::to('assets/images/icons/23.png')}}">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1 text-pale-sky">Dentist Certified</h5>
+                                    <span class="text-muted mb-0">Dentist </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-xxl-4 col-md-6">					
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Doctor List</h4>
+                        </div>
+                        <div class="py-2">
+                            <ul class="list-group list-group-flush dz-scroll" id="DZ_W_Doctor_List" style="height:350px;">
+                                <li class="list-group-item">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <img class="rounded-sm" alt="image" width="50" src="{{URL::to('assets/images/avatar/1.jpg')}}">
+                                        <div class="col">
+                                            <h5 class="mb-1">James Logan</h5>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <small class="d-block">Dentist - Specialist</small>
+                                                <div class="rating-bar">
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <img class="rounded-sm" alt="image" width="50" src="{{URL::to('assets/images/avatar/5.jpg')}}">
+                                        <div class="col">
+                                            <h5 class="mb-1">Muhammad Clay</h5>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <small class="d-block">Fever - Specialist</small>
+                                                <div class="rating-bar">
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <img class="rounded-sm" alt="image" width="50" src="{{URL::to('assets/images/avatar/4.jpg')}}">
+                                        <div class="col">
+                                            <h5 class="mb-1">Jacob Tucker</h5>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <small class="d-block">Dentist - Specialist</small>
+                                                <div class="rating-bar">
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <img class="rounded-sm" alt="image" width="50" src="{{URL::to('assets/images/avatar/3.jpg')}}">
+                                        <div class="col">
+                                            <h5 class="mb-1">Harry Parker</h5>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <small class="d-block">Fever - Specialist</small>
+                                                <div class="rating-bar">
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="timeline-panel text-muted d-flex align-items-center" href="#">
+                                        <img class="rounded-sm" alt="image" width="50" src="{{URL::to('assets/images/avatar/2.jpg')}}">
+                                        <div class="col">
+                                            <h5 class="mb-1">George Carson</h5>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <small class="d-block">Clinical Doctor</small>
+                                                <div class="rating-bar">
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
