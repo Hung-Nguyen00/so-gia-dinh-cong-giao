@@ -44,6 +44,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // ----------------------------- dashboard all ------------------------------//
 Route::get('student_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'student'])->name('student_dashboard');
+Route::get('teacher_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'teacher'])->name('teacher_dashboard');
+Route::get('parent_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'parent'])->name('parent_dashboard');
 
 
 // -----------------------------login----------------------------------------//

@@ -3,7 +3,6 @@
 @extends('sidebar.dashboard')
 @endsection --}}
 @section('content')
-
     <div class="dlabnav">
         <div class="dlabnav-scroll">
             <ul class="metismenu" id="menu">
@@ -15,8 +14,8 @@
                     <ul aria-expanded="false">
                         <li><a href="{{ route('home') }}">Admin</a></li>
                         <li><a href="{{ route('student_dashboard') }}">Students</a></li>
-                        <li><a href="index-3.html">Teachers</a></li>
-                        <li><a href="index-3.html">Parents</a></li>
+                        <li><a href="{{ route('teacher_dashboard') }}">Teachers</a></li>
+                        <li><a href="{{ route('parent_dashboard') }}">Parents</a></li>
                     </ul>
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -302,9 +301,9 @@
                         <div class="student-info">
                             <div class="text-center container-fluid">
                                 <div class="profile-photo">
-                                    <img src="{{ URL::to('assets/images/profile/education/pic1.jpg') }}" width="100" class="img-fluid rounded-circle" alt="">
+                                    <img class="img-fluid rounded-circle" width="100" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->avatar }}">
                                 </div>
-                                <h3 class="item-title">Soeng Souy</h3>
+                                <h3 class="item-title">{{ Auth::user()->name }}</h3>
                                     <p>Web Developer and Web Designer</p>
                             </div>
                             <div class="table-responsive info-table">
