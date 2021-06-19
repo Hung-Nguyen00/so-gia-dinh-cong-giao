@@ -43,7 +43,7 @@
                         <span class="nav-text">Students</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="all-students.html">All Students</a></li>
+                        <li><a href="{{ route('all/student/list') }}">All Students</a></li>
                         <li><a href="add-student.html">Add Students</a></li>
                         <li><a href="edit-student.html">Edit Students</a></li>
                         <li><a href="about-student.html">About Students</a></li>

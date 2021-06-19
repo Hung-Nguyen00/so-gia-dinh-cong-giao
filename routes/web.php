@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\LockScreen;
 
@@ -87,4 +88,6 @@ Route::get('activity/login/logout', [App\Http\Controllers\UserManagementControll
 Route::get('change/password', [App\Http\Controllers\UserManagementController::class, 'changePasswordView'])->middleware('auth')->name('change/password');
 Route::post('change/password/db', [App\Http\Controllers\UserManagementController::class, 'changePasswordDB'])->name('change/password/db');
 
+// ----------------------------- student ------------------------------//
+Route::get('all/student/list',[App\Http\Controllers\StudentController::class,'list'])->name('all/student/list');
 
