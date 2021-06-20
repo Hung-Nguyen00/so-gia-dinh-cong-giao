@@ -44,7 +44,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('all/student/list') }}">All Students</a></li>
-                        <li><a href="add-student.html">Add Students</a></li>
+                        <li><a href="{{ route('add/student/new') }}">Add Students</a></li>
                         <li><a href="edit-student.html">Edit Students</a></li>
                         <li><a href="about-student.html">About Students</a></li>
                     </ul>

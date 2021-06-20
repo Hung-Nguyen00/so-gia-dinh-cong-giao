@@ -11,4 +11,9 @@ class StudentController extends Controller
     {
         return view('student.student_all');
     }
+    // student add 
+    public function formAdd()
+    {
+        return view('student.student_add');
+    }
 }

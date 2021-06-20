@@ -13,6 +13,9 @@
 	<link rel="stylesheet" href="{{ URL::to('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ URL::to('assets/css/skin.css') }}">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="{{ URL::to('assets/vendor/pickadate/themes/default.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('assets/vendor/pickadate/themes/default.date.css') }}">
 </head>
 <body>
     <!-- Preloader start -->
@@ -171,11 +174,6 @@
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/custom.min.js') }}"></script>
-
-    
-    
-
-		
     <!-- Chart Morris plugin files -->
     <script src="{{ URL::to('assets/vendor/raphael/raphael.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/morris/morris.min.js') }}"></script>
@@ -190,6 +188,12 @@
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
     <script src="{{ URL::to('assets/js/styleSwitcher.js') }}"></script>
+    <!-- pickdate -->
+    <script src="{{ URL::to('assets/vendor/pickadate/picker.js') }}"></script>
+    <script src="{{ URL::to('assets/vendor/pickadate/picker.time.js') }}"></script>
+    <script src="{{ URL::to('assets/vendor/pickadate/picker.date.js') }}"></script>
+    <!-- Pickdate -->
+    <script src="{{ URL::to('assets/js/plugins-init/pickadate-init.js') }}"></script>
 
 </body>
 </html>

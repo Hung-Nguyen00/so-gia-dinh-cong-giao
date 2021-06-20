@@ -35,7 +35,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ route('all/student/list') }}">All Students</a></li>
-                        <li><a href="add-student.html">Add Students</a></li>
+                        <li><a href="{{ route('add/student/new') }}">Add Students</a></li>
                         <li><a href="edit-student.html">Edit Students</a></li>
                         <li><a href="about-student.html">About Students</a></li>
                     </ul>
@@ -121,7 +121,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">All Students List  </h4>
-                                    <a href="add-student.html" class="btn btn-primary">+ Add new</a>
+                                    <a href="{{ route('add/student/new') }}" class="btn btn-primary">+ Add new</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

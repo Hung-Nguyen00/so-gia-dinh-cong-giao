@@ -90,4 +90,5 @@ Route::post('change/password/db', [App\Http\Controllers\UserManagementController
 
 // ----------------------------- student ------------------------------//
 Route::get('all/student/list',[App\Http\Controllers\StudentController::class,'list'])->name('all/student/list');
+Route::get('add/student/new',[App\Http\Controllers\StudentController::class,'formAdd'])->name('add/student/new');
 
