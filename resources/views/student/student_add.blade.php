@@ -115,7 +115,7 @@
                             <h5 class="card-title">Basic Info</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('add/student/save') }}" method="post">
+                            <form action="{{ route('add/student/save') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-12">
@@ -154,7 +154,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label">Registration Date</label>
-                                            <input name="datepicker" class="datepicker-default form-control @error('registrationDate') is-invalid @enderror" value="{{ old('registrationDate') }}" name="registrationDate" id="datepicker">
+                                            <input type="text" class="datepicker-default form-control @error('registrationDate') is-invalid @enderror" value="{{ old('registrationDate') }}" name="registrationDate" id="datepicker">
                                             @error('registrationDate')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -249,7 +249,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label">Date of Birth</label>
-                                            <input name="datepicker" class="datepicker-default form-control @error('dateOfBirth') is-invalid @enderror" value="{{ old('dateOfBirth') }}" name="dateOfBirth" id="datepicker1">
+                                            <input type="text" class="datepicker-default form-control @error('dateOfBirth') is-invalid @enderror" value="{{ old('dateOfBirth') }}" name="dateOfBirth" id="datepicker1">
                                             @error('dateOfBirth')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
