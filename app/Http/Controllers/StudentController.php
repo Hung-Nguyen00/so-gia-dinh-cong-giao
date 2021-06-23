@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use DB;
 
 class StudentController extends Controller
 {
     // view list all students
     public function list()
     {
-        return view('student.student_all');
+        $studentShow = DB::table('students')->get();
+        return view('student.student_all',compact('studentShow'));
     }
     // student add 
     public function formAdd()

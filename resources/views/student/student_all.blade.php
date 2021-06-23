@@ -129,81 +129,36 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Image</th>
                                                     <th>Roll No.</th>
                                                     <th>Name</th>
-                                                    <th>Education</th>
-                                                    <th>Mobile</th>
                                                     <th>Email</th>
-                                                    <th>Admission Date</th>
+                                                    <th>Mobile</th>
+                                                    <th>Group</th>
+                                                    <th>Date Of Birth</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($studentShow as $key => $student )
                                                 <tr>
-                                                    <td><img class="rounded-circle" width="35" src="{{URL::to('assets/images/profile/small/pic1.jpg')}}" alt=""></td>
-                                                    <td><strong>01</strong></td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>M.COM., P.H.D.</td>
-                                                    <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
-                                                    <td>2011/04/25</td>
+                                                    <td><strong>{{ ++$key }}</strong></td>
+                                                    <td>
+                                                        <img class="rounded-circle" width="35" src="{{ URL::to('/images/'. $student->upload) }}" alt="{{ $student->upload }}">
+                                                    </td>
+                                                    <td><strong>{{ $student->rollNo }}</strong></td>
+                                                    <td>{{ $student->firstName }} {{ $student->lastName }}</td>
+                                                    <td>{{ $student->gender }}</td>
+                                                    <td>{{ $student->email }}</td>
+                                                    <td><a href="javascript:void(0);"><strong>{{ $student->mobileNumber }}</strong></a></td>
+                                                    <td><a href="javascript:void(0);"><strong>{{ $student->bloodGroup }}</strong></a></td>
+                                                    <td>{{ $student->dateOfBirth }}</td>
                                                     <td>
                                                         <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
                                                         <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
                                                     </td>												
                                                 </tr>
-                                                <tr>
-                                                    <td><img class="rounded-circle" width="35" src="{{URL::to('assets/images/profile/small/pic2.jpg')}}" alt=""></td>
-                                                    <td><strong>02</strong></td>
-                                                    <td>Garrett Winters</td>
-                                                    <td>M.COM., P.H.D.</td>
-                                                    <td><a href="javascript:void(0);"><strong>987 654 3210</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
-                                                    <td>2011/07/25</td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img class="rounded-circle" width="35" src="{{URL::to('assets/images/profile/small/pic8.jpg')}}" alt=""></td>
-                                                    <td><strong>28</strong></td>
-                                                    <td>Brenden Wagner</td>
-                                                    <td>B.TACH, M.TACH</td>
-                                                    <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
-                                                    <td>2011/06/07</td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img class="rounded-circle" width="35" src="{{URL::to('assets/images/profile/small/pic9.jpg')}}" alt=""></td>
-                                                    <td><strong>29</strong></td>
-                                                    <td>Fiona Green</td>
-                                                    <td>B.A, B.C.A</td>
-                                                    <td><a href="javascript:void(0);"><strong>987 654 3210</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
-                                                    <td>2010/03/11</td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><img class="rounded-circle" width="35" src="{{URL::to('assets/images/profile/small/pic10.jpg')}}" alt=""></td>
-                                                    <td><strong>30</strong></td>
-                                                    <td>Shou Itou</td>
-                                                    <td>B.COM., M.COM.</td>
-                                                    <td><a href="javascript:void(0);"><strong>(123) 4567 890</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
-                                                    <td>2011/08/14</td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
