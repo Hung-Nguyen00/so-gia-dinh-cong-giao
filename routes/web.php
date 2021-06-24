@@ -92,4 +92,6 @@ Route::post('change/password/db', [App\Http\Controllers\UserManagementController
 Route::get('all/student/list',[App\Http\Controllers\StudentController::class,'list'])->name('all/student/list');
 Route::get('add/student/new',[App\Http\Controllers\StudentController::class,'formAdd'])->name('add/student/new');
 Route::post('add/student/save',[App\Http\Controllers\StudentController::class,'formSave'])->name('add/student/save');
+Route::get('student/about',[App\Http\Controllers\StudentController::class,'aboutStudent'])->name('student/about');
+
 

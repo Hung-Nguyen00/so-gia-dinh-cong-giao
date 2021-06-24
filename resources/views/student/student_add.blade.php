@@ -37,7 +37,7 @@
                         <li><a href="{{ route('all/student/list') }}">All Students</a></li>
                         <li><a href="{{ route('add/student/new') }}">Add Students</a></li>
                         <li><a href="edit-student.html">Edit Students</a></li>
-                        <li><a href="about-student.html">About Students</a></li>
+                        <li><a href="{{ route('student/about') }}">About Students</a></li>
                     </ul>
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

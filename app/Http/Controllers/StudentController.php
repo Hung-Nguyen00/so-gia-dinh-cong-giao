@@ -16,6 +16,12 @@ class StudentController extends Controller
         $studentShow = DB::table('students')->get();
         return view('student.student_all',compact('studentShow'));
     }
+
+    //
+    public function aboutStudent()
+    {
+        return view('student.student_about');
+    }
     // student add 
     public function formAdd()
     {
