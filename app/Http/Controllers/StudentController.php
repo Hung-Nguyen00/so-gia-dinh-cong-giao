@@ -70,4 +70,10 @@ class StudentController extends Controller
         Toastr::success('Insert data has been successfully :)','Success');
         return redirect()->back();
     }
+    // student edit
+    public function studentEdit($id)
+    {
+        $student = DB::table('students')->where('id',$id)->get();
+        return view('student.student_edit',compact('student'));
+    }
 }

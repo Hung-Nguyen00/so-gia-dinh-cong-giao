@@ -154,8 +154,8 @@
                                                     <td><a href="javascript:void(0);"><strong>{{ $student->bloodGroup }}</strong></a></td>
                                                     <td>{{ $student->dateOfBirth }}</td>
                                                     <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+                                                        <a href="{{ url('student/edit/'.$student->id) }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+                                                        <a href="javascript:void(0);" onclick="return confirm('Are you sure to want to delete it?')" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
                                                     </td>												
                                                 </tr>
                                                 @endforeach
