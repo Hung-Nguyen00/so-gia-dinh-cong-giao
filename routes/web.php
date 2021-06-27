@@ -94,5 +94,6 @@ Route::get('add/student/new',[App\Http\Controllers\StudentController::class,'for
 Route::post('add/student/save',[App\Http\Controllers\StudentController::class,'formSave'])->name('add/student/save');
 Route::get('student/about',[App\Http\Controllers\StudentController::class,'aboutStudent'])->name('student/about');
 Route::get('student/edit/{id}',[App\Http\Controllers\StudentController::class,'studentEdit'])->name('student/edit');
+Route::post('student/update',[App\Http\Controllers\StudentController::class,'studentUpdate'])->name('student/update');
 
 

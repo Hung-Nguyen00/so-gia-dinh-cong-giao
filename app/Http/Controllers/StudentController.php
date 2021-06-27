@@ -76,4 +76,57 @@ class StudentController extends Controller
         $student = DB::table('students')->where('id',$id)->get();
         return view('student.student_edit',compact('student'));
     }
+    // student update to db
+    public function studentUpdate( Request $request)
+    {
+        $id                  = $request->id;
+        $firstName           = $request->firstName;
+        $lastName            = $request->lastName;
+        $email               = $request->email;
+        $registrationDate    = $request->registrationDate;
+        $rollNo              = $request->rollNo;
+        $class               = $request->class;
+        $gender              = $request->gender;
+        $mobileNumber        = $request->mobileNumber;
+        $parentsName         = $request->parentsName;
+        $parentsMobileNumber = $request->parentsMobileNumber;
+        $dateOfBirth         = $request->dateOfBirth;
+        $bloodGroup          = $request->bloodGroup;
+        $address             = $request->address;
+
+       
+        $old_image = Student::find($id);
+        $image_name = $request->hidden_image;
+        $image = $request->file('upload');
+
+        if($image != '')
+        {
+            $image_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $image_name);
+            unlink('images/'.$old_image->upload);
+        }
+    
+        $update = [
+
+            'id'                 => $id,
+            'firstName'           => $firstName,
+            'lastName'            => $lastName,
+            'email'               => $email,
+            'registrationDate'    => $registrationDate,
+            'rollNo'              => $rollNo,
+            'class'               => $class,
+            'gender'              => $gender,
+            'mobileNumber'        => $mobileNumber,
+            'parentsName'         => $parentsName,
+            'parentsMobileNumber' => $parentsMobileNumber,
+            'dateOfBirth'         => $dateOfBirth,
+            'bloodGroup'          => $bloodGroup,
+            'address'             => $address,
+            'upload'              => $image,
+        ];
+
+        Student::where('id',$request->id)->update($update);
+        Toastr::success('Data updated successfully :)','Success');
+        return redirect()->route('all/student/list');
+    }
 }

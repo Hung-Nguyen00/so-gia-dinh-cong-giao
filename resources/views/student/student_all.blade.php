@@ -89,7 +89,8 @@
         </div>
     </div>
 
-    
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <div class="content-body">
         <!-- row -->
         <div class="container-fluid">
