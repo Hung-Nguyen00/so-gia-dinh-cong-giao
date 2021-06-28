@@ -84,7 +84,7 @@ class UserManagementController extends Controller
         ]);
 
         $image = time().'.'.$request->image->extension();  
-        $request->image->move(public_path('images'), $image);
+        $request->image->move(public_path('/assets/images/'), $image);
 
         $user = new User;
         $user->name         = $request->name;
