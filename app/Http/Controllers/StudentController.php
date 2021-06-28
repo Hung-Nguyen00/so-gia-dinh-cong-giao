@@ -103,12 +103,11 @@ class StudentController extends Controller
         {
             $image_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $image_name);
-            unlink('images/'.$old_image->upload);
         }
-    
+      
         $update = [
 
-            'id'                 => $id,
+            'id'                  => $id,
             'firstName'           => $firstName,
             'lastName'            => $lastName,
             'email'               => $email,
@@ -122,7 +121,7 @@ class StudentController extends Controller
             'dateOfBirth'         => $dateOfBirth,
             'bloodGroup'          => $bloodGroup,
             'address'             => $address,
-            'upload'              => $image,
+            'upload'              => $image_name,
         ];
 
         Student::where('id',$request->id)->update($update);

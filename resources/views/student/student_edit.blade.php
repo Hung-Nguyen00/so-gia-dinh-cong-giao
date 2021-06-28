@@ -261,12 +261,8 @@
                                         <img class="rounded-circle" width="35" src="{{ URL::to('/images/'. $student[0]->upload) }}" alt="{{ $student[0]->upload }}">
                                         <div class="form-group fallback w-100">
                                             <input type="hidden" name="hidden_image" value="{{ $student[0]->upload }}">
-                                            <input type="file" class="dropify @error('upload') is-invalid @enderror" value="{{ old('upload') }}" data-default-file="upload" name="upload" id="upload">
-                                            @error('upload')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <input type="file" class="dropify" name="upload" id="upload">
+            
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12">
