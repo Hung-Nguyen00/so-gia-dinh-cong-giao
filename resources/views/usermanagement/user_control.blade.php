@@ -116,7 +116,8 @@
                     </ol>
                 </div>
             </div>
-         
+            {{-- message --}}
+            {!! Toastr::message() !!}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
