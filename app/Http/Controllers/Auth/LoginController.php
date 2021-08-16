@@ -70,30 +70,13 @@ class LoginController extends Controller
         {
             return redirect()->intended('home');
         }else{
-            Toastr::error('fail, WRONG USERNAME OR PASSWORD:)','Error');
+            Toastr::error('Tài khoản hoặc mật khẩu không chính xác','Error');
             return back();
         }
     }
 
     public function logout()
     {
-        $user = Auth::User();
-        Session::put('user', $user);
-        $user=Session::get('user');
-
-        $name       = $user->name;
-        $email      = $user->email;
-        $dt         = Carbon::now();
-        $todayDate  = $dt->toDayDateTimeString();
-
-        $activityLog = [
-
-            'name'        => $name,
-            'email'       => $email,
-            'description' => 'has logged out',
-            'date_time'   => $todayDate,
-        ];
-        DB::table('activity_logs')->insert($activityLog);
         Auth::logout();
         Toastr::success('Logout successfully :)','Success');
         return redirect('login');

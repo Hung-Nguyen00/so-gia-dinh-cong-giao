@@ -1,7 +1,4 @@
-@extends('layouts.master')
-@section('menu')
-@extends('sidebar.form_staff')
-@endsection
+@extends('layouts.st_master')
 @section('content')
 <div id="main">
     <header class="mb-3">

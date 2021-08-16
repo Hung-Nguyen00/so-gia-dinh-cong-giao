@@ -23,7 +23,7 @@ class CreateViTriTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ten_vu_tri', 45)->nullable(false);
+            $table->string('ten_vi_tri', 45)->nullable(false);
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
             $table->timestamps();
             $table->softDeletes();
