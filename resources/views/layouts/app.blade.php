@@ -18,7 +18,6 @@
 <body class="h-100">
     
     @yield('content')
-
     {{-- Scripts --}}
     <!-- Required vendors -->
     <script src="{{URL::to('assets/vendor/global/global.min.js')}}"></script>

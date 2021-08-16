@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 use DB;
 
 class HomeController extends Controller
@@ -24,9 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->count();
-        $user_activity_logs = DB::table('user_activity_logs')->count();
-        $activity_logs = DB::table('activity_logs')->count();
-        return view('dashboard.main_dashboard',compact('users','user_activity_logs','activity_logs'));
+        Toastr::success('Insert data has been successfully :)','Success');
+        return view('dashboard.main_dashboard');
     }
 }

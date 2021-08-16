@@ -173,11 +173,12 @@
 	<!-- Chart sparkline plugin files -->
     <script src="{{ URL::to('assets/vendor/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/plugins-init/sparkline-init.js') }}"></script>
-	
+    <!-- Chart piety plugin files -->
+    <script src="{{ URL::to('assets/vendor/peity/jquery.peity.min.js') }}"></script>
 	<!-- Chart Morris plugin files -->
     <script src="{{ URL::to('assets/vendor/raphael/raphael.min.js') }}"></script>
-    <script src="{{ URL::to('assets/vendor/morris/morris.min.js') }}"></script> 
-	
+    <script src="{{ URL::to('assets/vendor/morris/morris.min.js') }}"></script>
+
     <!-- Init file -->
     <script src="{{ URL::to('assets/js/plugins-init/widgets-script-init.js') }}"></script>
 	

@@ -68,36 +68,11 @@ class LoginController extends Controller
         $remember_me    =   $request->has('remember_me')? true:false;
         if(auth()->attempt(['email'=>$email,'password'=>$password],$remember_me))
         {
-            $user = auth()->user();
+            return redirect()->intended('home');
         }else{
             Toastr::error('fail, WRONG USERNAME OR PASSWORD:)','Error');
             return back();
         }
-
-        $dt         = Carbon::now();
-        $todayDate  = $dt->toDayDateTimeString();
-
-        $activityLog = [
-
-            'name'        => $email,
-            'email'       => $email,
-            'description' => 'has log in',
-            'date_time'   => $todayDate,
-        ];
-        if (Auth::attempt(['email'=>$email,'password'=>$password,'status'=>'Active'])) {
-            DB::table('activity_logs')->insert($activityLog);
-            Toastr::success('Login successfully :)','Success');
-            return redirect()->intended('home');
-        }elseif (Auth::attempt(['email'=>$email,'password'=>$password,'status'=> null])) {
-            DB::table('activity_logs')->insert($activityLog);
-            Toastr::success('Login successfully :)','Success');
-            return redirect()->intended('home');
-        }
-        else{
-            Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
-            return redirect('login');
-        }
-
     }
 
     public function logout()

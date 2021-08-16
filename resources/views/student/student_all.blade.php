@@ -141,25 +141,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($studentShow as $key => $student )
-                                                <tr>
-                                                    <td><strong>{{ ++$key }}</strong></td>
-                                                    <td>
-                                                        <img class="rounded-circle" width="35" src="{{ URL::to('/images/'. $student->upload) }}" alt="{{ $student->upload }}">
-                                                    </td>
-                                                    <td><strong>{{ $student->rollNo }}</strong></td>
-                                                    <td>{{ $student->firstName }} {{ $student->lastName }}</td>
-                                                    <td>{{ $student->gender }}</td>
-                                                    <td>{{ $student->email }}</td>
-                                                    <td><a href="javascript:void(0);"><strong>{{ $student->mobileNumber }}</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>{{ $student->bloodGroup }}</strong></a></td>
-                                                    <td>{{ $student->dateOfBirth }}</td>
-                                                    <td>
-                                                        <a href="{{ url('student/edit/'.$student->id) }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" onclick="return confirm('Are you sure to want to delete it?')" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                    </td>												
-                                                </tr>
-                                                @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -169,7 +151,6 @@
 
                         <div id="grid-view" class="tab-pane fade col-lg-12">
                             <div class="row">
-                                @foreach ($studentShow as $student )
                                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                                     <div class="card card-profile">
                                         <div class="card-header justify-content-end pb-0">
@@ -188,26 +169,25 @@
                                         <div class="card-body pt-2">
                                             <div class="text-center">
                                                 <div class="profile-photo">
-                                                    <img class="rounded-circle" width="35" src="{{ URL::to('/images/'. $student->upload) }}" alt="{{ $student->upload }}">
+                                                    <img class="rounded-circle" width="35" src="" alt="">
                                                 </div>
-                                                <h3 class="mt-4 mb-1">{{ $student->firstName }} {{ $student->lastName }}</h3>
-                                                <p class="text-muted">{{ $student->email }}</p>
+                                                <h3 class="mt-4 mb-1">Nguyen Thanh Hung</h3>
+                                                <p class="text-muted">thanhhung01100@gmail.com</p>
                                                 <ul class="list-group mb-3 list-group-flush">
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span>Roll No.</span><strong>{{ $student->rollNo }}</strong></li>
+                                                        <span>Roll No.</span><strong>Rollno</strong></li>
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Phone No. :</span><strong>{{ $student->mobileNumber }}</strong></li>
+                                                        <span class="mb-0">Phone No. :</span><strong>123321321321</strong></li>
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Admission Date. :</span><strong>{{ $student->registrationDate }}</strong></li>
+                                                        <span class="mb-0">Admission Date. :</span><strong>17-20.2021</strong></li>
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Email:</span><strong>{{ $student->email }}</strong></li>
+                                                        <span class="mb-0">Email:</span><strong>thanhhung04100@gmail.com</strong></li>
                                                 </ul>
-                                                <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{{ route('student/about') }}">Read More</a>
+                                                <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="">Read More</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>
