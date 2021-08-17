@@ -15,6 +15,12 @@ class GiaoXu extends Model
         'ten_giao_xu',
         'dia_chi',
         'ngay_thanh_lap',
-        'nguoi_khoi_tao'
+        'nguoi_khoi_tao',
+        'giao_hat_id',
     ];
+
+    public function giaoHat(){
+        return $this->belongsTo(GiaoHat::class);
+    }
+
 }

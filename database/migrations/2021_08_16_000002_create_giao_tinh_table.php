@@ -25,6 +25,7 @@ class CreateGiaoTinhTable extends Migration
             $table->id();
             $table->string('ten_giao_tinh', 100)->nullable(false);
             $table->string('dia_chi', 150)->nullable();
+            $table->string('ten_nha_tho')->nullable();
             $table->date('ngay_thanh_lap')->nullable();
 
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();

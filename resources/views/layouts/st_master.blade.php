@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    @livewireStyles
 </head>
 <body>
     <!-- Preloader start -->
@@ -38,7 +39,7 @@
             <a href="{{ route('home') }}" class="brand-logo">
                 <img class="logo-abbr" src="{{ URL::to('assets/images/logo-white-2.png') }}" alt="">
                 <img class="logo-compact" src="{{ URL::to('assets/images/logo-text-white.png') }}" alt="">
-                <img class="brand-title" src="{{ URL::to('assets/images/logo-text-white.png') }}" alt="">
+                <span class="text-capitalize" style="font-size: 16px">Quản lý giáo phận</span>
             </a>
             <div class="nav-control">
                 <div class="hamburger">
@@ -155,25 +156,18 @@
         </div>
         <!-- Header end ti-comment-alt -->
 
-        <!-- Sidebar start -->
-      
-        @yield('menu')
-   
-        <!-- Sidebar end -->
-		
-		<!-- Content body start -->
-        @yield('content')
+        {{--Nav--}}
+        @include('sidebar.dashboard')
+        {{--Nav end--}}
+         <!-- Content body start -->
+         @yield('content')
         <!-- Content body end -->
 
         <!-- Footer start -->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="https://www.soengsouy.com/" target="_blank">SoengSouy</a> 2021</p>
-            </div>
-        </div>
         <!-- Footer end -->
     </div>
 
+    @livewireScripts
     <!-- Required vendors -->
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>

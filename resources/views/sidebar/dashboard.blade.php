@@ -1,22 +1,16 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="nav-label first">Main Menu</li>
+            <li class="nav-label first">Các menu chính</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-home"></i>
-                    <span class="nav-text">Dashboard</span>
+                    <span class="nav-text">Bảng điều khiển</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('home') }}">Admin</a></li>
+                    <li><a href="{{ route('home') }}">Trang chủ</a></li>
                     <li><a href="{{ route('student_dashboard') }}">Students</a></li>
-                    <li><a href="index-3.html">Teachers</a></li>
-                    <li><a href="index-3.html">Parents</a></li>
+                    <li><a href="{{ route('teacher_dashboard') }}">Teachers</a></li>
                 </ul>
-            </li>
-            <li><a class="ai-icon" href="event-management.html" aria-expanded="false">
-                    <i class="la la-calendar"></i>
-                    <span class="nav-text">Event Management</span>
-                </a>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-user"></i>
@@ -30,12 +24,23 @@
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-home"></i>
+                    <span class="nav-text">Quản lý giáo phận</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('all/student/list') }}">Các giáo tỉnh</a></li>
+                    <li><a href="{{ route('giao-phan.index')}}">Các giáo phận</a></li>
+                    <li><a href="edit-departments.html">Các giáo hạt</a></li>
+                    <li><a href="edit-departments.html">Các giáo xứ</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-users"></i>
                     <span class="nav-text">Students</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="all-students.html">All Students</a></li>
-                    <li><a href="add-student.html">Add Students</a></li>
+                    <li><a href="{{ route('all/student/list') }}">All Students</a></li>
+                    <li><a href="{{ route('add/student/new') }}">Add Students</a></li>
                     <li><a href="edit-student.html">Edit Students</a></li>
                     <li><a href="about-student.html">About Students</a></li>
                 </ul>
@@ -61,34 +66,8 @@
                     <li><a href="edit-library.html">Edit Library</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-building"></i>
-                    <span class="nav-text">Departments</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="all-departments.html">All Departments</a></li>
-                    <li><a href="add-departments.html">Add Departments</a></li>
-                    <li><a href="edit-departments.html">Edit Departments</a></li>
-                </ul>
-            </li>
-            
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-plus-square-o"></i>
-                    <span class="nav-text">Plugins</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="uc-select2.html">Select 2</a></li>
-                    <li><a href="uc-nestable.html">Nestedable</a></li>
-                    <li><a href="uc-noui-slider.html">Noui Slider</a></li>
-                    <li><a href="uc-sweetalert.html">Sweet Alert</a></li>
-                    <li><a href="uc-toastr.html">Toastr</a></li>
-                    <li><a href="map-jqvmap.html">Jqv Map</a></li>
-                </ul>
-            </li>
-            <li><a href="widget-basic.html" aria-expanded="false">
-                    <i class="la la-desktop"></i>
-                    <span class="nav-text">Widget</span>
-                </a></li>
+
+
             <li class="nav-label">Forms</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-file-text"></i>

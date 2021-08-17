@@ -14,6 +14,18 @@ class GiaoTinh extends Model
     protected $fillable = [
         'ten_giao_tinh',
         'dia_chi',
+        'ten_nha_tho',
         'ngay_thanh_lap',
     ];
+
+
+    public function giaoPhan(){
+        return $this->hasMany(GiaoPhan::class);
+    }
+
+    public  function giaoTinh(){
+        return $this->hasManyThrough(GiaoTinh::class, GiaoPhan::class);
+    }
+
+
 }

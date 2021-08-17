@@ -2,13 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotosController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\FormController;
-use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\LockScreen;
+use App\Http\Controllers\GiaoPhanController;
 
 
 /*
@@ -39,6 +35,16 @@ Route::group(['middleware'=>'auth'],function()
 });
 
 Auth::routes();
+
+// import and export excel
+Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
+Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
+
+Route::resources([
+    'giao-phan' => GiaoPhanController::class,
+]);
+
+
 
 // ----------------------------- main dashboard ------------------------------//
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

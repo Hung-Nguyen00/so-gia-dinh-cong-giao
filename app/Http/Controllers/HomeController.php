@@ -25,7 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Toastr::success('Insert data has been successfully :)','Success');
         return view('dashboard.main_dashboard');
     }
 }

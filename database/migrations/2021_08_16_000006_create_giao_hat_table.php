@@ -25,6 +25,7 @@ class CreateGiaoHatTable extends Migration
             $table->id();
             $table->string('ten_giao_hat', 100)->nullable();
             $table->string('dia_chi', 250)->nullable();
+            $table->string('ten_nha_tho')->nullable();
             $table->date('ngay_thanh_lap')->nullable();
             $table->integer('nguoi_khoi_tao')->nullable();
             $table->timestamps();
