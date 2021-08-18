@@ -18,17 +18,31 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label for="giao_phan">Tên nhà thờ</label>
+                                <input type="text" wire:model="ten_nha_tho" class="form-control" placeholder="Nhập tên nhà thờ">
+                                @if($errors->has('ten_nha_tho'))
+                                    <span class="text-danger">{{ $errors->first('ten_nha_tho') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label >Địa chỉ</label>
                                 <input type="text" wire:model="dia_chi" class="form-control" placeholder="Nhập địa chỉ giáo phận">
                                 @if($errors->has('dia_chi'))
                                     <span class="text-danger">{{ $errors->first('dia_chi') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label >Ngày thành lập</label>
-                                <input type="date" wire:model="ngay_thanh_lap" class="form-control">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <input type="date" wire:model="ngay_thanh_lap" class="form-control col-md-5">
+                                    <label >Hoặc nhập năm:</label>
+                                    <input type="number" wire:model="nam_thanh_lap" class="form-control col-md-3">
+                                </div>
                                 @if($errors->has('ngay_thanh_lap'))
                                     <span class="text-danger">{{ $errors->first('ngay_thanh_lap') }}</span>
+                                @endif
+                                @if($errors->has('nam_thanh_lap'))
+                                    <span class="text-danger">{{ $errors->first('nam_thanh_lap') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">

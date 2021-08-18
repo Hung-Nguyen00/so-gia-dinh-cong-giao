@@ -5,6 +5,9 @@ use App\Http\Controllers\PhotosController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\GiaoPhanController;
+use App\Http\Controllers\GiaoHatController;
+use App\Http\Controllers\GiaoXuController;
+use App\Http\Controllers\GiaoHoController;
 
 
 /*
@@ -42,6 +45,9 @@ Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-f
 
 Route::resources([
     'giao-phan' => GiaoPhanController::class,
+    'giao-hat' => GiaoHatController::class,
+    'giao-xu' => GiaoXuController::class,
+    'giao-ho' => GiaoHoController::class,
 ]);
 
 

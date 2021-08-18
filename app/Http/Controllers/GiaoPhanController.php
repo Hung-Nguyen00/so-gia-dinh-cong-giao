@@ -8,7 +8,9 @@ use App\Imports\GiaoHoImport;
 use App\Imports\GiaoPhanImport;
 use App\Imports\GiaoXuImport;
 use App\Models\GiaoPhan;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GiaoPhanController extends Controller
@@ -25,10 +27,24 @@ class GiaoPhanController extends Controller
     }
 
     public function fileImport(Request $request){
-        Excel::import(new GiaoPhanImport(), $request->file('file')->store('temp'));
-        Excel::import(new GiaoHatImport(), $request->file('file')->store('temp'));
-        Excel::import(new GiaoXuImport(), $request->file('file')->store('temp'));
-        Excel::import(new GiaoHoImport(), $request->file('file')->store('temp'));
+        try{
+            DB::transaction(function () use ($request) {
+                Excel::import(new GiaoPhanImport(), $request->file('file')->store('temp'));
+                Excel::import(new GiaoHatImport(), $request->file('file')->store('temp'));
+                Excel::import(new GiaoXuImport(), $request->file('file')->store('temp'));
+                Excel::import(new GiaoHoImport(), $request->file('file')->store('temp'));
+            });
+       }catch (\InvalidArgumentException $ex){
+           Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+           return back();
+       }catch (\Exception $ex){
+           Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+           return back();
+       }catch(\Error $ex){
+           Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+           return back();
+       }
+        Toastr::success('Các cột trong tệp Excel không đúng dạng','Success');
         return back();
     }
 

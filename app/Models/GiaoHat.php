@@ -14,7 +14,6 @@ class GiaoHat extends Model
     protected $fillable = [
         'ten_giao_hat',
         'dia_chi',
-        'ten_nha_tho',
         'ngay_thanh_lap',
         'nguoi_khoi_tao',
         'giao_phan_id'
@@ -26,6 +25,10 @@ class GiaoHat extends Model
 
     public function giaoXu(){
         return $this->hasMany(GiaoXu::class);
+    }
+
+    public function user($id){
+        return User::find($id)->ho_va_ten;
     }
 
 

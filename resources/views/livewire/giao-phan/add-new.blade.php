@@ -19,32 +19,40 @@
     </div>
     <div  class="card-body" wire:ignore>
         <div class="table-responsive">
-            <table id="example3" class="display" style="min-width: 845px">
+            <table id="example3" class="display" style="min-width: 845px; width: 1100px !important;">
                 <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Tên giáo phận</th>
-                    <th>Ngày thành lập</th>
-                    <th>Sô lượng giáo hạt</th>
-                    <th>Người dùng cập nhập</th>
-                    <th>Cập nhập lần cuối</th>
-                    <td>Chỉnh sửa</td>
+                    <th style="width: 20px">STT</th>
+                    <th style="width: 90px">Tên giáo phận</th>
+                    <th style="width: 92px">Ngày thành lập</th>
+                    <th style="width: 103px">Nhà thờ chính tòa</th>
+                    <th style="width: 50px">Số lượng giáo hạt</th>
+                    <th style="width: 90px">Người cập nhập</th>
+                    <th style="width: 50px">Cập nhập lần cuối</th>
+                    <th style="width: 50px">Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody >
                 @php $i= 0; @endphp
                 @foreach($all_giao_phan as $giao_phan)
-                    <tr >
-                        <td> {{ ++$i }}</td>
+                    <tr>
+                        <td class="text-center"> {{ ++$i }}</td>
                         <td>{{ $giao_phan->ten_giao_phan }}</td>
-                        <td>{{ $giao_phan->ngay_thanh_lap }}</td>
-                        <td>{{ $giao_phan->giao_hat_count }}</td>
-                        <td>{{ $giao_phan->nguoi_khoi_tao }}</td>
+                        <td>
+                            @if(\Carbon\Carbon::parse($giao_phan->ngay_thanh_lap)->format('d-m') == '01-01')
+                                {{ \Carbon\Carbon::parse($giao_phan->ngay_thanh_lap)->format('Y') }}
+                                @else
+                                {{ \Carbon\Carbon::parse($giao_phan->ngay_thanh_lap)->format('d-m-Y') }}
+                            @endif
+                        </td>
+                        <td>{{ $giao_phan->ten_nha_tho }}</td>
+                        <td class="text-center">{{ $giao_phan->giao_hat_count }}</td>
+                        <td>{{ $giao_phan->user($giao_phan->nguoi_khoi_tao) }}</td>
                         <td>{{ $giao_phan->updated_at}}</td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $giao_phan->id }})"
-                                    class="btn btn-sm btn-primary"
+                                    class="btn btn-sm btn-primary mb-1"
                                     data-toggle="modal"
                                     data-target="#editGiaoPhan">
                                 <i class="la la-pencil"></i>
@@ -52,7 +60,7 @@
                             <button type="button" wire:click="edit({{ $giao_phan->id }})"
                                     data-toggle="modal"
                                     data-target="#deleteModal"
-                                    class="btn btn-sm btn-danger">
+                                    class="btn btn-sm btn-danger mb-1">
                                 <i class="la la-trash-o"></i>
                             </button>
                         </td>

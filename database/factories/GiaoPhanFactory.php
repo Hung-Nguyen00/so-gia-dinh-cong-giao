@@ -24,6 +24,7 @@ class GiaoPhanFactory extends Factory
     {
         return [
             'ten_giao_phan' => $this->faker->name(),
+            'ten_nha_tho' => $this->faker->name(),
             'dia_chi' => $this->faker->address(),
             'ngay_thanh_lap' => Carbon::now(),
             'giao_tinh_id' => 1,

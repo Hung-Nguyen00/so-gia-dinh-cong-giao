@@ -24,6 +24,7 @@ class GiaoTinhFactory extends Factory
     {
         return [
             'ten_giao_tinh' => $this->faker->name(),
+            'ten_nha_tho' => $this->faker->name(),
             'dia_chi' => $this->faker->address(),
             'ngay_thanh_lap' => Carbon::now(),
             'nguoi_khoi_tao' => 1

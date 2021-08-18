@@ -26,7 +26,7 @@ class CreateGiaoXuTable extends Migration
             $table->string('ten_giao_xu', 100)->nullable();
             $table->string('dia_chi', 250)->nullable();
             $table->date('ngay_thanh_lap')->nullable();
-            $table->boolean('giao_xu_hoac_giao_ho')->default(0);
+            $table->integer('giao_xu_hoac_giao_ho')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

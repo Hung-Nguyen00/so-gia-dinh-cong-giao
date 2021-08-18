@@ -24,7 +24,6 @@ class GiaoHatFactory extends Factory
     {
         return [
             'ten_giao_hat' => $this->faker->name(),
-            'dia_chi' => $this->faker->address(),
             'ngay_thanh_lap' => Carbon::now(),
             'giao_phan_id' => 1,
             'nguoi_khoi_tao' => 1

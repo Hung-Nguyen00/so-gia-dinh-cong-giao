@@ -16,6 +16,7 @@ class GiaoXu extends Model
         'dia_chi',
         'ngay_thanh_lap',
         'nguoi_khoi_tao',
+        'giao_xu_hoac_giao_ho',
         'giao_hat_id',
     ];
 
@@ -23,4 +24,11 @@ class GiaoXu extends Model
         return $this->belongsTo(GiaoHat::class);
     }
 
+    public function giaoHo(){
+        return $this->hasMany(GiaoXu::class ,'giao_xu_hoac_giao_ho')->with('giaoHo');
+    }
+
+    public function user($id){
+        return User::find($id)->ho_va_ten;
+    }
 }

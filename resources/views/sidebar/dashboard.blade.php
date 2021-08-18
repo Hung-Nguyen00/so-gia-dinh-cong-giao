@@ -30,8 +30,9 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('all/student/list') }}">Các giáo tỉnh</a></li>
                     <li><a href="{{ route('giao-phan.index')}}">Các giáo phận</a></li>
-                    <li><a href="edit-departments.html">Các giáo hạt</a></li>
-                    <li><a href="edit-departments.html">Các giáo xứ</a></li>
+                    <li><a href="{{ route('giao-hat.index') }}">Các giáo hạt</a></li>
+                    <li><a href="{{ route('giao-xu.index') }}">Các giáo xứ</a></li>
+                    <li><a href="{{ route('giao-ho.index') }}">Các giáo họ</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

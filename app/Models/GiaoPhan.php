@@ -29,5 +29,8 @@ class GiaoPhan extends Model
         return $this->hasMany(GiaoHat::class);
     }
 
+    public function user($id){
+        return User::find($id)->ho_va_ten;
+    }
 
 }
