@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class QuyenQuanTri extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $dates = ['deleted_at'];
 
     protected $table = 'quyen_quan_tri';
 

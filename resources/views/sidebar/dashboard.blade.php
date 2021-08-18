@@ -28,7 +28,7 @@
                     <span class="nav-text">Quản lý giáo phận</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('all/student/list') }}">Các giáo tỉnh</a></li>
+                    <li><a href="{{ route('giao-tinh.index') }}">Các giáo tỉnh</a></li>
                     <li><a href="{{ route('giao-phan.index')}}">Các giáo phận</a></li>
                     <li><a href="{{ route('giao-hat.index') }}">Các giáo hạt</a></li>
                     <li><a href="{{ route('giao-xu.index') }}">Các giáo xứ</a></li>
@@ -37,11 +37,11 @@
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-users"></i>
-                    <span class="nav-text">Students</span>
+                    <span class="nav-text">Quản lý tu sĩ</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('all/student/list') }}">All Students</a></li>
-                    <li><a href="{{ route('add/student/new') }}">Add Students</a></li>
+                    <li><a href="{{ route('ten-thanh.index') }}">Quản lý tên thánh</a></li>
+                    <li><a href="{{ route('chuc-vu.index') }}">Quản lý chức vụ</a></li>
                     <li><a href="edit-student.html">Edit Students</a></li>
                     <li><a href="about-student.html">About Students</a></li>
                 </ul>

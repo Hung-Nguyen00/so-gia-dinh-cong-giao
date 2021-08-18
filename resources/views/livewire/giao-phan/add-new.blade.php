@@ -2,15 +2,10 @@
     @include('giao_phan.add_giao_phan')
     @include('giao_phan.edit_giao_phan')
     @include('giao_phan.delete_giao_phan')
-    @include('giao_phan.import_giao_phan')
+
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo phận </h4>
         <div>
-            <a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>
-            <button
-                    data-toggle="modal" data-target="#importModal"
-                    class="btn btn-primary">Import Excel
-            </button>
             <button
                     data-toggle="modal" data-target="#exampleModal"
                     class="btn btn-primary">Thêm giáo phận mới
@@ -48,7 +43,7 @@
                         <td>{{ $giao_phan->ten_nha_tho }}</td>
                         <td class="text-center">{{ $giao_phan->giao_hat_count }}</td>
                         <td>{{ $giao_phan->user($giao_phan->nguoi_khoi_tao) }}</td>
-                        <td>{{ $giao_phan->updated_at}}</td>
+                        <td>{{\Carbon\Carbon::parse($giao_phan->updated_at)->format('d-m-Y  H:i') }}</td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $giao_phan->id }})"

@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PhotosController;
-use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\GiaoPhanController;
 use App\Http\Controllers\GiaoHatController;
 use App\Http\Controllers\GiaoXuController;
 use App\Http\Controllers\GiaoHoController;
+use App\Http\Controllers\GiaoTinhController;
+use App\Http\Controllers\TenThanhController;
+use App\Http\Controllers\ChucVuController;
 
 
 /*
@@ -38,22 +38,26 @@ Route::group(['middleware'=>'auth'],function()
 });
 
 Auth::routes();
+// ----------------------------- main dashboard ------------------------------//
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // import and export excel
 Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
 Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
 
 Route::resources([
+    'giao-tinh' => GiaoTinhController::class,
     'giao-phan' => GiaoPhanController::class,
     'giao-hat' => GiaoHatController::class,
     'giao-xu' => GiaoXuController::class,
     'giao-ho' => GiaoHoController::class,
+    'ten-thanh' => TenThanhController::class,
+    'chuc-vu' => ChucVuController::class
 ]);
 
 
 
-// ----------------------------- main dashboard ------------------------------//
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 // ----------------------------- dashboard all ------------------------------//
 Route::get('student_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'student'])->name('student_dashboard');

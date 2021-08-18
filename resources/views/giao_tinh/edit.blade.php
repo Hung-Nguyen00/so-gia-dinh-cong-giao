@@ -1,9 +1,9 @@
 <div>
-    <div wire:ignore.self class="modal fade" id="editGiaoHat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="editGiaoPhan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa giáo xứ </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa giáo tỉnh</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -11,15 +11,22 @@
                 <div class="modal-body">
                     <form wire:submit.prevent="update">
                         <div class="form-group">
-                            <label for="giao_hat">Tên giáo xứ</label>
-                            <input type="text" wire:model="ten_giao_hat" class="form-control" placeholder="Nhập tên giáo xứ">
-                            @if($errors->has('ten_giao_xu'))
-                                <span class="text-danger">{{ $errors->first('ten_giao_xu') }}</span>
+                            <label for="giao_tinh">Tên giáo tỉnh</label>
+                            <input type="text" wire:model="ten_giao_tinh" class="form-control" placeholder="Nhập tên giáo tỉnh">
+                            @if($errors->has('ten_giao_tinh'))
+                                <span class="text-danger">{{ $errors->first('ten_giao_tinh') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="giao_tinh">Tên nhà thờ</label>
+                            <input type="text" wire:model="ten_nha_tho" class="form-control" placeholder="Nhập tên nhà thờ">
+                            @if($errors->has('ten_nha_tho'))
+                                <span class="text-danger">{{ $errors->first('ten_nha_tho') }}</span>
                             @endif
                         </div>
                         <div class="form-group">
                             <label >Địa chỉ</label>
-                            <input type="text" wire:model="dia_chi" class="form-control" placeholder="Nhập địa chỉ Giáo Hạt">
+                            <input type="text" wire:model="dia_chi" class="form-control" placeholder="Nhập địa chỉ giáo tỉnh">
                             @if($errors->has('dia_chi'))
                                 <span class="text-danger">{{ $errors->first('dia_chi') }}</span>
                             @endif
@@ -36,18 +43,6 @@
                             @endif
                             @if($errors->has('nam_thanh_lap'))
                                 <span class="text-danger">{{ $errors->first('nam_thanh_lap') }}</span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label >Giáo Hạt</label>
-                            <select class="custom-select form-control mb-3" name="giao_hat_id" wire:model="giao_hat_id">
-                                <option selected>Chọn Giáo Hạt</option>
-                                @foreach($giao_hat as $gt)
-                                    <option value="{{ $gt->id }}"> {{ $gt->ten_giao_hat }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('giao_hat_id'))
-                                <span class="text-danger">{{ $errors->first('giao_hat_id') }}</span>
                             @endif
                         </div>
                         <button type="submit" class="btn btn-primary float-right">Lưu lại</button>

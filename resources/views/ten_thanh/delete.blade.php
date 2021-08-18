@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h5 class="card-header" style="margin-top: -15px;">Bạn có chắc chắn muốn xóa {{ $ten_giao_hat }} không?</h5>
+                <h5 class="card-header" style="margin-top: -15px;">Bạn có chắc chắn muốn xóa {{ $ten_thanh }} không?</h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>

@@ -6,32 +6,39 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class GiaoHat extends Model
+class TuSi extends Model
 {
     use HasFactory, SoftDeletes;
     protected $dates = ['deleted_at'];
 
-    protected $table = 'giao_hat';
-
     protected $fillable = [
-        'ten_giao_hat',
-        'dia_chi',
-        'ngay_thanh_lap',
+        'ho_va_ten',
+        'ngay_sinh',
+        'dia_chi_hien_tai',
+        'so_dien_thoai',
+        'ngay_nhan_chuc',
+        'noi_nhan_chuc',
+        'dang_du_hoc',
         'nguoi_khoi_tao',
-        'giao_phan_id'
+        'giao_phan_id',
+        'giao_hat_id',
+        'giao_xu_id',
+        'ten_thanh_id',
     ];
+
+    public function tenThanh(){
+        return $this->belongsTo(TenThanh::class);
+    }
 
     public function giaoPhan(){
         return $this->belongsTo(GiaoPhan::class);
     }
 
     public function giaoXu(){
-        return $this->hasMany(GiaoXu::class);
+        return $this->belongsTo(GiaoXu::class);
     }
 
     public function user($id){
         return User::find($id)->ho_va_ten;
     }
-
-
 }
