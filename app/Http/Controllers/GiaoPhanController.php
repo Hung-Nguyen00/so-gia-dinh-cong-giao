@@ -44,7 +44,7 @@ class GiaoPhanController extends Controller
            Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
            return back();
        }
-        Toastr::success('Các cột trong tệp Excel không đúng dạng','Success');
+        Toastr::success('Thêm mới thành công','Success');
         return back();
     }
 

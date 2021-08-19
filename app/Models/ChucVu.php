@@ -20,7 +20,7 @@ class ChucVu extends Model
     ];
 
     public function tuSi(){
-        return $this->hasMany(TuSi::class);
+        return $this->hasMany(TuSi::class, 'chuc_vu_id', 'id');
     }
 
     public function user($id){

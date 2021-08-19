@@ -8,6 +8,7 @@ use App\Http\Controllers\GiaoHoController;
 use App\Http\Controllers\GiaoTinhController;
 use App\Http\Controllers\TenThanhController;
 use App\Http\Controllers\ChucVuController;
+use App\Http\Controllers\TuSiController;
 
 
 /*
@@ -45,6 +46,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
 Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
 
+Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
+Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat'])->name('giao-hat.getGiaoHat');
+
 Route::resources([
     'giao-tinh' => GiaoTinhController::class,
     'giao-phan' => GiaoPhanController::class,
@@ -52,7 +56,8 @@ Route::resources([
     'giao-xu' => GiaoXuController::class,
     'giao-ho' => GiaoHoController::class,
     'ten-thanh' => TenThanhController::class,
-    'chuc-vu' => ChucVuController::class
+    'chuc-vu' => ChucVuController::class,
+    'tu-si' => TuSiController::class,
 ]);
 
 
@@ -85,17 +90,6 @@ Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordControll
 // ----------------------------- reset password -----------------------------//
 Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
 Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
-
-// ----------------------------- user profile ------------------------------//
-Route::get('profile_user', [App\Http\Controllers\UserManagementController::class, 'profile'])->name('profile_user');
-Route::post('profile_user/store', [App\Http\Controllers\UserManagementController::class, 'profileStore'])->name('profile_user/store');
-
-Route::get('activity/log', [App\Http\Controllers\UserManagementController::class, 'activityLog'])->middleware('auth')->name('activity/log');
-Route::get('activity/login/logout', [App\Http\Controllers\UserManagementController::class, 'activityLogInLogOut'])->middleware('auth')->name('activity/login/logout');
-
-// ----------------------------- form change password ------------------------------//
-Route::get('change/password', [App\Http\Controllers\UserManagementController::class, 'changePasswordView'])->middleware('auth')->name('change/password');
-Route::post('change/password/db', [App\Http\Controllers\UserManagementController::class, 'changePasswordDB'])->name('change/password/db');
 
 // ----------------------------- student ------------------------------//
 Route::get('all/student/list',[App\Http\Controllers\StudentController::class,'list'])->name('all/student/list');

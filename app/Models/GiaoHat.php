@@ -29,6 +29,10 @@ class GiaoHat extends Model
         return $this->hasMany(GiaoXu::class);
     }
 
+    public function tuSi(){
+        return $this->hasMany(TuSi::class);
+    }
+
     public function user($id){
         return User::find($id)->ho_va_ten;
     }

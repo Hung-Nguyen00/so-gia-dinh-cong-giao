@@ -26,6 +26,10 @@ class GiaoXu extends Model
         return $this->belongsTo(GiaoHat::class);
     }
 
+    public function tuSi(){
+        return $this->hasMany(TuSi::class);
+    }
+
     public function giaoHo(){
         return $this->hasMany(GiaoXu::class ,'giao_xu_hoac_giao_ho')->with('giaoHo');
     }

@@ -11,6 +11,8 @@ class TuSi extends Model
     use HasFactory, SoftDeletes;
     protected $dates = ['deleted_at'];
 
+    protected $table = 'tu_si';
+
     protected $fillable = [
         'ho_va_ten',
         'ngay_sinh',
@@ -27,15 +29,30 @@ class TuSi extends Model
     ];
 
     public function tenThanh(){
-        return $this->belongsTo(TenThanh::class);
+        return $this->belongsTo(TenThanh::class, 'ten_thanh_id', 'id');
     }
 
+
+    public function getTenThanh($id){
+        $ten_thanh = TenThanh::find($id);
+        if ($ten_thanh != null){
+            return $ten_thanh->ten_thanh ;
+        }
+    }
     public function giaoPhan(){
         return $this->belongsTo(GiaoPhan::class);
     }
 
+    public function giaoHat(){
+        return $this->belongsTo(GiaoHat::class);
+    }
+
     public function giaoXu(){
         return $this->belongsTo(GiaoXu::class);
+    }
+
+    public function chucVu(){
+        return $this->belongsTo(ChucVu::class,'chuc_vu_id');
     }
 
     public function user($id){

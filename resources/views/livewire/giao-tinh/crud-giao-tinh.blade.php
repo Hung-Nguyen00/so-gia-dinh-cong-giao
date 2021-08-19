@@ -4,7 +4,7 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo tỉnh </h4>
         <div>
-            <a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>
+            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
             <button
                     data-toggle="modal" data-target="#importModal"
                     class="btn btn-primary">Import Excel

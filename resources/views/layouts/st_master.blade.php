@@ -9,15 +9,13 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/favicon.png') }}">
     <!-- Datatable -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="{{ URL::to('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="{{ URL::to('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ URL::to('assets/css/skin.css') }}">
-    <!-- Pick date -->
-    <link rel="stylesheet" href="{{ URL::to('assets/vendor/pickadate/themes/default.css') }}">
-    <link rel="stylesheet" href="{{ URL::to('assets/vendor/pickadate/themes/default.date.css') }}">
     {{-- message toastr --}}
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     @livewireStyles
@@ -186,12 +184,8 @@
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
     <script src="{{ URL::to('assets/js/styleSwitcher.js') }}"></script>
-    <!-- pickdate -->
-    <script src="{{ URL::to('assets/vendor/pickadate/picker.js') }}"></script>
-    <script src="{{ URL::to('assets/vendor/pickadate/picker.time.js') }}"></script>
-    <script src="{{ URL::to('assets/vendor/pickadate/picker.date.js') }}"></script>
-    <!-- Pickdate -->
-    <script src="{{ URL::to('assets/js/plugins-init/pickadate-init.js') }}"></script>
 
+
+    @yield('scripts')
 </body>
 </html>
