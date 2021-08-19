@@ -33,6 +33,10 @@ class GiaoHat extends Model
         return $this->hasMany(TuSi::class);
     }
 
+    public function getTuSi(){
+        return $this->hasManyThrough(TuSi::class,   GiaoXu::class,'giao_hat_id', 'giao_hat_id');
+    }
+
     public function user($id){
         return User::find($id)->ho_va_ten;
     }

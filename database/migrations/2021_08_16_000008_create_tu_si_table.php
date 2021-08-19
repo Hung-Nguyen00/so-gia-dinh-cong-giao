@@ -26,6 +26,8 @@ class CreateTuSiTable extends Migration
             $table->string('ho_va_ten', 100)->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->date('ngay_mat')->nullable();
+            $table->date('bat_dau_phuc_vu')->nullable();
+            $table->date('ket_thuc_phuc_vu')->nullable();
             $table->string('dia_chi_hien_tai', 250)->nullable();
             $table->string('so_dien_thoai', 11)->nullable();
             $table->date('ngay_nhan_chuc')->nullable();
@@ -37,8 +39,10 @@ class CreateTuSiTable extends Migration
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
             $table->unsignedBigInteger('chuc_vu_id')->index();
             $table->unsignedBigInteger('giao_phan_id')->index();
-            $table->unsignedBigInteger('giao_hat_id')->nullable();
-            $table->unsignedBigInteger('giao_xu_id')->nullable();
+            $table->unsignedBigInteger('giao_hat_id')->index()->nullable();
+            $table->unsignedBigInteger('giao_xu_id')->index()->nullable();
+
+            $table->unsignedBigInteger('vi_tri_id')->index()->nullable();
 
 
             $table->foreign('chuc_vu_id')
@@ -55,6 +59,9 @@ class CreateTuSiTable extends Migration
 
             $table->foreign('giao_xu_id')
                 ->references('id')->on('giao_xu')
+                ->onDelete('cascade');
+            $table->foreign('vi_tri_id')
+                ->references('id')->on('vi_tri')
                 ->onDelete('cascade');
 
         });

@@ -27,20 +27,17 @@ class CreateLichSuCongTacTable extends Migration
             $table->string('ten_giao_hat', 45)->nullable();
             $table->string('ten_giao_xu', 45)->nullable();
             $table->string('ten_giao_ho', 45)->nullable();
+            $table->date('bat_dau_phuc_vu')->nullable();
+            $table->date('ket_thuc_phuc_vu')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->unsignedBigInteger('tu_si_id')->index();
 
-            $table->unsignedBigInteger('vi_tri_id')->index();
 
 
             $table->foreign('tu_si_id')
                 ->references('id')->on('tu_si')
-                ->onDelete('cascade');
-
-            $table->foreign('vi_tri_id')
-                ->references('id')->on('vi_tri')
                 ->onDelete('cascade');
         });
     }

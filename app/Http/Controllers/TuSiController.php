@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TuSiRequest;
 use App\Models\ChucVu;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
 use App\Models\TenThanh;
 use App\Models\TuSi;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TuSiController extends Controller
 {
@@ -64,9 +67,17 @@ class TuSiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TuSiRequest $request)
     {
-        //
+        $validateData = $request->validated();
+        $tusi = TuSi::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
+        if ($tusi){
+            Toastr::success('Thêm mới tu sĩ thành công','Success');
+            return redirect()->route('tu-si.search', ['chuc_vu_id' => $tusi->chuc_vu_id]);
+        }else{
+            Toastr::error('Không thể thêm tu sĩ mới','Error');
+            return back();
+        }
     }
 
     /**
@@ -92,6 +103,7 @@ class TuSiController extends Controller
                     ->where('id', $tuSi->id)->first();
         $all_ten_thanh = TenThanh::all();
         $all_giao_xu = GiaoXu::all();
+        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', '<>', 0)->get();
         $all_giao_hat = GiaoHat::all();
         $all_giao_phan = GiaoPhan::all();
         $all_chuc_vu = ChucVu::all();
@@ -100,7 +112,8 @@ class TuSiController extends Controller
             'all_giao_xu',
             'all_giao_hat',
             'all_giao_phan',
-            'all_ten_thanh'));
+            'all_ten_thanh',
+            'all_giao_ho'));
     }
 
     /**
@@ -110,9 +123,15 @@ class TuSiController extends Controller
      * @param  \App\Models\TuSi  $tuSi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TuSi $tuSi)
+    public function update(TuSiRequest $request, TuSi $tuSi)
     {
-        //
+        $validateData = $request->validated();
+        if ($validateData['ket_thuc_phuc_vu']){
+
+        }
+        $tuSi->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
+        Toastr::success('Cập nhập tu sĩ thành công','Success');
+        return redirect()->route('tu-si.search', ['chuc_vu_id' => $tuSi->chuc_vu_id]);
     }
 
     /**

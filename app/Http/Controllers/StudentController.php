@@ -33,7 +33,7 @@ class StudentController extends Controller
     // student update to db
     public function studentUpdate( Request $request)
     {
-        Toastr::success('Data updated successfully :)','Success');
+            Toastr::success('Data updated successfully :)','Success');
         return redirect()->route('all/student/list');
     }
 }

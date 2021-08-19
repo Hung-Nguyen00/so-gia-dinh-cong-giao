@@ -26,6 +26,9 @@ class TuSi extends Model
         'giao_hat_id',
         'giao_xu_id',
         'ten_thanh_id',
+        'chuc_vu_id',
+        'bat_dau_phuc_vu',
+        'ket_thuc_phuc_vu'
     ];
 
     public function tenThanh(){
@@ -40,15 +43,15 @@ class TuSi extends Model
         }
     }
     public function giaoPhan(){
-        return $this->belongsTo(GiaoPhan::class);
+        return $this->belongsTo(GiaoPhan::class, 'giao_phan_id', 'id');
     }
 
     public function giaoHat(){
-        return $this->belongsTo(GiaoHat::class);
+        return $this->belongsTo(GiaoHat::class, 'giao_hat_id', 'id');
     }
 
     public function giaoXu(){
-        return $this->belongsTo(GiaoXu::class);
+        return $this->belongsTo(GiaoXu::class, 'giao_xu_id', 'id');
     }
 
     public function chucVu(){

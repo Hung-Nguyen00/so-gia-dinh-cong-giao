@@ -31,13 +31,13 @@
                                             {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
                                         </div>
                                     </div>
-                                    <form action="">
-                                        <div class="col-md-12 mt-2 d-flex justify-content-around ">
-                                            <div class="d-flex col-md-8">
-                                                <div class="form-group " style="margin-left: -60px;">
+                                    <form action="{{ route('tu-si.search')}}">
+                                        <div class="col-md-12 mt-2 d-flex justify-content-around">
+                                            <div class="d-flex justify-content-start col-md-8">
+                                                <div class="form-group" style="margin-left: -10px;">
                                                     <div wire:ignore>
                                                         <lable class="col-form-label">Tìm kiếm tu sĩ theo chức vụ</lable>
-                                                        <select class="selectpicker form-control pt-1" name="" data-live-search="true" >
+                                                        <select class="selectpicker form-control pt-1" name="chuc_vu_id" data-live-search="true" >
                                                             @foreach($all_chuc_vu as $cv)
                                                                 @if($cv->id === $chuc_vu_id)
                                                                     <option selected value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
@@ -47,18 +47,14 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    {{--@if($errors->has('post_id'))--}}
-                                                    {{--<div class="text-danger font-weight-bold mt-2 text-sm-left">--}}
-                                                    {{--{{ $errors->first('post_id') }}--}}
-                                                    {{--</div>--}}
-                                                    {{--@endif--}}
                                                 </div>
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <button class="ml-2 mt-3 btn btn-sm btn-primary">Tìm kiếm</button>
+                                                    <button type="submit" class="ml-2 mt-3 btn btn-sm btn-primary">Tìm kiếm</button>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center">
+                                            <div class="col-md-4 d-flex justify-content-end align-items-center" >
                                                 <a href="{{ route('tu-si.create') }}"
+                                                   style="margin-top: 10px; margin-right: -10px;"
                                                    class="btn btn-primary">Thêm giáo tu sĩ
                                                 </a>
                                             </div>

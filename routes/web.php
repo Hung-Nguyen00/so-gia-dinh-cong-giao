@@ -47,7 +47,11 @@ Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-
 Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
 
 Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
-Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat'])->name('giao-hat.getGiaoHat');
+
+// request Ajax for select option
+Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
+Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
+Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
 
 Route::resources([
     'giao-tinh' => GiaoTinhController::class,

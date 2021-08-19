@@ -32,7 +32,7 @@ class GiaoPhan extends Model
     }
 
     public function tuSi(){
-        return $this->hasMany(TuSi::class);
+        return $this->hasMany(TuSi::class, 'giao_phan_id', 'id');
     }
 
     public function user($id){

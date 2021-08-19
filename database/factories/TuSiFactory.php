@@ -30,10 +30,10 @@ class TuSiFactory extends Factory
             'ngay_nhan_chuc' => $this->faker->date(),
             'dang_du_hoc' => rand(0,1),
             'nguoi_khoi_tao' => 2,
-            'chuc_vu_id' => 2,
-            'giao_phan_id' => 2,
-            'giao_xu_id' => 3,
-            'ten_thanh_id' => 2,
+            'chuc_vu_id' => rand(1,3),
+            'giao_phan_id' => rand(1,3),
+            'giao_xu_id' => rand(1,3),
+            'ten_thanh_id' => rand(1,3),
         ];
     }
 }
