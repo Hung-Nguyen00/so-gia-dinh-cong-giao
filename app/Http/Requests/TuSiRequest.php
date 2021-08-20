@@ -28,14 +28,19 @@ class TuSiRequest extends FormRequest
             'ten_thanh_id' => 'required',
             'chuc_vu_id' => 'required',
             'giao_phan_id' =>'required',
-            'ngay_nhan_chuc' => 'date|nullable',
-            'ngay_sinh' => 'date|nullable',
-            'ngay_mat' => 'date|nullable',
-            'so_dien_thoai' =>'max:11|numeric',
+            'ngay_nhan_chuc' => 'required|date|nullable',
+            'ngay_sinh' => 'required|date|nullable',
+            'ngay_mat' => 'date|nullable|after:ngay_sinh',
+            'so_dien_thoai' =>'digits:10|numeric',
             'dia_chi_hien_tai' => 'max:250|nullable',
-            'noi_nhan_chuc' => 'max:250|nullable',
-            'bat_dau_phuc_vu' => 'date|nullable',
+            'noi_nhan_chuc' => 'required|max:250|nullable',
+            'bat_dau_phuc_vu' => 'date|nullable|after:ket_thuc_phuc_vu',
             'ket_thuc_phuc_vu' => 'date|nullable',
+            'dang_du_hoc' => 'nullable',
+            'check_save_info' => 'required',
+            'giao_xu_id' => 'nullable',
+            'giao_hat_id' => 'nullable',
+            'vi_tri_id' => 'nullable'
         ];
     }
 
@@ -48,13 +53,19 @@ class TuSiRequest extends FormRequest
             'giao_phan_id.required' => ':attribute không được phép trống',
             'dia_chi_hien_tai.max' => ':attribute không được vượt quá :max',
             'noi_nhan_chuc.max' => ':attribute không được vượt quá :max',
+            'noi_nhan_chuc.required' => ':attribute không được phép trống',
             'ngay_nhan_chuc.date' => ':attribute phải là giá trị ngày tháng năm',
+            'ngay_nhan_chuc.required' => ':attribute không được phép trống',
             'bat_dau_phuc_vu.date' => ':attribute phải là giá trị ngày tháng năm',
             'ngay_mat.date' => ':attribute phải là giá trị ngày tháng năm',
+            'ngay_mat.after' => ':attribute không được nhỏ hơn hoặc bằng ngày sinh',
             'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
+            'ngay_sinh.required' => ':attribute không được phép trống',
             'ket_thuc_phuc_vu.date' => ':attribute phải là giá trị ngày tháng năm',
-            'so_dien_thoai.max' => ':attribute không được vượt quá :max',
-            'so_dien_thoai.numeric' => ':attribute phải là chữ số'
+            'so_dien_thoai.digits' => ':attribute không được vượt quá 10 chữ số',
+            'so_dien_thoai.numeric' => ':attribute phải là chữ số',
+            'check_save_info.required' => 'Hãy lựa chọn phương thức lưu thông tin',
+            'bat_dau_phuc_vu.after' => 'Ngày bắt đầu phục vụ giáo xứ mới phải lớn hơn ngày kết thúc.',
         ];
     }
 

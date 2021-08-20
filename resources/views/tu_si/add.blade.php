@@ -47,10 +47,10 @@
                                                     <div class="form-group">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên thánh</lable>
-                                                            <select class="selectpicker  form-control pt-2" value="{{ old('ten_thanh_id') }}" name="ten_thanh_id" data-live-search="true" >
+                                                            <select class="selectpicker  form-control pt-2" name="ten_thanh_id" data-live-search="true" >
                                                                 <option selected value=""> Chọn tên thánh</option>
                                                                 @foreach($all_ten_thanh as $cv)
-                                                                    <option  value="{{ $cv->id }}"> {{ $cv->ten_thanh }}</option>
+                                                                    <option  value="{{ $cv->id }}" {{ old('ten_thanh_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_thanh }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -63,10 +63,10 @@
                                                     <div class="form-group ">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Chức vụ</lable>
-                                                            <select class="selectpicker  form-control pt-2"  value="{{ old('chuc_vu_id') }}" name="chuc_vu_id" data-live-search="true" >
+                                                            <select class="selectpicker  form-control pt-2"   name="chuc_vu_id" data-live-search="true" >
                                                                 <option selected value=""> Chọn tên chức vụ</option>
                                                                 @foreach($all_chuc_vu as $cv)
-                                                                    <option  value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
+                                                                    <option  value="{{ $cv->id }}" {{ old('chuc_vu_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_chuc_vu }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -137,21 +137,22 @@
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize">Địa chỉ</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ old('dia_chi')}}" name="dia_chi">
+                                                               value="{{ old('dia_chi_hien_tai')}}" name="dia_chi_hien_tai">
                                                     </div>
-                                                    @if($errors->has('dia_chi'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('dia_chi') }}</span>
+                                                    @if($errors->has('dia_chi_hien_tai'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('dia_chi_hien_tai') }}</span>
                                                     @endif
                                                 </div>
+
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Giáo phận</lable>
                                                             <select class="selectpicker form-control pt-2" id="giao_phan_id"
-                                                                    value="{{ old('giao_phan_id') }}" name="giao_phan_id" data-live-search="true" >
+                                                                    name="giao_phan_id" data-live-search="true" >
                                                                 <option selected value="">Chọn tên giáo phận</option>
                                                                 @foreach($all_giao_phan as $cv)
-                                                                    <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }} - Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}</option>
+                                                                    <option  value="{{ $cv->id }}" {{ old('giao_phan_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_giao_phan }} - Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -159,6 +160,12 @@
                                                     @if($errors->has('giao_phan_id'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('giao_phan_id') }}</span>
                                                     @endif
+                                                </div>
+                                                <div class="col-lg-12 mt-2 col-md-12 col-sm-12">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="dang_du_hoc" class="form-check-input">
+                                                        <label class="form-check-label">Đang du học</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
@@ -185,80 +192,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group ">
-                                                        <div>
-                                                            <lable class="form-label text-capitalize">Giáo Họ</lable>
-                                                            <select class="selectpicker form-control pt-2" value="{{ old('giao_ho_id') }}"
-                                                                    data-live-search="true"
-                                                                    id="giao_ho"
-                                                                    name="giao_ho_id">
-                                                                <option selected value=""> Chọn tên giáo họ</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                     <button type="button" class="btn btn-light">Hủy</button>
                                                 </div>
                                             </div>
                                         </form>
-                                        <table class="table verticle-middle table-responsive-md">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">No.</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Assigned Professor</th>
-                                                <th scope="col">Date Of Admit</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Subject</th>
-                                                <th scope="col">Fees</th>
-                                                <th scope="col">Edit</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>01</td>
-                                                <td>Jack Ronan</td>
-                                                <td>Airi Satou</td>
-                                                <td>01 August 2020</td>
-                                                <td><span class="badge badge-rounded badge-primary">Checkin</span></td>
-                                                <td>Commerce</td>
-                                                <td>120$</td>
-                                                <td>
-                                                    <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>02 </td>
-                                                <td>Jimmy Morris</td>
-                                                <td>Angelica Ramos</td>
-                                                <td>31 July 2020</td>
-                                                <td><span class="badge badge-rounded badge-warning">Panding</span></td>
-                                                <td>Mechanical</td>
-                                                <td>120$</td>
-                                                <td>
-                                                    <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>03 </td>
-                                                <td>Nashid Martines</td>
-                                                <td>Ashton Cox</td>
-                                                <td>30 July 2020</td>
-                                                <td><span class="badge badge-rounded badge-danger">Canceled</span></td>
-                                                <td>Science</td>
-                                                <td>520$</td>
-                                                <td>
-                                                    <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
                             </div>

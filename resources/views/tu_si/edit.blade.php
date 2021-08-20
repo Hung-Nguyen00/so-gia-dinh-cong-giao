@@ -53,7 +53,7 @@
                                                                     @if($cv->id === $tu_si->ten_thanh_id)
                                                                         <option selected value="{{ $cv->id }}"> {{ $cv->ten_thanh }}</option>
                                                                     @else
-                                                                        <option  value="{{ $cv->id }}"> {{ $cv->ten_thanh }}</option>
+                                                                        <option  value="{{ $cv->id }}" {{ old('ten_thanh_id') == $cv->id ? 'selected' : '' }} > {{ $cv->ten_thanh }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -72,7 +72,7 @@
                                                                     @if($cv->id === $tu_si->chuc_vu_id)
                                                                         <option selected value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
                                                                     @else
-                                                                        <option  value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
+                                                                        <option  value="{{ $cv->id }}" {{ old('chuc_vu_id') == $cv->id ? 'selected' : '' }} > {{ $cv->ten_chuc_vu }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -158,9 +158,9 @@
                                                                     value="{{ old('giao_phan_id') }}" name="giao_phan_id" data-live-search="true" >
                                                                 @foreach($all_giao_phan as $cv)
                                                                     @if($cv->id === $tu_si->giao_phan_id)
-                                                                        <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }}</option>
+                                                                        <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }} - Giáo tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }} </option>
                                                                     @else
-                                                                        <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }}</option>
+                                                                        <option {{ old('giao_phan_id') == $cv->id ? 'selected' : '' }}   value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }} - Giáo tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -171,21 +171,30 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="dang_du_hoc" {{ $tu_si->dang_du_hoc ? 'checked' : '' }} class="form-check-input">
+                                                        <label class="form-check-label">Đang du học</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mt-2 col-md-12 col-sm-12 mt-3">
+                                                    <div class="form-group ">
+                                                        <h5 class="font-weight-bold">Thông tin chuyển nơi phục vụ giáo xứ</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
                                                             <lable class="form-label ">Giáo hạt</lable>
                                                             <select name="giao_hat_id" id="giao_hat"
                                                                     data-live-search="true"
                                                                     class="selectpicker form-control pt-2">
-                                                                    @if($tu_si->giao_hat_id == null)
-                                                                        <option selected value="">Chọn tên giáo xứ</option>
-                                                                    @endif
+                                                                    <option selected value="">Chọn tên giáo hạt</option>
                                                                     @foreach($all_giao_hat as $cv)
-                                                                    @if($cv->id === $tu_si->giao_hat_id)
-                                                                        <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
-                                                                    @else
-                                                                        <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
-                                                                    @endif
+                                                                        @if($cv->id === $tu_si->giao_hat_id)
+                                                                            <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
+                                                                        @elseif($cv->giao_phan_id == $tu_si->giao_phan_id)
+                                                                            <option {{ old('giao_hat_id') == $cv->id ? 'selected' : '' }}  value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
+                                                                        @endif
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -199,16 +208,16 @@
                                                                     data-live-search="true"
                                                                     id="giao_xu"
                                                                     name="giao_xu_id">
-                                                                @if($tu_si->giao_xu_id == null)
                                                                     <option selected value="">Chọn tên giáo xứ</option>
+                                                                @if($tu_si->giao_hat_id !== null)
+                                                                    @foreach($all_giao_xu as $cv)
+                                                                        @if($cv->id === $tu_si->giao_xu_id)
+                                                                            <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
+                                                                        @else
+                                                                            <option {{ old('giao_xu_id') == $cv->id ? 'selected' : '' }}  value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
+                                                                        @endif
+                                                                    @endforeach
                                                                 @endif
-                                                                @foreach($all_giao_xu as $cv)
-                                                                    @if($cv->id === $tu_si->giao_xu_id)
-                                                                        <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
-                                                                    @else
-                                                                        <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
-                                                                    @endif
-                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -216,19 +225,16 @@
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
-                                                            <lable class="form-label">Giáo họ</lable>
-                                                            <select class="selectpicker form-control pt-2" value="{{ old('giao_ho_id') }}"
+                                                            <lable class="form-label">Vị trí phục vụ giáo xứ</lable>
+                                                            <select class="selectpicker form-control pt-2" value="{{ old('vi_tri_id') }}"
                                                                     data-live-search="true"
-                                                                    id="giao_ho"
-                                                                    name="giao_ho_id">
-                                                                @if($tu_si->giao_xu_hoac_giao_ho == 0)
-                                                                    <option selected value="">Chọn tên giáo họ</option>
-                                                                @endif
-                                                                @foreach($all_giao_ho as $cv)
-                                                                    @if($cv->id === $tu_si->giao_xu_id)
-                                                                        <option selected value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
+                                                                    name="vi_tri_id">
+                                                                    <option selected value="">Chọn tên vị trí phục vụ của giáo xứ</option>
+                                                                @foreach($all_vi_tri as $cv)
+                                                                    @if($cv->id === $tu_si->vi_tri_id)
+                                                                        <option selected value="{{ $cv->id }}"> {{ $cv->ten_vi_tri }}</option>
                                                                     @else
-                                                                        <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
+                                                                        <option {{ old('vi_tri_id') == $cv->id ? 'selected' : '' }}   value="{{ $cv->id }}"> {{ $cv->ten_vi_tri }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -247,6 +253,7 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('bat_dau_phuc_vu') }}</span>
                                                     @endif
                                                 </div>
+
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label">Ngày kết thúc giáo xứ đã phục vụ</label>
@@ -259,69 +266,52 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ket_thuc_phuc_vu') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
-                                                    <button type="submit" class="btn btn-primary mr-2">Lưu lại thông tin cập nhập</button>
-                                                    <button type="submit" class="btn btn-primary mr-2">Lưu thông tin chuyển giáo xứ</button>
-                                                    <a href="{{ route('tu-si.search', ['chuc_vu_id' => 1]) }}" class="btn btn-light">Quay lại</a>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label">Chọn phương thức lưu thông tin</lable>
+                                                            <select class="selectpicker form-control pt-2" value="{{ old('check_save_info') }}"
+                                                                    data-live-search="true"
+                                                                    name="check_save_info">
+                                                                <option selected value=""> Chọn phương thức lưu thông tin</option>
+                                                                <option value="1"> Lưu thông tin cập nhập</option>
+                                                                <option value="2"> Lưu thông tin chuyển giáo xứ phục vụ</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('check_save_info'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('check_save_info') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary mr-2">Lưu lại</button>
+                                                        <a href="{{ route('tu-si.search', ['chuc_vu_id' => 1]) }}" class="btn btn-light">Quay lại</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
-                                        <table class="table verticle-middle table-responsive-md">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">No.</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Assigned Professor</th>
-                                                <th scope="col">Date Of Admit</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Subject</th>
-                                                <th scope="col">Fees</th>
-                                                <th scope="col">Edit</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>01</td>
-                                                <td>Jack Ronan</td>
-                                                <td>Airi Satou</td>
-                                                <td>01 August 2020</td>
-                                                <td><span class="badge badge-rounded badge-primary">Checkin</span></td>
-                                                <td>Commerce</td>
-                                                <td>120$</td>
-                                                <td>
-                                                    <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>02 </td>
-                                                <td>Jimmy Morris</td>
-                                                <td>Angelica Ramos</td>
-                                                <td>31 July 2020</td>
-                                                <td><span class="badge badge-rounded badge-warning">Panding</span></td>
-                                                <td>Mechanical</td>
-                                                <td>120$</td>
-                                                <td>
-                                                    <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>03 </td>
-                                                <td>Nashid Martines</td>
-                                                <td>Ashton Cox</td>
-                                                <td>30 July 2020</td>
-                                                <td><span class="badge badge-rounded badge-danger">Canceled</span></td>
-                                                <td>Science</td>
-                                                <td>520$</td>
-                                                <td>
-                                                    <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <form action="{{ route('tu-si.destroy', $tu_si) }}" style="margin-top: -36px;" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"  onclick="return window.confirm('Bạn chắc chắn muốn xóa tu sĩ này chứ?')" class="btn btn-danger mr-2 float-right">Xóa tu sĩ</button>
+                                        </form>
+                                        <div style="margin-top: 50px">
+                                            <hr>
+                                        </div>
+                                        <div class="" style="margin-top: 30px">
+                                            <h4>Lịch sử phục vụ {{ $tu_si->chucVu->ten_chuc_vu }} {{ $tu_si->ho_va_ten }}</h4>
+                                            @livewire('tu-si.lich-su-phuc-vu', ['tu_si' => $tu_si])
+                                        </div>
+                                        <div style="margin-top: 50px">
+                                            <hr>
+                                        </div>
+                                        <div class="" style="margin-top: 30px">
+                                            <h4>Lịch sử nhận chức {{ $tu_si->chucVu->ten_chuc_vu }} {{ $tu_si->ho_va_ten }}</h4>
+                                            @livewire('tu-si.lich-su-nhan-chuc', ['tu_si' => $tu_si])
+                                        </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -336,12 +326,13 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
+            var url = $(location).attr("origin");
             $('#giao_phan_id').change(function () {
                 var id = $(this).val();
                 console.log(id);
                 $('#giao_hat').find('option').not(':first').remove();
                 $.ajax({
-                    url:'giao-hat/'+id,
+                    url: url+'/tu-si/giao-hat/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
@@ -367,7 +358,7 @@
                 console.log(id);
                 $('#giao_xu').find('option').not(':first').remove();
                 $.ajax({
-                    url:'giao-xu/'+id,
+                    url: url+'/tu-si/giao-xu/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
@@ -385,32 +376,6 @@
                             }
                         }
                         $('#giao_xu').selectpicker('refresh');
-                    }
-                })
-            });
-            $('#giao_xu').change(function () {
-                var id = $(this).val();
-                console.log(id);
-                $('#giao_ho').find('option').not(':first').remove();
-                $.ajax({
-                    url:'giao-ho/'+id,
-                    type:'get',
-                    dataType:'json',
-                    success:function (response) {
-                        console.log(response.data);
-                        var len = 0;
-                        if (response.data != null) {
-                            len = response.data.length;
-                        }
-                        if (len>0) {
-                            for (var i = 0; i<len; i++) {
-                                var id = response.data[i].id;
-                                var name = response.data[i].ten_giao_xu;
-                                var option = "<option value='"+id+"'>"+name+"</option>";
-                                $("#giao_ho").append(option);
-                            }
-                        }
-                        $('#giao_ho').selectpicker('refresh');
                     }
                 })
             });

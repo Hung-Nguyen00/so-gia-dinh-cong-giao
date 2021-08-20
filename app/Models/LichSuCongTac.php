@@ -18,6 +18,6 @@ class LichSuCongTac extends Model
         'bat_dau_phuc_vu',
         'ket_thuc_phuc_vu',
         'tu_si_id',
-        'vi_tri_id'
+        'ten_vi_tri'
     ];
 }

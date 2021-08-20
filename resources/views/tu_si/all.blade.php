@@ -2,6 +2,7 @@
 @section('content')
     {{-- message --}}
     {!! Toastr::message() !!}
+    @include('tu_si.import')
     <div class="content-body">
         <!-- row -->
         <div class="container-fluid">
@@ -29,6 +30,10 @@
                                         <h4 class="card-title">Danh sách các tu sĩ </h4>
                                         <div class="d-flex justify-content-around">
                                             {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
+                                            <button
+                                                    data-toggle="modal" data-target="#importModal"
+                                                    class="btn btn-primary">Import Excel
+                                            </button>
                                         </div>
                                     </div>
                                     <form action="{{ route('tu-si.search')}}">

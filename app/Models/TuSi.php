@@ -28,7 +28,8 @@ class TuSi extends Model
         'ten_thanh_id',
         'chuc_vu_id',
         'bat_dau_phuc_vu',
-        'ket_thuc_phuc_vu'
+        'ket_thuc_phuc_vu',
+        'vi_tri_id'
     ];
 
     public function tenThanh(){
@@ -58,6 +59,9 @@ class TuSi extends Model
         return $this->belongsTo(ChucVu::class,'chuc_vu_id');
     }
 
+    public function viTri(){
+        return $this->belongsTo(ViTri::class, 'vi_tri_id');
+    }
     public function user($id){
         return User::find($id)->ho_va_ten;
     }

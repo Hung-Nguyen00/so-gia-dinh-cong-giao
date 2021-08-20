@@ -2,15 +2,15 @@
 
 namespace App\Imports;
 
-
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class GiaoXuImport implements WithMultipleSheets
+class ChucVuImport implements WithMultipleSheets
 {
+
     public function sheets(): array
     {
         return [
-            2 => new GiaoXuSheetImport(),
+            0 => new ChucVuSheetImport(),
         ];
     }
 }

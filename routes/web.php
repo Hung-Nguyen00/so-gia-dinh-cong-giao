@@ -9,6 +9,7 @@ use App\Http\Controllers\GiaoTinhController;
 use App\Http\Controllers\TenThanhController;
 use App\Http\Controllers\ChucVuController;
 use App\Http\Controllers\TuSiController;
+use App\Http\Controllers\ViTriController;
 
 
 /*
@@ -28,41 +29,44 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth'],function()
 {
-    Route::get('home',function()
-    {
-        return view('home');
-    });
-    Route::get('home',function()
-    {
-        return view('home');
-    });
+    // request Ajax for select option
+    Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
+    Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
+    Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
+
+    // search TuSI by CV
+    Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
+
+    // ----------------------------- main dashboard ------------------------------//
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    // import and export excel GT GP GH GX
+    Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
+    Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
+
+    // import TuSi, ChucVu, ViTri
+    Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
+
+    Route::resources([
+        'giao-tinh' => GiaoTinhController::class,
+        'giao-phan' => GiaoPhanController::class,
+        'giao-hat' => GiaoHatController::class,
+        'giao-xu' => GiaoXuController::class,
+        'giao-ho' => GiaoHoController::class,
+        'ten-thanh' => TenThanhController::class,
+        'chuc-vu' => ChucVuController::class,
+        'tu-si' => TuSiController::class,
+        'vi-tri' => ViTriController::class
+    ]);
 });
 
 Auth::routes();
-// ----------------------------- main dashboard ------------------------------//
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// import and export excel
-Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
-Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
 
-Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
 
-// request Ajax for select option
-Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
-Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
-Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
 
-Route::resources([
-    'giao-tinh' => GiaoTinhController::class,
-    'giao-phan' => GiaoPhanController::class,
-    'giao-hat' => GiaoHatController::class,
-    'giao-xu' => GiaoXuController::class,
-    'giao-ho' => GiaoHoController::class,
-    'ten-thanh' => TenThanhController::class,
-    'chuc-vu' => ChucVuController::class,
-    'tu-si' => TuSiController::class,
-]);
+
+
 
 
 

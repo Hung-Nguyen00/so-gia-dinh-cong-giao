@@ -31,8 +31,8 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('ten-thanh.index') }}">Quản lý tên thánh</a></li>
                     <li><a href="{{ route('chuc-vu.index') }}">Quản lý chức vụ</a></li>
+                    <li><a href="{{ route('vi-tri.index') }}">Quản lý vị trí</a></li>
                     <li><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1])}}">Các tu sĩ</a></li>
-                    <li><a href="about-student.html">About Students</a></li>
                 </ul>
             </li>
             <li class="nav-label">Forms</li>

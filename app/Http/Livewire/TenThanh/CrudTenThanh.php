@@ -21,7 +21,7 @@ class CrudTenThanh extends Component
     }
 
     protected $rules = [
-        'ten_thanh' => 'required:max:50',
+        'ten_thanh' => 'required|max:50',
 
     ];
 

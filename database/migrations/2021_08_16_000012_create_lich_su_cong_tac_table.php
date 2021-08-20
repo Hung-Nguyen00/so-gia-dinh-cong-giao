@@ -29,6 +29,7 @@ class CreateLichSuCongTacTable extends Migration
             $table->string('ten_giao_ho', 45)->nullable();
             $table->date('bat_dau_phuc_vu')->nullable();
             $table->date('ket_thuc_phuc_vu')->nullable();
+            $table->string('ten_vi_tri', 50)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

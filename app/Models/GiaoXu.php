@@ -34,6 +34,14 @@ class GiaoXu extends Model
         return $this->hasMany(GiaoXu::class ,'giao_xu_hoac_giao_ho')->with('giaoHo');
     }
 
+    public function getGiaoHo($id){
+        $ten_giao_ho = GiaoXu::find($id)->ten_giao_xu;
+        if ($ten_giao_ho){
+            return $ten_giao_ho;
+        }else{
+            return null;
+        }
+    }
     public function user($id){
         return User::find($id)->ho_va_ten;
     }
