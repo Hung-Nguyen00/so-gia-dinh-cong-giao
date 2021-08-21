@@ -15,10 +15,7 @@ class GiaoPhanImport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            0 => new GiaoPhanSheetImport(),
-//            1 => new GiaoHatSheetImport(),
-//            2 => new GiaoXuSheetImport(),
-//            3 => new GiaoHatSheetImport(),
+            1 => new GiaoPhanSheetImport(),
         ];
     }
 }

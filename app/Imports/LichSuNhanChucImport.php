@@ -11,7 +11,7 @@ class LichSuNhanChucImport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            2 => new GiaoXuSheetImport(),
+            3 => new LichSuNhanChucSheetImport(),
         ];
     }
 }

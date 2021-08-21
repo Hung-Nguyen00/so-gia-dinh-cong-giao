@@ -23,16 +23,14 @@ class GiaoHoSheetImport implements ToCollection, WithHeadingRow
     {
         foreach($rows as $row){
             $giao_xu = $this->giao_xus->where('ten_giao_xu', $row['ten_giao_xu'])->first();
-            if ($giao_xu){
-                GiaoXu::create([
-                    'ten_giao_xu' => $row['ten_giao_ho'],
-                    'dia_chi'    => $row['dia_chi'],
-                    'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
-                    'nguoi_khoi_tao'=> Auth::id(),
-                    'giao_xu_hoac_giao_ho' => $giao_xu->id,
-                    'giao_hat_id' => $giao_xu->giao_hat_id
-                ]);
-            }
+            GiaoXu::create([
+                'ten_giao_xu' => $row['ten_giao_ho'],
+                'dia_chi'    => $row['dia_chi'],
+                'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
+                'nguoi_khoi_tao'=> Auth::id(),
+                'giao_xu_hoac_giao_ho' => $giao_xu->id,
+                'giao_hat_id' => $giao_xu->giao_hat_id
+            ]);
         }
     }
 }

@@ -11,7 +11,7 @@ class TuSIImport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            2 => new TuSISheetImport(),
+            1 => new TuSISheetImport(),
         ];
     }
 }

@@ -17,6 +17,7 @@ class GiaoTinh extends Model
         'ten_giao_tinh',
         'dia_chi',
         'ten_nha_tho',
+        'nguoi_khoi_tao',
         'ngay_thanh_lap',
     ];
 

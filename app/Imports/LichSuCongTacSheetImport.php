@@ -15,7 +15,7 @@ class LichSuCongTacSheetImport implements ToCollection, WithHeadingRow
 
     public function __construct()
     {
-        $this->tu_si = TuSi::select('id', 'ho_va_ten')->get();
+        $this->tu_si = TuSi::select('id', 'ho_va_ten', 'so_dien_thoai')->get();
     }
 
     public function collection(Collection $rows)

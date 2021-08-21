@@ -26,17 +26,14 @@ class GiaoPhanSheetImport implements WithHeadingRow, ToCollection
     {
         foreach($rows as $row){
             $giao_tinh = $this->giao_tinhs->where('ten_giao_tinh', $row['ten_giao_tinh'])->first();
-            if ($giao_tinh){
-                GiaoPhan::create([
-                    'ten_giao_phan' => $row['ten_giao_phan'],
-                    'ten_nha_tho' => $row['ten_nha_tho'],
-                    'dia_chi'    => $row['dia_chi'],
-                    'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
-                    'nguoi_khoi_tao'=> Auth::id(),
-                    'giao_tinh_id' => $giao_tinh->id
-                ]);
-            }
+            GiaoPhan::create([
+                'ten_giao_phan' => $row['ten_giao_phan'],
+                'ten_nha_tho' => $row['ten_nha_tho'],
+                'dia_chi'    => $row['dia_chi'],
+                'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
+                'nguoi_khoi_tao'=> Auth::id(),
+                'giao_tinh_id' => $giao_tinh->id
+            ]);
         }
-
     }
 }

@@ -6,6 +6,7 @@ use App\Exports\GiaoPhanExport;
 use App\Imports\GiaoHatImport;
 use App\Imports\GiaoHoImport;
 use App\Imports\GiaoPhanImport;
+use App\Imports\GiaoTinhImport;
 use App\Imports\GiaoXuImport;
 use App\Models\GiaoPhan;
 use Brian2694\Toastr\Facades\Toastr;
@@ -27,8 +28,10 @@ class GiaoPhanController extends Controller
     }
 
     public function fileImport(Request $request){
+
         try{
             DB::transaction(function () use ($request) {
+                Excel::import(new GiaoTinhImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoPhanImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoHatImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoXuImport(), $request->file('file')->store('temp'));

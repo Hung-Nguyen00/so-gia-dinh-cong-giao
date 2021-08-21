@@ -27,14 +27,12 @@ class GiaoHatSheetImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row)
         {
             $giao_phan = $this->giao_phans->where('ten_giao_phan', $row['ten_giao_phan'])->first();
-            if ($giao_phan){
                 GiaoHat::create([
                     'ten_giao_hat' => $row['ten_giao_hat'],
                     'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
                     'nguoi_khoi_tao'=> Auth::id(),
                     'giao_phan_id' => $giao_phan->id
                 ]);
-            }
         }
 
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TuSiRequest;
 use App\Imports\ChucVuImport;
 use App\Imports\LichSuCongTacImport;
+use App\Imports\LichSuNhanChucImport;
 use App\Imports\TuSIImport;
 use App\Imports\ViTriImport;
 use App\Models\ChucVu;
@@ -38,19 +39,23 @@ class TuSiController extends Controller
     }
 
     public function fileImport(Request $request){
+
         try{
-            Excel::import(new ChucVuImport(), $request->file('file')->store('temp'));
-            Excel::import(new ViTriImport(), $request->file('file')->store('temp'));
-            Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
-            Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
+            DB::transaction(function () use ($request) {
+                Excel::import(new ChucVuImport(), $request->file('file')->store('temp'));
+                Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
+                Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
+                Excel::import(new LichSuNhanChucImport(), $request->file('file')->store('temp'));
+            });
+
         }catch (\InvalidArgumentException $ex){
-            Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Error');
             return back();
         }catch (\Exception $ex){
-            Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Error');
             return back();
         }catch(\Error $ex){
-            Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Error');
             return back();
         }
         Toastr::success('Thêm mới thành công','Success');

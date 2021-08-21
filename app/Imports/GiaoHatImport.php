@@ -13,7 +13,7 @@ class GiaoHatImport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            1 => new GiaoHatSheetImport(),
+            2 => new GiaoHatSheetImport(),
         ];
     }
 }
