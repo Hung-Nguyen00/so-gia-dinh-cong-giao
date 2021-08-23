@@ -29,10 +29,21 @@
                     <span class="nav-text">Quản lý tu sĩ</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('ten-thanh.index') }}">Quản lý tên thánh</a></li>
-                    <li><a href="{{ route('chuc-vu.index') }}">Quản lý chức vụ</a></li>
-                    <li><a href="{{ route('vi-tri.index') }}">Quản lý vị trí</a></li>
-                    <li><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1])}}">Các tu sĩ</a></li>
+                    <li><a href="{{ route('ten-thanh.index') }}">Tên thánh</a></li>
+                    <li><a href="{{ route('chuc-vu.index') }}">Chức vụ</a></li>
+                    <li><a href="{{ route('vi-tri.index') }}">Vị trí</a></li>
+                    <li><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1])}}">Tu sĩ</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-book"></i>
+                    <span class="nav-text">Quản lý giáo xứ</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('tu-si.index') }}">Tu sĩ</a></li>
+                    <li><a href="{{ route('bi-tich.index') }}">Bí tích</a></li>
+                    <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình</a></li>
+                    <li><a href="">Giáo dân</a></li>
                 </ul>
             </li>
             <li class="nav-label">Forms</li>

@@ -10,6 +10,9 @@ use App\Http\Controllers\TenThanhController;
 use App\Http\Controllers\ChucVuController;
 use App\Http\Controllers\TuSiController;
 use App\Http\Controllers\ViTriController;
+use App\Http\Controllers\BiTichController;
+use App\Http\Controllers\ThanhVienController;
+use App\Http\Controllers\SoGiaDinhController;
 
 
 /*
@@ -56,20 +59,14 @@ Route::group(['middleware'=>'auth'],function()
         'ten-thanh' => TenThanhController::class,
         'chuc-vu' => ChucVuController::class,
         'tu-si' => TuSiController::class,
-        'vi-tri' => ViTriController::class
+        'vi-tri' => ViTriController::class,
+        'bi-tich' => BiTichController::class,
+        'thanh-vien' => ThanhVienController::class,
+        'so-gia-dinh' => SoGiaDinhController::class
     ]);
 });
 
 Auth::routes();
-
-
-
-
-
-
-
-
-
 
 
 // ----------------------------- dashboard all ------------------------------//

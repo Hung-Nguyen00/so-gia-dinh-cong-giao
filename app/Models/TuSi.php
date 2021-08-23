@@ -62,6 +62,11 @@ class TuSi extends Model
     public function viTri(){
         return $this->belongsTo(ViTri::class, 'vi_tri_id');
     }
+
+    public function biTichDaNhan(){
+        return $this->hasMany(BiTichDaNhan::class, 'tu_si_id');
+    }
+
     public function user($id){
         return User::find($id)->ho_va_ten;
     }
