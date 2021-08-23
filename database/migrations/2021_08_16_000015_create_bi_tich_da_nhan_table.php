@@ -24,7 +24,7 @@ class CreateBiTichDaNhanTable extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->date('ngay_dien_ra')->nullable();
-            $table->string('nơi_dien_ra', 150)->nullable();
+            $table->string('noi_dien_ra', 150)->nullable();
             $table->string('ten_nguoi_do_dau', 100)->nullable();
             $table->string('ten_thanh_nguoi_do_dau', 50)->nullable();
             $table->date('ngay_sinh_nguoi_do_dau')->nullable();

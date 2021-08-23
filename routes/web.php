@@ -50,6 +50,13 @@ Route::group(['middleware'=>'auth'],function()
     // import TuSi, ChucVu, ViTri
     Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
 
+    // add ThanhVien to SoGiaDinh
+    Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
+    Route::get('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
+    // get ThanhVien
+    Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
+    Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{tvId}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
+
     Route::resources([
         'giao-tinh' => GiaoTinhController::class,
         'giao-phan' => GiaoPhanController::class,

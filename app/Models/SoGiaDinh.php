@@ -28,4 +28,8 @@ class SoGiaDinh extends Model
     public function thanhVien(){
         return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id');
     }
+
+    public function user($id){
+        return User::find($id)->ho_va_ten;
+    }
 }

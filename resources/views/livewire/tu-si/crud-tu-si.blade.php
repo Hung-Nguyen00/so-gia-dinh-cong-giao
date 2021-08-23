@@ -3,8 +3,6 @@
         <h4 class="card-title">Danh sách các tu sĩ </h4>
         <div class="d-flex justify-content-around">
             {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
-
-
         </div>
     </div>
     <form action="">
@@ -22,11 +20,6 @@
                            @endforeach
                        </select>
                    </div>
-                   {{--@if($errors->has('post_id'))--}}
-                   {{--<div class="text-danger font-weight-bold mt-2 text-sm-left">--}}
-                   {{--{{ $errors->first('post_id') }}--}}
-                   {{--</div>--}}
-                   {{--@endif--}}
                </div>
                <div class="d-flex justify-content-center align-items-center">
                    <button class="mt-3 btn btn-sm btn-primary">Tìm kiếm</button>

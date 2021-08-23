@@ -54,7 +54,7 @@ class CrudChucVu extends Component
             Toastr::success('Cập nhập tên chức vụ thành công','Success');
             return redirect()->route('chuc-vu.index');
         }else{
-            Toastr::success('Không tìm thấy chức vụ','Success');
+            Toastr::error('Không tìm thấy chức vụ','Error');
             return redirect()->route('chuc-vu.index');
         }
 
@@ -73,7 +73,7 @@ class CrudChucVu extends Component
             Toastr::success('Xóa thành công','Success');
             return redirect()->route('chuc-vu.index');
         }else{
-            Toastr::success('Không tìm thấy chức vụ','Success');
+            Toastr::error('Không tìm thấy chức vụ','Error');
             return redirect()->route('chuc-vu.index');
         }
     }

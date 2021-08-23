@@ -26,7 +26,7 @@ class BiTich extends Model
                 ['ngay_dien_ra',
                   'noi_dien_ra',
                   'ten_nguoi_do_dau',
-                  'ten_thah_nguoi_do_dau',
+                  'ten_thanh_nguoi_do_dau',
                   'ngay_sinh_nguoi_do_dau',
                   'ten_nguoi_lam_chung_1',
                   'ten_thanh_nguoi_lam_chung_1',

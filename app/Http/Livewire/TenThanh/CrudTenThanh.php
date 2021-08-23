@@ -53,7 +53,7 @@ class CrudTenThanh extends Component
             Toastr::success('Cập nhập tên thánh thành công','Success');
             return redirect()->route('ten-thanh.index');
         }else{
-            Toastr::success('Không tìm thấy tên thánh','Success');
+            Toastr::error('Không tìm thấy','Error');
             return redirect()->route('ten-thanh.index');
         }
 
@@ -72,7 +72,7 @@ class CrudTenThanh extends Component
             Toastr::success('Xóa thành công','Success');
             return redirect()->route('ten-thanh.index');
         }else{
-            Toastr::success('Không tìm thấy tên thánh','Success');
+            Toastr::error('Không tìm thấy ','Error');
             return redirect()->route('ten-thanh.index');
         }
     }

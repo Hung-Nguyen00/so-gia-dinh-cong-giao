@@ -11,12 +11,12 @@
                                 <div class="auth-form">
                                     {{-- message --}}
                                     {!! Toastr::message() !!}
-                                    <h4 class="text-center mb-4">Sign in your account</h4>
+                                    <h4 class="text-center mb-4">Đăng nhập tài khoản</h4>
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
                                             <label><strong>Email</strong></label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter email">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Nhập email">
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -24,8 +24,8 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label><strong>Password</strong></label>
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Enter Password">
+                                            <label><strong>Mật khẩu</strong></label>
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Nhập mật khẩu">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -36,20 +36,17 @@
                                             <div class="form-group">
                                             <div class="custom-control custom-checkbox ml-1">
                                                     <input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
-                                                    <label class="custom-control-label" for="basic_checkbox_1">Remember my preference</label>
+                                                    <label class="custom-control-label" for="basic_checkbox_1">Ghi nhớ mật khẩu</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <a href="{{ route('forget-password') }}">Forgot Password?</a>
+                                                <a href="{{ route('forget-password') }}">Quên mật khẩu?</a>
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign me in</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                                         </div>
                                     </form>
-                                    <div class="new-account mt-3">
-                                        <p>Don't have an account? <a class="text-primary" href="{{ route('register') }}">Sign up</a></p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
