@@ -67,7 +67,7 @@ class CrudGiaoHat extends Component
         $validatedData = $this->validate();
         $validatedData['ngay_thanh_lap'] = Carbon::parse($validatedData['ngay_thanh_lap'])->format('Y-m-d');
         GiaoHat::create(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
-        Toastr::success('Tạo giáo hạt mới thành công','Success');
+        Toastr::success('Tạo giáo hạt mới thành công','Thành công');
         return redirect()->route('giao-hat.index');
     }
 
@@ -102,7 +102,7 @@ class CrudGiaoHat extends Component
         GiaoHat::find($this->giao_hat_id)
                 ->update(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
         $this->cancel();
-        Toastr::success('Cập nhập giáo hạt thành công','Success');
+        Toastr::success('Cập nhập giáo hạt thành công','Thành công');
         return redirect()->route('giao-hat.index');
     }
 
@@ -110,10 +110,10 @@ class CrudGiaoHat extends Component
         $giao_hat = GiaoHat::find($this->giao_hat_id );
         if ($giao_hat){
             $giao_hat->delete();
-            Toastr::success('Xóa giáo hạt thành công','Success');
+            Toastr::success('Xóa giáo hạt thành công','Thành công');
             return redirect()->route('giao-hat.index');
         }else{
-            Toastr::error('Không tìm thấy giáo hạt','Error');
+            Toastr::error('Không tìm thấy giáo hạt','Lỗi');
             return redirect()->route('giao-hat.index');
         }
     }

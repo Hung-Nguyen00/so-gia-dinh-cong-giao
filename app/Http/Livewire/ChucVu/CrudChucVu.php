@@ -51,10 +51,10 @@ class CrudChucVu extends Component
         ChucVu::find($this->chuc_vu_id);
         if ($this->chuc_vu_model ){
             $this->chuc_vu_model->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-            Toastr::success('Cập nhập tên chức vụ thành công','Success');
+            Toastr::success('Cập nhập tên chức vụ thành công','Thành công');
             return redirect()->route('chuc-vu.index');
         }else{
-            Toastr::error('Không tìm thấy chức vụ','Error');
+            Toastr::error('Không tìm thấy chức vụ','Lỗi');
             return redirect()->route('chuc-vu.index');
         }
 
@@ -63,17 +63,17 @@ class CrudChucVu extends Component
     public function store(){
         $validateData = $this->validate();
         ChucVu::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-        Toastr::success('Thêm tên chức vụ thành công','Success');
+        Toastr::success('Thêm tên chức vụ thành công','Thành công');
         return redirect()->route('chuc-vu.index');
     }
 
     public function delete(){
         if ($this->chuc_vu_model ){
             $this->chuc_vu_model->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
             return redirect()->route('chuc-vu.index');
         }else{
-            Toastr::error('Không tìm thấy chức vụ','Error');
+            Toastr::error('Không tìm thấy chức vụ','Lỗi');
             return redirect()->route('chuc-vu.index');
         }
     }

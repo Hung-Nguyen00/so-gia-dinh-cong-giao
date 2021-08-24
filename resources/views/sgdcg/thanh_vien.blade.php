@@ -68,12 +68,19 @@
                                                         <td class="text-center">
                                                            {{ $th->bi_tich_count }}
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center d-flex justify-content-center">
                                                             <a type="button"
                                                                href="{{ route('so-gia-dinh.editTV', ['sgdId' => $soGiaDinh->id, 'tvId' => $th->id]) }}"
-                                                               class="btn btn-sm btn-primary mb-1">
+                                                               class="btn btn-sm btn-primary mr-2">
                                                                 <i class="la la-pencil"></i>
                                                             </a>
+                                                            <form action=" {{ route('so-gia-dinh.deleteTV', ['sgdId' => $soGiaDinh, 'id' => $th->id] ) }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                        onclick="return window.confirm('Bạn chắc chắn muốn xóa thành viên này chứ?')"
+                                                                        class="btn btn-sm btn-danger mr-2 "><i class="text-white la la-trash-o"></i></button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach

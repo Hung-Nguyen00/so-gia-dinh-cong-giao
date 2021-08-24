@@ -122,14 +122,15 @@
                                                 <div class="col-lg-12 mt-2 col-md-12 col-sm-12">
                                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                                     <a class="btn btn-light"
-                                                       href="{{ route('so-gia-dinh.show', $sgdcg)  }}">Quay lại
+                                                       href="{{ route('so-gia-dinh.editTV', ['sgdId' => $sgdcg->id, 'tvId' => $thanh_vien->id])  }}">Quay lại
                                                     </a>
                                                 </div>
                                             </div>
                                         </form>
                                         <hr>
-                                        <form action="{{ route('so-gia-dinh.storeBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien] ) }}" method="post" >
+                                        <form action="{{ route('so-gia-dinh.updateBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_detail->id] ) }}" method="post" >
                                             @csrf
+                                            @method('PATCH')
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
                                                     <h4><strong>Thông tin bí tích {{ $bi_tich_detail->getBiTich($bi_tich_detail->bi_tich_id)->ten_bi_tich }}</strong></h4>
@@ -247,7 +248,7 @@
                                                             <div class="form-group">
                                                                 <label class="form-label text-capitalize">Họ và tên</label>
                                                                 <input type="text" class="form-control"
-                                                                       value="{{ old('ten_nguoi_lam_chung_1') ?? $bi_tich_detail->ten_nguoi_lam_chung_1 }}" name="ten_nguoi_lam_chung_1">
+                                                                       value="{{ old('ten_nguoi_lam_chung_2') ?? $bi_tich_detail->ten_nguoi_lam_chung_2 }}" name="ten_nguoi_lam_chung_2">
                                                             </div>
                                                             @if($errors->has('ten_nguoi_lam_chung_2'))
                                                                 <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_2')}}</span>
@@ -257,7 +258,7 @@
                                                             <div class="form-group">
                                                                 <div>
                                                                     <lable class="form-label text-capitalize">Tên thánh</lable>
-                                                                    <select class="selectpicker  form-control pt-2" name="ten_thanh_nguoi_lam_chung_1" data-live-search="true" >
+                                                                    <select class="selectpicker  form-control pt-2" name="ten_thanh_nguoi_lam_chung_2" data-live-search="true" >
                                                                         <option selected value=""> Chọn tên thánh</option>
                                                                         @foreach($all_ten_thanh as $cv)
                                                                             <option  value="{{ $cv->ten_thanh }}"
@@ -318,7 +319,7 @@
                                                                 <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
                                                             @endif
                                                         </div>
-                                                        <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                        <div class="col-lg-6 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <div>
                                                                     <lable class="form-label text-capitalize">Tên thánh</lable>
@@ -371,7 +372,7 @@
                                                 <div class="col-lg-12 mt-4 col-md-12 col-sm-12">
                                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                                     <a class="btn btn-light"
-                                                       href="{{ route('so-gia-dinh.show', $sgdcg)  }}">Quay lại
+                                                       href="{{ route('so-gia-dinh.editTV', ['sgdId' => $sgdcg->id, 'tvId' => $thanh_vien->id])  }}">Quay lại
                                                     </a>
                                                 </div>
                                             </div>
@@ -406,16 +407,32 @@
                                                             <td>
                                                                 {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
                                                             </td>
-                                                            <td>
-                                                                <button type="button"
-                                                                        class="btn btn-sm btn-primary mb-1"
-                                                                >
-                                                                    <i class="la la-pencil"></i>
-                                                                </button>
-                                                                <button type="button"
-                                                                        class="btn btn-sm btn-danger mb-1">
-                                                                    <i class="la la-trash-o"></i>
-                                                                </button>
+                                                            <td class="text-center d-flex justify-content-center">
+                                                                @if($th->id == $bi_tich_detail->id)
+                                                                    <form action=" {{ route('so-gia-dinh.deleteBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id] ) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                                onclick="return window.confirm('Bạn chắc chắn muốn xóa bí tích này chứ?')"
+                                                                                class="btn btn-sm btn-danger mr-2 "><i class="text-white la la-trash-o"></i></button>
+                                                                    </form>
+
+                                                                @else
+                                                                    <a type="button"
+                                                                       href="{{ route('so-gia-dinh.editBT',
+                                                                       ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id])}}"
+                                                                       class="btn btn-sm btn-primary mb-1 mr-2"
+                                                                    >
+                                                                        <i class="la la-pencil"></i>
+                                                                    </a>
+                                                                    <form action=" {{ route('so-gia-dinh.deleteBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id] ) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                           onclick="return window.confirm('Bạn chắc chắn muốn xóa bí tích này chứ?')"
+                                                                           class="btn btn-sm btn-danger mr-2 "><i class="text-white la la-trash-o"></i></button>
+                                                                    </form>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach

@@ -96,7 +96,7 @@ class CrudGiaoTinh extends Component
         GiaoTinh::find($this->giao_tinh_id)
             ->update(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
         $this->cancel();
-        Toastr::success('Cập nhập giáo tỉnh thành công','Success');
+        Toastr::success('Cập nhập giáo tỉnh thành công','Thành công');
         return redirect()->route('giao-tinh.index');
     }
 

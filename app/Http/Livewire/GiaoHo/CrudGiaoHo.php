@@ -81,7 +81,7 @@ class CrudGiaoHo extends Component
             'giao_xu_hoac_giao_ho' => $giao_xu->id
         ]));
 
-        Toastr::success('Tạo giáo họ mới thành công','Success');
+        Toastr::success('Tạo giáo họ mới thành công','Thành công');
         return redirect()->route('giao-ho.index');
     }
 
@@ -139,7 +139,7 @@ class CrudGiaoHo extends Component
         // reset field
         $this->cancel();
         // notify to interface
-        Toastr::success('Cập nhập giáo họ thành công','Success');
+        Toastr::success('Cập nhập giáo họ thành công','Thành công');
         return redirect()->route('giao-ho.index');
     }
 
@@ -147,10 +147,10 @@ class CrudGiaoHo extends Component
         $giao_xu = GiaoXu::find($this->giao_ho_id );
         if ($giao_xu){
             $giao_xu->delete();
-            Toastr::success('Xóa giáo họ thành công','Success');
+            Toastr::success('Xóa giáo họ thành công','Thành công');
             return redirect()->route('giao-ho.index');
         }else{
-            Toastr::error('Không tìm thấy giáo họ','Error');
+            Toastr::error('Không tìm thấy giáo họ','Lỗi');
             return redirect()->route('giao-ho.index');
         }
     }

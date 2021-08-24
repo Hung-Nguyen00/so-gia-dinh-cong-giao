@@ -38,16 +38,16 @@ class GiaoPhanController extends Controller
                 Excel::import(new GiaoHoImport(), $request->file('file')->store('temp'));
             });
        }catch (\InvalidArgumentException $ex){
-           Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+           Toastr::error('Các cột trong tệp Excel không đúng dạng','Lỗi');
            return back();
        }catch (\Exception $ex){
-           Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+           Toastr::error('Các cột trong tệp Excel không đúng dạng','Lỗi');
            return back();
        }catch(\Error $ex){
-           Toastr::error('Các cột trong tệp Excel không đúng dạng','Error');
+           Toastr::error('Các cột trong tệp Excel không đúng dạng','Lỗi');
            return back();
        }
-        Toastr::success('Thêm mới thành công','Success');
+        Toastr::success('Thêm mới thành công','Thành công');
         return back();
     }
 

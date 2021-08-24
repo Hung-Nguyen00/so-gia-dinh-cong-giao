@@ -50,10 +50,10 @@ class CrudTenThanh extends Component
         TenThanh::find($this->ten_thanh_id);
         if ($this->ten_thanh_model ){
             $this->ten_thanh_model->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-            Toastr::success('Cập nhập tên thánh thành công','Success');
+            Toastr::success('Cập nhập tên thánh thành công','Thành công');
             return redirect()->route('ten-thanh.index');
         }else{
-            Toastr::error('Không tìm thấy','Error');
+            Toastr::error('Không tìm thấy','Lỗi');
             return redirect()->route('ten-thanh.index');
         }
 
@@ -62,17 +62,17 @@ class CrudTenThanh extends Component
     public function store(){
         $validateData = $this->validate();
         TenThanh::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-        Toastr::success('Thêm tên thánh thành công','Success');
+        Toastr::success('Thêm tên thánh thành công','Thành công');
         return redirect()->route('ten-thanh.index');
     }
 
     public function delete(){
         if ($this->ten_thanh_model ){
             $this->ten_thanh_model->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
             return redirect()->route('ten-thanh.index');
         }else{
-            Toastr::error('Không tìm thấy ','Error');
+            Toastr::error('Không tìm thấy ','Lỗi');
             return redirect()->route('ten-thanh.index');
         }
     }

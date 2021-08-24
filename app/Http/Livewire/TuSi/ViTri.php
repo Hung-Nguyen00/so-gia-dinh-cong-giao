@@ -48,10 +48,10 @@ class ViTri extends Component
         $validateData = $this->validate();
         if ($this->vi_tri_model){
             $this->vi_tri_model->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-            Toastr::success('Cập nhập tên thánh thành công','Success');
+            Toastr::success('Cập nhập tên thánh thành công','Thành công');
             return redirect()->route('vi-tri.index');
         }else{
-            Toastr::success('Không tìm thấy tên thánh','Success');
+            Toastr::error('Không tìm thấy tên thánh','Thành công');
             return redirect()->route('vi-tri.index');
         }
 
@@ -60,17 +60,17 @@ class ViTri extends Component
     public function store(){
         $validateData = $this->validate();
         \App\Models\ViTri::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-        Toastr::success('Thêm tên thánh thành công','Success');
+        Toastr::success('Thêm tên thánh thành công','Thành công');
         return redirect()->route('vi-tri.index');
     }
 
     public function delete(){
         if ($this->vi_tri_model ){
             $this->vi_tri_model->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
             return redirect()->route('vi-tri.index');
         }else{
-            Toastr::success('Không tìm thấy tên thánh','Success');
+            Toastr::error('Không tìm thấy tên thánh','Lỗi');
             return redirect()->route('vi-tri.index');
         }
     }

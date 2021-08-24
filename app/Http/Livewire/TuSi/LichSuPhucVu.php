@@ -28,9 +28,9 @@ class LichSuPhucVu extends Component
     public function delete(){
         if ($this->single_cong_tac){
             $this->single_cong_tac->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
         }else{
-            Toastr::error('Không tìm thấy','Error');
+            Toastr::error('Không tìm thấy','Lỗi');
         }
         return redirect()->route('tu-si.edit', $this->tu_si);
     }

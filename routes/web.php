@@ -51,13 +51,16 @@ Route::group(['middleware'=>'auth'],function()
 
     // add ThanhVien to SoGiaDinh
     Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
-    Route::get('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
+    Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
+    Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
 
     // create and update Bi Tich
-    Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
+    Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
     Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
-    Route::post('so-gia-dinh/{sgdId}/them-bi-tich/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
-    Route::get('so-gia-dinh/{sgdId}/them-bi-tich/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
+    Route::post('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
+    Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
+    Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
+    Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
 
     Route::resources([
         'giao-tinh' => GiaoTinhController::class,

@@ -51,10 +51,10 @@ class CrudBiTich extends Component
         $validateData = $this->validate();
         if ($this->bi_tich_model){
             $this->bi_tich_model->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
-            Toastr::success('Cập nhập thành công','Success');
+            Toastr::success('Cập nhập thành công','Thành công');
             return redirect()->route('bi-tich.index');
         }else{
-            Toastr::error('Không tìm thấy','Error');
+            Toastr::error('Không tìm thấy','Lỗi');
             return redirect()->route('bi-tich.index');
         }
 
@@ -68,17 +68,17 @@ class CrudBiTich extends Component
         }else{
             BiTich::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
         }
-        Toastr::success('Thêm mới thành công','Success');
+        Toastr::success('Thêm mới thành công','Thành công');
         return redirect()->route('bi-tich.index');
     }
 
     public function delete(){
         if ($this->bi_tich_model ){
             $this->bi_tich_model->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
             return redirect()->route('bi-tich.index');
         }else{
-            Toastr::error('Không tìm thấy ','Error');
+            Toastr::error('Không tìm thấy ','Lỗi');
             return redirect()->route('bi-tich.index');
         }
     }

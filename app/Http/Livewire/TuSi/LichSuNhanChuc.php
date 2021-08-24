@@ -27,9 +27,9 @@ class LichSuNhanChuc extends Component
     public function delete(){
         if ($this->single_nhan_chuc){
             $this->single_nhan_chuc->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
         }else{
-            Toastr::error('Không tìm thấy','Error');
+            Toastr::error('Không tìm thấy','Lỗi');
         }
         return redirect()->route('tu-si.edit', $this->tu_si);
     }

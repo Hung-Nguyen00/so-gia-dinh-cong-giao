@@ -71,6 +71,8 @@ class SoGiaDinhController extends Controller
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));
     }
 
+
+    // crud Thanh Vien
     public function createThanhVien($sgdId){
         $all_ten_thanh  = TenThanh::all();
         // get SoGiaDinh
@@ -92,7 +94,7 @@ class SoGiaDinhController extends Controller
                 ['nguoi_khoi_tao' => Auth::id(),
                     'so_gia_dinh_id' => $sgdId]));
         }
-        Toastr::success('Thêm mới thành công', 'success');
+        Toastr::success('Thêm mới thành công', 'Thành công');
         return redirect()->route('so-gia-dinh.show', SoGiaDinh::find($sgdId));
     }
 
@@ -137,9 +139,24 @@ class SoGiaDinhController extends Controller
                 ['nguoi_khoi_tao' => Auth::id(),]));
         }
 
-        Toastr::success('Cập nhập thành công', 'success');
+        Toastr::success('Cập nhập thành công', 'Thành công');
         return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
     }
+
+    public  function deleteThanhVien($sgd, $tvId){
+        $thanh_vien = ThanhVien::find($tvId);
+        if ($thanh_vien){
+            $thanh_vien->delete();
+            Toastr::success('Xóa thành công', 'Thành công');
+            return redirect()->route('so-gia-dinh.show', $sgd);
+        }else{
+            Toastr::error('Không tìm thấy', 'Lỗi');
+            return redirect()->route('so-gia-dinh.show', $sgd);
+        }
+    }
+
+
+    // crud Bi Tich
 
     public function storeBiTich(Request $request, $sgdId, ThanhVien $thanh_vien){
         $validateData = $this->validateBiTich($request);
@@ -152,22 +169,21 @@ class SoGiaDinhController extends Controller
             // take request and validate merge to a array, $sgdId use to check tu_si_id
             // match tu_si_id in sgdcg table because BiTICH: HonNhan must be tu_si in sgdcg promulgate
              $hon_nhan_info = $this->validateHonNhan($request, $validateData, $sgdcg);
-             $thanh_vien->biTich()->attach($request->bi_tich_id, [
-                 'ngay_dien_ra' => $hon_nhan_info['ngay_dien_ra'],
-                 'noi_dien_ra'  => $hon_nhan_info['noi_dien_ra'],
-                 'ten_nguoi_lam_chung_1'  => $hon_nhan_info['ten_nguoi_lam_chung_1'],
-                 'ten_thanh_nguoi_lam_chung_1' => $hon_nhan_info['ten_thanh_nguoi_lam_chung_1'],
-                 'ngay_sinh_nguoi_lam_chung_1'=> $hon_nhan_info['ngay_sinh_nguoi_lam_chung_1'],
-                 'ten_nguoi_lam_chung_2'    => $hon_nhan_info['ten_nguoi_lam_chung_2'],
-                 'ten_thanh_nguoi_lam_chung_2' => $hon_nhan_info['ten_thanh_nguoi_lam_chung_2'],
-                 'ngay_sinh_nguoi_lam_chung_2' => $hon_nhan_info['ngay_sinh_nguoi_lam_chung_2'] ,
-                 'nguoi_khoi_tao' => Auth::id(),
-                 'tu_si_id'  => $hon_nhan_info['tu_si_id'],
-             ]);
-             Toastr::success('Cập nhập thành công', 'success');
+             $thanh_vien->biTich()->attach($request->bi_tich_id,
+                 array_merge($hon_nhan_info,
+                     [ 'nguoi_khoi_tao' => Auth::id()]
+                 ));
+
+             Toastr::success('Cập nhập thành công', 'Thành công');
              return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
         }else{
-            $this->validateNotHonNhan($request, $validateData);
+            $not_hon_nhan =  $this->validateNotHonNhan($request, $validateData);
+            $thanh_vien->biTich()->attach($request->bi_tich_id,
+                array_merge($not_hon_nhan,
+                    ['nguoi_khoi_tao' => Auth::id()]
+                ));
+            Toastr::success('Cập nhập thành công', 'Thành công');
+            return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
         }
     }
 
@@ -191,6 +207,59 @@ class SoGiaDinhController extends Controller
             'sgdcg',
             'all_bi_tich_received'));
     }
+
+    public  function updateBiTich(Request $request,$sgdId, ThanhVien $thanh_vien, $bi_tich_id){
+        $validateData =  $this->validate($request, [
+            'noi_dien_ra' => 'required|max:150',
+            'tu_si_id' => 'required',
+            'ngay_dien_ra' => 'required|date'
+        ],[
+            'noi_dien_ra.required' => 'Nơi diễn ra không được phép trống',
+            'noi_dien_ra.max' => 'Nơi diễn ra không được phép vượt quá 150 ký tự',
+            'tu_si_id.required' => 'Linh mục hoặc giám mục ra không được phép trống',
+            'ngay_dien_ra.required' => 'Ngày diễn ra không được phép trống',
+            'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
+            ]
+        );
+
+        $sgdcg = SoGiaDinh::find($sgdId);
+        $bi_tich_received = BiTichDaNhan::find($bi_tich_id);
+        $la_hon_nhan = $bi_tich_received->getBiTich($bi_tich_received->bi_tich_id)->la_hon_nhan;
+        // check to save the right data
+        if ($la_hon_nhan){
+            $nhan_bi_tich = $this->validateHonNhan($request, $validateData, $sgdcg);
+            $bi_tich_received->update(array_merge($nhan_bi_tich,
+                ['nguoi_khoi_tao' => Auth::id()]
+            ));;
+
+            Toastr::success('Cập nhập thành công', 'Thành công');
+            return redirect()->route('so-gia-dinh.editBT',
+                ['sgdId' => $sgdId, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_id]);
+        }else{
+            $nhan_bi_tich = $this->validateNotHonNhan($request, $validateData);
+            $bi_tich_received->update(array_merge($nhan_bi_tich,
+                ['nguoi_khoi_tao' => Auth::id()]
+                 ));
+
+            Toastr::success('Cập nhập thành công', 'Thành công');
+            return redirect()->route('so-gia-dinh.editBT',
+                ['sgdId' => $sgdId, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_id]);
+        }
+
+    }
+
+    public function deleteBiTich($sgdId, ThanhVien $thanh_vien, $bi_tich_id){
+        $bi_tich_received = BiTichDaNhan::find($bi_tich_id);
+        if ($bi_tich_received){
+           $bi_tich_received->delete();
+            Toastr::success('Xóa thành công', 'Thành công');
+            return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
+        }else{
+            Toastr::error('Không tìm thấy', 'Lỗi');
+            return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
+        }
+    }
+
     public function edit(SoGiaDinh $soGiaDinh)
     {
         //
@@ -278,13 +347,15 @@ class SoGiaDinhController extends Controller
         if ($request->nam_sinh_nguoi_lam_chung_2){
             $validateData['ngay_sinh_nguoi_lam_chung_2'] =  $validateData['nam_sinh_nguoi_lam_chung_2'].'/01/01';
         }
+        unset($validateData['nam_sinh_nguoi_lam_chung_1']);
+        unset($validateData['nam_sinh_nguoi_lam_chung_2']);
         return array_merge($FirstValidate, $validateData);
     }
 
     public function validateNotHonNhan($request , $FirstValidate){
         $validateData = $this->validate($request, [
             'ten_nguoi_do_dau' => 'required|max:100',
-            'ten_thanh_nguoi_do_dau' => 'required|exists:App\Models\TenThanh,id',
+            'ten_thanh_nguoi_do_dau' => 'required|exists:App\Models\TenThanh,ten_thanh',
             'ngay_sinh_nguoi_do_dau' => 'date|nullable',
             'nam_sinh_nguoi_do_dau' => 'numeric|nullable',
 
@@ -298,12 +369,13 @@ class SoGiaDinhController extends Controller
         ]);
         // required ngay_sinh or nam_sinh
         if (!$request->ngay_sinh_nguoi_do_dau && !$request->nam_sinh_nguoi_do_dau){
-            throw ValidationException::withMessages(['ngay_sinh_nguoi_lam_chung_1' => 'Ngày sinh không được phép trống']);
+            throw ValidationException::withMessages(['ngay_sinh_nguoi_do_dau' => 'Ngày sinh không được phép trống']);
         }
         // if request has nam_sinh, it will save to ngay_sinh in db and show dateformat ngay_sinh to Nam_sinh
         if ($request->nam_sinh_nguoi_do_dau){
             $validateData['ngay_sinh_nguoi_do_dau'] =  $validateData['nam_sinh_nguoi_do_dau'].'/01/01';
         }
+        unset($validateData['nam_sinh_nguoi_do_dau']);
         return array_merge($FirstValidate, $validateData);
     }
 }

@@ -70,7 +70,7 @@ class CrudSgdcg extends Component
             ['nguoi_khoi_tao' => Auth::id(),
              'giao_xu_id' => Auth::user()->giao_xu_id]));
 
-        Toastr::success('Tạo mới thành công','Success');
+        Toastr::success('Tạo mới thành công','Thành công');
         return redirect()->route('so-gia-dinh.index');
     }
 
@@ -118,17 +118,17 @@ class CrudSgdcg extends Component
                 'nguoi_khoi_tao' => Auth::id()
             ]);
         }
-        Toastr::success('Cập nhập thành công','Success');
+        Toastr::success('Cập nhập thành công','Thành công');
         return redirect()->route('so-gia-dinh.index');
     }
 
     public function delete(){
         if ($this->sgdcg_modal){
             $this->sgdcg_modal->delete();
-            Toastr::success('Xóa thành công','Success');
+            Toastr::success('Xóa thành công','Thành công');
             return redirect()->route('so-gia-dinh.index');
         }else{
-            Toastr::error('Không tìm thấy','Error');
+            Toastr::error('Không tìm thấy','Lỗi');
             return redirect()->route('so-gia-dinh.index');
         }
     }

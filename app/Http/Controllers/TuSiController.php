@@ -49,16 +49,16 @@ class TuSiController extends Controller
             });
 
         }catch (\InvalidArgumentException $ex){
-            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Error');
+            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Lỗi');
             return back();
         }catch (\Exception $ex){
-            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Error');
+            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Lỗi');
             return back();
         }catch(\Error $ex){
-            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Error');
+            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Lỗi');
             return back();
         }
-        Toastr::success('Thêm mới thành công','Success');
+        Toastr::success('Thêm mới thành công','Thành công');
         return back();
     }
 
@@ -118,11 +118,11 @@ class TuSiController extends Controller
         }
         $tusi = TuSi::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
         if ($tusi){
-            Toastr::success('Thêm mới tu sĩ thành công','Success');
+            Toastr::success('Thêm mới tu sĩ thành công','Thành công');
             return redirect()->route('tu-si.search',
                 ['chuc_vu_id' => $tusi->chuc_vu_id]);
         }else{
-            Toastr::error('Không thể thêm tu sĩ mới','Error');
+            Toastr::error('Không thể thêm tu sĩ mới','Lỗi');
             return back();
         }
     }
@@ -193,7 +193,7 @@ class TuSiController extends Controller
                 ]);
             }
             $tuSi->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
-            Toastr::success('Cập nhập tu sĩ thành công','Success');
+            Toastr::success('Cập nhập tu sĩ thành công','Thành công');
             return redirect()->route('tu-si.edit', $tuSi);
         }else{
             // save info when change GX to lich_su_cong_tac table
@@ -220,7 +220,7 @@ class TuSiController extends Controller
                 'ket_thuc_phuc_vu' => $tuSi->ket_thuc_phuc_vu,
                 'ten_vi_tri' => $old_tu_si->viTri->ten_vi_tri
             ]);
-            Toastr::success('Cập nhập tu sĩ thành công','Success');
+            Toastr::success('Cập nhập tu sĩ thành công','Thành công');
             return redirect()->route('tu-si.edit', $tuSi);
         }
 
@@ -236,7 +236,7 @@ class TuSiController extends Controller
     public function destroy(TuSi $tuSi)
     {
         $tuSi->delete();
-        Toastr::success('Xóa tu sĩ thành công','Success');
+        Toastr::success('Xóa tu sĩ thành công','Thành công');
         return redirect()->route('tu-si.search', ['chuc_vu_id' => $tuSi->chuc_vu_id]);
     }
 }

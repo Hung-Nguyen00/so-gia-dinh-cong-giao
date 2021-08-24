@@ -75,7 +75,7 @@ class AddNew extends Component
         $validatedData = $this->validate();
         $validatedData['ngay_thanh_lap'] = Carbon::parse($validatedData['ngay_thanh_lap'])->format('Y-m-d');
         GiaoPhan::create(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
-        Toastr::success('Tạo giáo phận mới thành công','Success');
+        Toastr::success('Tạo giáo phận mới thành công','Thành công');
         return redirect()->route('giao-phan.index');
     }
 
@@ -112,7 +112,7 @@ class AddNew extends Component
         GiaoPhan::find($this->giao_phan_id)
             ->update(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
         $this->cancel();
-        Toastr::success('Cập nhập giáo phận thành công','Success');
+        Toastr::success('Cập nhập giáo phận thành công','Thành công');
         return redirect()->route('giao-phan.index');
     }
 
@@ -120,10 +120,10 @@ class AddNew extends Component
         $giao_phan = GiaoPhan::find($this->giao_phan_id );
         if ($giao_phan){
             $giao_phan->delete();
-            Toastr::success('Xóa giáo phận thành công','Success');
+            Toastr::success('Xóa giáo phận thành công','Thành công');
             return redirect()->route('giao-phan.index');
         }else{
-            Toastr::error('Không tìm thấy giáo phận','Error');
+            Toastr::error('Không tìm thấy giáo phận','Lỗi');
             return redirect()->route('giao-phan.index');
         }
     }
