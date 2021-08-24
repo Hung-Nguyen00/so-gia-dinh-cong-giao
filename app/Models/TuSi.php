@@ -56,7 +56,7 @@ class TuSi extends Model
     }
 
     public function chucVu(){
-        return $this->belongsTo(ChucVu::class,'chuc_vu_id');
+        return $this->belongsTo(ChucVu::class,'chuc_vu_id', 'id');
     }
 
     public function viTri(){

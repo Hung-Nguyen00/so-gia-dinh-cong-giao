@@ -36,7 +36,6 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
     Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
-
     // search TuSI by CV
     Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
 
@@ -53,9 +52,12 @@ Route::group(['middleware'=>'auth'],function()
     // add ThanhVien to SoGiaDinh
     Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
     Route::get('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
-    // get ThanhVien
+
+    // create and update Bi Tich
     Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
-    Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{tvId}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
+    Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
+    Route::post('so-gia-dinh/{sgdId}/them-bi-tich/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
+    Route::get('so-gia-dinh/{sgdId}/them-bi-tich/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
 
     Route::resources([
         'giao-tinh' => GiaoTinhController::class,

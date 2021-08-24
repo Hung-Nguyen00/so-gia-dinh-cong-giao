@@ -9,6 +9,7 @@ class BiTichDaNhan extends Model
 {
     use HasFactory;
 
+    protected $table = 'bi_tich_da_nhan';
     protected $fillable = [
         'ngay_dien_ra',
         'noi_dien_ra',
@@ -28,4 +29,11 @@ class BiTichDaNhan extends Model
     public function tuSi(){
         return $this->belongsTo(TuSi::class, 'tu_si_id');
     }
+
+    public function getBiTich($id){
+        return BiTich::find($id);
+    }
+
+
+
 }

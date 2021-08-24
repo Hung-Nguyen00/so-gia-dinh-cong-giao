@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Znck\Eloquent\Traits\BelongsToThrough;
 
 class GiaoXu extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, BelongsToThrough;
     protected $dates = ['deleted_at'];
 
     protected $table = 'giao_xu';
@@ -32,6 +33,10 @@ class GiaoXu extends Model
 
     public function giaoHo(){
         return $this->hasMany(GiaoXu::class ,'giao_xu_hoac_giao_ho')->with('giaoHo');
+    }
+
+    public  function giaoPhan(){
+        return $this->belongsToThrough(GiaoPhan::class, GiaoHat::class);
     }
 
     public function getGiaoHo($id){

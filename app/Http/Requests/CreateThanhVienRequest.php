@@ -29,7 +29,7 @@ class CreateThanhVienRequest extends FormRequest
             'ngay_sinh' => 'date|nullable',
             'ngay_mat' => 'date|nullable',
             'nam_sinh' => 'numeric|nullable',
-            'dia_chi' => 'max:250',
+            'dia_chi_hien_tai' => 'max:250',
             'so_dien_thoai' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
         ];
     }
@@ -44,7 +44,7 @@ class CreateThanhVienRequest extends FormRequest
             'nam_sinh.numeric' => ':attribute phải là giá trị số',
             'so_dien_thoai.min' =>':attribute nhỏ hơn :min',
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
-            'dia_chi.max' => ':attribute không vượt quá :max ký tự',
+            'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
         ];
     }
 
@@ -57,7 +57,7 @@ class CreateThanhVienRequest extends FormRequest
           'ngay_mat' => 'Ngày mất',
           'nam_sinh' => 'Năm sinh',
           'so_dien_thoai' => 'Số điện thoại',
-           'dia_chi' => 'Địa chỉ'
+           'dia_chi_hien_tai' => 'Địa chỉ'
         ];
     }
 }

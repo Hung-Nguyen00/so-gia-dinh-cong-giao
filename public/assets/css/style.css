@@ -26823,5 +26823,28 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     background-color: transparent; }
     [data-theme-version="dark"] .footer .copyright p {
       color: #fff; }
+#them_suc, #hon_nhan{
+  transition: all 0.3s linear;
+  padding-right: 0px!important;
+  padding-left: 0px !important;
+  opacity: 1;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  display: block;
+}
+#them_suc.d-sm-none, #them_suc.d-lg-none,
+#hon_nhan.d-sm-none, #hon_nhan.d-lg-none{
+  transition: opacity 1s ease-out;
+  opacity: 0;
+}
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 
 /*# sourceMappingURL=style.css.map */
