@@ -15,7 +15,7 @@ class LichSuCongTacImport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            2 => new LichSuCongTacSheetImport(),
+            1 => new LichSuCongTacSheetImport(),
         ];
     }
 }

@@ -33,29 +33,31 @@ class TuSiController extends Controller
      */
     public function index()
     {
-        $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])->get();
+        $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         return view('tu_si.all', compact('all_tu_si'));
     }
 
     public function fileImport(Request $request){
 
+
         try{
             DB::transaction(function () use ($request) {
-                Excel::import(new ChucVuImport(), $request->file('file')->store('temp'));
                 Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
                 Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
                 Excel::import(new LichSuNhanChucImport(), $request->file('file')->store('temp'));
             });
 
         }catch (\InvalidArgumentException $ex){
-            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Lỗi');
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
             return back();
         }catch (\Exception $ex){
-            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Lỗi');
+            Toastr::error('Thông tin liên kết có thể chưa tồn tại trong hệ thống','Lỗi');
             return back();
         }catch(\Error $ex){
-            Toastr::error('Các cột hoặc thông tin trong tệp Excel không đúng dạng','Lỗi');
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
             return back();
         }
         Toastr::success('Thêm mới thành công','Thành công');
@@ -71,7 +73,9 @@ class TuSiController extends Controller
 
         if (ChucVu::find($request->chuc_vu_id)){
             $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
-                ->where('chuc_vu_id', $request->chuc_vu_id)->get();
+                ->where('chuc_vu_id', $request->chuc_vu_id)
+                ->orderBy('created_at', 'DESC')
+                ->get();;
             $chuc_vu_id = ChucVu::find($request->chuc_vu_id)->id;
             $all_chuc_vu = ChucVu::all();
             return view('tu_si.all', compact('all_tu_si', 'chuc_vu_id', 'all_chuc_vu'));

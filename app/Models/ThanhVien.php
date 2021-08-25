@@ -18,6 +18,7 @@ class ThanhVien extends Model
       'ho_va_ten',
       'ngay_sinh',
       'ngay_mat',
+      'quan_he',
       'dia_chi_hien_tai',
       'so_dien_thoai',
       'so_gia_dinh_id',
@@ -50,4 +51,5 @@ class ThanhVien extends Model
                 'ngay_sinh_nguoi_lam_chung_2',
                 'nguoi_khoi_tao']);
     }
+
 }

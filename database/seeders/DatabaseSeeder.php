@@ -22,14 +22,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         QuyenQuanTri::create(['ten_quyen' => 'admin']);
-        GiaoTinh::factory(4)->create();
-        GiaoPhan::factory(4)->create();
-        GiaoHat::factory(4)->create();
-        GiaoXu::factory(10)->create();
-         \App\Models\User::factory(10)->create();
-        TenThanh::factory(5)->create();
-        ChucVu::factory(5)->create();
-        TuSi::factory(50)->create();
-
+        $this->call(GiaoTinhSeeder::class);
+        $this->call(GiaoPhanSeeder::class);
+        $this->call(GiaoHatSeeder::class);
+        $this->call(GiaoXuSeeder::class);
+         \App\Models\User::factory(1)->create();
     }
 }

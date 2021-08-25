@@ -24,6 +24,7 @@ class CreateThanhVienTable extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->string('ho_va_ten', 100)->nullable();
+            $table->string('chuc_vu_gd', 10)->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->date('ngay_mat')->nullable();
             $table->string('dia_chi_hien_tai', 250)->nullable();

@@ -23,7 +23,8 @@ class GiaoPhanController extends Controller
      */
     public function index()
     {
-        $all_giao_phan = GiaoPhan::withCount('giaoHat')->get();
+        $all_giao_phan = GiaoPhan::withCount('giaoHat')->orderBy('created_at', 'DESC')
+            ->get();;
         return view('giao_phan.all_giao_phan', compact('all_giao_phan'));
     }
 
@@ -37,16 +38,16 @@ class GiaoPhanController extends Controller
                 Excel::import(new GiaoXuImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoHoImport(), $request->file('file')->store('temp'));
             });
-       }catch (\InvalidArgumentException $ex){
-           Toastr::error('Các cột trong tệp Excel không đúng dạng','Lỗi');
-           return back();
-       }catch (\Exception $ex){
-           Toastr::error('Các cột trong tệp Excel không đúng dạng','Lỗi');
-           return back();
-       }catch(\Error $ex){
-           Toastr::error('Các cột trong tệp Excel không đúng dạng','Lỗi');
-           return back();
-       }
+        }catch (\InvalidArgumentException $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }catch (\Exception $ex){
+            Toastr::error('Thông tin liên kết có thể chưa tồn tại trong hệ thống','Lỗi');
+            return back();
+        }catch(\Error $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }
         Toastr::success('Thêm mới thành công','Thành công');
         return back();
     }

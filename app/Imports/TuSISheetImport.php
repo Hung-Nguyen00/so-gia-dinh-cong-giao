@@ -33,16 +33,17 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach($rows as $row){
-            $chuc_vu = $this->chuc_vu->where('ten_chuc_vu', $row['ten_chuc_vu'])->first();
-            $vi_tri = $this->vi_tri->where('ten_vi_tri', $row['ten_vi_tri_phuc_vu'])->first();
-            $giao_phan = $this->giao_phan->where('ten_giao_phan',$row['ten_giao_phan'])->first();
-            $giao_hat = $this->giao_hat->where('ten_giao_hat',$row['ten_giao_hat'])->first();
-            $giao_xu = $this->giao_xu->where('ten_giao_xu',$row['ten_giao_xu'])->first();
-            $ten_thanh = $this->ten_thanh->where('ten_thanh',$row['ten_thanh'])->first();
+            $chuc_vu = $this->chuc_vu->where('ten_chuc_vu', trim($row['ten_chuc_vu']))->first();
+            $vi_tri = $this->vi_tri->where('ten_vi_tri', trim($row['ten_vi_tri_phuc_vu']))->first();
+            $giao_phan = $this->giao_phan->where('ten_giao_phan', trim($row['ten_giao_phan']))->first();
+            $giao_hat = $this->giao_hat->where('ten_giao_hat', trim($row['ten_giao_hat']))->first();
+            $giao_xu = $this->giao_xu->where('ten_giao_xu', trim($row['ten_giao_xu']))->first();
+            $ten_thanh = $this->ten_thanh->where('ten_thanh', trim($row['ten_thanh']))->first();
 
 //            if($giao_phan &&  $chuc_vu && $ten_thanh)
             TuSi::create([
-                'ho_va_ten' => $row['ho_va_ten'],
+                'ho_va_ten' => trim($row['ho_va_ten']),
+                'email' => $row['email'],
                 'ngay_sinh' => Carbon::parse($row['ngay_sinh'])->toDate(),
                 'dia_chi_hien_tai' => $row['dia_chi_hien_tai'] ,
                 'so_dien_thoai' => $row['so_dien_thoai'],

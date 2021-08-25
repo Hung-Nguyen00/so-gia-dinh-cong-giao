@@ -22,9 +22,9 @@ class GiaoHoSheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach($rows as $row){
-            $giao_xu = $this->giao_xus->where('ten_giao_xu', $row['ten_giao_xu'])->first();
+            $giao_xu = $this->giao_xus->where('ten_giao_xu', trim($row['ten_giao_xu']))->first();
             GiaoXu::create([
-                'ten_giao_xu' => $row['ten_giao_ho'],
+                'ten_giao_xu' => trim($row['ten_giao_ho']),
                 'dia_chi'    => $row['dia_chi'],
                 'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
                 'nguoi_khoi_tao'=> Auth::id(),

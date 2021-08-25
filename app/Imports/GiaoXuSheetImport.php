@@ -26,9 +26,9 @@ class GiaoXuSheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach($rows as $row){
-            $giao_hat = $this->giao_hats->where('ten_giao_hat', $row['ten_giao_hat'])->first();
+            $giao_hat = $this->giao_hats->where('ten_giao_hat', trim( $row['ten_giao_hat']))->first();
             GiaoXu::create([
-                'ten_giao_xu' => $row['ten_giao_xu'],
+                'ten_giao_xu' => trim($row['ten_giao_xu']),
                 'dia_chi'    => $row['dia_chi'],
                 'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
                 'nguoi_khoi_tao'=> Auth::id(),

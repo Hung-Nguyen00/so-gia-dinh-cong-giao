@@ -14,7 +14,8 @@ class ChucVuController extends Controller
      */
     public function index()
     {
-        $all_chuc_vu = ChucVu::all();
+        $all_chuc_vu = ChucVu::orderBy('created_at', 'DESC')
+            ->get();;
 
         return view('chuc_vu.all_chuc_vu', compact('all_chuc_vu'));
     }

@@ -49,6 +49,13 @@ Route::group(['middleware'=>'auth'],function()
     // import TuSi, ChucVu, ViTri
     Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
 
+    // import chucVu, Vitri, TenThanh
+    Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
+
+    //import SoGiaDinh Thanh vien, BiTichDaNhan
+    Route::post('file-import-so-gia-dinh', [SoGiaDinhController::class, 'fileImport'])->name('bi-tich-received-import');
+
+
     // add ThanhVien to SoGiaDinh
     Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
     Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
@@ -61,6 +68,7 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
     Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
     Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
+    Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
 
     Route::resources([
         'giao-tinh' => GiaoTinhController::class,
@@ -96,7 +104,7 @@ Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 Route::get('lock_screen', [App\Http\Controllers\LockScreen::class, 'lockScreen'])->middleware('auth')->name('lock_screen');
 Route::post('unlock', [App\Http\Controllers\LockScreen::class, 'unlock'])->name('unlock');
 
-// ------------------------------ register ---------------------------------//
+//// ------------------------------ register ---------------------------------//
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
 

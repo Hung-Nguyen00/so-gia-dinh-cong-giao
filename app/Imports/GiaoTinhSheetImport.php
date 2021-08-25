@@ -19,7 +19,7 @@ class GiaoTinhSheetImport implements ToCollection, WithHeadingRow
         foreach($rows as $row){
             if ($row['ten_giao_tinh']){
                 GiaoTinh::create([
-                    'ten_giao_tinh' => $row['ten_giao_tinh'],
+                    'ten_giao_tinh' => trim($row['ten_giao_tinh']),
                     'ten_nha_tho' => $row['nha_tho_chinh_toa'],
                     'dia_chi' => $row['dia_chi'],
                     'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),

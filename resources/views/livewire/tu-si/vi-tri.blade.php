@@ -2,10 +2,14 @@
     @include('vi_tri.add_new')
     @include('vi_tri.edit')
     @include('vi_tri.delete')
+    @include('ten_thanh.import')
     <div class="card-header">
         <h4 class="card-title">Danh sách vị trí phục vụ giáo xứ </h4>
         <div>
-            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
+            <button
+                    data-toggle="modal" data-target="#importModal"
+                    class="btn btn-info">Import dữ liệu
+            </button>
             <button
                     data-toggle="modal" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm mới vị trí

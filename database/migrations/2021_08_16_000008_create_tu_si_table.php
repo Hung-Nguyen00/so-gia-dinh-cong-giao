@@ -24,6 +24,8 @@ class CreateTuSiTable extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->string('ho_va_ten', 100)->nullable();
+            $table->string('ten_dong', 100)->nullable();
+            $table->string('email', 100)->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->date('ngay_mat')->nullable();
             $table->date('bat_dau_phuc_vu')->nullable();
@@ -37,8 +39,8 @@ class CreateTuSiTable extends Migration
             $table->softDeletes();
 
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
-            $table->unsignedBigInteger('chuc_vu_id')->index();
-            $table->unsignedBigInteger('giao_phan_id')->index();
+            $table->unsignedBigInteger('chuc_vu_id')->index()->nullable();
+            $table->unsignedBigInteger('giao_phan_id')->index()->nullable();
             $table->unsignedBigInteger('giao_hat_id')->index()->nullable();
             $table->unsignedBigInteger('giao_xu_id')->index()->nullable();
 

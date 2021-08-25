@@ -16,7 +16,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tất cả tên thánh</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tu sĩ</a></li>
                     </ol>
                 </div>
             </div>
@@ -30,10 +30,7 @@
                                         <h4 class="card-title">Danh sách các tu sĩ </h4>
                                         <div class="d-flex justify-content-around">
                                             {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
-                                            <button
-                                                    data-toggle="modal" data-target="#importModal"
-                                                    class="btn btn-primary">Import Excel
-                                            </button>
+
                                         </div>
                                     </div>
                                     <form action="{{ route('tu-si.search')}}">
@@ -58,9 +55,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4 d-flex justify-content-end align-items-center" >
+                                                <button type="button"
+                                                        data-toggle="modal" data-target="#importModal"
+                                                        class="btn btn-info mr-2" style="margin-top: 11px !important;">Import Excel
+                                                </button>
+
                                                 <a href="{{ route('tu-si.create') }}"
                                                    style="margin-top: 10px; margin-right: -10px;"
-                                                   class="btn btn-primary">Thêm giáo tu sĩ
+                                                   class="btn btn-primary">Thêm tu sĩ
                                                 </a>
                                             </div>
                                         </div>
@@ -73,7 +75,7 @@
                                                     <th >STT</th>
                                                     <th>Họ và tên</th>
                                                     <th>Tên thánh</th>
-                                                    <th>Ngày sinh</th>
+                                                    <th style="width: 100px">Ngày sinh</th>
                                                     <th>Du học</th>
                                                     <th>Thuộc giáo phận</th>
                                                     <th >Chỉnh sửa</th>

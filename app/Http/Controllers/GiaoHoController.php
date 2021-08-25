@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class GiaoHoController extends Controller
 {
     public function index(){
-        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', '<>', 0)->get();
+        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', '<>', 0)->orderBy('created_at', 'DESC')
+            ->get();;
         return view('giao_ho.all_giao_ho', compact('all_giao_ho'));
     }
 }

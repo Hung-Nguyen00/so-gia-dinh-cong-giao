@@ -40,10 +40,9 @@
                     <span class="nav-text">Quản lý giáo xứ</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('tu-si.index') }}">Tu sĩ</a></li>
+                    <li><a href="{{ route('giaoXu.showTuSi') }}">Tu sĩ</a></li>
                     <li><a href="{{ route('bi-tich.index') }}">Bí tích</a></li>
                     <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình</a></li>
-                    <li><a href="">Giáo dân</a></li>
                 </ul>
             </li>
             <li class="nav-label">Forms</li>

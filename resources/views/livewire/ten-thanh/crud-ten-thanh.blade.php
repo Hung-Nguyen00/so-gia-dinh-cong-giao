@@ -2,10 +2,14 @@
     @include('ten_thanh.add_new')
     @include('ten_thanh.edit')
     @include('ten_thanh.delete')
+    @include('ten_thanh.import')
     <div class="card-header">
         <h4 class="card-title">Danh sách các tên thánh </h4>
         <div>
-            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
+            <button
+                    data-toggle="modal" data-target="#importModal"
+                    class="btn btn-info">Import dữ liệu
+            </button>
             <button
                     data-toggle="modal" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm giáo tên thánh

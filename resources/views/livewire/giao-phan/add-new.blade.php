@@ -23,7 +23,7 @@
                     <th style="width: 103px">Nhà thờ chính tòa</th>
                     <th style="width: 50px">Số lượng giáo hạt</th>
                     <th style="width: 90px">Người cập nhập</th>
-                    <th style="width: 50px">Cập nhập lần cuối</th>
+                    <th style="width: 60px">Cập nhập lần cuối</th>
                     <th style="width: 50px">Chỉnh sửa</th>
                 </tr>
                 </thead>

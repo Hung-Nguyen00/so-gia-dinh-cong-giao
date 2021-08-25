@@ -2,10 +2,14 @@
     @include('sgdcg.add_giao_phan')
     @include('sgdcg.edit_giao_phan')
     @include('sgdcg.delete_giao_phan')
-
+    @include('sgdcg.import');
     <div class="card-header">
         <h4 class="card-title">Danh sách các sổ gia đình công giáo </h4>
         <div>
+            <button
+                    data-toggle="modal" data-target="#importModal"
+                    class="btn btn-info">Import dữ liệu
+            </button>
             <button
                     data-toggle="modal" data-target="#createModal"
                     class="btn btn-primary">Thêm mới

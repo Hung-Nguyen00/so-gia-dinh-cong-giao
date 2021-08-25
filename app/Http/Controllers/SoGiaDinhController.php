@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateThanhVienRequest;
+use App\Imports\BiTichDaNhanImport;
+use App\Imports\SoGiaDinhImport;
+use App\Imports\ThanhVienImport;
 use App\Models\BiTich;
 use App\Models\BiTichDaNhan;
 use App\Models\GiaoXu;
@@ -13,8 +16,10 @@ use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SoGiaDinhController extends Controller
 {
@@ -27,47 +32,19 @@ class SoGiaDinhController extends Controller
     {
         // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
         $all_so_gia_dinh = SoGiaDinh::withCount('thanhVien')
-            ->where('giao_xu_id', Auth::user()->giao_xu_id)->get();
+            ->where('giao_xu_id', Auth::user()->giao_xu_id)->orderBy('created_at', 'DESC')
+            ->get();
 
         $ten_giao_xu = GiaoXu::where('id', Auth::user()->giao_xu_id)->first()->ten_giao_xu;
         return view('sgdcg.all', compact('all_so_gia_dinh', 'ten_giao_xu'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-
-    public function indexThanhVien($id){
-
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SoGiaDinh  $soGiaDinh
-     * @return \Illuminate\Http\Response
-     */
     public function show(SoGiaDinh $soGiaDinh)
     {
         $all_thanh_vien = ThanhVien::with(['tenThanh'])->withCount('biTich')
             ->where('so_gia_dinh_id', $soGiaDinh->id)->get();
+
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));
     }
 
@@ -260,34 +237,32 @@ class SoGiaDinhController extends Controller
         }
     }
 
-    public function edit(SoGiaDinh $soGiaDinh)
-    {
-        //
+    // import Excel SoGiaDinh ThanhVien and BiTichDaNhan
+    public function fileImport(Request $request){
+
+        Excel::import(new SoGiaDinhImport(), $request->file('file')->store('temp'));
+        Excel::import(new ThanhVienImport(), $request->file('file')->store('temp'));
+        Excel::import(new BiTichDaNhanImport(), $request->file('file')->store('temp'));
+        try{
+            DB::transaction(function () use ($request) {
+
+            });
+        }catch (\InvalidArgumentException $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }catch (\Exception $ex){
+            Toastr::error('Thông tin liên kết có thể chưa tồn tại trong hệ thống','Lỗi');
+            return back();
+        }catch(\Error $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }
+        Toastr::success('Thêm mới thành công','Thành công');
+        return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SoGiaDinh  $soGiaDinh
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SoGiaDinh $soGiaDinh)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SoGiaDinh  $soGiaDinh
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SoGiaDinh $soGiaDinh)
-    {
-        //
-    }
-
+    // validate add BiTich for ThanhVien
     public  function validateBiTich($request){
         $validateData =  $this->validate($request, [
             'bi_tich_id' => 'required',

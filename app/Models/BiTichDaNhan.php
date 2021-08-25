@@ -14,6 +14,8 @@ class BiTichDaNhan extends Model
 
     protected $table = 'bi_tich_da_nhan';
     protected $fillable = [
+        'thanh_vien_id',
+        'bi_tich_id',
         'ngay_dien_ra',
         'noi_dien_ra',
         'ten_nguoi_do_dau',

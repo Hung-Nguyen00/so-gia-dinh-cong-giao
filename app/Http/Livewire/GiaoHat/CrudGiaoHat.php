@@ -58,7 +58,8 @@ class CrudGiaoHat extends Component
 
     public function render()
     {
-        $this->giao_phan = GiaoPhan::all();
+        $this->giao_phan = GiaoPhan::orderBy('created_at', 'DESC')
+            ->get();
         return view('livewire.giao-hat.crud-giao-hat');
     }
 

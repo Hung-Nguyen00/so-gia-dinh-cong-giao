@@ -21,8 +21,8 @@ class LichSuCongTacSheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row){
-            $tu_si = $this->tu_si->where('ho_va_ten', $row['ho_va_ten'])
-                                    ->where('so_dien_thoai', $row['so_dien_thoai'])
+            $tu_si = $this->tu_si->where('ho_va_ten', trim($row['ho_va_ten']))
+                                    ->where('so_dien_thoai', trim($row['so_dien_thoai']))
                                     ->first();
             if ($tu_si){
                 LichSuCongTac::create([

@@ -2,10 +2,14 @@
     @include('chuc_vu.add_new')
     @include('chuc_vu.edit')
     @include('chuc_vu.delete')
+    @include('ten_thanh.import')
     <div class="card-header">
         <h4 class="card-title">Danh sách các chức vụ </h4>
         <div>
-            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
+            <button
+                    data-toggle="modal" data-target="#importModal"
+                    class="btn btn-info">Import dữ liệu
+            </button>
             <button
                     data-toggle="modal" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm giáo chức vụ

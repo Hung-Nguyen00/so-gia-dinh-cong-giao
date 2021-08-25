@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ChucVuImport;
 use App\Models\TenThanh;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TenThanhController extends Controller
 {
@@ -14,9 +18,28 @@ class TenThanhController extends Controller
      */
     public function index()
     {
-        $all_ten_thanh = TenThanh::all();
+        $all_ten_thanh = TenThanh::orderBy('created_at', 'DESC')->get();
 
         return view('ten_thanh.all_ten_thanh', compact('all_ten_thanh'));
+    }
+
+
+    public function fileImport(Request $request){
+
+        try{
+            Excel::import(new ChucVuImport(), $request->file('file')->store('temp'));
+        }catch (\InvalidArgumentException $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }catch (\Exception $ex){
+            Toastr::error('Thông tin liên kết có thể chưa tồn tại trong hệ thống','Lỗi');
+            return back();
+        }catch(\Error $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }
+        Toastr::success('Thêm mới thành công','Thành công');
+        return back();
     }
 
     /**
