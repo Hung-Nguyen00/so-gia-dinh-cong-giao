@@ -26,12 +26,14 @@ class TuSiRequest extends FormRequest
         return [
             'ho_va_ten' => 'required|max:100',
             'ten_thanh_id' => 'required',
+            'ten_dong' => 'max:100|nullable',
             'chuc_vu_id' => 'required',
+            'email' => 'email',
             'giao_phan_id' =>'required',
             'ngay_nhan_chuc' => 'required|date|nullable',
             'ngay_sinh' => 'required|date|nullable',
             'ngay_mat' => 'date|nullable|after:ngay_sinh',
-            'so_dien_thoai' =>'digits:10|numeric',
+            'so_dien_thoai' =>'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'dia_chi_hien_tai' => 'max:250|nullable',
             'noi_nhan_chuc' => 'required|max:250|nullable',
             'bat_dau_phuc_vu' => 'date|nullable|after:ket_thuc_phuc_vu',
@@ -62,10 +64,12 @@ class TuSiRequest extends FormRequest
             'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
             'ngay_sinh.required' => ':attribute không được phép trống',
             'ket_thuc_phuc_vu.date' => ':attribute phải là giá trị ngày tháng năm',
-            'so_dien_thoai.digits' => ':attribute không được vượt quá 10 chữ số',
-            'so_dien_thoai.numeric' => ':attribute phải là chữ số',
+            'so_dien_thoai.min' => ':attribute không được nhỏ hơn :min ký tự',
+            'so_dien_thoai.regex' => ':attribute phải là chữ số',
             'check_save_info.required' => 'Hãy lựa chọn phương thức lưu thông tin',
             'bat_dau_phuc_vu.after' => 'Ngày bắt đầu phục vụ giáo xứ mới phải lớn hơn ngày kết thúc.',
+            'email.email' => 'Giá trị nhập phải đúng dạng email',
+            'ten_dong.max' => 'Tên dòng không được vượt quá 100 ký tự'
         ];
     }
 

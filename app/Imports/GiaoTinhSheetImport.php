@@ -22,7 +22,7 @@ class GiaoTinhSheetImport implements ToCollection, WithHeadingRow
                     'ten_giao_tinh' => trim($row['ten_giao_tinh']),
                     'ten_nha_tho' => $row['nha_tho_chinh_toa'],
                     'dia_chi' => $row['dia_chi'],
-                    'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
+                    'ngay_thanh_lap' => $row['ngay_thanh_lap'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_thanh_lap']) : null,
                     'nguoi_khoi_tao' => Auth::id(),
                 ]);
             }

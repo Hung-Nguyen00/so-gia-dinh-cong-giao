@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class QuyenQuanTri extends Model
 {
     use HasFactory, SoftDeletes;
+
+
     protected $dates = ['deleted_at'];
 
     protected $table = 'quyen_quan_tri';
@@ -16,6 +18,10 @@ class QuyenQuanTri extends Model
     public $timestamps;
 
     protected $fillable = [
-        'name'
+        'ten_quyen'
     ];
+
+    public  function users(){
+        return $this->hasMany(User::class,'quyen_quan_tri_id', 'id');
+    }
 }

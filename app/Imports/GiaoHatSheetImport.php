@@ -29,7 +29,7 @@ class GiaoHatSheetImport implements ToCollection, WithHeadingRow
             $giao_phan = $this->giao_phans->where('ten_giao_phan',trim($row['ten_giao_phan']))->first();
                 GiaoHat::create([
                     'ten_giao_hat' => trim( $row['ten_giao_hat']),
-                    'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
+                    'ngay_thanh_lap' => $row['ngay_thanh_lap'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_thanh_lap']) : null,
                     'nguoi_khoi_tao'=> Auth::id(),
                     'giao_phan_id' => $giao_phan->id
                 ]);

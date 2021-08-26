@@ -7,16 +7,16 @@
         <!-- row -->
         <div class="container-fluid">
             <div class="row page-titles mx-0">
-                <div class="col-sm-6 p-md-0">
+                <div class="col-sm-4 p-md-0">
                     <div class="welcome-text">
-                        <h4>Các tu sĩ</h4>
+                        <h4>Thông tin giáo dân</h4>
                     </div>
                 </div>
-                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <div class="col-sm-8 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý giáo xứ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tu sĩ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý giáo xứ</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Giáo dân</a></li>
                     </ol>
                 </div>
             </div>
@@ -27,10 +27,7 @@
                             <div class="card">
                                 <div>
                                     <div class="card-header">
-                                        <h4 class="card-title">Danh sách các tu sĩ</h4>
-                                        <div class="d-flex justify-content-around">
-                                            <a class="btn btn-primary" href="{{ route('giaoXu.createTuDong') }}">Thêm tu sĩ thuộc tu dòng</a>
-                                        </div>
+                                        <h4 class="card-title">Danh sách tất cả giáo dân </h4>
                                     </div>
                                     <div  class="card-body">
                                         <div class="table-responsive">
@@ -40,50 +37,44 @@
                                                     <th >STT</th>
                                                     <th>Họ và tên</th>
                                                     <th>Tên thánh</th>
-                                                    <th style="width: 100px">Ngày sinh</th>
-                                                    <th>Tên dòng</th>
-                                                    <th>Chức vụ</th>
-                                                    <th>Vị trí</th>
-                                                    <th>Chỉnh sửa</th>
+                                                    <th>Ngày sinh</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>Xem thông tin sổ</th>
+                                                    <th>Xem chi tiết</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody >
                                                 @php $i= 0; @endphp
-                                                @foreach($all_tu_si as $th)
+                                                @foreach($all_thanh_vien as $th)
                                                     <tr >
                                                         <td class="text-center"> {{ ++$i }}</td>
                                                         <td> {{ $th->ho_va_ten }}</td>
                                                         <td>
                                                             {{ $th->tenThanh->ten_thanh }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
                                                         <td>
-                                                            {{ $th->ten_dong }}
-                                                        </td>
-                                                        <td>
-                                                            @if($th->chucVu)
-                                                                {{ $th->chucVu->ten_chuc_vu }}
-                                                                @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($th->viTri)
-                                                                {{$th->viTri->ten_vi_tri }}
+                                                            @if(\Carbon\Carbon::parse($th->ngay_sinh)->format('d-m') == '01-01' && strtotime($th->ngay_sinh) < strtotime(1980))
+                                                                {{ \Carbon\Carbon::parse($th->ngay_sinh)->format('Y') }}
+                                                            @else
+                                                                {{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}
                                                             @endif
+                                                        </td>
+                                                        <td>
+                                                            {{ $th->so_dien_thoai }}
                                                         </td>
                                                         <td class="text-center">
-                                                            @if($th->ten_dong !== null)
+                                                            {{ $th->dia_chi_hien_tai}}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)  }}" class="text-primary">Xem chi tiết </a>
+                                                        </td>
+                                                        <td class="text-center">
                                                             <a type="button"
-                                                               href="{{ route('giaoXu.editTuDong', $th)}}"
-                                                               class="btn btn-sm btn-primary mb-1">
+                                                               href="{{ route('so-gia-dinh.editTV', ['sgdId' => $th->soGiaDinh->id, 'tvId' => $th->id]) }}"
+                                                               class="btn btn-sm btn-primary">
                                                                 <i class="la la-pencil"></i>
                                                             </a>
-                                                                @else
-                                                            <a type="button"
-                                                               href="{{ route('tu-si.edit', $th)}}"
-                                                               class="btn btn-sm btn-primary mb-1">
-                                                                <i class="la la-pencil"></i>
-                                                            </a>
-                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

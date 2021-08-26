@@ -41,8 +41,6 @@ class TuSiController extends Controller
     }
 
     public function fileImport(Request $request){
-
-
         try{
             DB::transaction(function () use ($request) {
                 Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
@@ -70,7 +68,6 @@ class TuSiController extends Controller
 
 
     public function searchTuSi(Request $request){
-
         if (ChucVu::find($request->chuc_vu_id)){
             $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
                 ->where('chuc_vu_id', $request->chuc_vu_id)
@@ -85,6 +82,21 @@ class TuSiController extends Controller
 
     }
 
+    public function searchTuSiDong(Request $request){
+        if (ChucVu::find($request->chuc_vu_id)){
+            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
+                ->where('chuc_vu_id', $request->chuc_vu_id)
+                ->whereNotNull('ten_dong')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+            $chuc_vu_id = ChucVu::find($request->chuc_vu_id)->id;
+            $all_chuc_vu = ChucVu::all();
+            return view('tu_si.thuoc_dong', compact('all_tu_si', 'chuc_vu_id', 'all_chuc_vu'));
+        }else{
+            return back();
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,7 +105,8 @@ class TuSiController extends Controller
     public function create()
     {
         $all_ten_thanh = TenThanh::all();
-        $all_giao_xu = GiaoXu::with('giaoHat')->get();
+        $all_giao_xu = GiaoXu::with('giaoHat')
+            ->where('giao_xu_hoac_giao_ho', 0)->get();
         $all_giao_hat = GiaoHat::with('giaoPhan')->get();
         $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
 
@@ -153,7 +166,7 @@ class TuSiController extends Controller
         $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
                     ->where('id', $tuSi->id)->first();
         $all_ten_thanh = TenThanh::all();
-        $all_giao_xu = GiaoXu::all();
+        $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
         $all_giao_hat = GiaoHat::all();
         $all_vi_tri = ViTri::all();
         $all_giao_phan = GiaoPhan::with('giaoTinh')->get();

@@ -39,24 +39,23 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
             $giao_hat = $this->giao_hat->where('ten_giao_hat', trim($row['ten_giao_hat']))->first();
             $giao_xu = $this->giao_xu->where('ten_giao_xu', trim($row['ten_giao_xu']))->first();
             $ten_thanh = $this->ten_thanh->where('ten_thanh', trim($row['ten_thanh']))->first();
-
-//            if($giao_phan &&  $chuc_vu && $ten_thanh)
             TuSi::create([
                 'ho_va_ten' => trim($row['ho_va_ten']),
                 'email' => $row['email'],
-                'ngay_sinh' => Carbon::parse($row['ngay_sinh'])->toDate(),
+                'ten_dong' => $row['ten_dong_neu_co'],
+                'ngay_sinh' => $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
                 'dia_chi_hien_tai' => $row['dia_chi_hien_tai'] ,
                 'so_dien_thoai' => $row['so_dien_thoai'],
-                'ngay_nhan_chuc' => Carbon::parse($row['ngay_nhan_chuc'])->toDate(),
+                'ngay_nhan_chuc' => $row['ngay_nhan_chuc'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_nhan_chuc']) : null,
                 'noi_nhan_chuc' => $row['noi_nhan_chuc'],
                 'dang_du_hoc' => $row['dang_du_hoc'],
                 'nguoi_khoi_tao' => Auth::id(),
-                'giao_phan_id' => $giao_phan->id,
+                'giao_phan_id' => $giao_phan ?  $giao_phan->id : null,
                 'giao_hat_id' => $giao_hat ? $giao_hat->id : null,
                 'giao_xu_id' => $giao_xu ? $giao_xu->id : null,
                 'ten_thanh_id' => $ten_thanh->id ,
                 'chuc_vu_id' => $chuc_vu->id,
-                'bat_dau_phuc_vu' => Carbon::parse($row['ngay_bat_dau_phuc_vu'])->toDate(),
+                'bat_dau_phuc_vu' => $row['ngay_bat_dau_phuc_vu'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_bat_dau_phuc_vu']) : null,
                 'vi_tri_id' =>  $vi_tri ? $vi_tri->id : null
             ]);
         }

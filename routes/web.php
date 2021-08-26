@@ -13,6 +13,7 @@ use App\Http\Controllers\ViTriController;
 use App\Http\Controllers\BiTichController;
 use App\Http\Controllers\ThanhVienController;
 use App\Http\Controllers\SoGiaDinhController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -32,12 +33,20 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth'],function()
 {
+    //// ------------------------------ register ---------------------------------//
+    Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+    Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
+
+
     // request Ajax for select option
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
     Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
-    // search TuSI by CV
+    // search TuSI by ChucVu
     Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
+
+    // search Tusi is belong Nha Dong
+    Route::get('tu-dong/search', [TuSiController::class, 'searchTuSiDong'])->name('tu-dong.search');
 
     // ----------------------------- main dashboard ------------------------------//
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -68,9 +77,19 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
     Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
     Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
+
+
+
+    // create TuDong
     Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
+    Route::get('giao-xu/tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
+    Route::post('giao-xu/tu-dong', [GiaoXuController::class, 'storeTuDong'])->name('giaoXu.storeTuDong');
+    Route::get('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'editTuDong'])->name('giaoXu.editTuDong');
+    Route::patch('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'updateTuDong'])->name('giaoXu.updateTuDong');
+    Route::delete('giao-xu/tu-dong/{tu_si}/xoa', [GiaoXuController::class, 'deleteTuDong'])->name('giaoXu.deleteTuDong');
 
     Route::resources([
+        'tai-khoan' => UserController::class,
         'giao-tinh' => GiaoTinhController::class,
         'giao-phan' => GiaoPhanController::class,
         'giao-hat' => GiaoHatController::class,
@@ -100,13 +119,6 @@ Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-// ----------------------------- lock screen --------------------------------//
-Route::get('lock_screen', [App\Http\Controllers\LockScreen::class, 'lockScreen'])->middleware('auth')->name('lock_screen');
-Route::post('unlock', [App\Http\Controllers\LockScreen::class, 'unlock'])->name('unlock');
-
-//// ------------------------------ register ---------------------------------//
-Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');

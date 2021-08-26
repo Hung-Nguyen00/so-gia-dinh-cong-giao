@@ -8,14 +8,15 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>Thông tin tài khoản</h4>
+                        <h4>Thông tin tu sĩ</h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý tài khoản</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Thêm tài khoản</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Dánh sách tu sĩ</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Thêm mới tu sĩ</a></li>
                     </ol>
                 </div>
             </div>
@@ -26,10 +27,10 @@
                             <div class="card">
                                 <div>
                                     <div class="card-header">
-                                        <h4 class="card-title">Thông tin tài khoản</h4>
+                                        <h4 class="card-title">Thông tin tu sĩ</h4>
                                     </div>
                                     <div  class="card-body">
-                                        <form action="{{ route('register') }}" method="post" >
+                                        <form action="{{ route('giaoXu.storeTuDong') }}" method="post" >
                                             @csrf
                                             <div class="row">
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -44,9 +45,43 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label ">Tên Tài khoản</label>
+                                                        <div>
+                                                            <lable class="form-label ">Tên thánh</lable>
+                                                            <select class="selectpicker  form-control pt-2" name="ten_thanh_id" data-live-search="true" >
+                                                                <option selected value=""> Chọn tên thánh</option>
+                                                                @foreach($all_ten_thanh as $cv)
+                                                                    <option  value="{{ $cv->id }}" {{ old('ten_thanh_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_thanh }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('ten_thanh_id'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_id') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label ">Chức vụ</lable>
+                                                            <select class="selectpicker  form-control pt-2"   name="chuc_vu_id" data-live-search="true" >
+                                                                <option selected value=""> Chọn tên chức vụ</option>
+                                                                @foreach($all_chuc_vu as $cv)
+                                                                    <option  value="{{ $cv->id }}" {{ old('chuc_vu_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_chuc_vu }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('chuc_vu_id'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_id') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Email</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ old('email') }}" name="email">
+                                                               value="{{ old('email') }}"
+                                                               name="email"
+                                                        >
                                                     </div>
                                                     @if($errors->has('email'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('email') }}</span>
@@ -54,9 +89,46 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label ">Số điện thoại</label>
+                                                        <label class="form-label ">Tên dòng</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ old('so_dien_thoai') }}" name="so_dien_thoai">
+                                                               value="{{ old('ten_dong')}}" name="ten_dong">
+                                                    </div>
+                                                    @if($errors->has('ten_dong'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ten_dong') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label">Vị trí phục vụ giáo xứ</lable>
+                                                            <select class="selectpicker form-control pt-2" value="{{ old('vi_tri_id') }}"
+                                                                    data-live-search="true"
+                                                                    name="vi_tri_id">
+                                                                <option selected value="">Chọn tên vị trí phục vụ của giáo xứ</option>
+                                                                @foreach($all_vi_tri as $cv)
+                                                                    <option {{ old('vi_tri_id') == $cv->id ? 'selected' : '' }}   value="{{ $cv->id }}"> {{ $cv->ten_vi_tri }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Ngày sinh</label>
+                                                        <input type="date" class="form-control "
+                                                               value="{{ old('ngay_sinh')}}"
+                                                               name="ngay_sinh"
+                                                        >
+                                                    </div>
+                                                    @if($errors->has('ngay_sinh'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ngay_sinh') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Số điện thoại</label>
+                                                        <input type="tel" class="form-control "
+                                                               value="{{ old('so_dien_thoai')}}" name="so_dien_thoai">
                                                     </div>
                                                     @if($errors->has('so_dien_thoai'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('so_dien_thoai') }}</span>
@@ -64,89 +136,16 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label><strong>Quyền hạn</strong></label>
-                                                        <select class="form-control" name="quyen_quan_tri_id" id="role_name">
-                                                            <option selected disabled>Chọn quyền hạn</option>
-                                                            @foreach($all_quyen_han as $q)
-                                                                <option value="{{ $q->id }}">{{ $q->ten_quyen}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label class="form-label ">Địa chỉ</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('dia_chi_hien_tai')}}" name="dia_chi_hien_tai">
                                                     </div>
-                                                    @if($errors->has('quyen_quan_tri_id'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('quyen_quan_tri_id') }}</span>
+                                                    @if($errors->has('dia_chi_hien_tai'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('dia_chi_hien_tai') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label><strong>Mật khẩu</strong></label>
-                                                        <input type="password"
-                                                               class="form-control"
-                                                               name="password"
-                                                               placeholder="Nhập mật khẩu">
-                                                    </div>
-                                                    @if($errors->has('password'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('password') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label><strong>Nhập lại mật khẩu</strong></label>
-                                                        <input type="password"
-                                                               class="form-control"
-                                                               name="password_confirmation"
-                                                               placeholder="Nhập lại mật khẩu">
-                                                    </div>
-                                                    @if($errors->has('password'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('password') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group ">
-                                                        <div>
-                                                            <lable class="form-label ">Giáo phận</lable>
-                                                            <select class="selectpicker form-control pt-2" id="giao_phan_id"
-                                                                    name="giao_phan_id" data-live-search="true" >
-                                                                <option selected value="">Chọn tên giáo phận</option>
-                                                                @foreach($all_giao_phan as $cv)
-                                                                    <option  value="{{ $cv->id }}" {{ old('giao_phan_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_giao_phan }} - Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    @if($errors->has('giao_phan_id'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('giao_phan_id') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group ">
-                                                        <div>
-                                                            <lable class="form-label ">Giáo hạt</lable>
-                                                            <select name="giao_hat_id" id="giao_hat"
-                                                                    data-live-search="true"
-                                                                    class="selectpicker form-control pt-2">
-                                                                <option selected value=""> Chọn tên giáo hạt</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group ">
-                                                        <div>
-                                                            <lable class="form-label ">Giáo Xứ</lable>
-                                                            <select class="selectpicker form-control pt-2" value="{{ old('giao_xu_id') }}"
-                                                                    data-live-search="true"
-                                                                    id="giao_xu"
-                                                                    name="giao_xu_id">
-                                                                <option selected value="">Chọn tên giáo xứ</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    @if($errors->has('giao_xu_id'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('giao_xu_id') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-12 mt-2 col-md-12 col-sm-12">
-                                                    <button type="submit" class="btn btn-primary">Tạo</button>
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -165,12 +164,12 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            var url = $(location).attr("origin");
             $('#giao_phan_id').change(function () {
                 var id = $(this).val();
+                console.log(id);
                 $('#giao_hat').find('option').not(':first').remove();
                 $.ajax({
-                    url: url+'/tu-si/giao-hat/'+id,
+                    url:'giao-hat/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
@@ -196,7 +195,7 @@
                 console.log(id);
                 $('#giao_xu').find('option').not(':first').remove();
                 $.ajax({
-                    url: url+'/tu-si/giao-xu/'+id,
+                    url:'giao-xu/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
@@ -222,7 +221,7 @@
                 console.log(id);
                 $('#giao_ho').find('option').not(':first').remove();
                 $.ajax({
-                    url:   url+'/tu-si/giao-ho/'+id,
+                    url:'giao-ho/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
@@ -247,4 +246,3 @@
 
     </script>
 @endsection
-

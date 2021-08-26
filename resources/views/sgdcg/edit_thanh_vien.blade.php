@@ -80,10 +80,10 @@
                                                         @endif
                                                     </div>
                                                     @if($errors->has('ngay_sinh'))
-                                                        <span class="text-danger">{{ $errors->first('ngay_sinh') }}</span>
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ngay_sinh') }}</span>
                                                     @endif
                                                     @if($errors->has('nam_sinh'))
-                                                        <span class="text-danger">{{ $errors->first('nam_sinh') }}</span>
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('nam_sinh') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">

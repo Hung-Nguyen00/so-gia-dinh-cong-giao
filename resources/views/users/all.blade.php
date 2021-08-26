@@ -9,14 +9,14 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>Các tu sĩ</h4>
+                        <h4>Tài khoản</h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý giáo xứ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tu sĩ</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý tài khoản</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tài khoản</a></li>
                     </ol>
                 </div>
             </div>
@@ -27,10 +27,17 @@
                             <div class="card">
                                 <div>
                                     <div class="card-header">
-                                        <h4 class="card-title">Danh sách các tu sĩ</h4>
-                                        <div class="d-flex justify-content-around">
-                                            <a class="btn btn-primary" href="{{ route('giaoXu.createTuDong') }}">Thêm tu sĩ thuộc tu dòng</a>
-                                        </div>
+                                        <h4 class="card-title">Danh sách tài khoản </h4>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'admin')
+                                            <div class="d-flex justify-content-around">
+                                                <a class="btn btn-primary" href="{{ route('tai-khoan.create') }}">Tạo tài khoản</a>
+                                            </div>
+                                         @else
+                                            <div class="d-flex justify-content-around">
+                                                <a class="btn btn-primary" href="{{ route('register') }}">Tạo tài khoản</a>
+                                            </div>
+                                        @endif
+
                                     </div>
                                     <div  class="card-body">
                                         <div class="table-responsive">
@@ -39,51 +46,44 @@
                                                 <tr>
                                                     <th >STT</th>
                                                     <th>Họ và tên</th>
-                                                    <th>Tên thánh</th>
-                                                    <th style="width: 100px">Ngày sinh</th>
-                                                    <th>Tên dòng</th>
-                                                    <th>Chức vụ</th>
-                                                    <th>Vị trí</th>
-                                                    <th>Chỉnh sửa</th>
+                                                    <th>Email</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Tên giáo phận</th>
+                                                    <th>Quyền hạn</th>
+                                                    <th >Chỉnh sửa</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody >
                                                 @php $i= 0; @endphp
-                                                @foreach($all_tu_si as $th)
-                                                    <tr >
+                                                @foreach($users as $th)
+                                                    <tr>
                                                         <td class="text-center"> {{ ++$i }}</td>
                                                         <td> {{ $th->ho_va_ten }}</td>
                                                         <td>
-                                                            {{ $th->tenThanh->ten_thanh }}
+                                                            {{ $th->email }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
+                                                        <td>{{ $th->so_dien_thoai }}</td>
                                                         <td>
-                                                            {{ $th->ten_dong }}
-                                                        </td>
-                                                        <td>
-                                                            @if($th->chucVu)
-                                                                {{ $th->chucVu->ten_chuc_vu }}
-                                                                @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($th->viTri)
-                                                                {{$th->viTri->ten_vi_tri }}
+                                                            @if($th->giaoXu)
+                                                                Giáo phận: {{ $th->giaoPhan->ten_giao_phan }}
+                                                                <br>
+                                                                Giáo hạt: {{ $th->giaoXu->giaoHat->ten_giao_hat }}
+                                                                <br>
+                                                                Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
+                                                            @else
+                                                                Giáo phận: {{ $th->giaoPhan->ten_giao_phan }}
                                                             @endif
                                                         </td>
+                                                        <td>
+                                                            {{ $th->quanTri->ten_quyen }}
+                                                        </td>
+
                                                         <td class="text-center">
-                                                            @if($th->ten_dong !== null)
                                                             <a type="button"
-                                                               href="{{ route('giaoXu.editTuDong', $th)}}"
+                                                               href="{{ route('tai-khoan.edit', $th->id)}}"
                                                                class="btn btn-sm btn-primary mb-1">
                                                                 <i class="la la-pencil"></i>
                                                             </a>
-                                                                @else
-                                                            <a type="button"
-                                                               href="{{ route('tu-si.edit', $th)}}"
-                                                               class="btn btn-sm btn-primary mb-1">
-                                                                <i class="la la-pencil"></i>
-                                                            </a>
-                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

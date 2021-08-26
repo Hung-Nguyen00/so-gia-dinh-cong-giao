@@ -30,7 +30,7 @@ class GiaoXuSheetImport implements ToCollection, WithHeadingRow
             GiaoXu::create([
                 'ten_giao_xu' => trim($row['ten_giao_xu']),
                 'dia_chi'    => $row['dia_chi'],
-                'ngay_thanh_lap' => Carbon::parse($row['ngay_thanh_lap'])->toDate(),
+                'ngay_thanh_lap' =>$row['ngay_thanh_lap'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_thanh_lap']) : null,
                 'nguoi_khoi_tao'=> Auth::id(),
                 'giao_hat_id' => $giao_hat->id
             ]);

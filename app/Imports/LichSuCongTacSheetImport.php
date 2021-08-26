@@ -29,8 +29,8 @@ class LichSuCongTacSheetImport implements ToCollection, WithHeadingRow
                     'ten_giao_phan' => $row['ten_giao_phan'],
                     'ten_giao_xu' => $row['ten_giao_phan'],
                     'ten_giao_hat' => $row['ten_giao_hat'],
-                    'bat_dau_phuc_vu' =>  Carbon::parse($row['thoi_gian_bat_dau'])->toDate(),
-                    'ket_thuc_phuc_vu' => Carbon::parse($row['thoi_gian_ket_thuc'])->toDate(),
+                    'bat_dau_phuc_vu' => $row['thoi_gian_bat_dau'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['thoi_gian_bat_dau']) : null,
+                    'ket_thuc_phuc_vu' =>$row['thoi_gian_ket_thuc'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['thoi_gian_ket_thuc']) : null,
                     'tu_si_id' => $tu_si->id,
                     'ten_vi_tri' => $row['vi_tri_phuc_vu']
                 ]);

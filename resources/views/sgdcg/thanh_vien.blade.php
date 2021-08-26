@@ -45,8 +45,9 @@
                                                     <th>Họ và tên</th>
                                                     <th>Tên thánh</th>
                                                     <th>Ngày sinh</th>
+                                                    <th>Chức vụ gia đình</th>
                                                     <th>Bí tích đã nhận</th>
-                                                    <th >Xem chi tiết</th>
+                                                    <th>Xem chi tiết</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody >
@@ -65,6 +66,7 @@
                                                                 {{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}
                                                             @endif
                                                         </td>
+                                                        <td class="text-center">{{ $th->chuc_vu_gd }}</td>
                                                         <td class="text-center">
                                                            {{ $th->bi_tich_count }}
                                                         </td>

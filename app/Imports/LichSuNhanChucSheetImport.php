@@ -27,9 +27,9 @@ class LichSuNhanChucSheetImport implements ToCollection, WithHeadingRow
                 ->first();
             if ($tu_si){
                 LichSuNhanChuc::create([
-                    'ngay_nhan_chuc' => Carbon::parse($row['ngay_nhan_chuc'])->toDate(),
+                    'ngay_nhan_chuc' => $row['ngay_nhan_chuc'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_nhan_chuc']) : null,
                     'noi_nhan_chuc' => $row['noi_nhan_chuc'],
-                    'ten_chuc_vu' => $row['ten_chuc_vu'],
+                    'chuc_vu' => $row['ten_chuc_vu'],
                     'tu_si_id' =>  $tu_si->id,
                     'nguoi_khoi_tao' => Auth::id(),
                 ]);

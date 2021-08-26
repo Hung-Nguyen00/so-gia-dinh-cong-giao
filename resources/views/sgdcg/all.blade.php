@@ -15,7 +15,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý giáo xứ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tất cả sổ gia đình công giáo</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Sổ gia đình công giáo</a></li>
                     </ol>
                 </div>
             </div>

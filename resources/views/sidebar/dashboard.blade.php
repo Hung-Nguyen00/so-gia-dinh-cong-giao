@@ -33,6 +33,7 @@
                     <li><a href="{{ route('chuc-vu.index') }}">Chức vụ</a></li>
                     <li><a href="{{ route('vi-tri.index') }}">Vị trí</a></li>
                     <li><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1])}}">Tu sĩ</a></li>
+                    <li><a href="{{ route('tu-dong.search', ['chuc_vu_id' => 2])}}">Tu sĩ thuộc nhà dòng</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -42,20 +43,22 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('giaoXu.showTuSi') }}">Tu sĩ</a></li>
                     <li><a href="{{ route('bi-tich.index') }}">Bí tích</a></li>
-                    <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình</a></li>
+                    <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
+                    <li><a href="{{ route('thanh-vien.index') }}">Giáo dân</a></li>
                 </ul>
             </li>
-            <li class="nav-label">Forms</li>
+            <li class="nav-label">Quản trị</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-file-text"></i>
-                    <span class="nav-text">Forms</span>
+                    <i class="la la-user"></i>
+                    <span class="nav-text">Quản lý tài khoản</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="form-element.html">Form Elements</a></li>
-                    <li><a href="form-wizard.html">Wizard</a></li>
-                    <li><a href="form-editor-summernote.html">Summernote</a></li>
-                    <li><a href="form-pickers.html">Pickers</a></li>
-                    <li><a href="form-validation-jquery.html">Jquery Validate</a></li>
+                    <li><a href="{{ route('tai-khoan.index') }}">Tài khoản</a></li>
+                    @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen !== 'admin')
+                        <li><a href="{{ route('tai-khoan.create')}}">Thêm tài khoản</a></li>
+                    @else
+                        <li><a href="{{ route('register')}}">Thêm tài khoản</a></li>
+                    @endif
                 </ul>
             </li>
         </ul>

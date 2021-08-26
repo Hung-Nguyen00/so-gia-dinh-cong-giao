@@ -30,8 +30,9 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row){
+            $format =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh_cua_giam_muc_hoac_linh_muc']);
             $tu_si_id = $this->tu_si->where('ho_va_ten', trim($row['ten_giam_muc_hoac_linh_muc']))
-                                    ->where('ngay_sinh', Carbon::parse($row['ngay_sinh_cua_giam_muc_hoac_linh_muc'])->format('Y-m-d'))
+                                    ->where('ngay_sinh', $format->format('Y-m-d'))
                                     ->first();
             $thanh_vien = $this->thanh_vien->where('ma_so', trim($row['ma_so']))
                                             ->where('ho_va_ten', trim($row['ho_va_ten']))
@@ -40,17 +41,17 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
             BiTichDaNhan::create([
                 'bi_tich_id' => $bi_tich->id,
                 'thanh_vien_id' => $thanh_vien->tvId,
-                'ngay_dien_ra' => Carbon::parse($row['ngay_dien_ra'])->toDate(),
+                'ngay_dien_ra' => $row['ngay_dien_ra'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_dien_ra']) : null,
                 'noi_dien_ra' => $row['noi_dien_ra'],
                 'ten_nguoi_do_dau' => $row['ten_nguoi_do_dau'],
                 'ten_thanh_nguoi_do_dau'=> $row['ten_thanh_nguoi_do_dau'],
-                'ngay_sinh_nguoi_do_dau' => Carbon::parse($row['ngay_sinh_nguoi_do_dau'])->toDate(),
+                'ngay_sinh_nguoi_do_dau' => $row['ngay_sinh_nguoi_do_dau'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh_nguoi_do_dau']) : null,
                 'ten_nguoi_lam_chung_1'=> $row['ten_nguoi_lam_chung_1'],
                 'ten_thanh_nguoi_lam_chung_1'=> $row['ten_thanh_nguoi_lam_chung_1'],
-                'ngay_sinh_nguoi_lam_chung_1' => Carbon::parse($row['ngay_sinh_nguoi_lam_chung_1'])->toDate(),
+                'ngay_sinh_nguoi_lam_chung_1' => $row['ngay_sinh_nguoi_lam_chung_1'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh_nguoi_lam_chung_1']) : null,
                 'ten_nguoi_lam_chung_2'=> $row['ten_nguoi_lam_chung_2'],
                 'ten_thanh_nguoi_lam_chung_2'=> $row['ten_thanh_nguoi_lam_chung_2'],
-                'ngay_sinh_nguoi_lam_chung_2' => Carbon::parse($row['ngay_sinh_nguoi_lam_chung_2'])->toDate(),
+                'ngay_sinh_nguoi_lam_chung_2' =>$row['ngay_sinh_nguoi_lam_chung_2'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh_nguoi_lam_chung_2']) : null,
                 'nguoi_khoi_tao' => Auth::id(),
                 'tu_si_id' => $tu_si_id->id,
             ]);

@@ -84,6 +84,18 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
+                                                        <label class="form-label ">Email</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('email') ?? $tu_si->email }}"
+                                                               name="email"
+                                                        >
+                                                    </div>
+                                                    @if($errors->has('email'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('email') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
                                                         <label class="form-label ">Ngày nhận chức</label>
                                                         <input type="date" class="form-control"
                                                                value="{{ old('ngay_nhan_chuc') ?? $tu_si->ngay_nhan_chuc  }}"
@@ -94,6 +106,7 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ngay_nhan_chuc') }}</span>
                                                     @endif
                                                 </div>
+
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label ">Nơi nhận chức</label>
@@ -104,6 +117,16 @@
                                                     </div>
                                                     @if($errors->has('noi_nhan_chuc'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('noi_nhan_chuc') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Tên dòng (nếu thuộc nhà dòng)</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('ten_dong') ?? $tu_si->ten_dong}}" name="ten_dong">
+                                                    </div>
+                                                    @if($errors->has('ten_dong'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ten_dong') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -170,9 +193,10 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('giao_phan_id') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-check">
-                                                        <input type="checkbox" name="dang_du_hoc" {{ $tu_si->dang_du_hoc ? 'checked' : '' }} class="form-check-input">
+                                                        <input type="checkbox" name="dang_du_hoc" {{ $tu_si->dang_du_hoc ? 'checked' : '' }}
+                                                                class="form-check-input ">
                                                         <label class="form-check-label">Đang du học</label>
                                                     </div>
                                                 </div>
@@ -286,7 +310,6 @@
                                                 <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
                                                     <div>
                                                         <button type="submit" class="btn btn-primary mr-2">Lưu lại</button>
-                                                        <a href="{{ route('tu-si.search', ['chuc_vu_id' => 1]) }}" class="btn btn-light">Quay lại</a>
                                                     </div>
                                                 </div>
                                             </div>

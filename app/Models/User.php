@@ -18,12 +18,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+
     protected $fillable = [
-        'name',
-        'avatar',
         'email',
-        'role_name',
         'password',
+        'ho_va_ten',
+        'quyen_quan_tri_id',
+        'giao_phan_id',
+        'giao_xu_id'
     ];
 
     /**
@@ -44,4 +46,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function quanTri(){
+        return $this->belongsTo(QuyenQuanTri::class, 'quyen_quan_tri_id', 'id');
+    }
+
+    public function giaoXu(){
+        return $this->belongsTo(GiaoXu::class, 'giao_xu_id', 'id');
+    }
+
+    public function giaoPhan(){
+        return $this->belongsTo(GiaoPhan::class, 'giao_phan_id', 'id');
+    }
 }

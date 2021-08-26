@@ -32,7 +32,8 @@ class SoGiaDinhController extends Controller
     {
         // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
         $all_so_gia_dinh = SoGiaDinh::withCount('thanhVien')
-            ->where('giao_xu_id', Auth::user()->giao_xu_id)->orderBy('created_at', 'DESC')
+            ->where('giao_xu_id', Auth::user()->giao_xu_id)
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         $ten_giao_xu = GiaoXu::where('id', Auth::user()->giao_xu_id)->first()->ten_giao_xu;
@@ -59,6 +60,12 @@ class SoGiaDinhController extends Controller
 
     public function storeThanhVien(CreateThanhVienRequest $request, $sgdId){
         $validateData = $request->validated();
+        if (!$validateData['nam_sinh'] && !$validateData['ngay_sinh']){
+            throw ValidationException::withMessages(['ngay_sinh' => 'Ngày sinh hoặc năm sinh không được phép trống']);
+        }
+        if ($validateData['nam_sinh'] && $validateData['ngay_sinh']){
+            throw ValidationException::withMessages(['ngay_sinh' => 'Chỉ được phép nhập một trong 2 giá trị']);
+        }
         if (array_key_exists('nam_sinh', $validateData )){
             // if client input nam_sinh, it's a number and then convert to date and save it to db
             // db only receive type date
@@ -101,8 +108,11 @@ class SoGiaDinhController extends Controller
     public function updateThanhVien(CreateThanhVienRequest $request, $sgdId, ThanhVien $thanh_vien){
         $validateData = $request->validated();
         // required ngay_sinh
-        if (!$validateData['nam_sinh'] && $validateData['ngay_sinh']){
+        if (!$validateData['nam_sinh'] && !$validateData['ngay_sinh']){
             throw ValidationException::withMessages(['ngay_sinh' => 'Ngày sinh hoặc năm sinh không được phép trống']);
+        }
+        if ($validateData['nam_sinh'] && $validateData['ngay_sinh']){
+            throw ValidationException::withMessages(['ngay_sinh' => 'Chỉ được phép nhập một trong 2 giá trị']);
         }
 
         if (array_key_exists('nam_sinh', $validateData) && $validateData['nam_sinh']){
@@ -239,13 +249,11 @@ class SoGiaDinhController extends Controller
 
     // import Excel SoGiaDinh ThanhVien and BiTichDaNhan
     public function fileImport(Request $request){
-
-        Excel::import(new SoGiaDinhImport(), $request->file('file')->store('temp'));
-        Excel::import(new ThanhVienImport(), $request->file('file')->store('temp'));
-        Excel::import(new BiTichDaNhanImport(), $request->file('file')->store('temp'));
         try{
             DB::transaction(function () use ($request) {
-
+                Excel::import(new SoGiaDinhImport(), $request->file('file')->store('temp'));
+                Excel::import(new ThanhVienImport(), $request->file('file')->store('temp'));
+                Excel::import(new BiTichDaNhanImport(), $request->file('file')->store('temp'));
             });
         }catch (\InvalidArgumentException $ex){
             Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');

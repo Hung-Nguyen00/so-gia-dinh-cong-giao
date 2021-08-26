@@ -27,7 +27,8 @@ class CrudSgdcg extends Component
 
     public function render()
     {
-        $this->all_giao_xu = GiaoXu::where('giao_hat_id', $this->giao_hat_id)->get();
+        $this->all_giao_xu = GiaoXu::where('giao_hat_id', $this->giao_hat_id)
+                                ->where('giao_xu_hoac_giao_ho', 0)->get();
         $this->all_giao_phan = GiaoPhan::all();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
         return view('livewire.sgdcg.crud-sgdcg');

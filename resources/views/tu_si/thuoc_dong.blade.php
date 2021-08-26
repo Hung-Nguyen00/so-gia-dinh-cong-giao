@@ -9,14 +9,14 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>Các tu sĩ</h4>
+                        <h4>Các tu sĩ thuộc nhà dòng</h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tu sĩ</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Tu sĩ thuộc nhà dòng</a></li>
                     </ol>
                 </div>
             </div>
@@ -27,23 +27,19 @@
                             <div class="card">
                                 <div>
                                     <div class="card-header">
-                                        <h4 class="card-title">Danh sách các tu sĩ </h4>
-                                        <div class="d-flex justify-content-around">
-                                            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
-
-                                        </div>
+                                        <h4 class="card-title">Danh sách các tu sĩ thuộc nhà dòng </h4>
                                     </div>
-                                    <form action="{{ route('tu-si.search')}}">
+                                    <form action="{{ route('tu-dong.search')}}">
                                         <div class="col-md-12 mt-2 d-flex justify-content-around">
                                             <div class="d-flex justify-content-start col-md-8">
                                                 <div class="form-group" style="margin-left: -10px;">
                                                     <div wire:ignore>
                                                         <lable class="col-form-label">Tìm kiếm tu sĩ theo chức vụ</lable>
-                                                        <select class="selectpicker form-control pt-1" name="chuc_vu_id" data-live-search="true" >
+                                                        <select class="selectpicker form-control pt-1" name="chuc_vu_id" data-live-search="true">
                                                             @foreach($all_chuc_vu as $cv)
                                                                 @if($cv->id === $chuc_vu_id)
                                                                     <option selected value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
-                                                                    @else
+                                                                @else
                                                                     <option  value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
                                                                 @endif
                                                             @endforeach
@@ -75,9 +71,9 @@
                                                     <th >STT</th>
                                                     <th>Họ và tên</th>
                                                     <th>Tên thánh</th>
+                                                    <th>Tên dòng</th>
                                                     <th style="width: 100px">Ngày sinh</th>
-                                                    <th style="width:60px; ">Du học</th>
-                                                    <th>Đang phục vụ</th>
+                                                    <th>Đang phục vụ giáo xứ</th>
                                                     <th >Chỉnh sửa</th>
                                                 </tr>
                                                 </thead>
@@ -90,25 +86,23 @@
                                                         <td>
                                                             {{ $th->getTenThanh($th->ten_thanh_id) }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
                                                         <td>
-                                                            @if($th->dang_du_hoc == 1)
-                                                                <span class="badge badge-rounded badge-success">Đang du học</span>
-                                                            @endif
+                                                            {{ $th->ten_dong }}
                                                         </td>
-                                                        <td>
-                                                            @if($th->giao_xu_id)
-                                                                Giáo hat: {{ $th->giaoHat->ten_giao_hat }}
+                                                        <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
+                                                        <td>@if($th->giao_xu_id)
+                                                                Giáo hạt: {{ $th->giaoHat->ten_giao_hat }}
                                                                 <br>
-                                                                Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
+                                                                Giáo xứ:
+                                                                {{ $th->giaoXu->ten_giao_xu }}
                                                                 @else
-
+                                                                Không
                                                             @endif
                                                         </td>
                                                         <td class="text-center">
                                                             <a type="button"
                                                                href="{{ route('tu-si.edit', $th)}}"
-                                                                    class="btn btn-sm btn-primary mb-1">
+                                                               class="btn btn-sm btn-primary mb-1">
                                                                 <i class="la la-pencil"></i>
                                                             </a>
                                                         </td>

@@ -31,8 +31,8 @@ class ThanhVienSheetImport implements ToCollection, WithHeadingRow
             ThanhVien::create([
                 'ho_va_ten' => trim($row['ho_va_ten']),
                 'chuc_vu_gd' => $row['quan_he'],
-                'ngay_sinh' =>  Carbon::parse($row['ngay_sinh'])->toDate(),
-                'ngay_mat'  => Carbon::parse($row['ngay_mat'])->toDate(),
+                'ngay_sinh' =>  $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
+                'ngay_mat'  => $row['ngay_mat'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_mat']) : null,
                 'dia_chi_hien_tai' => $row['dia_chi_hien_tai'],
                 'so_dien_thoai' => $row['so_dien_thoai'],
                 'so_gia_dinh_id' => $ma_so->id,
