@@ -9,8 +9,11 @@ use App\Imports\GiaoPhanImport;
 use App\Imports\GiaoTinhImport;
 use App\Imports\GiaoXuImport;
 use App\Models\GiaoPhan;
+use App\Models\GiaoXu;
+use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -26,6 +29,71 @@ class GiaoPhanController extends Controller
         $all_giao_phan = GiaoPhan::withCount('giaoHat')->orderBy('created_at', 'DESC')
             ->get();;
         return view('giao_phan.all_giao_phan', compact('all_giao_phan'));
+    }
+
+    public function indexGiaoPhan($id){
+        $statistics_giao_phan = GiaoPhan::with('giaoHat.giaoXu')
+            ->withCount(['giaoXu', 'giaoHat','giaoDan'])
+            ->where('id', $id)
+            ->first();
+        $giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
+            $q->where('ten_chuc_vu', 'Giám mục');
+        })->where('giao_phan_id',$id)
+         ->first();
+        $linh_muc_count = TuSi::whereHas('chucVu', function ($q){
+            $q->where('ten_chuc_vu', 'Linh mục');
+        })->where('giao_phan_id',$id)
+            ->count();
+        $chung_sinh_count = TuSi::whereHas('chucVu', function ($q){
+            $q->where('ten_chuc_vu', '<>' , 'Linh mục')
+                ->where('ten_chuc_vu', '<>' , 'Giám mục');
+        })->where('giao_phan_id',$id)
+            ->count();
+        if ($giam_muc){
+            return view('dashboard.statictis_giao_phan', compact(
+                'statistics_giao_phan', 'linh_muc_count', 'chung_sinh_count', 'giam_muc'));
+        }else{
+            Toastr::error('Không có dữ liệu', 'Cảnh báo');
+            return redirect()->route('home');
+        }
+
+    }
+
+    public function indexGiaoXu(){
+        $giao_xu = GiaoXu::with(['giaoDan.biTich', 'giaoHo'])->withCount(['tuSi', 'giaoDan', 'giaoHo'])
+            ->where('id', Auth::user()->giao_xu_id)
+            ->first();
+        $static_ket_hon = 0;
+        $static_tu = 0;
+        $static_sinh = 0;
+        if ($giao_xu != null && $giao_xu->giaoDan->count() > 0){
+            foreach($giao_xu->giaoDan as $g){
+                if ( $g->biTich->count() == 4){
+                     $static_ket_hon ++;
+                }
+                if ( $g->biTich->count() == 1){
+                    $static_sinh ++;
+                }
+                if ($g->ngay_mat !== null){
+                    $static_tu ++;
+                }
+            }
+        }
+        $linh_muc = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
+            $q->where('ten_vi_tri', 'Cha xứ');
+        })->where('giao_xu_id', Auth::user()->giao_xu_id)->first();
+        if ($linh_muc && $giao_xu){
+            return view('dashboard.static_giao_xu', compact(
+                'giao_xu',
+                'static_tu',
+                'static_ket_hon',
+                'static_sinh',
+                'linh_muc'));
+        }else{
+            Toastr::error('Không có dữ liệu', 'Cảnh báo');
+            return redirect()->route('home');
+        }
+
     }
 
     public function fileImport(Request $request){

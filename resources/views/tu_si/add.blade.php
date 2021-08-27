@@ -33,16 +33,7 @@
                                         <form action="{{ route('tu-si.store') }}" method="post" >
                                             @csrf
                                             <div class="row">
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label class="form-label ">Họ và tên</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('ho_va_ten') }}" name="ho_va_ten">
-                                                    </div>
-                                                    @if($errors->has('ho_va_ten'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
-                                                    @endif
-                                                </div>
+
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <div>
@@ -57,6 +48,16 @@
                                                     </div>
                                                     @if($errors->has('ten_thanh_id'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_id') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Họ và tên</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('ho_va_ten') }}" name="ho_va_ten">
+                                                    </div>
+                                                    @if($errors->has('ho_va_ten'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -174,7 +175,10 @@
                                                                     name="giao_phan_id" data-live-search="true" >
                                                                 <option selected value="">Chọn tên giáo phận</option>
                                                                 @foreach($all_giao_phan as $cv)
-                                                                    <option  value="{{ $cv->id }}" {{ old('giao_phan_id') == $cv->id ? 'selected' : '' }}> {{ $cv->ten_giao_phan }} - Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}</option>
+                                                                    <option  value="{{ $cv->id }}"
+                                                                    {{ old('giao_phan_id') || \Illuminate\Support\Facades\Auth::user()->giao_phan_id == $cv->id ? 'selected' : '' }}>
+                                                                        {{ $cv->ten_giao_phan }} - Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -233,6 +237,32 @@
 
 @section('scripts')
     <script type="text/javascript">
+        $( window ).on( "load", function() {
+            var id = $('#giao_phan_id').val();
+            console.log(id);
+            $('#giao_hat').find('option').not(':first').remove();
+            $.ajax({
+                url:'giao-hat/'+id,
+                type:'get',
+                dataType:'json',
+                success:function (response) {
+                    console.log(response.data);
+                    var len = 0;
+                    if (response.data != null) {
+                        len = response.data.length;
+                    }
+                    if (len>0) {
+                        for (var i = 0; i<len; i++) {
+                            var id = response.data[i].id;
+                            var name = response.data[i].ten_giao_hat;
+                            var option = "<option value='"+id+"'>"+name+"</option>";
+                            $("#giao_hat").append(option);
+                        }
+                    }
+                    $('#giao_hat').selectpicker('refresh');
+                }
+            })
+        });
         $(document).ready(function () {
             $('#giao_phan_id').change(function () {
                 var id = $(this).val();

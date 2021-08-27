@@ -38,18 +38,6 @@
                                 <span class="text-danger">{{ $errors->first('nam_thanh_lap') }}</span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label >Giáo hạt</label>
-                            <select class="custom-select form-control mb-3" name="giao_xu_id" wire:model="giao_xu_id">
-                                <option selected>Chọn Giáo hạt</option>
-                                @foreach($giao_xu as $gt)
-                                    <option value="{{ $gt->id }}"> {{ $gt->ten_giao_xu }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('giao_xu_id'))
-                                <span class="text-danger">{{ $errors->first('giao_xu_id') }}</span>
-                            @endif
-                        </div>
                         <button type="submit" class="btn btn-primary float-right">Thêm mới</button>
                         <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy</button>
                     </form>

@@ -48,7 +48,7 @@
                         <button data-toggle="modal"
                                 data-target="#deletePhucVu"
                                 wire:click="edit({{ $ls->id }})"
-                                class="btn btn-sm btn-danger">
+                                class="btn btn-outline-danger btn-sm d-inline-block">
                             <i class="la la-trash-o"></i>
                         </button>
                     </td>

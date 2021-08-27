@@ -15,7 +15,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Dánh sách tu sĩ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1]) }}">Dánh sách tu sĩ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Chỉnh sửa</a></li>
                     </ol>
                 </div>
@@ -34,16 +34,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <div class="row">
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label class="form-label ">Họ và tên</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('ho_va_ten') ?? $tu_si->ho_va_ten}}" name="ho_va_ten">
-                                                    </div>
-                                                    @if($errors->has('ho_va_ten'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
-                                                    @endif
-                                                </div>
+
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <div>
@@ -61,6 +52,16 @@
                                                     </div>
                                                     @if($errors->has('ten_thanh_id'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_id') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Họ và tên</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('ho_va_ten') ?? $tu_si->ho_va_ten}}" name="ho_va_ten">
+                                                    </div>
+                                                    @if($errors->has('ho_va_ten'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -307,7 +308,7 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('check_save_info') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 mt-3">
                                                     <div>
                                                         <button type="submit" class="btn btn-primary mr-2">Lưu lại</button>
                                                     </div>
@@ -317,7 +318,9 @@
                                         <form action="{{ route('tu-si.destroy', $tu_si) }}" style="margin-top: -36px;" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"  onclick="return window.confirm('Bạn chắc chắn muốn xóa tu sĩ này chứ?')" class="btn btn-danger mr-2 float-right">Xóa tu sĩ</button>
+                                            <button type="submit"
+                                                    onclick="return window.confirm('Bạn chắc chắn muốn xóa tu sĩ này chứ?')"
+                                                    class="btn btn-outline-danger d-inline-block px-3 float-right">Xóa tu sĩ</button>
                                         </form>
                                         <div style="margin-top: 50px">
                                             <hr>

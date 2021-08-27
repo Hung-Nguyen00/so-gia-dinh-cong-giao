@@ -24,7 +24,7 @@ class CreateTuSiTable extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->string('ho_va_ten', 100)->nullable();
-            $table->string('ten_dong', 100)->nullable();
+
             $table->string('email', 100)->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->date('ngay_mat')->nullable();

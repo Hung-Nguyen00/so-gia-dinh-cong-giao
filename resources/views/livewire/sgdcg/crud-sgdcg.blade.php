@@ -11,7 +11,7 @@
                     class="btn btn-info">Import dữ liệu
             </button>
             <button
-                    data-toggle="modal" data-target="#createModal"
+                    data-toggle="modal"  data-target="#createModal"
                     class="btn btn-primary">Thêm mới
             </button>
         </div>
@@ -50,7 +50,7 @@
                             <button type="button" wire:click="edit({{ $g->id }})"
                                     data-toggle="modal"
                                     data-target="#deleteModal"
-                                    class="btn btn-sm btn-danger mb-1">
+                                    class="btn btn-outline-danger btn-sm d-inline-block mb-1">
                                 <i class="la la-trash-o"></i>
                             </button>
                         </td>

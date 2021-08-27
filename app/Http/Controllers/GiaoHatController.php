@@ -22,7 +22,7 @@ class GiaoHatController extends Controller
     }
 
     public function getGiaoXu($id){
-        $data = GiaoXu::where('giao_hat_id', $id)->where('giao_xu_hoac_giao_ho', 0)->get();
+    $data = GiaoXu::where('giao_hat_id', $id)->get();
         \Log::info($data);
         return response()->json(['data' => $data]);
     }

@@ -31,7 +31,7 @@ class SoGiaDinhController extends Controller
     public function index()
     {
         // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
-        $all_so_gia_dinh = SoGiaDinh::withCount('thanhVien')
+      $all_so_gia_dinh = SoGiaDinh::withCount('thanhVien')
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -66,7 +66,7 @@ class SoGiaDinhController extends Controller
         if ($validateData['nam_sinh'] && $validateData['ngay_sinh']){
             throw ValidationException::withMessages(['ngay_sinh' => 'Chỉ được phép nhập một trong 2 giá trị']);
         }
-        if (array_key_exists('nam_sinh', $validateData )){
+        if (array_key_exists('nam_sinh', $validateData) && $validateData['nam_sinh']){
             // if client input nam_sinh, it's a number and then convert to date and save it to db
             // db only receive type date
             $validateData['ngay_sinh'] =  $validateData['nam_sinh'].'/01/01';

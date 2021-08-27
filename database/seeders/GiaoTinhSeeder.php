@@ -14,6 +14,7 @@ class GiaoTinhSeeder extends Seeder
      */
     public function run()
     {
+
         GiaoTinh::create([
             'ten_giao_tinh' => 'Hà Nội',
             'dia_chi' => 'Hà Nội',

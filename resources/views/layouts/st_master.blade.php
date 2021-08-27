@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Quản sổ gia đình công giáo</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/favicon.jpg') }}">
     <!-- Datatable -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="{{ URL::to('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -170,10 +170,6 @@
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/custom.min.js') }}"></script>
-    <!-- Chart Morris plugin files -->
-    <script src="{{ URL::to('assets/vendor/raphael/raphael.min.js') }}"></script>
-    <script src="{{ URL::to('assets/vendor/morris/morris.min.js') }}"></script>
-	<!-- Chart piety plugin files -->
     <script src="{{ URL::to('assets/vendor/peity/jquery.peity.min.js') }}"></script>
 	<!-- Demo scripts -->
     <script src="{{ URL::to('assets/js/dashboard/dashboard-2.js') }}"></script>
@@ -183,9 +179,6 @@
 	<!-- Svganimation scripts -->
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
-    <script src="{{ URL::to('assets/js/styleSwitcher.js') }}"></script>
-
-
     @yield('scripts')
 </body>
 </html>

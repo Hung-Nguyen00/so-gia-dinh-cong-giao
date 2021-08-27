@@ -19,7 +19,12 @@
                             </div>
                             <div class="form-group ">
                                 <label >Ngày tạo sổ</label>
-                                    <input type="date" wire:model="ngay_tao_so" class="form-control col-md-5">
+                                    <input  id="ngay_tao_so"
+                                            type="date"
+                                            wire:model="ngay_tao_so"
+                                            name="ngay_tao_so"
+                                            value="{{ $ngay_tao_so }}"
+                                            class="form-control col-md-5">
                                 @if($errors->has('ngay_tao_so'))
                                     <span class="text-danger">{{ $errors->first('ngay_tao_so') }}</span>
                                 @endif
@@ -32,3 +37,4 @@
         </div>
     </div>
 </div>
+

@@ -3,6 +3,7 @@
     <!-- Content body start -->
     <div class="content-body">
         <!-- row -->
+        {!! Toastr::message() !!}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-xxl-3 col-sm-6">
@@ -10,16 +11,14 @@
                         <div class="card-body">
                             <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-users"></i>
+                                    <i class="la la-home"></i>
                                 </span>
-                                <div class="media-body text-white">
-                                    <p class="mb-1">Total Students</p>
-                                    <h3 class="text-white">3280</h3>
-                                    <div class="progress mb-2 bg-white">
-                                        <div class="progress-bar progress-animated bg-light" style="width: 80%"></div>
-                                    </div>
-                                    <small>80% Increase in 20 Days</small>
+                                <div class="text-white">
+                                    <p class="mb-1">Tổng số phận</p>
                                 </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white" style="font-size: 16px"> {{ $count['giao_phan_count'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -29,16 +28,14 @@
                         <div class="card-body">
                             <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-user"></i>
+                                    <i class="la la-home"></i>
                                 </span>
-                                <div class="media-body text-white">
-                                    <p class="mb-1">New Students</p>
-                                    <h3 class="text-white">245</h3>
-                                    <div class="progress mb-2 bg-white">
-                                        <div class="progress-bar progress-animated bg-light" style="width: 50%"></div>
-                                    </div>
-                                    <small>50% Increase in 25 Days</small>
+                                <div class="text-white">
+                                    <p class="mb-1">Tổng số giáo xứ</p>
                                 </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white fs-16" style="font-size: 16px"> {{ $count['giao_xu_count'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -50,14 +47,12 @@
                                 <span class="mr-3">
                                     <i class="la la-graduation-cap"></i>
                                 </span>
-                                <div class="media-body text-white">
-                                    <p class="mb-1">Total Course</p>
-                                    <h3 class="text-white">28</h3>
-                                    <div class="progress mb-2 bg-white">
-                                        <div class="progress-bar progress-animated bg-light" style="width: 76%"></div>
-                                    </div>
-                                    <small>76% Increase in 20 Days</small>
+                                <div class="text-white">
+                                    <p class="mb-1">Tổng số tu sĩ</p>
                                 </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white fs-16" style="font-size: 16px"> {{ $count['tu_si_count'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -67,16 +62,14 @@
                         <div class="card-body">
                             <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-dollar"></i>
+                                    <i class="la la-users"></i>
                                 </span>
-                                <div class="media-body text-white">
-                                    <p class="mb-1">Fees Collection</p>
-                                    <h3 class="text-white">25160$</h3>
-                                    <div class="progress mb-2 bg-white">
-                                        <div class="progress-bar progress-animated bg-light" style="width: 30%"></div>
-                                    </div>
-                                    <small>30% Increase in 30 Days</small>
+                                <div class="text-white">
+                                    <p class="mb-1" style="width: 120px;">Tổng số giáo dân</p>
                                 </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white fs-16" style="font-size: 16px"> {{ $count['giao_dan_count'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -88,85 +81,33 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive recentOrderTable">
-                                <table class="table verticle-middle table-responsive-md">
+                                <table id="example3" class="display" style="min-width: 845px;">
                                     <thead>
                                         <tr>
-                                            <th scope="col">No.</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Assigned Professor</th>
-                                            <th scope="col">Date Of Admit</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Subject</th>
-                                            <th scope="col">Fees</th>
-                                            <th scope="col">Edit</th>
+                                            <th scope="col">STT</th>
+                                            <th scope="col">Tên giáo phận</th>
+                                            <th scope="col">Tổng số giáo hạt</th>
+                                            <th scope="col">Tổng số giáo xứ</th>
+                                            <th scope="col">Tổng tu sĩ</th>
+                                            <th scope="col">Tổng giáo dân</th>
+                                            <th scope="col">Xem chi tiết</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    @php $i = 0 @endphp
+                                    @foreach($statistics_giao_phan as $th)
                                         <tr>
-                                            <td>01</td>
-                                            <td>Jack Ronan</td>
-                                            <td>Airi Satou</td>
-                                            <td>01 August 2020</td>
-                                            <td><span class="badge badge-rounded badge-primary">Checkin</span></td>
-                                            <td>Commerce</td>
-                                            <td>120$</td>
+                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $th->ten_giao_phan }}</td>
+                                            <td class="text-center">{{ $th->giao_hat_count }}</td>
+                                            <td class="text-center">{{ $th->giao_xu_count }}</td>
+                                            <td class="text-center">{{ $th->tu_si_count }}</td>
+                                            <td class="text-center">{{ $th->giao_dan_count }}</td>
                                             <td>
                                                 <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>02 </td>
-                                            <td>Jimmy Morris</td>
-                                            <td>Angelica Ramos</td>
-                                            <td>31 July 2020</td>
-                                            <td><span class="badge badge-rounded badge-warning">Panding</span></td>
-                                            <td>Mechanical</td>
-                                            <td>120$</td>
-                                            <td>
-                                                <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>03 </td>
-                                            <td>Nashid Martines</td>
-                                            <td>Ashton Cox</td>
-                                            <td>30 July 2020</td>
-                                            <td><span class="badge badge-rounded badge-danger">Canceled</span></td>
-                                            <td>Science</td>
-                                            <td>520$</td>
-                                            <td>
-                                                <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>04</td>
-                                            <td>Roman Aurora</td>
-                                            <td>Cara Stevens</td>
-                                            <td>29 July 2020</td>
-                                            <td><span class="badge badge-rounded badge-success">Checkin</span></td>
-                                            <td>Arts</td>
-                                            <td>220$</td>
-                                            <td>
-                                                <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>05</td>
-                                            <td>Samantha</td>
-                                            <td>Bruno Nash </td>
-                                            <td>28 July 2020</td>
-                                            <td><span class="badge badge-rounded badge-success">Checkin</span></td>
-                                            <td>Maths</td>
-                                            <td>130$</td>
-                                            <td>
-                                                <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                            </td>
-                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

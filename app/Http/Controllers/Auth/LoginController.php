@@ -78,7 +78,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        Toastr::success('Logout successfully :)','Success');
+        Toastr::success('Đăng xuất thành công','Thành công');
         return redirect('login');
     }
 

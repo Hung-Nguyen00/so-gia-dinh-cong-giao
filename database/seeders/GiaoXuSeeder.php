@@ -14,6 +14,7 @@ class GiaoXuSeeder extends Seeder
      */
     public function run()
     {
+
         GiaoXu::create([
             'ten_giao_xu' => 'Thạnh An',
             'dia_chi' => 'Hà Nội',

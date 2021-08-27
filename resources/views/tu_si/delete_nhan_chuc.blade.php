@@ -12,7 +12,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" wire:click.prevent="delete()" class="btn btn-danger">Xóa</button>
+                <button type="button" wire:click.prevent="delete()" class="btn btn-outline-danger d-inline-block px-3">Xóa</button>
             </div>
         </div>
     </div>

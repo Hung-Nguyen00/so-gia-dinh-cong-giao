@@ -7,6 +7,7 @@ a:hover, a:focus, a.active {
   .email-left-box .intro-title i {
     color: #ff8f16; }
 .widget-stat .media .media-body h4 {
+  font-size: 20px !important;
   color: #ff8f16 !important; }
 .email-right-box .right-box-border {
   border-right: 2px solid rgba(255, 143, 22, 0.1); }

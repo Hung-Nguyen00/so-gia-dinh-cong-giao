@@ -25,7 +25,7 @@
                     <button data-toggle="modal"
                             data-target="#deleteNhanChuc"
                             wire:click="edit({{ $ls->id }})"
-                            class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></button>
+                            class="btn btn-outline-danger btn-sm d-inline-block"><i class="la la-trash-o"></i></button>
                 </td>
             </tr>
             @endforeach

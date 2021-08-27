@@ -67,7 +67,7 @@
                                                             {{ $th->dia_chi_hien_tai}}
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)  }}" class="text-primary">Xem chi tiết </a>
+                                                            <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}" class="text-primary">Xem chi tiết </a>
                                                         </td>
                                                         <td class="text-center">
                                                             <a type="button"

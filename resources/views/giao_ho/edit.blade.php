@@ -38,18 +38,6 @@
                                 <span class="text-danger">{{ $errors->first('nam_thanh_lap') }}</span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label >Giáo Hạt</label>
-                            <select class="custom-select form-control mb-3" name="giao_xu_id" wire:model="giao_xu_id">
-                                <option selected>Chọn giáo xứ</option>
-                                @foreach($giao_xu as $gt)
-                                    <option value="{{ $gt->id }}"> {{ $gt->ten_giao_xu }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('giao_xu_id'))
-                                <span class="text-danger">{{ $errors->first('giao_xu_id') }}</span>
-                            @endif
-                        </div>
                         <div class="form-check">
                             <input type="checkbox" wire:model="change_to_giao_xu" class="form-check-input"  >
                             <label class="form-check-label" >Chuyển thành giáo xứ</label>

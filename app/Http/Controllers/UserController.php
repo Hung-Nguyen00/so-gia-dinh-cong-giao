@@ -98,7 +98,7 @@ class UserController extends Controller
         if ($user){
             return view('users.edit', compact('user'));
         }else{
-            Toastr::success('Không tìm thấy','Lỗi');
+            Toastr::error('Không tìm thấy','Lỗi');
             return back();
         }
     }
@@ -123,6 +123,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if ($user){
+            $user->delete();
+            Toastr::success('Xóa thành công','Thành công');
+            return back();
+        }else{
+            Toastr::error('Không tìm thấy','Lỗi');
+            return back();
+        }
     }
 }

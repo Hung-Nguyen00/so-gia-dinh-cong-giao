@@ -39,6 +39,10 @@ class GiaoXu extends Model
         return $this->belongsToThrough(GiaoPhan::class, GiaoHat::class);
     }
 
+    public function giaoDan(){
+        return $this->hasManyThrough(ThanhVien::class, SoGiaDinh::class);
+    }
+
     public function getGiaoHo($id){
         $ten_giao_ho = GiaoXu::find($id)->ten_giao_xu;
         if ($ten_giao_ho){

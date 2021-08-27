@@ -28,7 +28,7 @@
                                 <div>
                                     <div class="card-header">
                                         <h4 class="card-title">Danh sách tài khoản </h4>
-                                        @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'admin')
+                                        @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen !== 'admin')
                                             <div class="d-flex justify-content-around">
                                                 <a class="btn btn-primary" href="{{ route('tai-khoan.create') }}">Tạo tài khoản</a>
                                             </div>
@@ -41,7 +41,7 @@
                                     </div>
                                     <div  class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example3" class="display" style="min-width: 845px">
+                                            <table id="example3" class="display" style="min-width: 845px; width: 1000px;">
                                                 <thead>
                                                 <tr>
                                                     <th >STT</th>
@@ -79,11 +79,15 @@
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <a type="button"
-                                                               href="{{ route('tai-khoan.edit', $th->id)}}"
-                                                               class="btn btn-sm btn-primary mb-1">
-                                                                <i class="la la-pencil"></i>
-                                                            </a>
+                                                            <form action="{{ route('tai-khoan.destroy', $th->id) }}" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                        onclick="return window.confirm('Bạn chắc chắn muốn xóa tài khoản này chứ?')"
+                                                                        class="btn btn-outline-danger btn-sm d-inline-block">
+                                                                    <i class="la la-trash"></i>
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach

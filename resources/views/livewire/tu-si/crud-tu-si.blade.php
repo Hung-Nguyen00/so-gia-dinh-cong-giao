@@ -73,7 +73,7 @@
                             <button type="button"
                                     data-toggle="modal"
                                     data-target="#deleteGiaoHat"
-                                    class="btn btn-sm btn-danger mb-1">
+                                    class="btn btn-outline-danger btn-sm d-inline-block mb-1">
                                 <i class="la la-trash-o"></i>
                             </button>
                         </td>

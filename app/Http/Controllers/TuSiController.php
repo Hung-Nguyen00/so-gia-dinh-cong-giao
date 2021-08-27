@@ -34,6 +34,7 @@ class TuSiController extends Controller
     public function index()
     {
         $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
+            ->where('giao_phan_id', Auth::user()->giao_phan_id)
             ->orderBy('created_at', 'DESC')
             ->get();
 
@@ -69,10 +70,19 @@ class TuSiController extends Controller
 
     public function searchTuSi(Request $request){
         if (ChucVu::find($request->chuc_vu_id)){
-            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
-                ->where('chuc_vu_id', $request->chuc_vu_id)
-                ->orderBy('created_at', 'DESC')
-                ->get();;
+            if (Auth::user()->quanTri->ten_quyen == 'admin'){
+                $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
+                    ->where('chuc_vu_id', $request->chuc_vu_id)
+                    ->whereNull('ten_dong')
+                    ->orderBy('created_at', 'DESC')
+                    ->get();;
+            }else{
+                $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
+                    ->where('giao_phan_id', Auth::user()->giao_phan_id)
+                    ->where('chuc_vu_id', $request->chuc_vu_id)
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
+            }
             $chuc_vu_id = ChucVu::find($request->chuc_vu_id)->id;
             $all_chuc_vu = ChucVu::all();
             return view('tu_si.all', compact('all_tu_si', 'chuc_vu_id', 'all_chuc_vu'));
@@ -163,21 +173,33 @@ class TuSiController extends Controller
      */
     public function edit(TuSi $tuSi)
     {
-        $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
-                    ->where('id', $tuSi->id)->first();
-        $all_ten_thanh = TenThanh::all();
-        $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
-        $all_giao_hat = GiaoHat::all();
-        $all_vi_tri = ViTri::all();
-        $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-        $all_chuc_vu = ChucVu::all();
-        return view('tu_si.edit', compact('tu_si',
-            'all_chuc_vu',
-            'all_giao_xu',
-            'all_giao_hat',
-            'all_giao_phan',
-            'all_ten_thanh',
-            'all_vi_tri'));
+        if (Auth::user()->quanTri->ten_quyen == 'admin') {
+            $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
+                ->where('id', $tuSi->id)->first();
+        }else{
+            $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
+                ->where('giao_phan_id', Auth::user()->giao_phan_id)
+                ->where('id', $tuSi->id)
+                ->first();
+        }
+        if($tu_si){
+            $all_ten_thanh = TenThanh::all();
+            $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
+            $all_giao_hat = GiaoHat::all();
+            $all_vi_tri = ViTri::all();
+            $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
+            $all_chuc_vu = ChucVu::all();
+            return view('tu_si.edit', compact('tu_si',
+                'all_chuc_vu',
+                'all_giao_xu',
+                'all_giao_hat',
+                'all_giao_phan',
+                'all_ten_thanh',
+                'all_vi_tri'));
+
+        }else{
+            return back();
+        }
     }
 
     /**

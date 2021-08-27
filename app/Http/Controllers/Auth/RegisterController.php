@@ -30,14 +30,14 @@ class RegisterController extends Controller
         $validateData = $this->validateRegister($request);
         User::create(array_merge($validateData, ['password'  => Hash::make($request->password)]));
         Toastr::success('Tạo tài khoản thành công','Thành công');
-        return back();
+        return redirect()->route('tai-khoan.index');
     }
 
 
     public function validateRegister($request){
         $validateData = $request->validate([
             'ho_va_ten'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:255|unique:users',
+            'email'     => 'required|string|email|max:100|unique:users',
             'quyen_quan_tri_id' => 'required',
             'giao_phan_id' => 'required',
             'giao_xu_id' => 'nullable',
@@ -46,6 +46,9 @@ class RegisterController extends Controller
         ], [
             'ho_va_ten.required' => 'Họ và tên không được phép trống',
             'email.required' => 'Tài khoản không được phép trống',
+            'email.email' => 'Tài khoản phải đúng dạng email ví dụ: abc@gmail.com',
+            'email.unique' => 'Tài khoản đã tồn tại',
+            'email.max' => 'Tài khoản không được vượt quá 100 ký tự',
             'quyen_quan_tri_id.required' => 'Quyền hạn không được phép trống',
             'password.required' => 'Mật khẩu không được phép trống',
             'password.confirmed' => 'Mật khẩu không trùng khớp',

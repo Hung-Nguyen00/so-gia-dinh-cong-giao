@@ -44,7 +44,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label ">Tên Tài khoản</label>
+                                                        <label class="form-label ">Email</label>
                                                         <input type="text" class="form-control"
                                                                value="{{ old('email') }}" name="email">
                                                     </div>
@@ -68,7 +68,7 @@
                                                         <select class="form-control" name="quyen_quan_tri_id" id="role_name">
                                                             <option selected disabled>Chọn quyền hạn</option>
                                                             @foreach($all_quyen_han as $q)
-                                                                <option value="{{ $q->id }}">{{ $q->ten_quyen}}</option>
+                                                                <option value="{{ $q->id }}"  {{ old('quyen_quan_tri_id') == $q->id ? 'selected' : ''}} >{{ $q->ten_quyen}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

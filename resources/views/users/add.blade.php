@@ -44,7 +44,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label ">Tên Tài khoản</label>
+                                                        <label class="form-label ">Email</label>
                                                         <input type="text" class="form-control"
                                                                value="{{ old('email') }}" name="email">
                                                         @if($errors->has('email'))

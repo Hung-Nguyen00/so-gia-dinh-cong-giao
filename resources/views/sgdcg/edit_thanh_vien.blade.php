@@ -36,16 +36,6 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Họ và tên</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('ho_va_ten') ?? $thanh_vien->ho_va_ten}}" name="ho_va_ten">
-                                                    </div>
-                                                    @if($errors->has('ho_va_ten'))
-                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên thánh</lable>
                                                             <select class="selectpicker  form-control pt-2" name="ten_thanh_id" data-live-search="true" >
@@ -58,6 +48,16 @@
                                                     </div>
                                                     @if($errors->has('ten_thanh_id'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_id') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Họ và tên</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('ho_va_ten') ?? $thanh_vien->ho_va_ten}}" name="ho_va_ten">
+                                                    </div>
+                                                    @if($errors->has('ho_va_ten'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -426,7 +426,6 @@
             var x = document.getElementById("bi_tich"),
                 hon_nhan = document.getElementById('hon_nhan'),
                 then_suc = document.getElementById('them_suc');
-            console.log(then_suc);
             var text = x.options[x.selectedIndex].text;
             if(text.toLocaleLowerCase().indexOf('hôn') > -1){
                 hon_nhan.classList.remove('d-lg-none', 'd-sm-none');

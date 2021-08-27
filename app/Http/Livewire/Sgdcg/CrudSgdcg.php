@@ -7,6 +7,7 @@ use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
 use App\Models\SoGiaDinh;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -28,7 +29,9 @@ class CrudSgdcg extends Component
     public function render()
     {
         $this->all_giao_xu = GiaoXu::where('giao_hat_id', $this->giao_hat_id)
-                                ->where('giao_xu_hoac_giao_ho', 0)->get();
+                                ->where('giao_xu_hoac_giao_ho', 0)
+                                ->get();
+        $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
         $this->all_giao_phan = GiaoPhan::all();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
         return view('livewire.sgdcg.crud-sgdcg');
@@ -36,7 +39,6 @@ class CrudSgdcg extends Component
 
     public function mount($all_so_gia_dinh){
         $this->all_so_gia_dinh = $all_so_gia_dinh;
-
     }
 
 

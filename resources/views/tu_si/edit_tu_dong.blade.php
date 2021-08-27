@@ -36,16 +36,6 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label ">Họ và tên</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('ho_va_ten') ?? $tu_si->ho_va_ten}}" name="ho_va_ten">
-                                                    </div>
-                                                    @if($errors->has('ho_va_ten'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group">
                                                         <div>
                                                             <lable class="form-label ">Tên thánh</lable>
                                                             <select class="selectpicker  form-control pt-2" value="{{ old('ten_thanh_id')}}" name="ten_thanh_id" data-live-search="true" >
@@ -61,6 +51,16 @@
                                                     </div>
                                                     @if($errors->has('ten_thanh_id'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_id') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label ">Họ và tên</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('ho_va_ten') ?? $tu_si->ho_va_ten}}" name="ho_va_ten">
+                                                    </div>
+                                                    @if($errors->has('ho_va_ten'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -172,7 +172,7 @@
                                         @method('DELETE')
                                         <button type="submit"
                                                 onclick="return window.confirm('Bạn chắc chắn muốn xóa tu sĩ này chứ?')"
-                                                class="btn btn-danger float-right" style="margin-top: -56px">Xóa tu sĩ</button>
+                                                class="btn btn-outline-danger d-inline-block  float-right" style="margin-top: -56px">Xóa tu sĩ</button>
                                     </form>
                                 </div>
                             </div>

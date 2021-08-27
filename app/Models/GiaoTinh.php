@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class GiaoTinh extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasRelationships;
     protected $dates = ['deleted_at'];
 
     protected $table = 'giao_tinh';
@@ -28,6 +29,20 @@ class GiaoTinh extends Model
 
     public  function giaoHat(){
         return $this->hasManyThrough(GiaoHat::class, GiaoPhan::class);
+    }
+
+    public function tuSi(){
+        return $this->hasManyThrough(TuSi::class, GiaoPhan::class);
+    }
+
+    public function giaoXu(){
+        return $this->hasManyDeep(GiaoXu::class,
+            [GiaoPhan::class,GiaoHat::class]);
+    }
+
+    public function giaoDan(){
+        return $this->hasManyDeep(ThanhVien::class,
+            [GiaoPhan::class,GiaoHat::class, GiaoXu::class, SoGiaDinh::class]);
     }
 
     public function user($id){

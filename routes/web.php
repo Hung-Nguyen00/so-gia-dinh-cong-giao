@@ -16,109 +16,100 @@ use App\Http\Controllers\SoGiaDinhController;
 use App\Http\Controllers\UserController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Route::group(['middleware'=>'auth'],function()
 {
-    //// ------------------------------ register ---------------------------------//
-    Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-    Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
+    Route::group(['middleware'=> 'roleGiaoPhan'], function (){
+        // import TuSi, ChucVu, ViTri
+        Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
+        // search TuSI by ChucVu
+        Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
+        // import and export excel GT GP GH GX
+        Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
+        Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
+        // search Tusi is belong Nha Dong
+        Route::get('tu-dong/search', [TuSiController::class, 'searchTuSiDong'])->name('tu-dong.search');
+        //// ------------------------------ register ---------------------------------//
+        Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+        Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
 
+        Route::resources([
+            'giao-tinh' => GiaoTinhController::class,
+            'giao-phan' => GiaoPhanController::class,
+            'giao-hat' => GiaoHatController::class,
 
+            'chuc-vu' => ChucVuController::class,
+        ]);
+
+    });
+
+    Route::group(['middleware'=> 'roleGiaoXu'], function (){
+        // create and update Bi Tich
+        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
+        Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
+        Route::post('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
+        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
+        Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
+        Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
+
+        // create TuDong
+        Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
+        Route::get('giao-xu/tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
+        Route::post('giao-xu/tu-dong', [GiaoXuController::class, 'storeTuDong'])->name('giaoXu.storeTuDong');
+        Route::get('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'editTuDong'])->name('giaoXu.editTuDong');
+        Route::patch('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'updateTuDong'])->name('giaoXu.updateTuDong');
+        Route::delete('giao-xu/tu-dong/{tu_si}/xoa', [GiaoXuController::class, 'deleteTuDong'])->name('giaoXu.deleteTuDong');
+
+        //import SoGiaDinh Thanh vien, BiTichDaNhan
+        Route::post('file-import-so-gia-dinh', [SoGiaDinhController::class, 'fileImport'])->name('bi-tich-received-import');
+
+        // add ThanhVien to SoGiaDinh
+        Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
+        Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
+        Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
+
+        Route::resources([
+            'so-gia-dinh' => SoGiaDinhController::class,
+            'thanh-vien' => ThanhVienController::class,
+            'giao-ho' => GiaoHoController::class,
+        ]);
+    });
+    // ----------------------------- main dashboard ------------------------------//
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home/giao-phan/{id}', [GiaoPhanController::class, 'indexGiaoPhan'])->name('home.giaoPhan');
+    Route::get('/home/giao-xu', [GiaoPhanController::class, 'indexGiaoXu'])->name('home.giaoXu');
     // request Ajax for select option
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
     Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
-    // search TuSI by ChucVu
-    Route::get('tu-si/search', [TuSiController::class, 'searchTuSi'])->name('tu-si.search');
-
-    // search Tusi is belong Nha Dong
-    Route::get('tu-dong/search', [TuSiController::class, 'searchTuSiDong'])->name('tu-dong.search');
-
-    // ----------------------------- main dashboard ------------------------------//
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    // import and export excel GT GP GH GX
-    Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
-    Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
-
-    // import TuSi, ChucVu, ViTri
-    Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
-
     // import chucVu, Vitri, TenThanh
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
 
-    //import SoGiaDinh Thanh vien, BiTichDaNhan
-    Route::post('file-import-so-gia-dinh', [SoGiaDinhController::class, 'fileImport'])->name('bi-tich-received-import');
-
-
-    // add ThanhVien to SoGiaDinh
-    Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
-    Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
-    Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
-
-    // create and update Bi Tich
-    Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
-    Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
-    Route::post('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
-    Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
-    Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
-    Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
-
-
-
-    // create TuDong
-    Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
-    Route::get('giao-xu/tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
-    Route::post('giao-xu/tu-dong', [GiaoXuController::class, 'storeTuDong'])->name('giaoXu.storeTuDong');
-    Route::get('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'editTuDong'])->name('giaoXu.editTuDong');
-    Route::patch('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'updateTuDong'])->name('giaoXu.updateTuDong');
-    Route::delete('giao-xu/tu-dong/{tu_si}/xoa', [GiaoXuController::class, 'deleteTuDong'])->name('giaoXu.deleteTuDong');
-
     Route::resources([
         'tai-khoan' => UserController::class,
-        'giao-tinh' => GiaoTinhController::class,
-        'giao-phan' => GiaoPhanController::class,
-        'giao-hat' => GiaoHatController::class,
-        'giao-xu' => GiaoXuController::class,
-        'giao-ho' => GiaoHoController::class,
         'ten-thanh' => TenThanhController::class,
-        'chuc-vu' => ChucVuController::class,
         'tu-si' => TuSiController::class,
         'vi-tri' => ViTriController::class,
         'bi-tich' => BiTichController::class,
-        'thanh-vien' => ThanhVienController::class,
-        'so-gia-dinh' => SoGiaDinhController::class
+        'giao-xu' => GiaoXuController::class,
     ]);
 });
 
-Auth::routes();
+//Auth::routes();
 
 
 // ----------------------------- dashboard all ------------------------------//
 Route::get('student_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'student'])->name('student_dashboard');
 Route::get('teacher_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'teacher'])->name('teacher_dashboard');
-Route::get('parent_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'parent'])->name('parent_dashboard');
 
 
 // -----------------------------login----------------------------------------//
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');
@@ -127,13 +118,3 @@ Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordControll
 // ----------------------------- reset password -----------------------------//
 Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
 Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
-
-// ----------------------------- student ------------------------------//
-Route::get('all/student/list',[App\Http\Controllers\StudentController::class,'list'])->name('all/student/list');
-Route::get('add/student/new',[App\Http\Controllers\StudentController::class,'formAdd'])->name('add/student/new');
-Route::post('add/student/save',[App\Http\Controllers\StudentController::class,'formSave'])->name('add/student/save');
-Route::get('student/about',[App\Http\Controllers\StudentController::class,'aboutStudent'])->name('student/about');
-Route::get('student/edit/{id}',[App\Http\Controllers\StudentController::class,'studentEdit'])->name('student/edit');
-Route::post('student/update',[App\Http\Controllers\StudentController::class,'studentUpdate'])->name('student/update');
-
-
