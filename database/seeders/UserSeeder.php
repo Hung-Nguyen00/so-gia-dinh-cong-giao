@@ -35,6 +35,7 @@ class UserSeeder extends Seeder
                 'email' => 'testGiaoXu@app.com',
                 'password' => bcrypt('password'),
                 'giao_phan_id' => 1,
+                'giao_xu_id' => 1,
                 'quyen_quan_tri_id' => 3
             ]
         ]);
