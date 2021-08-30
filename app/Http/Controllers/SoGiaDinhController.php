@@ -36,9 +36,13 @@ class SoGiaDinhController extends Controller
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();
-
-        $ten_giao_xu = GiaoXu::where('id', Auth::user()->giao_xu_id)->first()->ten_giao_xu;
-        return view('sgdcg.all', compact('all_so_gia_dinh', 'ten_giao_xu'));
+    $ten_giao_xu = GiaoXu::where('id', Auth::user()->giao_xu_id)->first();
+    if ($ten_giao_xu == null){
+        return back();
+    }else{
+        $ten_giao_xu = $ten_giao_xu->ten_giao_xu;
+    }
+    return view('sgdcg.all', compact('all_so_gia_dinh', 'ten_giao_xu'));
     }
 
 

@@ -101,12 +101,6 @@ Route::group(['middleware'=>'auth'],function()
 
 //Auth::routes();
 
-
-// ----------------------------- dashboard all ------------------------------//
-Route::get('student_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'student'])->name('student_dashboard');
-Route::get('teacher_dashboard', [App\Http\Controllers\Dashboard\MainDashboardController::class, 'teacher'])->name('teacher_dashboard');
-
-
 // -----------------------------login----------------------------------------//
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);

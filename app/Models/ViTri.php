@@ -22,6 +22,6 @@ class ViTri extends Model
     }
 
     public function user($id){
-        return User::find($id)->ho_va_ten;
+        return User::find($id) ? User::find($id)->ho_va_ten : null;
     }
 }

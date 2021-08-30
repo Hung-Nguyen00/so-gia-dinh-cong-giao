@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        QuyenQuanTri::create(['ten_quyen' => 'admin']);
-//        QuyenQuanTri::create(['ten_quyen' => 'Giáo phận']);
-//        QuyenQuanTri::create(['ten_quyen' => 'Giáo xứ']);
-//        $this->call(GiaoTinhSeeder::class);
-//        $this->call(GiaoPhanSeeder::class);
-//        $this->call(GiaoHatSeeder::class);
-//        $this->call(NhaDongSeeder::class);
-//        $this->call(GiaoXuSeeder::class);
+        QuyenQuanTri::create(['ten_quyen' => 'admin']);
+        QuyenQuanTri::create(['ten_quyen' => 'Giáo phận']);
+        QuyenQuanTri::create(['ten_quyen' => 'Giáo xứ']);
+        $this->call(GiaoTinhSeeder::class);
+        $this->call(GiaoPhanSeeder::class);
+        $this->call(GiaoHatSeeder::class);
+        $this->call(NhaDongSeeder::class);
+        $this->call(GiaoXuSeeder::class);
          $this->call(UserSeeder::class);
     }
 }

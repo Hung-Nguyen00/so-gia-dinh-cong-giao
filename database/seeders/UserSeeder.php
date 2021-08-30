@@ -15,22 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            [
-                'email' => 'test@gmail.com',
-                'ho_va_ten' => 'Administrator',
-                'password' => bcrypt('password'),
-                'giao_phan_id' => 1,
-                'quyen_quan_tri_id' => 1,
-            ],
-            [
-                'email' => 'testGiaoPhan@gmail.com',
-                'ho_va_ten' => 'Agency',
-                'password' => bcrypt('password'),
-                'giao_phan_id' => 1,
-                'quyen_quan_tri_id' => 2
-            ],
-
+        User::create([
+            'email' => 'test@gmail.com',
+            'ho_va_ten' => 'Administrator',
+            'password' => bcrypt('password'),
+            'giao_phan_id' => 1,
+            'giao_xu_id' => 1,
+            'quyen_quan_tri_id' => 1,
+        ]);
+        User::create([
+            'email' => 'testGiaoPhan@gmail.com',
+            'ho_va_ten' => 'Agency',
+            'password' => bcrypt('password'),
+            'giao_phan_id' => 1,
+            'quyen_quan_tri_id' => 2
         ]);
         User::create([
             'email' => 'testGiaoXu@gmail.com',
