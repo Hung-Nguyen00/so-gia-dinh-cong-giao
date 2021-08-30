@@ -18,21 +18,21 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'ho_va_ten' => 'Administrator',
-                'email' => 'test@app.com',
+                'email' => 'test@gmail.com',
                 'password' => bcrypt('password'),
                 'giao_phan_id' => 1,
                 'quyen_quan_tri_id' => 1,
             ],
             [
                 'ho_va_ten' => 'Agency',
-                'email' => 'testGiaoPhan@app.com',
+                'email' => 'testGiaoPhan@gmail.com',
                 'password' => bcrypt('password'),
                 'giao_phan_id' => 1,
                 'quyen_quan_tri_id' => 2
             ],
             [
                 'ho_va_ten' => 'End',
-                'email' => 'testGiaoXu@app.com',
+                'email' => 'testGiaoXu@gmail.com',
                 'password' => bcrypt('password'),
                 'giao_phan_id' => 1,
                 'giao_xu_id' => 1,
