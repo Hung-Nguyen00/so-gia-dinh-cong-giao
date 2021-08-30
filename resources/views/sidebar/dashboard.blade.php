@@ -33,7 +33,7 @@
                     <span class="nav-text">Quản lý tu sĩ</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1])}}">Tu sĩ</a></li>
+                    <li><a href="{{ route('tu-si.search', ['chuc_vu' => 'Giám mục'])}}">Tu sĩ</a></li>
                     <li><a href="{{ route('tu-dong.search', ['chuc_vu_id' => 2])}}">Tu sĩ thuộc nhà dòng</a></li>
                 </ul>
             </li>
@@ -49,6 +49,7 @@
                     @endif
                     <li><a href="{{ route('bi-tich.index') }}">Bí tích</a></li>
                     <li><a href="{{ route('vi-tri.index') }}">Vị trí trong giáo xứ</a></li>
+                    <li><a href="{{ route('nha-dong.index') }}">Nhà dòng</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

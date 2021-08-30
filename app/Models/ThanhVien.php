@@ -17,7 +17,7 @@ class ThanhVien extends Model
     protected $fillable = [
       'ho_va_ten',
       'ngay_sinh',
-    'chuc_vu_gd',
+       'chuc_vu_gd',
       'ngay_mat',
       'quan_he',
       'dia_chi_hien_tai',

@@ -26,7 +26,7 @@ class TuSiRequest extends FormRequest
         return [
             'ho_va_ten' => 'required|max:100',
             'ten_thanh_id' => 'required',
-            'ten_dong' => 'max:100|nullable',
+            'nha_dong_id' => 'nullable',
             'chuc_vu_id' => 'required',
             'email' => 'email',
             'giao_phan_id' =>'required',
@@ -69,7 +69,6 @@ class TuSiRequest extends FormRequest
             'check_save_info.required' => 'Hãy lựa chọn phương thức lưu thông tin',
             'bat_dau_phuc_vu.after' => 'Ngày bắt đầu phục vụ giáo xứ mới phải lớn hơn ngày kết thúc.',
             'email.email' => 'Giá trị nhập phải đúng dạng email',
-            'ten_dong.max' => 'Tên dòng không được vượt quá 100 ký tự'
         ];
     }
 

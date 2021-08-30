@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateThanhVienRequest extends FormRequest
+class UpdateThanhVienRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,10 +27,7 @@ class CreateThanhVienRequest extends FormRequest
             'ho_va_ten' => 'required|max:100',
             'ten_thanh_id' => 'required',
             'ngay_sinh' => 'date|nullable',
-            'bi_tich_id' => 'required',
-            'noi_dien_ra' => 'required|max:150',
-            'tu_si_id' => 'required',
-            'ngay_dien_ra' => 'required|date',
+            'chuc_vu_gd' => 'required',
             'ngay_mat' => 'date|nullable',
             'nam_sinh' => 'numeric|nullable',
             'dia_chi_hien_tai' => 'max:250',
@@ -49,25 +46,20 @@ class CreateThanhVienRequest extends FormRequest
             'so_dien_thoai.min' =>':attribute nhỏ hơn :min',
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
             'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
-            'bi_tich_id' => 'Bí tích không được phép trống',
-            'noi_dien_ra.required' => 'Nơi diễn ra không được phép trống',
-            'noi_dien_ra.max' => 'Nơi diễn ra không được phép vượt quá 150 ký tự',
-            'tu_si_id.required' => 'Linh mục hoặc giám mục ra không được phép trống',
-            'ngay_dien_ra.required' => 'Ngày diễn ra không được phép trống',
-            'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
+            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống'
         ];
     }
 
     public function attributes()
     {
         return[
-          'ho_va_ten' => 'Họ và tên',
-          'ten_thanh_id' => 'Tên thánh',
-          'ngay_sinh' => 'Ngày sinh',
-          'ngay_mat' => 'Ngày mất',
-          'nam_sinh' => 'Năm sinh',
-          'so_dien_thoai' => 'Số điện thoại',
-           'dia_chi_hien_tai' => 'Địa chỉ'
+            'ho_va_ten' => 'Họ và tên',
+            'ten_thanh_id' => 'Tên thánh',
+            'ngay_sinh' => 'Ngày sinh',
+            'ngay_mat' => 'Ngày mất',
+            'nam_sinh' => 'Năm sinh',
+            'so_dien_thoai' => 'Số điện thoại',
+            'dia_chi_hien_tai' => 'Địa chỉ'
         ];
     }
 }

@@ -13,9 +13,9 @@
                 </div>
                 <div class="col-sm-8 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý giáo xứ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Sổ gia đình công giáo</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Quản lý giáo xứ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $sgdcg)}}">Sổ gia đình công giáo</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Chỉnh sửa thành viên</a></li>
                     </ol>
                 </div>
@@ -58,6 +58,16 @@
                                                     </div>
                                                     @if($errors->has('ho_va_ten'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Chức vụ trong gia đình</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('chuc_vu_gd')  ??  $thanh_vien->chuc_vu_gd }}" name="chuc_vu_gd">
+                                                    </div>
+                                                    @if($errors->has('chuc_vu_gd'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('chuc_vu_gd') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -128,7 +138,7 @@
                                             </div>
                                         </form>
                                         <hr>
-                                        <form action="{{ route('so-gia-dinh.updateBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_detail->id] ) }}" method="post" >
+                                        <form action="{{ route('so-gia-dinh.updateBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_detail->bi_tich_id ] ) }}" method="post" >
                                             @csrf
                                             @method('PATCH')
                                             <div class="row">
@@ -143,11 +153,11 @@
                                                                 @foreach($all_tu_si as $cv)
                                                                     @if($cv->id == $bi_tich_detail->tu_si_id)
                                                                         <option  value="{{ $cv->id }}" selected>
-                                                                            {{ $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                            {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
                                                                     @else
                                                                         <option  value="{{ $cv->id }}"
                                                                                 {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
-                                                                            {{ $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                            {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -313,7 +323,7 @@
                                                             <div class="form-group">
                                                                 <label class="form-label text-capitalize">Họ và tên</label>
                                                                 <input type="text" class="form-control"
-                                                                       value="{{ old('ten_nguoi_do_dau') ?? $bi_tich_detail->ten_nguoi_do_dau }}" name="ten_nguoi_do_dau">
+                                                                       value="{{ old('ten_nguoi_do_dau') ?? $bi_tich_detail->ten_nguoi_do_dau }}" name=Ten_nguoi_do_dau">
                                                             </div>
                                                             @if($errors->has('ten_nguoi_do_dau'))
                                                                 <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
@@ -420,7 +430,7 @@
                                                                 @else
                                                                     <a type="button"
                                                                        href="{{ route('so-gia-dinh.editBT',
-                                                                       ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id])}}"
+                                                                       ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->bi_tich_id])}}"
                                                                        class="btn btn-sm btn-primary mb-1 mr-2"
                                                                     >
                                                                         <i class="la la-pencil"></i>

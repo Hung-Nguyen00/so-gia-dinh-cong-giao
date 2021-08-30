@@ -17,5 +17,16 @@ class NhaDong extends Model
     protected $fillable = [
       'ten_nha_dong',
       'dia_chi',
+      'nguoi_khoi_tao',
+      'ngay_thanh_lap'
     ];
+
+    public function tuSi(){
+        return $this->hasMany(TuSi::class, 'nha_dong_id');
+    }
+
+    public function user($id){
+        return User::find($id)->ho_va_ten;
+    }
+
 }

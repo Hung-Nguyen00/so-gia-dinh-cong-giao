@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateThanhVienRequest;
+use App\Http\Requests\UpdateThanhVienRequest;
 use App\Imports\BiTichDaNhanImport;
 use App\Imports\SoGiaDinhImport;
 use App\Imports\ThanhVienImport;
@@ -55,31 +56,34 @@ class SoGiaDinhController extends Controller
         $all_ten_thanh  = TenThanh::all();
         // get SoGiaDinh
         $sgdcg = SoGiaDinh::find($sgdId);
-        return view('sgdcg.add_thanh_vien', compact('all_ten_thanh', 'sgdcg'));
+        $all_tu_si = TuSi::with(['tenThanh', 'giaoXu', 'chucVu'])
+            ->whereHas('chucVu', function ($q){
+                $q->where('ten_chuc_vu', 'like', '%mục%');
+            })->get();
+        $ten_giao_xu = GiaoXu::find(Auth::user()->giao_xu_id);
+        $all_bi_tich = BiTich::where('ten_bi_tich', 'Rửa tội')->get();
+        return view('sgdcg.add_thanh_vien', compact('all_ten_thanh',
+            'sgdcg',
+               'ten_giao_xu',
+               'all_bi_tich',
+               'all_tu_si'));
     }
 
-    public function storeThanhVien(CreateThanhVienRequest $request, $sgdId){
-        $validateData = $request->validated();
-        if (!$validateData['nam_sinh'] && !$validateData['ngay_sinh']){
-            throw ValidationException::withMessages(['ngay_sinh' => 'Ngày sinh hoặc năm sinh không được phép trống']);
-        }
-        if ($validateData['nam_sinh'] && $validateData['ngay_sinh']){
-            throw ValidationException::withMessages(['ngay_sinh' => 'Chỉ được phép nhập một trong 2 giá trị']);
-        }
-        if (array_key_exists('nam_sinh', $validateData) && $validateData['nam_sinh']){
-            // if client input nam_sinh, it's a number and then convert to date and save it to db
-            // db only receive type date
-            $validateData['ngay_sinh'] =  $validateData['nam_sinh'].'/01/01';
-            ThanhVien::create(array_merge($validateData,
+    public function storeThanhVien(Request $request, $sgdId){
+        $validateData = $this->validateCreateThanhVien($request);
+        $validate_biTich = $this->validateBiTich($request);
+        $not_hon_nhan =  $this->validateNotHonNhan($request, $validate_biTich);
+        $thanh_vien = ThanhVien::create(array_merge($validateData,
                 ['nguoi_khoi_tao' => Auth::id(),
-                  'so_gia_dinh_id' => $sgdId]));
-        }else{
-            ThanhVien::create(array_merge($validateData,
-                ['nguoi_khoi_tao' => Auth::id(),
-                    'so_gia_dinh_id' => $sgdId]));
-        }
+                 'so_gia_dinh_id' => $sgdId]
+        ));
+
+        $thanh_vien->biTich()->attach($request->bi_tich_id,
+            array_merge($not_hon_nhan,
+                ['nguoi_khoi_tao' => Auth::id()]
+        ));
         Toastr::success('Thêm mới thành công', 'Thành công');
-        return redirect()->route('so-gia-dinh.show', SoGiaDinh::find($sgdId));
+        return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
     }
 
     public function  editThanhVien($sgdId,$tv_id){
@@ -105,7 +109,7 @@ class SoGiaDinhController extends Controller
     }
 
 
-    public function updateThanhVien(CreateThanhVienRequest $request, $sgdId, ThanhVien $thanh_vien){
+    public function updateThanhVien(UpdateThanhVienRequest $request, $sgdId, ThanhVien $thanh_vien){
         $validateData = $request->validated();
         // required ngay_sinh
         if (!$validateData['nam_sinh'] && !$validateData['ngay_sinh']){
@@ -114,7 +118,6 @@ class SoGiaDinhController extends Controller
         if ($validateData['nam_sinh'] && $validateData['ngay_sinh']){
             throw ValidationException::withMessages(['ngay_sinh' => 'Chỉ được phép nhập một trong 2 giá trị']);
         }
-
         if (array_key_exists('nam_sinh', $validateData) && $validateData['nam_sinh']){
             // if client input nam_sinh, it's a number and then convert to date and save it to db
             // db only receive type date
@@ -149,7 +152,6 @@ class SoGiaDinhController extends Controller
         $validateData = $this->validateBiTich($request);
         $bi_tich = BiTich::find($request->bi_tich_id);
         $sgdcg = SoGiaDinh::with('giaoXu')->find($sgdId);
-
         // check BiTich HonNhan
         if ($bi_tich->la_hon_nhan == 1)
         {
@@ -175,8 +177,9 @@ class SoGiaDinhController extends Controller
     }
 
     public function  editBiTich($sgdId, ThanhVien $thanh_vien, $bi_tich_id){
-        $thanh_vien = ThanhVien::with('biTich')->first();
-        $bi_tich_detail = BiTichDaNhan::find($bi_tich_id);
+        $bi_tich_detail = BiTichDaNhan::where('bi_tich_id', $bi_tich_id)
+            ->where('thanh_vien_id', $thanh_vien->id)
+            ->first();
         $sgdcg = SoGiaDinh::find($sgdId);
         $all_ten_thanh = TenThanh::all();
         $all_tu_si = TuSi::with(['tenThanh', 'giaoXu', 'chucVu'])
@@ -208,7 +211,6 @@ class SoGiaDinhController extends Controller
             'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
             ]
         );
-
         $sgdcg = SoGiaDinh::find($sgdId);
         $bi_tich_received = BiTichDaNhan::find($bi_tich_id);
         $la_hon_nhan = $bi_tich_received->getBiTich($bi_tich_received->bi_tich_id)->la_hon_nhan;
@@ -249,12 +251,9 @@ class SoGiaDinhController extends Controller
 
     // import Excel SoGiaDinh ThanhVien and BiTichDaNhan
     public function fileImport(Request $request){
+
         try{
-            DB::transaction(function () use ($request) {
-                Excel::import(new SoGiaDinhImport(), $request->file('file')->store('temp'));
-                Excel::import(new ThanhVienImport(), $request->file('file')->store('temp'));
-                Excel::import(new BiTichDaNhanImport(), $request->file('file')->store('temp'));
-            });
+            Excel::import(new BiTichDaNhanImport(), $request->file('file')->store('temp'));
         }catch (\InvalidArgumentException $ex){
             Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
             return back();
@@ -270,8 +269,9 @@ class SoGiaDinhController extends Controller
     }
 
 
+
     // validate add BiTich for ThanhVien
-    public  function validateBiTich($request){
+    public function validateBiTich($request){
         $validateData =  $this->validate($request, [
             'bi_tich_id' => 'required',
             'noi_dien_ra' => 'required|max:150',
@@ -286,6 +286,48 @@ class SoGiaDinhController extends Controller
             'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
             ]
         );
+        return $validateData;
+    }
+    public function validateCreateThanhVien($request){
+        $validateData =  $this->validate($request, [
+            'ho_va_ten' => 'required|max:100',
+            'ten_thanh_id' => 'required',
+            'ngay_sinh' => 'date|nullable',
+            'ngay_mat' => 'date|nullable',
+            'chuc_vu_gd' => 'required',
+            'nam_sinh' => 'numeric|nullable',
+            'dia_chi_hien_tai' => 'max:250',
+            'so_dien_thoai' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
+        ],[
+            'ho_va_ten.required' => ':attribute không được phép trống',
+            'ten_thanh_id.required' =>':attribute không được phép trống',
+            'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
+            'ngay_mat.date' => ':attribute phải là giá trị ngày tháng năm',
+            'nam_sinh.numeric' => ':attribute phải là giá trị số',
+            'so_dien_thoai.min' =>':attribute nhỏ hơn :min',
+            'so_dien_thoai.regex' =>':attribute phải là giá trị số',
+            'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
+            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống'
+            ],
+            [
+            'ho_va_ten' => 'Họ và tên',
+            'ten_thanh_id' => 'Tên thánh',
+            'ngay_sinh' => 'Ngày sinh',
+            'ngay_mat' => 'Ngày mất',
+            'nam_sinh' => 'Năm sinh',
+            'so_dien_thoai' => 'Số điện thoại',
+            'dia_chi_hien_tai' => 'Địa chỉ'
+            ]
+        );
+        if ($request->nam_sinh){
+            $validateData['ngay_sinh'] =  $validateData['nam_sinh'].'/01/01';
+        }
+        if (!$request->nam_sinh && !$request->ngay_sinh){
+            throw ValidationException::withMessages(['nam_sinh' => 'Ngày sinh không được phép trống']);
+        }
+        if ($request->nam_sinh && $request->ngay_sinh){
+            throw ValidationException::withMessages(['nam_sinh' => 'Chỉ được phép nhập một trong 2']);
+        }
         return $validateData;
     }
     public function validateHonNhan($request, $FirstValidate, $sgdcg){

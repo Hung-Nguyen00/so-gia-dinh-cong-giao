@@ -40,6 +40,7 @@ class GiaoPhanController extends Controller
             $q->where('ten_chuc_vu', 'Giám mục');
         })->where('giao_phan_id',$id)
          ->first();
+
         $linh_muc_count = TuSi::whereHas('chucVu', function ($q){
             $q->where('ten_chuc_vu', 'Linh mục');
         })->where('giao_phan_id',$id)

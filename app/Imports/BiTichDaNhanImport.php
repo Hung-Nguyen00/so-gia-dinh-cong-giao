@@ -14,7 +14,7 @@ class BiTichDaNhanImport implements WithMultipleSheets
     public function sheets(): array
     {
        return [
-         2 => new BiTichDaNhanSheetImport(),
+         1 => new BiTichDaNhanSheetImport(),
        ];
     }
 }

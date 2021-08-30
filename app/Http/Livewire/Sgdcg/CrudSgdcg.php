@@ -9,6 +9,7 @@ use App\Models\SoGiaDinh;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -31,6 +32,13 @@ class CrudSgdcg extends Component
         $this->all_giao_xu = GiaoXu::where('giao_hat_id', $this->giao_hat_id)
                                 ->where('giao_xu_hoac_giao_ho', 0)
                                 ->get();
+
+        $flag = 1;
+        while ($flag == 1){
+            $this->ma_so = Str::random(10);
+            $check_unique = SoGiaDinh::where('ma_so', $this->ma_so)->first();
+            $check_unique !== null ? $flag = 1 : $flag = 2;
+        }
         $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
         $this->all_giao_phan = GiaoPhan::all();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();

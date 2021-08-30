@@ -14,11 +14,12 @@ use App\Http\Controllers\BiTichController;
 use App\Http\Controllers\ThanhVienController;
 use App\Http\Controllers\SoGiaDinhController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NhaDongController;
 
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('guest');
 
 Route::group(['middleware'=>'auth'],function()
 {
@@ -40,7 +41,6 @@ Route::group(['middleware'=>'auth'],function()
             'giao-tinh' => GiaoTinhController::class,
             'giao-phan' => GiaoPhanController::class,
             'giao-hat' => GiaoHatController::class,
-
             'chuc-vu' => ChucVuController::class,
         ]);
 
@@ -91,6 +91,7 @@ Route::group(['middleware'=>'auth'],function()
     Route::resources([
         'tai-khoan' => UserController::class,
         'ten-thanh' => TenThanhController::class,
+        'nha-dong' => NhaDongController::class,
         'tu-si' => TuSiController::class,
         'vi-tri' => ViTriController::class,
         'bi-tich' => BiTichController::class,

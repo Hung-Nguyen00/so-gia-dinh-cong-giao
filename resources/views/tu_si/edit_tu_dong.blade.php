@@ -97,12 +97,21 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label ">Tên dòng</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('ten_dong') ?? $tu_si->ten_dong}}" name="ten_dong">
+                                                        <label class="form-label">Tên dòng (nếu thuộc nhà dòng)</label>
+                                                        <select class="selectpicker form-control pt-2"
+                                                                name="nha_dong_id"
+                                                                data-live-search="true" >
+                                                            <option selected value="">Chọn tên nhà dòng</option>
+                                                            @foreach($all_nha_dong as $cv)
+                                                                <option  value="{{ $cv->id }}"
+                                                                        {{ old('nha_dong_id') == $cv->id || $tu_si->nha_dong_id ? 'selected' : '' }}>
+                                                                    {{ $cv->ten_nha_dong }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
-                                                    @if($errors->has('ten_dong'))
-                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ten_dong') }}</span>
+                                                    @if($errors->has('nha_dong_id'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('nha_dong_id') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">

@@ -14,6 +14,7 @@ use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
 use App\Models\LichSuCongTac;
 use App\Models\LichSuNhanChuc;
+use App\Models\NhaDong;
 use App\Models\TenThanh;
 use App\Models\TuSi;
 use App\Models\ViTri;
@@ -22,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use function Livewire\str;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TuSiController extends Controller
@@ -42,11 +44,12 @@ class TuSiController extends Controller
     }
 
     public function fileImport(Request $request){
+        Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
+        Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
+        Excel::import(new LichSuNhanChucImport(), $request->file('file')->store('temp'));
         try{
             DB::transaction(function () use ($request) {
-                Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
-                Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
-                Excel::import(new LichSuNhanChucImport(), $request->file('file')->store('temp'));
+
             });
 
         }catch (\InvalidArgumentException $ex){
@@ -69,23 +72,28 @@ class TuSiController extends Controller
 
 
     public function searchTuSi(Request $request){
-        if (ChucVu::find($request->chuc_vu_id)){
+        $chuc_vu = ChucVu::where('ten_chuc_vu', trim($request->chuc_vu))->first();
+        if ($chuc_vu){
             if (Auth::user()->quanTri->ten_quyen == 'admin'){
                 $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
-                    ->where('chuc_vu_id', $request->chuc_vu_id)
-                    ->whereNull('ten_dong')
+                    ->where('chuc_vu_id', $chuc_vu->id)
+                    ->whereNull('nha_dong_id')
                     ->orderBy('created_at', 'DESC')
-                    ->get();;
+                    ->get();
             }else{
                 $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
                     ->where('giao_phan_id', Auth::user()->giao_phan_id)
-                    ->where('chuc_vu_id', $request->chuc_vu_id)
+                    ->where('chuc_vu_id', $chuc_vu->id)
                     ->orderBy('created_at', 'DESC')
                     ->get();
             }
-            $chuc_vu_id = ChucVu::find($request->chuc_vu_id)->id;
+            $chuc_vu_id = $chuc_vu->id;
+            $ten_giao_phan = GiaoPhan::find(Auth::user()->giao_phan_id)->ten_giao_phan;
             $all_chuc_vu = ChucVu::all();
-            return view('tu_si.all', compact('all_tu_si', 'chuc_vu_id', 'all_chuc_vu'));
+            return view('tu_si.all', compact('all_tu_si',
+                'chuc_vu_id',
+                'all_chuc_vu',
+                'ten_giao_phan'));
         }else{
             return back();
         }
@@ -96,7 +104,7 @@ class TuSiController extends Controller
         if (ChucVu::find($request->chuc_vu_id)){
             $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
                 ->where('chuc_vu_id', $request->chuc_vu_id)
-                ->whereNotNull('ten_dong')
+                ->whereNotNull('nha_dong_id')
                 ->orderBy('created_at', 'DESC')
                 ->get();
             $chuc_vu_id = ChucVu::find($request->chuc_vu_id)->id;
@@ -119,12 +127,13 @@ class TuSiController extends Controller
             ->where('giao_xu_hoac_giao_ho', 0)->get();
         $all_giao_hat = GiaoHat::with('giaoPhan')->get();
         $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-
+        $all_nha_dong = NhaDong::all();
         $all_chuc_vu = ChucVu::all();
         return view('tu_si.add', compact(
             'all_chuc_vu',
             'all_giao_xu',
             'all_giao_hat',
+            'all_nha_dong',
             'all_giao_phan',
             'all_ten_thanh'
             ));
@@ -187,12 +196,14 @@ class TuSiController extends Controller
             $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
             $all_giao_hat = GiaoHat::all();
             $all_vi_tri = ViTri::all();
+            $all_nha_dong = NhaDong::all();
             $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
             $all_chuc_vu = ChucVu::all();
             return view('tu_si.edit', compact('tu_si',
                 'all_chuc_vu',
                 'all_giao_xu',
                 'all_giao_hat',
+                'all_nha_dong',
                 'all_giao_phan',
                 'all_ten_thanh',
                 'all_vi_tri'));
@@ -232,7 +243,7 @@ class TuSiController extends Controller
                 ]);
             }
             $tuSi->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
-            Toastr::success('Cập nhập tu sĩ thành công','Thành công');
+            Toastr::success('Cập nhập thành công','Thành công');
             return redirect()->route('tu-si.edit', $tuSi);
         }else{
             // save info when change GX to lich_su_cong_tac table
@@ -259,7 +270,7 @@ class TuSiController extends Controller
                 'ket_thuc_phuc_vu' => $tuSi->ket_thuc_phuc_vu,
                 'ten_vi_tri' => $old_tu_si->viTri->ten_vi_tri
             ]);
-            Toastr::success('Cập nhập tu sĩ thành công','Thành công');
+            Toastr::success('Cập nhập thành công','Thành công');
             return redirect()->route('tu-si.edit', $tuSi);
         }
 

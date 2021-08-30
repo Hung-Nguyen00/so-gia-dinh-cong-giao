@@ -6,6 +6,7 @@ use App\Models\ChucVu;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
+use App\Models\NhaDong;
 use App\Models\TenThanh;
 use App\Models\TuSi;
 use App\Models\ViTri;
@@ -17,7 +18,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class TuSISheetImport implements ToCollection, WithHeadingRow
 {
-    private $vi_tri, $chuc_vu, $giao_phan, $giao_hat, $giao_xu, $ten_thanh;
+    private $vi_tri, $chuc_vu, $giao_phan, $giao_hat, $giao_xu, $ten_thanh, $ten_dong;
 
     public function __construct()
     {
@@ -27,6 +28,7 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
         $this->giao_hat = GiaoHat::select('id', 'ten_giao_hat')->get();
         $this->giao_xu = GiaoXu::select('id', 'ten_giao_xu')->get();
         $this->ten_thanh = TenThanh::select('id', 'ten_thanh')->get();
+        $this->ten_dong = NhaDong::select('id', 'ten_nha_dong')->get();
     }
 
 
@@ -39,11 +41,12 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
             $giao_hat = $this->giao_hat->where('ten_giao_hat', trim($row['ten_giao_hat']))->first();
             $giao_xu = $this->giao_xu->where('ten_giao_xu', trim($row['ten_giao_xu']))->first();
             $ten_thanh = $this->ten_thanh->where('ten_thanh', trim($row['ten_thanh']))->first();
+            $ten_dong = $this->ten_dong->where('ten_nha_dong', trim($row['ten_dong_neu_co']))->first();
             TuSi::create([
                 'ho_va_ten' => trim($row['ho_va_ten']),
                 'email' => $row['email'],
-                'ten_dong' => $row['ten_dong_neu_co'],
                 'ngay_sinh' => $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
+                'ngay_mat' => $row['ngay_mat'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_mat']) : null,
                 'dia_chi_hien_tai' => $row['dia_chi_hien_tai'] ,
                 'so_dien_thoai' => $row['so_dien_thoai'],
                 'ngay_nhan_chuc' => $row['ngay_nhan_chuc'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_nhan_chuc']) : null,
@@ -55,6 +58,7 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
                 'giao_xu_id' => $giao_xu ? $giao_xu->id : null,
                 'ten_thanh_id' => $ten_thanh->id ,
                 'chuc_vu_id' => $chuc_vu->id,
+                'nha_dong_id' => $ten_dong ? $ten_dong->id : null,
                 'bat_dau_phuc_vu' => $row['ngay_bat_dau_phuc_vu'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_bat_dau_phuc_vu']) : null,
                 'vi_tri_id' =>  $vi_tri ? $vi_tri->id : null
             ]);
