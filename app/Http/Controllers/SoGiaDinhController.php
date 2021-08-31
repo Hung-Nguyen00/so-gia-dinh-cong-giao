@@ -251,23 +251,25 @@ class SoGiaDinhController extends Controller
         }
     }
     public function fileExport(Request $request){
+
         if ($request->name == 'sgdcg'){
-            $filepath = public_path('storage/ImportSGDCD.xlsx');
+            $filepath = public_path('excels/ImportSGDCD.xlsx');
         }
         if ($request->name == 'ten_thanh'){
-            $filepath = public_path('storage/ImportChucVu ViTri TenThanh .xlsx');
+            $filepath = public_path('excels/ImportChucVu ViTri TenThanh .xlsx');
         }
         if ($request->name == 'nha_dong'){
-            $filepath = public_path('storage/ImportNhaDong.xlsx');
+            $filepath = public_path('excels/ImportNhaDong.xlsx');
         }
         if ($request->name == 'tu_si'){
-            $filepath = public_path('storage/ImportTuSi.xlsx');
+            $filepath = public_path('excels/ImportTuSi.xlsx');
+            dd($filepath);
         }
         if ($request->name == 'bi_tich'){
-            $filepath = public_path('storage/ImportBiTich.xlsx');
+            $filepath = public_path('excels/ImportBiTich.xlsx');
         }
         if ($request->name == 'giao_tinh'){
-            $filepath = public_path('storage/ImportGPGXGH.xlsx');
+            $filepath = public_path('excels/ImportGPGXGH.xlsx');
         }
         return Response::download($filepath);
     }
