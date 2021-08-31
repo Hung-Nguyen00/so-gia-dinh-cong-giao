@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QuyenQuanTri;
+use App\Models\GiaoPhan;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -83,7 +83,9 @@ class UserController extends Controller
 
     public function show($id)
     {
-        //
+        $user = User::with(['giaoXu.giaoHat'])->find($id);
+        $all_giao_phan = GiaoPhan::all();
+        return view('users.profile', compact('user', 'all_giao_phan'));
     }
 
     /**
@@ -110,9 +112,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $tai_khoan)
     {
-        //
+        $validateData = $this->validateUpdateUser($request);
+        $tai_khoan->update($validateData);
+        Toastr::success('Cập nhập thành công', 'Thành công');
+        return redirect()->route('tai-khoan.show', $tai_khoan->id);
     }
 
     /**
@@ -132,5 +137,20 @@ class UserController extends Controller
             Toastr::error('Không tìm thấy','Lỗi');
             return back();
         }
+    }
+
+    public function validateUpdateUser($request){
+        $validateData = $request->validate([
+            'ho_va_ten'      => 'required|string|max:255',
+            'giao_phan_id' => 'required',
+            'so_dien_thoai' => 'regex:/^([0-9\s\-\+\(\)]*)$/|min:10|nullable',
+            'giao_xu_id' => 'nullable',
+        ], [
+            'ho_va_ten.required' => 'Họ và tên không được phép trống',
+            'giao_phan_id.required' => 'Không được phép trống',
+            'so_dien_thoai.regex' => 'Số điện thoại phải là ký tự số',
+            'so_dien_thoai.min' => 'Số điện thoại không được phép nhỏ hơn 10 chữ số'
+        ]);
+        return $validateData;
     }
 }

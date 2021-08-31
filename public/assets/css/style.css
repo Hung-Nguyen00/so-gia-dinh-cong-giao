@@ -11840,7 +11840,7 @@ The smaller device rules always should write below the bigger device rules
 Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Component
 */
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header {
-  width: 3.75rem;
+  width: 8.75rem;
   z-index: 999; }
   [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .brand-logo {
     padding-left: 0;
