@@ -263,7 +263,6 @@ class SoGiaDinhController extends Controller
         }
         if ($request->name == 'tu_si'){
             $filepath = public_path('excels/ImportTuSi.xlsx');
-            dd($filepath);
         }
         if ($request->name == 'bi_tich'){
             $filepath = public_path('excels/ImportBiTich.xlsx');
