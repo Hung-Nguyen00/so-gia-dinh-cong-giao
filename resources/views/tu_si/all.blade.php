@@ -1,7 +1,6 @@
 @extends('layouts.st_master')
 @section('content')
     {{-- message --}}
-    {!! Toastr::message() !!}
     @include('tu_si.import')
     <div class="content-body">
         <!-- row -->
@@ -55,6 +54,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4 d-flex justify-content-end align-items-center" >
+
+                                                <a href="{{ route('sgdcg-file-export', ['name' => 'tu_si'])}}"
+                                                   style="margin-top: 11px !important;"
+                                                   class="btn btn-info mr-2">Excel mẫu
+                                                </a>
                                                 <button type="button"
                                                         data-toggle="modal" data-target="#importModal"
                                                         class="btn btn-info mr-2" style="margin-top: 11px !important;">Import Excel
@@ -62,7 +66,7 @@
 
                                                 <a href="{{ route('tu-si.create') }}"
                                                    style="margin-top: 10px; margin-right: -10px;"
-                                                   class="btn btn-primary">Thêm tu sĩ
+                                                   class="btn btn-primary">Thêm mới
                                                 </a>
                                             </div>
                                         </div>

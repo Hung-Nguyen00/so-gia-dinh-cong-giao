@@ -6,7 +6,9 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách các nhà dòng</h4>
         <div>
-            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
+            <a href="{{ route('sgdcg-file-export', ['name' => 'nha_dong'])}}"
+               class="btn btn-info">Excel mẫu
+            </a>
             <button
                     data-toggle="modal" data-target="#importModal"
                     class="btn btn-info">Import dữ liệu

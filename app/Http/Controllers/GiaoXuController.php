@@ -7,6 +7,7 @@ use App\Models\ChucVu;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
+use App\Models\NhaDong;
 use App\Models\TenThanh;
 use App\Models\TuSi;
 use App\Models\ViTri;
@@ -29,7 +30,7 @@ class GiaoXuController extends Controller
     }
 
     public function showTuSiByGiaoXu(){
-        $all_tu_si = TuSi::with(['chucVu', 'tenThanh', 'viTri'])
+        $all_tu_si = TuSi::with(['chucVu', 'tenThanh', 'viTri', 'nhaDong'])
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -42,9 +43,11 @@ class GiaoXuController extends Controller
         $all_ten_thanh = TenThanh::all();
         $all_vi_tri = ViTri::all();
         $all_chuc_vu = ChucVu::all();
+        $all_nha_dong = NhaDong::all();
         return view('tu_si.add_tu_dong', compact(
             'all_chuc_vu',
             'all_ten_thanh',
+                'all_nha_dong',
                 'all_vi_tri'
         ));
     }

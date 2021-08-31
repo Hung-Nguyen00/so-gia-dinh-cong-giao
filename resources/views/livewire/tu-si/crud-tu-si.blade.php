@@ -26,9 +26,12 @@
                </div>
            </div>
             <div class="float">
+                <a href="{{ route('sgdcg-file-export', ['name' => 'tu_si'])}}"
+                   class="btn btn-info">Excel mẫu
+                </a>
                 <button
                         data-toggle="modal" data-target="#giaoHatModal"
-                        class="btn btn-primary">Thêm giáo tu sĩ
+                        class="btn btn-primary">Thêm mới
                 </button>
             </div>
         </div>

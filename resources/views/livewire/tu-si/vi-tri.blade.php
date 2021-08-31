@@ -6,6 +6,9 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách vị trí phục vụ giáo xứ </h4>
         <div>
+            <a href="{{ route('sgdcg-file-export', ['name' => 'ten_thanh'])}}"
+               class="btn btn-info">Excel mẫu
+            </a>
             <button
                     data-toggle="modal" data-target="#importModal"
                     class="btn btn-info">Import dữ liệu

@@ -26,7 +26,7 @@ class CreateTuDongRequest extends FormRequest
         return [
             'ho_va_ten' => 'required|max:100',
             'ten_thanh_id' => 'required',
-            'ten_dong' => 'required|max:100|nullable',
+            'nha_dong_id' => 'required',
             'chuc_vu_id' => 'required',
             'email' => 'email|nullable',
             'ngay_sinh' => 'required|date',
@@ -49,7 +49,7 @@ class CreateTuDongRequest extends FormRequest
             'so_dien_thoai.digits' => ':attribute chỉ có 10 chữ số',
             'so_dien_thoai.numeric' => ':attribute phải là chữ số',
             'email.email' => 'Giá trị nhập phải đúng dạng email',
-            'ten_dong.max' => 'Tên dòng không được vượt quá 100 ký tự'
+            'ten_dong.required' => 'Tên dòng không được phép trống'
         ];
     }
 

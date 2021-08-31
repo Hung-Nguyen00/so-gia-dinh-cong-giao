@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateThanhVienRequest;
 use App\Http\Requests\UpdateThanhVienRequest;
 use App\Imports\BiTichDaNhanImport;
 use App\Imports\SoGiaDinhImport;
@@ -17,10 +16,9 @@ use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
 
 class SoGiaDinhController extends Controller
 {
@@ -252,6 +250,29 @@ class SoGiaDinhController extends Controller
             return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
         }
     }
+    public function fileExport(Request $request){
+        if ($request->name == 'sgdcg'){
+            $filepath = public_path('storage/excels/ImportSGDCD.xlsx');
+        }
+        if ($request->name == 'ten_thanh'){
+            $filepath = public_path('storage/excels/ImportChucVu ViTri TenThanh .xlsx');
+        }
+        if ($request->name == 'nha_dong'){
+            $filepath = public_path('storage/excels/ImportNhaDong.xlsx');
+        }
+        if ($request->name == 'tu_si'){
+            $filepath = public_path('storage/excels/ImportTuSi.xlsx');
+        }
+        if ($request->name == 'bi_tich'){
+            $filepath = public_path('storage/excels/ImportBiTich.xlsx');
+        }
+        if ($request->name == 'giao_tinh'){
+            $filepath = public_path('storage/excels/ImportGPGXGH.xlsx');
+        }
+        return Response::download($filepath);
+    }
+
+
 
     // import Excel SoGiaDinh ThanhVien and BiTichDaNhan
     public function fileImport(Request $request){

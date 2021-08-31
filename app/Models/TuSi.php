@@ -69,6 +69,9 @@ class TuSi extends Model
         return $this->hasMany(BiTichDaNhan::class, 'tu_si_id');
     }
 
+    public function nhaDong(){
+        return $this->belongsTo(NhaDong::class, 'nha_dong_id','id');
+    }
     public function user($id){
         return User::find($id) ? User::find($id)->ho_va_ten : null;
     }

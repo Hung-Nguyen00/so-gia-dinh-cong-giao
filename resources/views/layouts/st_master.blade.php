@@ -179,6 +179,7 @@
 	<!-- Svganimation scripts -->
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
+    {!! Toastr::message() !!}
     @yield('scripts')
 </body>
 </html>

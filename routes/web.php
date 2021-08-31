@@ -88,6 +88,8 @@ Route::group(['middleware'=>'auth'],function()
     // import chucVu, Vitri, TenThanh
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
 
+    Route::get('file-export-so-gia-dinh', [SoGiaDinhController::class, 'fileExport'])->name('sgdcg-file-export');
+
     Route::resources([
         'tai-khoan' => UserController::class,
         'ten-thanh' => TenThanhController::class,

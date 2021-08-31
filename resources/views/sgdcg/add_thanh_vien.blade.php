@@ -1,7 +1,6 @@
 @extends('layouts.st_master')
 @section('content')
     {{-- message --}}
-    {!! Toastr::message() !!}
     <div class="content-body">
         <!-- row -->
         <div class="container-fluid">
@@ -141,13 +140,19 @@
                                                             <lable class="form-label text-capitalize">Tên linh mục hoặc giám mục</lable>
                                                             <select class="selectpicker  form-control pt-2" name="tu_si_id" id="tu_si" data-live-search="true" >
                                                                 @foreach($all_tu_si as $cv)
-                                                                    @if($cv->giao_xu_id == \Illuminate\Support\Facades\Auth::user()->giao_xu_id)
-                                                                        <option  value="{{ $cv->id }}" selected>
-                                                                            {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                    @if($cv->giaoXu)
+                                                                        @if($cv->giao_xu_id == \Illuminate\Support\Facades\Auth::user()->giao_xu_id)
+                                                                            <option  value="{{ $cv->id }}" selected>
+                                                                                {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                        @else
+                                                                            <option  value="{{ $cv->id }}"
+                                                                                    {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
+                                                                                {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                        @endif
                                                                     @else
                                                                         <option  value="{{ $cv->id }}"
                                                                                 {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
-                                                                            {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                            {{ $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>

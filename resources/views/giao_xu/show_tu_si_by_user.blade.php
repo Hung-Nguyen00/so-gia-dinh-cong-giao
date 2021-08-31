@@ -1,7 +1,6 @@
 @extends('layouts.st_master')
 @section('content')
     {{-- message --}}
-    {!! Toastr::message() !!}
     @include('tu_si.import')
     <div class="content-body">
         <!-- row -->
@@ -58,7 +57,7 @@
                                                         </td>
                                                         <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
                                                         <td>
-                                                            {{ $th->ten_dong }}
+                                                            {{ $th->nhaDong ? $th->nhaDong->ten_nha_dong : '' }}
                                                         </td>
                                                         <td>
                                                             @if($th->chucVu)

@@ -35,10 +35,16 @@ class TuSiController extends Controller
      */
     public function index()
     {
-        $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
-            ->where('giao_phan_id', Auth::user()->giao_phan_id)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        if (Auth::user()->quanTri->ten_quyen !== 'admin'){
+            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
+                ->where('giao_phan_id', Auth::user()->giao_phan_id)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }else{
+            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
 
         return view('tu_si.all', compact('all_tu_si'));
     }

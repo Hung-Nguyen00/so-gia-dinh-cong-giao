@@ -1,7 +1,6 @@
 @extends('layouts.st_master')
 @section('content')
     {{-- message --}}
-    {!! Toastr::message() !!}
     @include('tu_si.import')
     <div class="content-body">
         <!-- row -->
