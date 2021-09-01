@@ -45,6 +45,7 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
             TuSi::create([
                 'ho_va_ten' => trim($row['ho_va_ten']),
                 'email' => $row['email'],
+                'gioi_tinh' => $row['gioi_tinh'] == 'Nam' ? 1 : 0,
                 'ngay_sinh' => $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
                 'ngay_mat' => $row['ngay_mat'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_mat']) : null,
                 'dia_chi_hien_tai' => $row['dia_chi_hien_tai'] ,

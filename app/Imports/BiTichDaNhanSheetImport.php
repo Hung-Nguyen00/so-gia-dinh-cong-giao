@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\BiTich;
 use App\Models\BiTichDaNhan;
+use App\Models\GiaoXu;
 use App\Models\SoGiaDinh;
 use App\Models\TenThanh;
 use App\Models\ThanhVien;
@@ -32,6 +33,15 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
         $this->flag = false;
     }
 
+    public function getUpperCase($name){
+        preg_match_all('/[A-Z]/', $name, $matches, PREG_OFFSET_CAPTURE);
+        $letter_uc = '';
+        for ($i = 0 ; $i < sizeof($matches[0]); $i++){
+            $letter_uc = $letter_uc . $matches[0][$i][0];
+        }
+        return $letter_uc;
+    }
+
     public function collection(Collection $rows)
     {
         $count = 0;
@@ -48,14 +58,14 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                 continue;
             }
             if ($count == 0 || $this->flag){
-                $flag = 1;
-                //random ma_so
-                $ma_so = Str::random(10);
-                while ($flag == 1){
-                    $check_unique = SoGiaDinh::where('ma_so', $ma_so)->first();
-                    $check_unique !== null ? $flag = 1 : $flag = 2;
-                    $ma_so = Str::random(10);
-                }
+                // get id GX by User
+                $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
+                $last_sgdcg = SoGiaDinh::all()->last();
+                $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
+                $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
+                $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
+
+                $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
                 // create so_gia_dinh
                 $this->so_gia_dinh = SoGiaDinh::create([
                     'ma_so' => $ma_so,
@@ -77,6 +87,7 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                 $this->thanh_vien  = ThanhVien::create([
                     'ho_va_ten' => trim($row['ho_va_ten']),
                     'chuc_vu_gd' => $row['quan_he'],
+                    'gioi_tinh' => $row['gioi_tinh'] == 'Nam' ? 1 : 0,
                     'ngay_sinh' =>  $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
                     'ngay_mat'  => $row['ngay_mat'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_mat']) : null,
                     'dia_chi_hien_tai' => $row['dia_chi_hien_tai'],
@@ -90,6 +101,7 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                     'thanh_vien_id' =>$this->thanh_vien->id,
                     'ngay_dien_ra' => $row['ngay_dien_ra'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_dien_ra']) : null,
                     'noi_dien_ra' => $row['noi_dien_ra'],
+                    'gioi_tinh' => $row['gioi_tinh'] == 'Nam' ? 1 : 0,
                     'ten_nguoi_do_dau' => $row['ten_nguoi_do_dau'],
                     'ten_thanh_nguoi_do_dau'=> $row['ten_thanh_nguoi_do_dau'],
                     'ngay_sinh_nguoi_do_dau' => $row['ngay_sinh_nguoi_do_dau'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh_nguoi_do_dau']) : null,

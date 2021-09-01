@@ -15,11 +15,8 @@ class ThanhVienController extends Controller
      */
     public function index()
     {
-        $all_thanh_vien = ThanhVien::with(['soGiaDinh', 'tenThanh'])
-            ->whereHas('soGiaDinh', function ($q){
-                $q->where('giao_xu_id', Auth::user()->giao_xu_id);
-            })->get();
-        return view('sgdcg.all_thanh_vien', compact('all_thanh_vien'));
+
+        return view('sgdcg.all_thanh_vien');
     }
 
     /**

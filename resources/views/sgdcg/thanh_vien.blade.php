@@ -46,6 +46,7 @@
                                                     <th>Ngày sinh</th>
                                                     <th>Chức vụ gia đình</th>
                                                     <th>Bí tích đã nhận</th>
+                                                    <th>Thêm bí tích</th>
                                                     <th>Xem chi tiết</th>
                                                 </tr>
                                                 </thead>
@@ -68,6 +69,13 @@
                                                         <td class="text-center">{{ $th->chuc_vu_gd }}</td>
                                                         <td class="text-center">
                                                            {{ $th->bi_tich_count }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a type="button"
+                                                               href="{{ route('so-gia-dinh.editBTTV', ['sgdId' => $soGiaDinh->id, 'tvId' => $th->id]) }}"
+                                                               class="btn btn-sm btn-primary mr-2">
+                                                                <i class="la la-pencil"></i>
+                                                            </a>
                                                         </td>
                                                         <td class="text-center d-flex justify-content-center">
                                                             <a type="button"

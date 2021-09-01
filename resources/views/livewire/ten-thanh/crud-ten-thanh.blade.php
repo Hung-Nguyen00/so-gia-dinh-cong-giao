@@ -15,7 +15,7 @@
             </button>
             <button
                     data-toggle="modal" data-target="#giaoHatModal"
-                    class="btn btn-primary">Thêm giáo tên thánh
+                    class="btn btn-primary">Thêm tên thánh
             </button>
         </div>
     </div>

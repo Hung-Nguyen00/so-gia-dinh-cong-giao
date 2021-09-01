@@ -40,7 +40,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <a href="{{ route('forget-password') }}">Quên mật khẩu?</a>
+                                                <a href="{{ route('user.forget-password') }}">Quên mật khẩu?</a>
                                             </div>
                                         </div>
                                         <div class="text-center">

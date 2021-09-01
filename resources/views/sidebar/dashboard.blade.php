@@ -33,7 +33,7 @@ m<div class="dlabnav">
                     <span class="nav-text">Quản lý tu sĩ</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('tu-si.search', ['chuc_vu' => 'Giám mục'])}}">Tu sĩ</a></li>
+                    <li><a href="{{ route('tu-si.index')}}">Tu sĩ</a></li>
                     <li><a href="{{ route('tu-dong.search', ['chuc_vu_id' => 2])}}">Tu sĩ thuộc nhà dòng</a></li>
                 </ul>
             </li>

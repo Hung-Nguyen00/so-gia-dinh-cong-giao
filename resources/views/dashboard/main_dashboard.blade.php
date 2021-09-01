@@ -2,8 +2,6 @@
 @section('content')
     <!-- Content body start -->
     <div class="content-body">
-        <!-- row -->
-        {!! Toastr::message() !!}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-xxl-3 col-sm-6">
@@ -77,7 +75,21 @@
                 <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">New Student List</h4>
+                            <h4 class="card-title">Danh sách thống kê giáo phận</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="col-xl-6 col-xxl-6 col-sm-12">
+                                    {{--<canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>--}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Danh sách thống kê giáo phận</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive recentOrderTable">
@@ -118,3 +130,4 @@
         </div>
     </div>
 @endsection
+

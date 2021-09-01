@@ -8,8 +8,7 @@
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
-                                    <h4 class="text-center mb-4">Reset Password</h4>
-                                    <p class="auth-subtitle mb-3">Input your email to register reset new password.</p>
+                                    <h4 class="text-center mb-4">Lấy lại mật khẩu</h4>
                                     <form method="POST" action="/reset-password">
                                         @csrf
                                         <input type="hidden" name="token" value="{{ $token }}">
@@ -23,8 +22,10 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label><strong>Password</strong></label>
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Enter Password">
+                                            <label><strong>Mật khẩu</strong></label>
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                                   name="password"
+                                                   placeholder="Nhập mật khẩu">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -32,15 +33,15 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label><strong>Confirm Password</strong></label>
-                                            <input type="password" class="form-control" name="password_confirmation" placeholder="Choose Confirm Password">
+                                            <label><strong>Nhập lại mật khẩu</strong></label>
+                                            <input type="password" class="form-control" name="password_confirmation" placeholder="Nhập lại mật khẩu">
                                         </div>
                                         <div class="text-center mt-4">
-                                            <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Thay đổi mật khẩu</button>
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">
-                                        <p>Already have an account? <a class="text-primary" href="{{ route('login') }}">Sign in</a></p>
+                                        <p>Bạn đã có tài khoản <a class="text-primary" href="{{ route('login') }}">Đăng nhập</a></p>
                                     </div>
                                 </div>
                             </div>

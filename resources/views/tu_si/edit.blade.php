@@ -14,7 +14,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('tu-si.search', ['chuc_vu_id' => 1]) }}">Dánh sách tu sĩ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tu-si.index') }}">Dánh sách tu sĩ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Chỉnh sửa</a></li>
                     </ol>
                 </div>
@@ -95,6 +95,21 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label">Giới tính</lable>
+                                                            <select class="selectpicker form-control pt-2" name="gioi_tinh">
+                                                                <option selected value="">Chọn giới tính</option>
+                                                                    <option value="1" {{ $tu_si->gioi_tinh ? 'selected' : ''}}>Nam</option>
+                                                                    <option value="0" {{ $tu_si->gioi_tinh ? '' : 'selected'}}>Nữ</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('gioi_tinh'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('gioi_tinh') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label ">Ngày nhận chức</label>
                                                         <input type="date" class="form-control"
@@ -119,7 +134,7 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('noi_nhan_chuc') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label">Tên dòng (nếu thuộc nhà dòng)</label>
                                                         <select class="selectpicker form-control pt-2"
@@ -202,7 +217,7 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('giao_phan_id') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="col-lg-6 mt-5 col-md-6 col-sm-12">
                                                     <div class="form-check">
                                                         <input type="checkbox" name="dang_du_hoc" {{ $tu_si->dang_du_hoc ? 'checked' : '' }}
                                                                 class="form-check-input ">
@@ -210,7 +225,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 mt-2 col-md-12 col-sm-12 mt-3">
-                                                    <div class="form-group ">
+                                                    <div id="cong_tac" class="form-group ">
                                                         <h5 class="font-weight-bold">Thông tin chuyển nơi phục vụ giáo xứ</h5>
                                                     </div>
                                                 </div>
@@ -304,7 +319,6 @@
                                                         <div>
                                                             <lable class="form-label">Chọn phương thức lưu thông tin</lable>
                                                             <select class="selectpicker form-control pt-2" value="{{ old('check_save_info') }}"
-                                                                    data-live-search="true"
                                                                     name="check_save_info">
                                                                 <option selected value=""> Chọn phương thức lưu thông tin</option>
                                                                 <option value="1"> Lưu thông tin cập nhập</option>

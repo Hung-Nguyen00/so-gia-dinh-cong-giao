@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TuSiRequest extends FormRequest
+class CreateTuSiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,13 +37,8 @@ class TuSiRequest extends FormRequest
             'so_dien_thoai' =>'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'dia_chi_hien_tai' => 'max:250|nullable',
             'noi_nhan_chuc' => 'max:250|nullable',
-            'bat_dau_phuc_vu' => 'date|nullable|after:ket_thuc_phuc_vu',
-            'ket_thuc_phuc_vu' => 'date|nullable',
             'dang_du_hoc' => 'nullable',
-            'check_save_info' => 'required',
-            'giao_xu_id' => 'nullable',
-            'giao_hat_id' => 'nullable',
-            'vi_tri_id' => 'nullable'
+
         ];
     }
 
@@ -64,11 +59,8 @@ class TuSiRequest extends FormRequest
             'ngay_mat.after' => ':attribute không được nhỏ hơn hoặc bằng ngày sinh',
             'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
             'ngay_sinh.required' => ':attribute không được phép trống',
-            'ket_thuc_phuc_vu.date' => ':attribute phải là giá trị ngày tháng năm',
             'so_dien_thoai.min' => ':attribute không được nhỏ hơn :min ký tự',
             'so_dien_thoai.regex' => ':attribute phải là chữ số',
-            'check_save_info.required' => 'Hãy lựa chọn phương thức lưu thông tin',
-            'bat_dau_phuc_vu.after' => 'Ngày bắt đầu phục vụ giáo xứ mới phải lớn hơn ngày kết thúc.',
             'email.email' => 'Giá trị nhập phải đúng dạng email',
             'gioi_tinh.required' => 'Giới tính không được phép trống'
         ];

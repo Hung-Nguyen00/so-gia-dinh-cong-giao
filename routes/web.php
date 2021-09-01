@@ -34,7 +34,7 @@ Route::group(['middleware'=>'auth'],function()
         // search Tusi is belong Nha Dong
         Route::get('tu-dong/search', [TuSiController::class, 'searchTuSiDong'])->name('tu-dong.search');
         //// ------------------------------ register ---------------------------------//
-        Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+        Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.user');
         Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
 
         Route::resources([
@@ -49,6 +49,10 @@ Route::group(['middleware'=>'auth'],function()
     Route::group(['middleware'=> 'roleGiaoXu'], function (){
         // create and update Bi Tich
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
+        // href bookmark
+        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua#bi_tich', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editBTTV');
+        Route::get('tu-si/{tuSi}/edit/#cong_tac', [TuSiController::class, 'edit'])->name('tu-si.editCongTac');
+
         Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
         Route::post('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
@@ -101,16 +105,16 @@ Route::group(['middleware'=>'auth'],function()
     ]);
 });
 
-//Auth::routes();
+Auth::routes();
 
 // -----------------------------login----------------------------------------//
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('user.logout');
 
 // ----------------------------- forget password ----------------------------//
-Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');
-Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('forget-password');
+Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('user.forget-password');
+Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('user.forget-password');
 
 // ----------------------------- reset password -----------------------------//
 Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);

@@ -32,13 +32,14 @@ class CrudSgdcg extends Component
         $this->all_giao_xu = GiaoXu::where('giao_hat_id', $this->giao_hat_id)
                                 ->where('giao_xu_hoac_giao_ho', 0)
                                 ->get();
+         $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
+        //get ma_code from GP GH GX
+        $last_sgdcg = SoGiaDinh::all()->last();
+        $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
+        $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
+        $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
 
-        $flag = 1;
-        while ($flag == 1){
-            $this->ma_so = Str::random(10);
-            $check_unique = SoGiaDinh::where('ma_so', $this->ma_so)->first();
-            $check_unique !== null ? $flag = 1 : $flag = 2;
-        }
+        $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
         $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
         $this->all_giao_phan = GiaoPhan::all();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
@@ -49,6 +50,15 @@ class CrudSgdcg extends Component
         $this->all_so_gia_dinh = $all_so_gia_dinh;
     }
 
+
+    public function getUpperCase($name){
+        preg_match_all('/[A-Z]/', $name, $matches, PREG_OFFSET_CAPTURE);
+        $letter_uc = '';
+        for ($i = 0 ; $i < sizeof($matches[0]); $i++){
+            $letter_uc = $letter_uc . $matches[0][$i][0];
+        }
+        return $letter_uc;
+    }
 
     protected $rules = [
         'ma_so' => 'required|max:15|unique:so_gia_dinh_cong_giao',
@@ -77,12 +87,12 @@ class CrudSgdcg extends Component
     public function store()
     {
         $validatedData = $this->validate();
-        SoGiaDinh::create(array_merge($validatedData,
+        $sgdcg = SoGiaDinh::create(array_merge($validatedData,
             ['nguoi_khoi_tao' => Auth::id(),
              'giao_xu_id' => Auth::user()->giao_xu_id]));
 
         Toastr::success('Tạo mới thành công','Thành công');
-        return redirect()->route('so-gia-dinh.index');
+        return redirect()->route('so-gia-dinh.createTV', $sgdcg->id);
     }
 
     public function changeGiaoHat(){

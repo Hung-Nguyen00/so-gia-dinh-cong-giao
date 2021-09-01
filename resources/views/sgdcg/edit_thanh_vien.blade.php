@@ -140,7 +140,7 @@
                                         <form action="{{ route('so-gia-dinh.storeBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien] ) }}" method="post" >
                                             @csrf
                                             <div class="row">
-                                                <div class="col-md-12 col-sm-12">
+                                                <div id="bi_tich" class="col-md-12 col-sm-12">
                                                     <h4><strong>Thêm bí tích</strong></h4>
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -213,16 +213,6 @@
                                                     <div class="col-md-12 col-sm-12">
                                                         <h5><strong> Thông tin người đỡ đầu </strong></h5>
                                                     </div>
-                                                    <div class="col-lg-6 col-md-6 mt-2 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label text-capitalize">Họ và tên</label>
-                                                            <input type="text" class="form-control"
-                                                                   value="{{ old('ten_nguoi_do_dau')}}" name="ten_nguoi_do_dau">
-                                                        </div>
-                                                        @if($errors->has('ten_nguoi_do_dau'))
-                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
-                                                        @endif
-                                                    </div>
                                                     <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                         <div class="form-group">
                                                             <div>
@@ -241,6 +231,17 @@
                                                             <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_nguoi_do_dau') }}</span>
                                                         @endif
                                                     </div>
+                                                    <div class="col-lg-6 col-md-6 mt-2 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label text-capitalize">Họ và tên</label>
+                                                            <input type="text" class="form-control"
+                                                                   value="{{ old('ten_nguoi_do_dau')}}" name="ten_nguoi_do_dau">
+                                                        </div>
+                                                        @if($errors->has('ten_nguoi_do_dau'))
+                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
+                                                        @endif
+                                                    </div>
+
                                                     <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                         <label>Ngày sinh</label>
                                                         <div class="d-flex justify-content-between align-items-center">
@@ -267,16 +268,6 @@
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                                         <div class="form-group">
-                                                            <label class="form-label text-capitalize">Họ và tên</label>
-                                                            <input type="text" class="form-control"
-                                                                   value="{{ old('ten_nguoi_lam_chung_1')}}" name="ten_nguoi_lam_chung_1">
-                                                        </div>
-                                                        @if($errors->has('ten_nguoi_lam_chung_1'))
-                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_1')}}</span>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                        <div class="form-group">
                                                             <div>
                                                                 <lable class="form-label text-capitalize">Tên thánh</lable>
                                                                 <select class="selectpicker  form-control pt-2" name="ten_thanh_nguoi_lam_chung_1" data-live-search="true" >
@@ -293,6 +284,18 @@
                                                             <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_nguoi_lam_chung_1') }}</span>
                                                         @endif
                                                     </div>
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label text-capitalize">Họ và tên</label>
+                                                            <input type="text" class="form-control"
+                                                                   value="{{ old('ten_nguoi_lam_chung_1')}}" name="ten_nguoi_lam_chung_1">
+                                                        </div>
+                                                        @if($errors->has('ten_nguoi_lam_chung_1'))
+                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_1')}}</span>
+                                                        @endif
+                                                    </div>
+
                                                     <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                         <label>Ngày sinh</label>
                                                         <div class="d-flex justify-content-between align-items-center">
@@ -315,17 +318,7 @@
                                                     <div class="col-md-12 mt-4 col-sm-12">
                                                         <h5><strong>Thông tin người làm chứng 2</strong></h5>
                                                     </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label text-capitalize">Họ và tên</label>
-                                                            <input type="text" class="form-control"
-                                                                   value="{{ old('ten_nguoi_lam_chung_2')}}"
-                                                                   name="ten_nguoi_lam_chung_2">
-                                                        </div>
-                                                        @if($errors->has('ten_nguoi_lam_chung_2'))
-                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_2')}}</span>
-                                                        @endif
-                                                    </div>
+
                                                     <div class="col-lg-6  col-md-6 col-sm-12">
                                                         <div class="form-group">
                                                             <div>
@@ -341,6 +334,17 @@
                                                         </div>
                                                         @if($errors->has('ten_thanh_nguoi_lam_chung_2'))
                                                             <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_nguoi_lam_chung_2') }}</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label text-capitalize">Họ và tên</label>
+                                                            <input type="text" class="form-control"
+                                                                   value="{{ old('ten_nguoi_lam_chung_2')}}"
+                                                                   name="ten_nguoi_lam_chung_2">
+                                                        </div>
+                                                        @if($errors->has('ten_nguoi_lam_chung_2'))
+                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_2')}}</span>
                                                         @endif
                                                     </div>
                                                     <div class="col-lg-6 mt-2 col-md-6 col-sm-12">

@@ -28,14 +28,18 @@ class GiaoPhanController extends Controller
     {
         $all_giao_phan = GiaoPhan::withCount('giaoHat')->orderBy('created_at', 'DESC')
             ->get();;
+
         return view('giao_phan.all_giao_phan', compact('all_giao_phan'));
     }
+
+
 
     public function indexGiaoPhan($id){
         $statistics_giao_phan = GiaoPhan::with('giaoHat.giaoXu')
             ->withCount(['giaoXu', 'giaoHat','giaoDan'])
             ->where('id', $id)
             ->first();
+
         $giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
             $q->where('ten_chuc_vu', 'Giám mục');
         })->where('giao_phan_id',$id)

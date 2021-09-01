@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -20,6 +20,10 @@ class ForgotPasswordController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users',
+        ], [
+            'email.required' => 'Email không được phép trống',
+            'email.email' => 'Tài khoản phải đúng dạng email',
+            'email.exists' => 'Tài khoản không tồn tại',
         ]);
 
         $token = Str::random(60);
@@ -27,13 +31,12 @@ class ForgotPasswordController extends Controller
         DB::table('password_resets')->insert(
             ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
         );
-
         Mail::send('auth.verify',['token' => $token], function($message) use ($request) {
                   $message->from($request->email);
-                  $message->to('your email');
+                  $message->to('thanhhung041100@gmail.com');
                   $message->subject('Reset Password Notification');
                });
 
-        return back()->with('message', 'We have e-mailed your password reset link!');
+        return back()->with('message', 'Đã gửi mật khẩu qua email');
     }
 }

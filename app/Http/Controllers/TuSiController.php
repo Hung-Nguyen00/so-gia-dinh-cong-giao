@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTuSiRequest;
 use App\Http\Requests\TuSiRequest;
 use App\Imports\ChucVuImport;
 use App\Imports\LichSuCongTacImport;
@@ -35,18 +36,8 @@ class TuSiController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->quanTri->ten_quyen !== 'admin'){
-            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
-                ->where('giao_phan_id', Auth::user()->giao_phan_id)
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        }else{
-            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu'])
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        }
-
-        return view('tu_si.all', compact('all_tu_si'));
+        $ten_giao_phan = GiaoPhan::find(Auth::user()->giao_phan_id)->ten_giao_phan;
+        return view('tu_si.all', compact('ten_giao_phan'));
     }
 
     public function fileImport(Request $request){
@@ -128,7 +119,7 @@ class TuSiController extends Controller
      */
     public function create()
     {
-        $all_ten_thanh = TenThanh::all();
+        $all_ten_thanh = TenThanh::orderBy('ten_thanh')->get();
         $all_giao_xu = GiaoXu::with('giaoHat')
             ->where('giao_xu_hoac_giao_ho', 0)->get();
         $all_giao_hat = GiaoHat::with('giaoPhan')->get();
@@ -151,7 +142,7 @@ class TuSiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TuSiRequest $request)
+    public function store(CreateTuSiRequest $request)
     {
         $validateData = $request->validated();
         $dang_du_hoc = 0;
@@ -161,8 +152,7 @@ class TuSiController extends Controller
         $tusi = TuSi::create(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
         if ($tusi){
             Toastr::success('Thêm mới tu sĩ thành công','Thành công');
-            return redirect()->route('tu-si.search',
-                ['chuc_vu_id' => $tusi->chuc_vu_id]);
+            return redirect()->route('tu-si.edit', $tusi);
         }else{
             Toastr::error('Không thể thêm tu sĩ mới','Lỗi');
             return back();
@@ -198,7 +188,7 @@ class TuSiController extends Controller
                 ->first();
         }
         if($tu_si){
-            $all_ten_thanh = TenThanh::all();
+            $all_ten_thanh = TenThanh::orderBy('ten_thanh')->get();
             $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
             $all_giao_hat = GiaoHat::all();
             $all_vi_tri = ViTri::all();

@@ -18,6 +18,7 @@ class TuSi extends Model
         'ngay_sinh',
         'email',
         'nha_dong_id',
+        'gioi_tinh',
         'dia_chi_hien_tai',
         'so_dien_thoai',
         'ngay_nhan_chuc',

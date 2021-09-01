@@ -23,7 +23,7 @@ class CreateSoGiaDinhCongGiaoTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ma_so', 15)->unique();
+            $table->string('ma_so', 20)->unique();
             $table->date('ngay_tao_so')->nullable();
             $table->timestamps();
             $table->softDeletes();

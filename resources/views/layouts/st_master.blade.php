@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -17,7 +16,6 @@
     {{-- message toastr --}}
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     @livewireStyles
 </head>
 <body>
@@ -101,6 +99,7 @@
     @livewireScripts
     <!-- Required vendors -->
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
+    <script src="{{ URL::to('assets/vendor/toastr/js/toastr.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/custom.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/peity/jquery.peity.min.js') }}"></script>
@@ -112,6 +111,7 @@
 	<!-- Svganimation scripts -->
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
+
     {!! Toastr::message() !!}
     @yield('scripts')
 </body>

@@ -26,35 +26,8 @@
                             <div class="card">
                                 <div>
                                     <div class="card-header">
-                                        <h4 class="card-title">Danh sách các tu sĩ </h4>
-                                        <div class="d-flex justify-content-around">
-                                            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
-
-                                        </div>
-                                    </div>
-                                    <form action="{{ route('tu-si.search')}}">
-                                        <div class="col-md-12 mt-2 d-flex justify-content-around">
-                                            <div class="d-flex justify-content-start col-md-8">
-                                                <div class="form-group" style="margin-left: -10px;">
-                                                    <div wire:ignore>
-                                                        <lable class="col-form-label">Tìm kiếm tu sĩ theo chức vụ</lable>
-                                                        <select class="selectpicker form-control pt-1" name="chuc_vu_id" data-live-search="true" >
-                                                            @foreach($all_chuc_vu as $cv)
-                                                                @if($cv->id === $chuc_vu_id)
-                                                                    <option selected value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
-                                                                    @else
-                                                                    <option  value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <button type="submit" class="ml-2 mt-3 btn btn-sm btn-primary">Tìm kiếm</button>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 d-flex justify-content-end align-items-center" >
-
+                                        <h4 class="card-title font-weight-bold">Danh sách các tu sĩ </h4>
+                                        <div class="col-md-4 d-flex justify-content-end align-items-center" >
                                                 <a href="{{ route('sgdcg-file-export', ['name' => 'tu_si'])}}"
                                                    style="margin-top: 11px !important;"
                                                    class="btn btn-info mr-2">Excel mẫu
@@ -69,59 +42,8 @@
                                                    class="btn btn-primary">Thêm mới
                                                 </a>
                                             </div>
-                                        </div>
-                                    </form>
-                                    <div  class="card-body" wire:ignore>
-                                        <div class="table-responsive">
-                                            <table id="example3" class="display" style="min-width: 845px">
-                                                <thead>
-                                                <tr>
-                                                    <th >STT</th>
-                                                    <th>Họ và tên</th>
-                                                    <th>Tên thánh</th>
-                                                    <th style="width: 100px">Ngày sinh</th>
-                                                    <th style="width:60px; ">Du học</th>
-                                                    <th>Đang phục vụ</th>
-                                                    <th >Chỉnh sửa</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody >
-                                                @php $i= 0; @endphp
-                                                @foreach($all_tu_si as $th)
-                                                    <tr >
-                                                        <td class="text-center"> {{ ++$i }}</td>
-                                                        <td> {{ $th->ho_va_ten }}</td>
-                                                        <td>
-                                                            {{ $th->getTenThanh($th->ten_thanh_id) }}
-                                                        </td>
-                                                        <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
-                                                        <td>
-                                                            @if($th->dang_du_hoc == 1)
-                                                                <span class="badge badge-rounded badge-success">Đang du học</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($th->giao_xu_id)
-                                                                Giáo hat: {{ $th->giaoHat->ten_giao_hat }}
-                                                                <br>
-                                                                Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
-                                                                @else
-
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <a type="button"
-                                                               href="{{ route('tu-si.edit', $th)}}"
-                                                                    class="btn btn-sm btn-primary mb-1">
-                                                                <i class="la la-pencil"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
                                     </div>
+                                    @livewire('tu-si.crud-tu-si')
                                 </div>
                             </div>
                         </div>

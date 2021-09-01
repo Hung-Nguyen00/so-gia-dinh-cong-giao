@@ -7,7 +7,7 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-4 p-md-0">
                     <div class="welcome-text">
-                        <h4>Thêm thành viên vào sổ {{ $sgdcg->ma_so }}</h4>
+                        <h4>Thêm thành viên vào sổ <br> <strong>{{ $sgdcg->ma_so }}</strong></h4>
                     </div>
                 </div>
                 <div class="col-sm-8 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">

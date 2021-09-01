@@ -17,6 +17,7 @@ class ThanhVien extends Model
     protected $fillable = [
       'ho_va_ten',
       'ngay_sinh',
+        'gioi_tinh',
        'chuc_vu_gd',
       'ngay_mat',
       'quan_he',
@@ -53,4 +54,12 @@ class ThanhVien extends Model
                 'nguoi_khoi_tao']);
     }
 
+
+    public function scopeSearch($query, $term){
+        $term = "%$term%";
+        $query->where(function ($query) use ($term){
+           $query->where('ho_va_ten', 'like', $term);
+        });
+
+    }
 }
