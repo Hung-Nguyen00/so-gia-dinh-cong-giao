@@ -93,7 +93,7 @@
                                 <table id="example" class="display" style="min-width: 500px;">
                                     <thead>
                                         <tr>
-                                            <th width="50">STT</th>
+                                            <th width="25">STT</th>
                                             <th width="100">Tên giáo hạt</th>
                                             <th width="50">Số lượng giáo xứ</th>
                                             <th width="50">Số lượng giáo dân</th>

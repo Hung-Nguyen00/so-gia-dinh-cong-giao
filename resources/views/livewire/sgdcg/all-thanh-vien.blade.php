@@ -1,5 +1,4 @@
 <div>
-
     <div  class="card-body">
         <h4 class="font-weight-bold">Tìm kiếm</h4>
         <div class="d-flex flex-wrap mb-3">
@@ -19,7 +18,7 @@
             <div class="col-md-3">
                 <label>Sinh hoặc tử</label>
                 <select class="form-control" wire:model="sinh_or_tu">
-                    <option value="" selected>Lựa chọn sinh hoặc tử</option>
+                    <option value="null" selected>Lựa chọn sinh hoặc tử</option>
                     <option value="1">Sinh</option>
                     <option value="2">Tử</option>
                 </select>
@@ -34,7 +33,7 @@
             </div>
             <div class="col-md-2 mt-3">
                 <label>Hiển thị</label>
-                <select class="form-control" wire:model="paginate_number">
+                <select class="form-control w-75" wire:model="paginate_number">
                     <option value="5" selected>5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>

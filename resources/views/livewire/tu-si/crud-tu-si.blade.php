@@ -4,7 +4,7 @@
             <div class="d-flex flex-wrap mb-3">
                 <div class="col-md-3">
                     <label>Tên thánh</label>
-                    <select data-live-search="true" class="selectpicker select form-control" wire:model="ten_thanh_id">
+                    <select data-live-search="true" class="selectpicker  select form-control" wire:model="ten_thanh_id">
                         <option value="" selected>Chọn tên thánh</option>
                         @foreach($all_ten_thanh as $t)
                             <option value="{{ $t->id }}">{{ $t->ten_thanh }}</option>
@@ -16,25 +16,46 @@
                     <input type="text" wire:model="ho_va_ten" class="form-control">
                 </div>
                 <div class="col-md-3">
-                    <lable class="col-form-label">Tìm kiếm tu sĩ theo chức vụ</lable>
-                    <select class="selectpicker select form-control pt-2" name="chuc_vu_id">
+                    <lable class="col-form-label">Chức vụ</lable>
+                    <select class="selectpicker select form-control pt-2" wire:model="chuc_vu_id" name="chuc_vu_id">
                         <option  value=""  selected> Chọn chức vụ</option>
                         @foreach($all_chuc_vu as $cv)
-                            <option  value="{{ $cv->ten_chuc_vu }}"> {{ $cv->ten_chuc_vu }}</option>
+                            <option  value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
                         @endforeach
                     </select>
                 </div>
+                @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen === 'admin')
                 <div class="col-md-3">
-                    <label>Ngày bắt đầu</label>
-                    <input type="date" wire:model="start_date" class="form-control">
+                    <lable class="col-form-label">Giáo phận</lable>
+                    <select class="selectpicker select form-control pt-2" wire:change="changeGiaoPhan" wire:model="giao_phan_id" >
+                        <option  value=""  selected> Chọn giáo phận</option>
+                        @foreach($all_giao_phan as $cv)
+                            <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="col-md-3 mt-3">
-                    <label>Ngày kết thúc</label>
-                    <input type="date"  wire:model="end_date"  class="form-control">
+                @endif
+                <div class="col-md-3 mt-1">
+                    <lable class="col-form-label pt-1">Giáo hạt</lable>
+                    <select class="selectpicker select form-control pt-2" wire:model="giao_hat_id" >
+                        <option  value=""  selected> Chọn giáo hạt</option>
+                        @foreach($all_giao_hat as $cv)
+                            <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="col-md-2 mt-3">
-                    <label>Hiển thị</label>
-                    <select class="form-control" wire:model="paginate_number">
+                <div class="col-md-3 mt-1">
+                    <lable class="col-form-label pt-1">Giáo xứ</lable>
+                    <select class="selectpicker select form-control pt-2" wire:model="giao_xu_id">
+                        <option value="" selected> Chọn giáo xứ</option>
+                        @foreach($all_giao_xu as $cv)
+                            <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label pt-1">Hiển thị</label>
+                    <select class="form-control select w-75" wire:model="paginate_number">
                         <option value="5" selected>5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -100,6 +121,16 @@
                 @endforeach
                 </tbody>
             </table>
+            <div class="d-flex col-md-12 justify-content-end">
+                {{ $all_tu_si->links()}}
+            </div>
         </div>
     </div>
 </div>
+@section('scripts')
+    <script>
+        window.addEventListener('contentChanged', event => {
+            $('.select').selectpicker();
+        });
+    </script>
+@endsection

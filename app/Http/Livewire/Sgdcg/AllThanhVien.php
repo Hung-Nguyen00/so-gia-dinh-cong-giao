@@ -13,6 +13,8 @@ use Livewire\WithPagination;
 class AllThanhVien extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
     public $start_date,
         $end_date,
         $ten_thanh_id,
@@ -20,7 +22,7 @@ class AllThanhVien extends Component
         $sinh_or_tu = null,
         $paginate_number = 5,
         $ten_thanh;
-    protected $paginationTheme = 'bootstrap';
+
     // can use $updatesQueryString to encode url
     protected $queryString  = ['ho_va_ten', 'ten_thanh_id', 'start_date', 'end_date', 'sinh_or_tu'];
 
@@ -47,7 +49,7 @@ class AllThanhVien extends Component
     {
         $this->dispatchBrowserEvent('contentChanged');
         $this->ten_thanh = TenThanh::get('id')->toArray();
-        if ($this->ten_thanh_id !== null){
+        if ($this->ten_thanh_id !== null && $this->ten_thanh_id !== ''){
             $this->ten_thanh = TenThanh::where('id', $this->ten_thanh_id)->first('id')->toArray();
         }
         if ($this->sinh_or_tu == 1){

@@ -8,13 +8,16 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>Các tu sĩ của giáo phận {{ $ten_giao_phan }}</h4>
+                        <h4>Các tu sĩ của giáo phận @if(\Auth::user()->quanTri->ten_quyen == 'admin')
+                                {{ $ten_giao_phan }}
+                                @endif
+                        </h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý tu sĩ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Tu sĩ</a></li>
                     </ol>
                 </div>
