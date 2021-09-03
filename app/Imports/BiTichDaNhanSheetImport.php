@@ -65,7 +65,11 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                 $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
                 $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
 
-                $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
+                if ($last_sgdcg){
+                    $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
+                }else{
+                    $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. 0;
+                }
                 // create so_gia_dinh
                 $this->so_gia_dinh = SoGiaDinh::create([
                     'ma_so' => $ma_so,
@@ -101,7 +105,6 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                     'thanh_vien_id' =>$this->thanh_vien->id,
                     'ngay_dien_ra' => $row['ngay_dien_ra'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_dien_ra']) : null,
                     'noi_dien_ra' => $row['noi_dien_ra'],
-                    'gioi_tinh' => $row['gioi_tinh'] == 'Nam' ? 1 : 0,
                     'ten_nguoi_do_dau' => $row['ten_nguoi_do_dau'],
                     'ten_thanh_nguoi_do_dau'=> $row['ten_thanh_nguoi_do_dau'],
                     'ngay_sinh_nguoi_do_dau' => $row['ngay_sinh_nguoi_do_dau'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh_nguoi_do_dau']) : null,

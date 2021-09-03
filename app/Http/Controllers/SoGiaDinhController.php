@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateThanhVienRequest;
 use App\Imports\BiTichDaNhanImport;
+use App\Imports\ImportBiTichXTTS;
 use App\Imports\SoGiaDinhImport;
 use App\Imports\ThanhVienImport;
 use App\Models\BiTich;
@@ -280,6 +281,7 @@ class SoGiaDinhController extends Controller
 
         try{
             Excel::import(new BiTichDaNhanImport(), $request->file('file')->store('temp'));
+
         }catch (\InvalidArgumentException $ex){
             Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
             return back();
@@ -293,8 +295,23 @@ class SoGiaDinhController extends Controller
         Toastr::success('Thêm mới thành công','Thành công');
         return back();
     }
-
-
+    // import biTich XungToi ThemSuc
+    public function fileImportXTTS(Request $request){
+        Excel::import(new ImportBiTichXTTS(), $request->file('file')->store('temp'));
+        try{
+        }catch (\InvalidArgumentException $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }catch (\Exception $ex){
+            Toastr::error('Thông tin liên kết có thể chưa tồn tại trong hệ thống','Lỗi');
+            return back();
+        }catch(\Error $ex){
+            Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
+            return back();
+        }
+        Toastr::success('Thêm mới thành công','Thành công');
+        return back();
+    }
 
     // validate add BiTich for ThanhVien
     public function validateBiTich($request){

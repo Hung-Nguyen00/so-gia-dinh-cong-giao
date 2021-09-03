@@ -39,7 +39,11 @@ class CrudSgdcg extends Component
         $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
         $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
 
-        $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
+        if (!$last_sgdcg){
+            $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. 0;
+        }else{
+            $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
+        }
         $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
         $this->all_giao_phan = GiaoPhan::all();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();

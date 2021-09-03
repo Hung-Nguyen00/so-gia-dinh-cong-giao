@@ -69,7 +69,8 @@ Route::group(['middleware'=>'auth'],function()
 
         //import SoGiaDinh Thanh vien, BiTichDaNhan
         Route::post('file-import-so-gia-dinh', [SoGiaDinhController::class, 'fileImport'])->name('bi-tich-received-import');
-
+        //import SoGiaDinh Thanh vien, BiTichDaNhan
+        Route::post('file-import-them-bi-tich', [SoGiaDinhController::class, 'fileImportXTTS'])->name('bi-tich-added-import');
         // add ThanhVien to SoGiaDinh
         Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
