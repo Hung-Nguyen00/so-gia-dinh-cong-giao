@@ -18,7 +18,7 @@ class TenThanhController extends Controller
      */
     public function index()
     {
-        $all_ten_thanh = TenThanh::orderBy('created_at', 'DESC')->get();
+        $all_ten_thanh = TenThanh::with('getUser')->orderBy('created_at', 'DESC')->get();
 
         return view('ten_thanh.all_ten_thanh', compact('all_ten_thanh'));
     }

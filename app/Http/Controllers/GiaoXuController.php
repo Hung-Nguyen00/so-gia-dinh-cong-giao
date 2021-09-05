@@ -19,7 +19,8 @@ class GiaoXuController extends Controller
 {
     public  function index(){
         if (Auth::user()->quanTri->ten_quyen == 'admin' || Auth::user()->quanTri->ten_quyen == 'Giáo phận' ){
-            $all_giao_xu = GiaoXu::withCount('giaoHo')
+            $all_giao_xu = GiaoXu::with('getUser')
+                ->withCount('giaoHo')
                 ->where('giao_xu_hoac_giao_ho', 0)
                 ->orderBy('created_at', 'DESC')
                 ->get();;
@@ -30,7 +31,7 @@ class GiaoXuController extends Controller
     }
 
     public function showTuSiByGiaoXu(){
-        $all_tu_si = TuSi::with(['chucVu', 'tenThanh', 'viTri', 'nhaDong'])
+        $all_tu_si = TuSi::with(['chucVu', 'tenThanh', 'viTri', 'nhaDong', 'getUser'])
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();

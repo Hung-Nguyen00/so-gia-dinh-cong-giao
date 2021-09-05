@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Quản lý sổ gia đình công giáo</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/favicon.jpg') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('assets/images/logo-cong-giao.jpg') }}">
     <!-- Datatable -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="{{ URL::to('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -33,9 +33,8 @@
         <!-- Nav header start -->
         <div class="nav-header">
             <a href="{{ route('home') }}" class="brand-logo">
-                <img class="logo-abbr" src="{{ URL::to('assets/images/logo-white-2.png') }}" alt="">
-                <img class="logo-compact" src="{{ URL::to('assets/images/logo-text-white.png') }}" alt="">
-                <span class="text-capitalize" style="font-size: 16px">Quản lý giáo phận</span>
+                <img style="width: 60px; height:  60px; border-radius: 50px"  src="{{ URL::to('assets/images/logo-cong-giao.jpg') }}" alt="">
+                <span class="text-capitalize ml-1" style="font-size: 16px">Quản lý giáo phận</span>
             </a>
             <div class="nav-control">
                 <div class="hamburger">
@@ -99,6 +98,7 @@
     @livewireScripts
     <!-- Required vendors -->
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ URL::to('assets/vendor/toastr/js/toastr.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/custom.min.js') }}"></script>
@@ -111,8 +111,8 @@
 	<!-- Svganimation scripts -->
     <script src="{{ URL::to('assets/vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/svganimation/svg.animation.js') }}"></script>
-
     {!! Toastr::message() !!}
     @yield('scripts')
+    @stack('scripts')
 </body>
 </html>

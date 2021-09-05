@@ -24,4 +24,8 @@ class QuyenQuanTri extends Model
     public  function users(){
         return $this->hasMany(User::class,'quyen_quan_tri_id', 'id');
     }
+
+    public function getUser(){
+        return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
+    }
 }

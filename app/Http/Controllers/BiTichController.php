@@ -14,7 +14,7 @@ class BiTichController extends Controller
      */
     public function index()
     {
-        $all_bi_tich = BiTich::orderBy('created_at', 'DESC')
+        $all_bi_tich = BiTich::with('getUser')->orderBy('created_at', 'DESC')
             ->get();
         return view('bi_tich.all', compact('all_bi_tich'));
     }

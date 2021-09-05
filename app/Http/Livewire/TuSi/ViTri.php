@@ -16,7 +16,8 @@ class ViTri extends Component
     }
 
     public function mount(){
-        $this->all_vi_tri = \App\Models\ViTri::orderBy('created_at', 'DESC')
+        $this->all_vi_tri = \App\Models\ViTri::with('getUser')
+            ->orderBy('created_at', 'DESC')
             ->get();
     }
 

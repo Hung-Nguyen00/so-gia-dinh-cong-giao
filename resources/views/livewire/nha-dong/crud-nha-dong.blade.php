@@ -49,7 +49,7 @@
                             @endif
                         </td>
                         <td class="text-center">{{ $nha_dong->tu_si_count }}</td>
-                        <td>{{ $nha_dong->user($nha_dong->nguoi_khoi_tao) }}</td>
+                        <td>{{ $nha_dong->getUser->ho_va_ten }}</td>
                         <td>{{ \Carbon\Carbon::parse($nha_dong->updated_at)->format('d-m-Y  H:i') }}</td>
                         <td>
                             <button type="button"

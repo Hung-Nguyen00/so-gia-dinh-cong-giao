@@ -42,7 +42,7 @@
                             @endif
                         </td>
                         <td class="text-center">{{ $giao_xu->giao_ho_count }}</td>
-                        <td>{{ $giao_xu->user($giao_xu->nguoi_khoi_tao) }}</td>
+                        <td>{{ $giao_xu->getUser->ho_va_ten }}</td>
                         <td>{{ \Carbon\Carbon::parse($giao_xu->updated_at)->format('d-m-Y  H:i') }}</td>
                         <td>
                             <button type="button"

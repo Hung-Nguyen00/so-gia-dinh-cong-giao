@@ -317,7 +317,7 @@
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
-                                                            <lable class="form-label">Chọn phương thức lưu thông tin</lable>
+                                                            <label class="form-label">Chọn phương thức lưu thông tin</label>
                                                             <select class="selectpicker form-control pt-2" value="{{ old('check_save_info') }}"
                                                                     name="check_save_info">
                                                                 <option selected value=""> Chọn phương thức lưu thông tin</option>

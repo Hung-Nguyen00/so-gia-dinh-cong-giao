@@ -38,7 +38,9 @@ class BiTichDaNhan extends Model
     public function getBiTich($id){
         return BiTich::find($id);
     }
-
+    public function getUser(){
+        return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
+    }
 
 
 }

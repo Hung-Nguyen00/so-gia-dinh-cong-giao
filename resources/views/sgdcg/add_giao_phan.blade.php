@@ -11,7 +11,7 @@
                 <div class="modal-body">
                         <form wire:submit.prevent="store">
                             <div class="form-group">
-                                <label for="giao_phan">Mã sổ</label>
+                                <label for="">Mã sổ</label>
                                 <input type="text" wire:model="ma_so" class="form-control" placeholder="Nhập mã sổ">
                                 @if($errors->has('ma_so'))
                                     <span class="text-danger">{{ $errors->first('ma_so') }}</span>

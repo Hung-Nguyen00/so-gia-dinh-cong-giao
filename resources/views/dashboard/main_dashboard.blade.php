@@ -75,12 +75,31 @@
                 <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Danh sách thống kê giáo phận</h4>
+                            <h4 class="card-title">Biểu đồ thống kê toàn giáo phận</h4>
                         </div>
+
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="col-xl-6 col-xxl-6 col-sm-12">
-                                    {{--<canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>--}}
+                                    <div class="w-50">
+                                        <label class="form-label">Chọn thống kê sinh hoặc tử</label>
+                                        <select id="sinh_hoac_tu" class="form-control">
+                                            <option value="1" selected>Sinh</option>
+                                            <option value="2">Tử</option>
+                                        </select>
+                                    </div>
+                                    <div id="loadDiv" class="d-none la-ball-circus">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                                </div>
+                                <div class="col-xl-6 col-xxl-6 col-sm-12">
+                                    <h5>Thông kê tu sĩ toàn giáo phận</h5>
+                                    <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -131,3 +150,104 @@
     </div>
 @endsection
 
+
+@section('scripts')
+    <script type="text/javascript">
+        var dataTuSi = <?php echo $analytic_tu_si; ?>;
+            console.log(dataTuSi);
+        var piechart = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(piechart, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(dataTuSi),
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: Object.values(dataTuSi),
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+                        'rgb(255, 22, 22)',
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+        var url = $(location).attr("origin");
+        var data_gender;
+        var myChart;
+        $( window ).on( "load", function() {
+            var id = $('#sinh_hoac_tu').val();
+            $.ajax({
+                url: url+'/home/sinh-hoac-tu/' + id,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loadDiv').removeClass('d-none')
+                },
+                success: function (response) {
+                    data_gender = response.data;
+                    if (response.data != null) {
+                        var analytics = response.data;
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels:analytics.month,
+                                datasets: [{
+                                    label: 'Nữ',
+                                    data: analytics.females,
+                                    backgroundColor: 'transparent',
+                                    borderColor: 'red',
+                                    borderWidth: 3,
+                                    tension: 0.1,
+                                }, {
+                                    label: 'Nam',
+                                    data: analytics.males,
+                                    backgroundColor: 'transparent',
+                                    borderColor: 'blue',
+                                    borderWidth: 3,
+                                    tension: 0.1,
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loadDiv').addClass('d-none')
+                },
+            })
+        });
+
+        $('#sinh_hoac_tu').change(function () {
+            var id = $('#sinh_hoac_tu').val();
+            $.ajax({
+                url: url+'/home/sinh-hoac-tu/' + id,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loadDiv').removeClass('d-none')
+                },
+                success: function (response) {
+                    data_gender = response.data;
+                    myChart.data.datasets[0].data = response.data.females;
+                    myChart.data.datasets[1].data = response.data.males;
+                    myChart.data.labels = response.data.month;
+                    myChart.update();
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loadDiv').addClass('d-none')
+                },
+            })
+        })
+    </script>
+@endsection

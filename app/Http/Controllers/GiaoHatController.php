@@ -10,7 +10,9 @@ class GiaoHatController extends Controller
 {
     public function index(){
 
-        $all_giao_hat = GiaoHat::withCount('giaoXu')->orderBy('created_at', 'DESC')
+        $all_giao_hat = GiaoHat::with('getUser')
+            ->withCount('giaoXu')
+            ->orderBy('created_at', 'DESC')
             ->get();
         return view('giao_hat.all_giao_hat', compact('all_giao_hat'));
     }

@@ -26,7 +26,9 @@ class GiaoPhanController extends Controller
      */
     public function index()
     {
-        $all_giao_phan = GiaoPhan::withCount('giaoHat')->orderBy('created_at', 'DESC')
+        $all_giao_phan = GiaoPhan::with('getUser')
+            ->withCount('giaoHat')
+            ->orderBy('created_at', 'DESC')
             ->get();;
 
         return view('giao_phan.all_giao_phan', compact('all_giao_phan'));
@@ -34,34 +36,8 @@ class GiaoPhanController extends Controller
 
 
 
-    public function indexGiaoPhan($id){
-        $statistics_giao_phan = GiaoPhan::with('giaoHat.giaoXu')
-            ->withCount(['giaoXu', 'giaoHat','giaoDan'])
-            ->where('id', $id)
-            ->first();
-
-        $giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
-            $q->where('ten_chuc_vu', 'Giám mục');
-        })->where('giao_phan_id',$id)
-         ->first();
-
-        $linh_muc_count = TuSi::whereHas('chucVu', function ($q){
-            $q->where('ten_chuc_vu', 'Linh mục');
-        })->where('giao_phan_id',$id)
-            ->count();
-        $chung_sinh_count = TuSi::whereHas('chucVu', function ($q){
-            $q->where('ten_chuc_vu', '<>' , 'Linh mục')
-                ->where('ten_chuc_vu', '<>' , 'Giám mục');
-        })->where('giao_phan_id',$id)
-            ->count();
-        if ($giam_muc){
-            return view('dashboard.statictis_giao_phan', compact(
-                'statistics_giao_phan', 'linh_muc_count', 'chung_sinh_count', 'giam_muc'));
-        }else{
-            Toastr::error('Không có dữ liệu', 'Cảnh báo');
-            return redirect()->route('home');
-        }
-
+    public function indexGiaoPhan(){
+        return view('dashboard.statictis_giao_phan');
     }
 
     public function indexGiaoXu(){

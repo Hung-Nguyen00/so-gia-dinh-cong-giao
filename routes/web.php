@@ -15,6 +15,7 @@ use App\Http\Controllers\ThanhVienController;
 use App\Http\Controllers\SoGiaDinhController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NhaDongController;
+use App\Http\Controllers\HomeController;
 
 
 Route::get('/', function () {
@@ -83,13 +84,14 @@ Route::group(['middleware'=>'auth'],function()
         ]);
     });
     // ----------------------------- main dashboard ------------------------------//
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/home/giao-phan/{id}', [GiaoPhanController::class, 'indexGiaoPhan'])->name('home.giaoPhan');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home/giao-phan', [GiaoPhanController::class, 'indexGiaoPhan'])->name('home.giaoPhan');
     Route::get('/home/giao-xu', [GiaoPhanController::class, 'indexGiaoXu'])->name('home.giaoXu');
     // request Ajax for select option
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
     Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
+    Route::get('home/sinh-hoac-tu/{id}', [HomeController::class, 'getGenderSinhOrTu']);
     // import chucVu, Vitri, TenThanh
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
 
@@ -115,8 +117,8 @@ Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('user.forget-password');
-Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('user.forget-password');
+Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('user.forget-password.send');
 
-// ----------------------------- reset password -----------------------------//
-Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
-Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+//// ----------------------------- reset password -----------------------------//
+//Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
+//Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);

@@ -9,14 +9,14 @@ m<div class="dlabnav">
                 <ul aria-expanded="false">
                     <li><a href="{{ route('home') }}">Giáo phận</a></li>
                     <li>
-                        <a href="{{ route('home.giaoPhan', \Illuminate\Support\Facades\Auth::user()->giao_phan_id)}}">
+                        <a href="{{ route('home.giaoPhan') }}">
                             Thống kê của giáo phận</a></li>
                     <li>
                         <a href="{{ route('home.giaoXu')}}">
                             Thống kê của giáo xứ</a></li>
                 </ul>
             </li>
-            @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'admin')
+            @if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-home"></i>
                     <span class="nav-text">Quản lý giáo phận</span>

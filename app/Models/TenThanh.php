@@ -26,5 +26,9 @@ class TenThanh extends Model
         return User::find($id)->ho_va_ten;
     }
 
+    public function getUser(){
+        return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
+    }
+
 
 }

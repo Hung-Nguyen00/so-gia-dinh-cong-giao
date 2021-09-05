@@ -47,5 +47,7 @@ class GiaoPhan extends Model
     public function user($id){
         return User::find($id) ? User::find($id)->ho_va_ten : null;
     }
-
+    public function getUser(){
+        return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
+    }
 }

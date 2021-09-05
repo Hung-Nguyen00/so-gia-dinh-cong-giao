@@ -31,7 +31,8 @@ class SoGiaDinhController extends Controller
     public function index()
     {
         // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
-      $all_so_gia_dinh = SoGiaDinh::withCount('thanhVien')
+      $all_so_gia_dinh = SoGiaDinh::with('getUser')
+          ->withCount('thanhVien')
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -47,7 +48,7 @@ class SoGiaDinhController extends Controller
 
     public function show(SoGiaDinh $soGiaDinh)
     {
-        $all_thanh_vien = ThanhVien::with(['tenThanh'])->withCount('biTich')
+        $all_thanh_vien = ThanhVien::with(['tenThanh', 'getUser'])->withCount('biTich')
             ->where('so_gia_dinh_id', $soGiaDinh->id)->get();
 
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));

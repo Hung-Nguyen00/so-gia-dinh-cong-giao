@@ -38,7 +38,7 @@
                     <tr >
                         <td class="text-center"> {{ ++$i }}</td>
                         <td> {{ $th->ten_chuc_vu }}</td>
-                        <td>{{ $th->user($th->nguoi_khoi_tao) }}</td>
+                        <td>{{ $th->getUser->ho_va_ten }}</td>
                         <td>{{ \Carbon\Carbon::parse($th->updated_at)->format('d-m-Y  H:i') }}</td>
                         <td>
                             <button type="button"

@@ -14,7 +14,10 @@ class NhaDongController extends Controller
      */
     public function index()
     {
-        $all_nha_dong = NhaDong::withCount('tuSi')->orderBy('created_at', 'DESC')->get();
+        $all_nha_dong = NhaDong::with('getUser')
+            ->withCount('tuSi')
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         return view('nha_dong.all', compact('all_nha_dong'));
     }
