@@ -2,7 +2,7 @@
     <div class="card-body">
             <h4 class="font-weight-bold">Tìm kiếm</h4>
             <div class="d-flex flex-wrap mb-3">
-                <div class="col-md-3">
+                <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <label>Tên thánh</label>
                     <select data-live-search="true" class="selectpicker  select form-control" wire:model="ten_thanh_id">
                         <option value="" selected>Chọn tên thánh</option>
@@ -11,11 +11,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <label>Họ và tên</label>
                     <input type="text" wire:model="ho_va_ten" class="form-control">
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <lable class="col-form-label">Chức vụ</lable>
                     <select class="selectpicker select form-control pt-2" wire:model="chuc_vu_id" name="chuc_vu_id">
                         <option  value=""  selected> Chọn chức vụ</option>
@@ -24,8 +24,8 @@
                         @endforeach
                     </select>
                 </div>
-                @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen === 'admin')
-                <div class="col-md-3">
+                @if(\Auth::user()->quanTri->ten_quyen === 'admin')
+                <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <lable class="col-form-label">Giáo phận</lable>
                     <select class="selectpicker select form-control pt-2" wire:change="changeGiaoPhan" wire:model="giao_phan_id" >
                         <option  value=""  selected> Chọn giáo phận</option>
@@ -35,8 +35,8 @@
                     </select>
                 </div>
                 @endif
-                <div class="col-md-3 mt-1">
-                    <lable class="col-form-label pt-1">Giáo hạt</lable>
+                <div class="col-lg-3 pt-3 col-md-3 col-sm-6">
+                    <lable class="col-form-label">Giáo hạt</lable>
                     <select class="selectpicker select form-control pt-2" wire:model="giao_hat_id" >
                         <option  value=""  selected> Chọn giáo hạt</option>
                         @foreach($all_giao_hat as $cv)
@@ -44,8 +44,8 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-3 mt-1">
-                    <lable class="col-form-label pt-1">Giáo xứ</lable>
+                <div class="col-lg-3 pt-3 col-md-3 col-sm-6">
+                    <lable class="col-form-label">Giáo xứ</lable>
                     <select class="selectpicker select form-control pt-2" wire:model="giao_xu_id">
                         <option value="" selected> Chọn giáo xứ</option>
                         @foreach($all_giao_xu as $cv)
@@ -53,9 +53,9 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <label class="col-form-label pt-1">Hiển thị</label>
-                    <select class="form-control select w-75" wire:model="paginate_number">
+                <div class="col-lg-2 pt-2 col-md-2 col-sm-2">
+                    <label class="col-form-label w-100 d-inline-block">Hiển thị</label>
+                    <select class="form-control selectpicker w-auto select" wire:model="paginate_number">
                         <option value="5" selected>5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -86,7 +86,7 @@
                         <td class="text-center"> {{ ++$i }}</td>
                         <td> {{ $th->ho_va_ten }}</td>
                         <td>
-                            {{ $th->getTenThanh($th->ten_thanh_id) }}
+                            {{ $th->tenThanh->ten_thanh }}
                         </td>
                         <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
                         <td>

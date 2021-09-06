@@ -4,6 +4,6 @@
 @endsection --}}
 @section('content')
     <div class="content-body">
-        @livewire('giao-xu.statictis-giao-xu')
+        @livewire('giao-tinh.statistic-giao-tinh')
     </div>
 @endsection

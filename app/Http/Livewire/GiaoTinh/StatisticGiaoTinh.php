@@ -1,29 +1,25 @@
 <?php
 
-namespace App\Http\Livewire\GiaoPhan;
+namespace App\Http\Livewire\GiaoTinh;
 
-use App\Models\GiaoHat;
-use App\Models\GiaoPhan;
 use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AnalyticGiaoPhan extends Component
+class StatisticGiaoTinh extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $giao_phan_id = 1, $giam_muc, $paginate_number = 5, $giao_hat_id, $sinh_hoac_tu = 1;
+    public $giao_tinh_id = 1, $giam_muc, $paginate_number = 5, $giao_hat_id, $sinh_hoac_tu = 1;
     protected $queryString = ['giao_phan_id'];
 
 
 
     public function mount()
     {
-        $this->giao_phan_id = request()->query('giao_phan_id', $this->giao_phan_id);
+        $this->giao_tinh_id = request()->query('giao_tinh_id', $this->giao_tinh_id);
         $this->giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
             $q->where('ten_chuc_vu', 'Giám mục');
         })->where('giao_phan_id',$this->giao_phan_id)
@@ -52,7 +48,7 @@ class AnalyticGiaoPhan extends Component
 
         // show GiaoHat to table
         $all_giao_hat = GiaoHat::withCount(['giaoXu', 'giaoDan'])
-                        ->where('giao_phan_id', $this->giao_phan_id);
+            ->where('giao_phan_id', $this->giao_phan_id);
         // search GiaoHat By Id
         if ($this->giao_hat_id){
             $all_giao_hat = $all_giao_hat->where('id', $this->giao_hat_id)->get();
@@ -62,7 +58,7 @@ class AnalyticGiaoPhan extends Component
             ->orderBy('ten_giao_phan', 'DESC')
             ->get();
 
-        return view('livewire.giao-phan.analytic-giao-phan',
+        return view('livewire.giao-tinh.statistic-giao-tinh',
             compact('statistics_giao_phan', 'analytics_bi_tich'))
             ->with(['all_giao_phan' => $all_giao_phan,
                 'giam_muc' => $this->giam_muc,
@@ -149,7 +145,7 @@ class AnalyticGiaoPhan extends Component
         $count_hon_phoi = 0;
         $count_sgd = 0;
         $count_tv = 0;
-         DB::table('giao_phan as p')
+        DB::table('giao_phan as p')
             ->join('giao_hat as h', 'p.id', '=', 'h.giao_phan_id')
             ->join('giao_xu as x', 'h.id', '=', 'x.giao_hat_id')
             ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')

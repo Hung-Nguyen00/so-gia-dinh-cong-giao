@@ -38,6 +38,10 @@ class GiaoHat extends Model
         return $this->hasManyDeep(ThanhVien::class, [GiaoXu::class, SoGiaDinh::class]);
     }
 
+    public  function hoGiaDinh(){
+        return $this->hasManyThrough(SoGiaDinh::class, GiaoXu::class);
+    }
+
     public function getTuSi(){
         return $this->hasManyThrough(TuSi::class,   GiaoXu::class,'giao_hat_id', 'giao_hat_id');
     }

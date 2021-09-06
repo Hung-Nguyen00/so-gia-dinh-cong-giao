@@ -27,27 +27,27 @@
                     <div class="row tab-content">
                         <div id="list-view" class="tab-pane fade active show col-lg-12">
                             <div class="card">
-                                <div>
-                                    <div class="card-header">
-                                        <h4 class="card-title font-weight-bold">Danh sách các tu sĩ </h4>
-                                        <div class="col-md-4 d-flex justify-content-end align-items-center" >
-                                                <a href="{{ route('sgdcg-file-export', ['name' => 'tu_si'])}}"
-                                                   style="margin-top: 11px !important;"
-                                                   class="btn btn-info mr-2">Excel mẫu
-                                                </a>
-                                                <button type="button"
-                                                        data-toggle="modal" data-target="#importModal"
-                                                        class="btn btn-info mr-2" style="margin-top: 11px !important;">Import Excel
-                                                </button>
-
-                                                <a href="{{ route('tu-si.create') }}"
-                                                   style="margin-top: 10px; margin-right: -10px;"
-                                                   class="btn btn-primary">Thêm mới
-                                                </a>
-                                            </div>
+                                <div class="card-header">
+                                    <div class="col-xs-12">
+                                        <h4 class="card-title  font-weight-bold">Danh sách các tu sĩ </h4>
                                     </div>
-                                    @livewire('tu-si.crud-tu-si')
+                                    <div class="col-md-4 col-xs-12 d-flex justify-content-end align-items-center" >
+                                            <a href="{{ route('sgdcg-file-export', ['name' => 'tu_si'])}}"
+                                               style="margin-top: 11px !important;"
+                                               class="btn btn-info mr-2">Excel mẫu
+                                            </a>
+                                            <button type="button"
+                                                    data-toggle="modal" data-target="#importModal"
+                                                    class="btn btn-info mr-2" style="margin-top: 11px !important;">Import Excel
+                                            </button>
+
+                                            <a href="{{ route('tu-si.create') }}"
+                                               style="margin-top: 10px; margin-right: -10px;"
+                                               class="btn btn-primary">Thêm mới
+                                            </a>
+                                    </div>
                                 </div>
+                                @livewire('tu-si.crud-tu-si')
                             </div>
                         </div>
                     </div>

@@ -43,6 +43,10 @@ class GiaoXu extends Model
         return $this->hasManyThrough(ThanhVien::class, SoGiaDinh::class);
     }
 
+    public function hoGiaDinh(){
+        return $this->hasMany(SoGiaDinh::class, 'giao_xu_id', 'id');
+    }
+
     public function getGiaoHo($id){
         $ten_giao_ho = GiaoXu::find($id)->ten_giao_xu;
         if ($ten_giao_ho){
@@ -51,9 +55,7 @@ class GiaoXu extends Model
             return null;
         }
     }
-    public function user($id){
-        return User::find($id) ? User::find($id)->ho_va_ten : null;
-    }
+
     public function getUser(){
         return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
     }

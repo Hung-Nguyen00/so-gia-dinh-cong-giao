@@ -4,7 +4,7 @@
             <div class="col-sm-7 p-md-0">
                 <div class="welcome-text d-flex justify-content-start align-items-center">
                     <h4>Thống kê giáo phận</h4>
-                    <select class="selectpicker w-auto select form-control ml-2"  wire:model="giao_phan_id"
+                    <select class="selectpicker w-50 select form-control ml-2"  wire:model="giao_phan_id"
                             value="{{ old('giao_phan_id') }}"  data-live-search="true" >
                         @foreach($all_giao_phan as $cv)
                             <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}</option>
@@ -158,28 +158,28 @@
                 </div>
             </div>
         </div>
-       <div class="row">
-           <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
-               <div class="card">
-                   <div class="card-body" id="chart-responsive">
-                       <div class="col-xl-6 col-xxl-6 col-sm-12">
-                           <div class="w-50">
-                               <label class="form-label">Chọn thống kê sinh hoặc tử</label>
-                               <select id="select" class="form-control" wire:model="sinh_hoac_tu">
-                                   <option value="1" selected>Sinh</option>
-                                   <option value="2">Tử</option>
-                               </select>
-                           </div>
-                           <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
-                       </div>
-                       <div class="col-xl-6 col-xxl-6 col-sm-12">
-                           <h5>Thông kê tu sĩ</h5>
-                           <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body" id="chart-responsive">
+                        <div class="col-xl-6 col-xxl-6 col-sm-12">
+                            <div class="w-50">
+                                <label class="form-label">Chọn thống kê sinh hoặc tử</label>
+                                <select id="select" class="form-control" wire:model="sinh_hoac_tu">
+                                    <option value="1" selected>Sinh</option>
+                                    <option value="2">Tử</option>
+                                </select>
+                            </div>
+                            <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                        </div>
+                        <div class="col-xl-6 col-xxl-6 col-sm-12">
+                            <h5>Thông kê tu sĩ</h5>
+                            <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xl-7 col-lg-7 col-xxl-7 col-md-12">
                 <div class="card">

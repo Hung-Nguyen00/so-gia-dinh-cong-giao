@@ -1,7 +1,8 @@
 <div>
 
     @include('tu_si.delete_phuc_vu')
-    <table id="example3" class="table verticle-middle table-responsive-md mt-2">
+    <div class="table-responsive">
+        <table id="example3" class="table verticle-middle table-responsive-md mt-2">
         <thead>
         <tr>
             <th>STT</th>
@@ -56,4 +57,5 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 </div>

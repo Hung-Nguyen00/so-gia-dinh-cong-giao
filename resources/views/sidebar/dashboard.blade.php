@@ -1,4 +1,4 @@
-m<div class="dlabnav">
+<div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label first">Các menu chính</li>
@@ -7,13 +7,13 @@ m<div class="dlabnav">
                     <span class="nav-text">Bảng thống kê</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('home') }}">Giáo phận</a></li>
+                    <li><a href="{{ route('home') }}">Toàn giáo hội công giáo</a></li>
                     <li>
                         <a href="{{ route('home.giaoPhan') }}">
-                            Thống kê của giáo phận</a></li>
+                            Thống kê giáo phận</a></li>
                     <li>
                         <a href="{{ route('home.giaoXu')}}">
-                            Thống kê của giáo xứ</a></li>
+                            Thống kê giáo xứ</a></li>
                 </ul>
             </li>
             @if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')

@@ -3,6 +3,19 @@
     <!-- Content body start -->
     <div class="content-body">
         <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-7 p-md-0">
+                    <div class="welcome-text d-flex justify-content-start align-items-center">
+                        <h4>Thống kê toàn giáo phận</h4>
+                    </div>
+                </div>
+                <div class="col-sm-5 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Thống kê toàn giáo phận</a></li>
+                    </ol>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xl-3 col-xxl-3 col-sm-6">
                     <div class="widget-stat card bg-primary">
@@ -12,7 +25,7 @@
                                     <i class="la la-home"></i>
                                 </span>
                                 <div class="text-white">
-                                    <p class="mb-1">Tổng số phận</p>
+                                    <p class="mb-1">Tổng số giáo phận</p>
                                 </div>
                             </div>
                             <div class="text-center">
@@ -72,35 +85,100 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-primary">
+                        <div class="card-body">
+                            <div class="media">
+                                <span class="mr-3">
+                                    <i class="la la-street-view"></i>
+                                </span>
+                                <div class="text-white">
+                                    <p class="mb-1">Rửa tội</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white" style="font-size: 16px"> {{ $analytics_bi_tich['rua_toi'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-warning">
+                        <div class="card-body">
+                            <div class="media">
+                                <span class="mr-3">
+                                    <i class="la la-user-secret"></i>
+                                </span>
+                                <div class="text-white">
+                                    <p class="mb-1">Xưng tội</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['xung_toi'] }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-secondary">
+                        <div class="card-body">
+                            <div class="media">
+                                <span class="mr-3">
+                                    <i class="la la-glass"></i>
+                                </span>
+                                <div class="text-white">
+                                    <p class="mb-1">Thêm sức</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['them_suc']}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-danger">
+                        <div class="card-body">
+                            <div class="media">
+                                <span class="mr-3">
+                                    <i class="la la-heart"></i>
+                                </span>
+                                <div class="text-white">
+                                    <p class="mb-1" style="width: 120px;">Hôn phối</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['hon_phoi']}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-xxl-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Biểu đồ thống kê toàn giáo phận</h4>
                         </div>
-
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="col-xl-6 col-xxl-6 col-sm-12">
-                                    <div class="w-50">
-                                        <label class="form-label">Chọn thống kê sinh hoặc tử</label>
-                                        <select id="sinh_hoac_tu" class="form-control">
-                                            <option value="1" selected>Sinh</option>
-                                            <option value="2">Tử</option>
-                                        </select>
-                                    </div>
-                                    <div id="loadDiv" class="d-none la-ball-circus">
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                    </div>
-                                    <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                        <div class="card-body" id="chart-responsive">
+                            <div class="col-xl-6 col-xxl-6 col-sm-12 col-md-12 p-0">
+                                <div class="w-50">
+                                    <label class="form-label">Chọn thống kê sinh hoặc tử</label>
+                                    <select id="sinh_hoac_tu" class="form-control">
+                                        <option value="1" selected>Sinh</option>
+                                        <option value="2">Tử</option>
+                                    </select>
                                 </div>
-                                <div class="col-xl-6 col-xxl-6 col-sm-12">
-                                    <h5>Thông kê tu sĩ toàn giáo phận</h5>
-                                    <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                                <div id="loadDiv" class="d-none la-ball-circus">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
                                 </div>
+                                <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                            </div>
+                            <div class="col-xl-6 col-xxl-6 col-sm-12 p-0">
+                                <label>Thông kê tu sĩ toàn giáo phận</label>
+                                <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
                             </div>
                         </div>
                     </div>
@@ -135,7 +213,7 @@
                                             <td class="text-center">{{ $th->tu_si_count }}</td>
                                             <td class="text-center">{{ $th->giao_dan_count }}</td>
                                             <td>
-                                                <a href="edit-student.html" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+                                                <a href="home/giao-phan?giao_phan_id={{ $th->id }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -146,6 +224,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
@@ -154,7 +233,6 @@
 @section('scripts')
     <script type="text/javascript">
         var dataTuSi = <?php echo $analytic_tu_si; ?>;
-            console.log(dataTuSi);
         var piechart = document.getElementById('pieChart').getContext('2d');
         var pieChart = new Chart(piechart, {
             type: 'pie',

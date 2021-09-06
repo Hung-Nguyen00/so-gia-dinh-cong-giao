@@ -50,16 +50,6 @@
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
-                            <div class="search_bar dropdown">
-                                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
-                                    <i class="mdi mdi-magnify"></i>
-                                </span>
-                                <div class="dropdown-menu p-0 m-0">
-                                    <form>
-                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                                    </form>
-                                </div>
-                            </div>
                         </div>
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown header-profile">
@@ -82,23 +72,19 @@
                 </nav>
             </div>
         </div>
-        <!-- Header end ti-comment-alt -->
-
         {{--Nav--}}
         @include('sidebar.dashboard')
         {{--Nav end--}}
          <!-- Content body start -->
          @yield('content')
         <!-- Content body end -->
-
-        <!-- Footer start -->
-        <!-- Footer end -->
     </div>
 
     @livewireScripts
     <!-- Required vendors -->
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="{{ URL::to('assets/vendor/toastr/js/toastr.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/custom.min.js') }}"></script>

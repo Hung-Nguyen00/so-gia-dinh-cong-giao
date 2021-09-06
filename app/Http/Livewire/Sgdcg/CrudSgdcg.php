@@ -45,7 +45,7 @@ class CrudSgdcg extends Component
             $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
         }
         $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
-        $this->all_giao_phan = GiaoPhan::all();
+        $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
         return view('livewire.sgdcg.crud-sgdcg');
     }

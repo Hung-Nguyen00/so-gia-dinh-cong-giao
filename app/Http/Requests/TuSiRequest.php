@@ -29,6 +29,8 @@ class TuSiRequest extends FormRequest
             'nha_dong_id' => 'nullable',
             'chuc_vu_id' => 'required',
             'email' => 'email',
+            'la_tong_giam_muc' => 'max:1',
+            'giao_tinh' => 'nullable',
             'gioi_tinh' => 'required',
             'giao_phan_id' =>'required',
             'ngay_nhan_chuc' => 'date|nullable',
@@ -70,6 +72,7 @@ class TuSiRequest extends FormRequest
             'check_save_info.required' => 'Hãy lựa chọn phương thức lưu thông tin',
             'bat_dau_phuc_vu.after' => 'Ngày bắt đầu phục vụ giáo xứ mới phải lớn hơn ngày kết thúc.',
             'email.email' => 'Giá trị nhập phải đúng dạng email',
+            'la_tong_giam_muc.max' => 'Chức vị không trùng khớp',
             'gioi_tinh.required' => 'Giới tính không được phép trống'
         ];
     }

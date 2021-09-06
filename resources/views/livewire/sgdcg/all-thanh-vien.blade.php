@@ -80,8 +80,8 @@
                         <td>
                             {{ $th->so_dien_thoai }}
                         </td>
-                        <td class="text-center">
-                            {{ $th->dia_chi_hien_tai}}  {{ $th->dia_chi_hien_tai}} {{ $th->dia_chi_hien_tai}} {{ $th->dia_chi_hien_tai}} {{ $th->dia_chi_hien_tai}} {{ $th->dia_chi_hien_tai}} {{ $th->dia_chi_hien_tai}} {{ $th->dia_chi_hien_tai}}
+                        <td >
+                            {{ $th->dia_chi_hien_tai}}
                         </td>
                         <td class="text-center">
                             <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}" class="text-primary">Xem </a>

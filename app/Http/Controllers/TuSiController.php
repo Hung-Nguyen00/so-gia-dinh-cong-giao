@@ -12,6 +12,7 @@ use App\Imports\ViTriImport;
 use App\Models\ChucVu;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
+use App\Models\GiaoTinh;
 use App\Models\GiaoXu;
 use App\Models\LichSuCongTac;
 use App\Models\LichSuNhanChuc;
@@ -120,17 +121,14 @@ class TuSiController extends Controller
     public function create()
     {
         $all_ten_thanh = TenThanh::orderBy('ten_thanh')->get();
-        $all_giao_xu = GiaoXu::with('giaoHat')
-            ->where('giao_xu_hoac_giao_ho', 0)->get();
-        $all_giao_hat = GiaoHat::with('giaoPhan')->get();
         $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-        $all_nha_dong = NhaDong::all();
-        $all_chuc_vu = ChucVu::all();
+        $all_giao_tinh = GiaoTinh::select('id', 'ten_giao_tinh')->get();
+        $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
+        $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();
         return view('tu_si.add', compact(
             'all_chuc_vu',
-            'all_giao_xu',
-            'all_giao_hat',
             'all_nha_dong',
+            'all_giao_tinh',
             'all_giao_phan',
             'all_ten_thanh'
             ));
@@ -188,17 +186,19 @@ class TuSiController extends Controller
                 ->first();
         }
         if($tu_si){
-            $all_ten_thanh = TenThanh::orderBy('ten_thanh')->get();
-            $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
-            $all_giao_hat = GiaoHat::all();
-            $all_vi_tri = ViTri::all();
-            $all_nha_dong = NhaDong::all();
+            $all_ten_thanh = TenThanh::select('id', 'ten_thanh')->orderBy('ten_thanh')->get();
+            $all_giao_xu = GiaoXu::select('id', 'ten_giao_xu', 'giao_xu_hoac_giao_ho')->get();
+            $all_giao_hat = GiaoHat::select('id', 'ten_giao_hat')->get();
+            $all_vi_tri = ViTri::select('id', 'ten_vi_tri')->get();
+            $all_giao_tinh = GiaoTinh::select('id', 'ten_giao_tinh')->get();
+            $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
             $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-            $all_chuc_vu = ChucVu::all();
+            $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();
             return view('tu_si.edit', compact('tu_si',
                 'all_chuc_vu',
                 'all_giao_xu',
                 'all_giao_hat',
+                'all_giao_tinh',
                 'all_nha_dong',
                 'all_giao_phan',
                 'all_ten_thanh',

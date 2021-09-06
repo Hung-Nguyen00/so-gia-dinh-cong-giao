@@ -77,19 +77,26 @@
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
+                                                            <lable class="form-label">Chức vị</lable>
+                                                            <select class="selectpicker form-control pt-2" name="la_tong_giam_muc">
+                                                                <option selected value=""> Chọn tên chức vị</option>
+                                                                <option value="T" {{ old('la_tong_giam_muc') == 'T' ? 'selected' : '' }}>Tổng giám mục</option>
+                                                                <option value="P" {{ old('la_tong_giam_muc') == 'P' ? 'selected' : '' }}>Giám mục phụ tá</option>
+                                                                <option value="Q" {{ old('la_tong_giam_muc') == 'Q' ? 'selected' : '' }}>Linh mục quản hạt</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('la_tong_giam_muc'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('la_tong_giam_muc')}}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
                                                             <lable class="form-label ">Giới tính</lable>
-                                                            <select class="selectpicker form-control pt-2" value="{{ old('gioi_tinh') }}" name="gioi_tinh">
-                                                                <option selected value="">Chọn giới tính</option>
-                                                                @if(old('gioi_tinh'))
-                                                                    <option value="1" selected>Nam </option>
-                                                                    <option value="0">Nữ</option>
-                                                                @elseif(old('gioi_tinh') == 0)
-                                                                    <option value="1">Nam</option>
-                                                                    <option value="0" selected>Nữ</option>
-                                                                @else
-                                                                    <option value="1">Nam</option>
-                                                                    <option value="0">Nữ</option>
-                                                                @endif
+                                                            <select class="selectpicker form-control pt-2" name="gioi_tinh">
+                                                                <option value="0" {{ old('gioi_tinh') == 0 ? 'selected' : '' }}>Nữ</option>
+                                                                <option selected value="1" {{ old('gioi_tinh') == 1 ? 'selected' : '' }}>Nam</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -199,14 +206,30 @@
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
+                                                            <lable class="form-label">Tổng giáo phận</lable>
+                                                            <select class="selectpicker form-control pt-2" id="giao_tinh_id"
+                                                                    name="giao_phan_id" data-live-search="true" >
+                                                                <option selected value="">Chọn tên tổng giáo phận</option>
+                                                                @foreach($all_giao_tinh as $cv)
+                                                                    <option  value="{{ $cv->id }}">
+                                                                        {{ $cv->ten_giao_tinh }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
                                                             <lable class="form-label ">Giáo phận</lable>
                                                             <select class="selectpicker form-control pt-2" id="giao_phan_id"
                                                                     name="giao_phan_id" data-live-search="true" >
                                                                 <option selected value="">Chọn tên giáo phận</option>
                                                                 @foreach($all_giao_phan as $cv)
                                                                     <option  value="{{ $cv->id }}"
-                                                                    {{ old('giao_phan_id') || \Illuminate\Support\Facades\Auth::user()->giao_phan_id == $cv->id ? 'selected' : '' }}>
-                                                                        {{ $cv->ten_giao_phan }} - Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }}
+                                                                    {{ old('giao_phan_id') || \Auth::user()->giao_phan_id == $cv->id ? 'selected' : '' }}>
+                                                                        Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>

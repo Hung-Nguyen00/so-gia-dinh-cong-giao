@@ -30,22 +30,52 @@ class HomeController extends Controller
         $statistics_giao_phan = GiaoPhan::withCount(['giaoXu', 'giaoHat','giaoDan', 'tuSi'])->get();
         $count = array('giao_phan_count' => 0, 'giao_xu_count' => 0, 'giao_dan_count' => 0, 'tu_si_count' => 0);
 
+        // analytics TUSI
         $count_ts= DB::table('giao_tinh as gt')
             ->leftJoin('giao_phan as p', 'gt.id', '=', 'p.giao_tinh_id')
             ->leftJoin('tu_si as ts', 'ts.giao_phan_id', '=', 'p.id')
             ->leftJoin('chuc_vu as c', 'c.id', '=', 'ts.chuc_vu_id')
             ->select( DB::raw('count(ts.id) as TuSi'), 'c.ten_chuc_vu as chuc_vu')
             ->groupBy('gt.id', 'chuc_vu')
-            ->get();
+            ->simplePaginate();
+
         $count_giam_muc = $count_ts->where('chuc_vu', 'Giám mục')->sum('TuSi');
         $count_linh_muc = $count_ts->where('chuc_vu', 'Linh mục')->sum('TuSi');
         $count_chung_sinh = $count_ts->where('chuc_vu', 'Chủng sinh')->sum('TuSi');
         $count_so = $count_ts->where('chuc_vu', 'Sơ')->sum('TuSi');
-
         $analytic_tu_si = ['Giám mục' => $count_giam_muc,
             'Linh mục' => $count_linh_muc,
             'Chủng sinh' => $count_chung_sinh,
             'Sơ' => $count_so];
+        // analytics BiTich
+
+        $count_rua_toi  = 0;
+        $count_xung_toi = 0;
+        $count_them_suc = 0;
+        $count_hon_phoi = 0;
+
+        DB::table('giao_tinh as gt')
+            ->join('giao_phan as p', 'gt.id', '=', 'p.giao_tinh_id')
+            ->join('giao_hat as h', 'p.id', '=', 'h.giao_phan_id')
+            ->join('giao_xu as x', 'h.id', '=', 'x.giao_hat_id')
+            ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
+            ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
+            ->join('bi_tich_da_nhan as btdn', 'tv.id', '=', 'btdn.thanh_vien_id')
+            ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
+            ->orderBy('btdn.created_at', 'DESC')
+            ->select('tv.id as ThanhVien', 'bt.ten_bi_tich as BiTich')
+            ->chunk(1000, function ($value) use(&$count_rua_toi, &$count_xung_toi, &$count_them_suc, &$count_hon_phoi){
+                $count_rua_toi += $value->where('BiTich', 'Rửa tội')->count();
+                $count_them_suc += $value->where('BiTich', 'Thêm sức')->count();
+                $count_hon_phoi += $value->where('BiTich', 'Hôn phối')->count();
+                $count_xung_toi += $value->where('BiTich', 'Xưng tội')->count();
+            });
+
+        $analytics_bi_tich = ['rua_toi' => $count_rua_toi,
+            'them_suc' => $count_them_suc,
+            'hon_phoi' => $count_them_suc,
+            'xung_toi' => $count_xung_toi];
+
 
         foreach($statistics_all as $gp){
             $count['giao_phan_count'] += $gp->giao_phan_count;
@@ -54,7 +84,7 @@ class HomeController extends Controller
             $count['tu_si_count'] += $gp->tu_si_count;
         }
         return view('dashboard.main_dashboard', compact(
-             'count', 'statistics_giao_phan'))
+             'count', 'statistics_giao_phan', 'analytics_bi_tich'))
             ->with(['analytic_tu_si' => json_encode($analytic_tu_si)]);
     }
 

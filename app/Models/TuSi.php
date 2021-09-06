@@ -15,6 +15,8 @@ class TuSi extends Model
 
     protected $fillable = [
         'ho_va_ten',
+        'la_tong_giam_muc',
+        'giao_tinh_id',
         'ngay_sinh',
         'email',
         'nha_dong_id',
@@ -73,8 +75,9 @@ class TuSi extends Model
     public function nhaDong(){
         return $this->belongsTo(NhaDong::class, 'nha_dong_id','id');
     }
-    public function user($id){
-        return User::find($id) ? User::find($id)->ho_va_ten : null;
+
+    public function giaoTinh(){
+        return $this->belongsTo(GiaoTinh::class, 'giao_tinh_id', 'id');
     }
 
     public function getUser(){

@@ -72,12 +72,14 @@ class CrudTuSi extends Component
             return view('livewire.tu-si.crud-tu-si', [
                 'all_tu_si' => $tu_si->where('giao_phan_id', Auth::user()->giao_phan_id)
                                     ->paginate($this->paginate_number),
-                'all_chuc_vu' => ChucVu::all(),
-                'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
+                'all_chuc_vu' => ChucVu::select('id', 'ten_chuc_vu')->get(),
+                'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->select('id', 'ten_thanh')->get(),
                 'all_giao_hat' => GiaoHat::orderBy('ten_giao_hat')
+                        ->select('id', 'ten_giao_hat', 'giao_phan_id')
                         ->where('giao_phan_id', Auth::user()->giao_phan_id)
                         ->get(),
                 'all_giao_xu' => GiaoXu::orderBy('ten_giao_xu')
+                        ->select('id', 'ten_giao_xu', 'giao_hat_id')
                         ->where('giao_hat_id', $this->giao_hat_id)
                         ->get(),
              ]

@@ -1,6 +1,7 @@
 <div>
     @include('tu_si.delete_nhan_chuc')
-    <table id="example3" class="table verticle-middle table-responsive-md mt-2">
+    <div class="table-responsive">
+    <table id="example3" class="table verticle-middle table-responsive-md mt-2" style="min-width: 845px">
         <thead>
         <tr>
             <th scope="col">STT</th>
@@ -33,4 +34,5 @@
         @endif
         </tbody>
     </table>
+    </div>
 </div>

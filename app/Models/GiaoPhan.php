@@ -43,6 +43,9 @@ class GiaoPhan extends Model
     public function tuSi(){
         return $this->hasMany(TuSi::class, 'giao_phan_id', 'id');
     }
+    public  function hoGiaDinh(){
+        return $this->hasManyDeep(SoGiaDinh::class, [GiaoHat::class, GiaoXu::class]);
+    }
 
     public function user($id){
         return User::find($id) ? User::find($id)->ho_va_ten : null;

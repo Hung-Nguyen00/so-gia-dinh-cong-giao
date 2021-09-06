@@ -28,7 +28,9 @@ class CreateTuSiRequest extends FormRequest
             'ten_thanh_id' => 'required',
             'nha_dong_id' => 'nullable',
             'chuc_vu_id' => 'required',
+            'la_tong_giam_muc' => 'max:1',
             'email' => 'email',
+            'giao_tinh_id' => 'nullable',
             'gioi_tinh' => 'required',
             'giao_phan_id' =>'required',
             'ngay_nhan_chuc' => 'date|nullable',
@@ -62,6 +64,7 @@ class CreateTuSiRequest extends FormRequest
             'so_dien_thoai.min' => ':attribute không được nhỏ hơn :min ký tự',
             'so_dien_thoai.regex' => ':attribute phải là chữ số',
             'email.email' => 'Giá trị nhập phải đúng dạng email',
+            'la_tong_giam_muc.max' => 'Chức vị không trùng khớp',
             'gioi_tinh.required' => 'Giới tính không được phép trống'
         ];
     }

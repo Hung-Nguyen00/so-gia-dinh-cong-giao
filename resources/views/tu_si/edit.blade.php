@@ -83,6 +83,25 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label">Chức vị</lable>
+                                                            <select class="selectpicker form-control pt-2" name="la_tong_giam_muc">
+                                                                <option selected value=""> Chọn tên chức vị</option>
+                                                                <option value="T" {{ old('la_tong_giam_muc') == 'T' || $tu_si->la_tong_giam_muc == 'T'  ? 'selected' : '' }}>
+                                                                    Tổng giám mục</option>
+                                                                <option value="P" {{ old('la_tong_giam_muc') == 'P'|| $tu_si->la_tong_giam_muc == 'P'  ? 'selected' : '' }}>
+                                                                    Giám mục phụ tá</option>
+                                                                <option value="Q" {{ old('la_tong_giam_muc') == 'Q'|| $tu_si->la_tong_giam_muc == 'Q'  ? 'selected' : '' }}>
+                                                                    Linh mục quản hạt</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('la_tong_giam_muc'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('la_tong_giam_muc')}}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label ">Email</label>
                                                         <input type="text" class="form-control"
@@ -200,6 +219,22 @@
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
+                                                            <lable class="form-label">Tổng giáo phận</lable>
+                                                            <select class="selectpicker form-control pt-2" id="giao_tinh_id"
+                                                                    name="giao_phan_id" data-live-search="true" >
+                                                                <option selected value="">Chọn tên tổng giáo phận</option>
+                                                                @foreach($all_giao_tinh as $cv)
+                                                                    <option  value="{{ $cv->id }}" {{ $cv->id == old('giao_tinh_id') || $cv->id == $tu_si->giao_inh_id ? 'selected' : '' }}>
+                                                                        {{ $cv->ten_giao_tinh }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
                                                             <lable class="form-label ">Giáo phận</lable>
                                                             <select class="selectpicker form-control pt-2" id="giao_phan_id"
                                                                     value="{{ old('giao_phan_id') }}" name="giao_phan_id" data-live-search="true" >
@@ -217,7 +252,7 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('giao_phan_id') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-6 mt-5 col-md-6 col-sm-12">
+                                                <div class="col-lg-6 mb-2 col-md-6 col-sm-12 d-flex align-items-end">
                                                     <div class="form-check">
                                                         <input type="checkbox" name="dang_du_hoc" {{ $tu_si->dang_du_hoc ? 'checked' : '' }}
                                                                 class="form-check-input ">
@@ -314,11 +349,11 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('ket_thuc_phuc_vu') }}</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                <div class="col-lg-6 pt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
                                                             <label class="form-label">Chọn phương thức lưu thông tin</label>
-                                                            <select class="selectpicker form-control pt-2" value="{{ old('check_save_info') }}"
+                                                            <select class="selectpicker form-control" value="{{ old('check_save_info') }}"
                                                                     name="check_save_info">
                                                                 <option selected value=""> Chọn phương thức lưu thông tin</option>
                                                                 <option value="1"> Lưu thông tin cập nhập</option>
