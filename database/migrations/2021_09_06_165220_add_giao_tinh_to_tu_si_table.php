@@ -15,12 +15,6 @@ class AddGiaoTinhToTuSiTable extends Migration
     {
         Schema::table('tu_si', function (Blueprint $table) {
             $table->char('la_tong_giam_muc', 1)->nullable();
-            $table->unsignedBigInteger('giao_tinh_id')->nullable()->index();
-
-            $table->foreign('giao_tinh_id')
-                ->references('id')
-                ->on('giao_tinh')
-                ->onDelete('cascade');
         });
     }
 

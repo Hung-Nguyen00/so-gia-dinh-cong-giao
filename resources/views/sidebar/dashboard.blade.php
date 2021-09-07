@@ -61,6 +61,7 @@
                     <li><a href="{{ route('giao-ho.index') }}">Giáo họ</a></li>
                     <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
                     <li><a href="{{ route('thanh-vien.index') }}">Giáo dân</a></li>
+                    <li><a href="{{ route('so-gia-dinh.viewPDF') }}">PDF</a></li>
                 </ul>
             </li>
             <li class="nav-label">Quản trị</li>

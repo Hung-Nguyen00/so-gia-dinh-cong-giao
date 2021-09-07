@@ -14,8 +14,10 @@ use App\Models\SoGiaDinh;
 use App\Models\TenThanh;
 use App\Models\ThanhVien;
 use App\Models\TuSi;
+use Barryvdh\DomPDF\Facade as PDF;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
@@ -54,6 +56,23 @@ class SoGiaDinhController extends Controller
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));
     }
 
+    public function viewPDF(){
+        return view('print.print_sgdcg');
+    }
+
+    public  function downloadPDF(){
+        $contxt = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ]
+        ]);
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadView('print.print_data_sgdcg');
+        $pdf->getDomPDF()->setHttpContext($contxt);
+        return $pdf->stream('SoGiaDinhCongGiao.pdf');
+    }
 
     // crud Thanh Vien
     public function createThanhVien($sgdId){

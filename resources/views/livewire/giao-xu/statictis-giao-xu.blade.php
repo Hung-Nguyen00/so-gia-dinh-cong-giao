@@ -102,10 +102,11 @@
                                     <option value="2">Tử</option>
                                 </select>
                             </div>
-                            <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                            <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
+                            <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;" height="50"></canvas>
                         </div>
                         <div class="col-xl-6 col-xxl-6 col-sm-12">
-                            <h5>Thông kê tu sĩ</h5>
+                            <h5>Thông kê bí tích</h5>
                             <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
                         </div>
                     </div>

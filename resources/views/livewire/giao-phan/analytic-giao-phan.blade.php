@@ -170,7 +170,8 @@
                                    <option value="2">Tử</option>
                                </select>
                            </div>
-                           <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                           <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
+                           <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;" height="50"></canvas>
                        </div>
                        <div class="col-xl-6 col-xxl-6 col-sm-12">
                            <h5>Thông kê tu sĩ</h5>
@@ -211,8 +212,9 @@
                                 <thead>
                                 <tr>
                                     <th width="25">STT</th>
-                                    <th width="100">Tên giáo hạt</th>
-                                    <th width="100">Tổng giáo xứ</th>
+                                    <th width="150">Tên giáo hạt</th>
+                                    <th width="250">Linh mục quản hạt</th>
+                                    <th width="50">Tổng giáo xứ</th>
                                     <th width="100">Tổng giáo dân</th>
                                 </tr>
                                 </thead>
@@ -223,6 +225,13 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $th->ten_giao_hat }}</td>
+                                            @if($th->tuSi->count() > 0)
+                                               @foreach($th->tuSi as $ts)
+                                                    <td> {{ $ts->tenThanh->ten_thanh}} {{$ts->ho_va_ten }}</td>
+                                               @endforeach
+                                            @else
+                                                <td></td>
+                                            @endif
                                             <td class="text-center">{{ $th->giao_xu_count }}</td>
                                             <td class="text-center">{{ $th->giao_dan_count }}</td>
                                         </tr>

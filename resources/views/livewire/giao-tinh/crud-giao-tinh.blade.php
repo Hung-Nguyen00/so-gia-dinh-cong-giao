@@ -15,17 +15,15 @@
     </div>
     <div  class="card-body" wire:ignore>
         <div class="table-responsive">
-            <table id="example3" class="display" style="min-width: 845px; width: 1100px !important;">
+            <table id="example3" class="display" style="min-width: 845px;">
                 <thead>
                 <tr>
                     <th style="width: 20px">STT</th>
-                    <th style="width: 90px">Tên giáo tỉnh</th>
-                    <th style="width: 92px">Ngày thành lập</th>
-                    <th style="width: 103px">Nhà thờ chính tòa</th>
-                    <th style="width: 50px">Số lượng giáo phận</th>
-                    <th style="width: 90px">Người cập nhập</th>
-                    <th style="width: 60px">Cập nhập lần cuối</th>
-                    <th style="width: 50px">Chỉnh sửa</th>
+                    <th>Tên giáo tỉnh</th>
+                    <th>Số lượng giáo phận</th>
+                    <th>Người cập nhập</th>
+                    <th>Cập nhập lần cuối</th>
+                    <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody >
@@ -34,14 +32,6 @@
                     <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>{{ $giao_tinh->ten_giao_tinh }}</td>
-                        <td>
-                            @if(\Carbon\Carbon::parse($giao_tinh->ngay_thanh_lap)->format('d-m') == '01-01')
-                                {{ \Carbon\Carbon::parse($giao_tinh->ngay_thanh_lap)->format('Y') }}
-                            @else
-                                {{ \Carbon\Carbon::parse($giao_tinh->ngay_thanh_lap)->format('d-m-Y') }}
-                            @endif
-                        </td>
-                        <td>{{ $giao_tinh->ten_nha_tho }}</td>
                         <td class="text-center">{{ $giao_tinh->giao_phan_count }}</td>
                         <td>{{ $giao_tinh->getUser->ho_va_ten }}</td>
                         <td>{{\Carbon\Carbon::parse($giao_tinh->updated_at)->format('d-m-Y  H:i') }}</td>

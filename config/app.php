@@ -164,6 +164,7 @@ return [
         Brian2694\Toastr\ToastrServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         \Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
        
 
         /*
@@ -233,6 +234,7 @@ return [
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
         'Excel' => \Maatwebsite\Excel\Facades\Excel::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

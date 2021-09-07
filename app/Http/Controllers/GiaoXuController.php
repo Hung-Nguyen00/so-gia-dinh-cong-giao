@@ -35,7 +35,24 @@ class GiaoXuController extends Controller
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();
-        return view('giao_xu.show_tu_si_by_user', compact('all_tu_si'));
+        $count_linh_muc = TuSi::whereHas('chucVu', function ($q){
+            $q->where('ten_chuc_vu', 'Linh mục');
+        })->where('giao_xu_id', Auth::user()->giao_xu_id)
+            ->count();
+
+        $count_so = TuSi::whereHas('chucVu', function ($q){
+            $q->where('ten_chuc_vu', 'Sơ');
+        })->where('giao_xu_id', Auth::user()->giao_xu_id)
+            ->count();
+
+        $count_chung_sinh = TuSi::whereHas('chucVu', function ($q){
+            $q->whereNotIn('ten_chuc_vu', ['Sơ', 'Giám mục', 'Linh mục']);
+        })->where('giao_xu_id', Auth::user()->giao_xu_id)
+            ->count();
+
+        return view('giao_xu.show_tu_si_by_user', compact(
+            'count_linh_muc', 'count_so', 'count_chung_sinh', 'all_tu_si'
+        ));
     }
 
 

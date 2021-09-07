@@ -219,22 +219,6 @@
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group ">
                                                         <div>
-                                                            <lable class="form-label">Tổng giáo phận</lable>
-                                                            <select class="selectpicker form-control pt-2" id="giao_tinh_id"
-                                                                    name="giao_phan_id" data-live-search="true" >
-                                                                <option selected value="">Chọn tên tổng giáo phận</option>
-                                                                @foreach($all_giao_tinh as $cv)
-                                                                    <option  value="{{ $cv->id }}" {{ $cv->id == old('giao_tinh_id') || $cv->id == $tu_si->giao_inh_id ? 'selected' : '' }}>
-                                                                        {{ $cv->ten_giao_tinh }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                                                    <div class="form-group ">
-                                                        <div>
                                                             <lable class="form-label ">Giáo phận</lable>
                                                             <select class="selectpicker form-control pt-2" id="giao_phan_id"
                                                                     value="{{ old('giao_phan_id') }}" name="giao_phan_id" data-live-search="true" >

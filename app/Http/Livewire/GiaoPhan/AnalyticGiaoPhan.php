@@ -52,6 +52,11 @@ class AnalyticGiaoPhan extends Component
 
         // show GiaoHat to table
         $all_giao_hat = GiaoHat::withCount(['giaoXu', 'giaoDan'])
+                        ->with('tuSi', function ($q) {
+                            $q->with('tenThanh')
+                                ->where('la_tong_giam_muc', 'H')
+                                ->first();
+                        })
                         ->where('giao_phan_id', $this->giao_phan_id);
         // search GiaoHat By Id
         if ($this->giao_hat_id){

@@ -122,7 +122,6 @@ class TuSiController extends Controller
     {
         $all_ten_thanh = TenThanh::orderBy('ten_thanh')->get();
         $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-        $all_giao_tinh = GiaoTinh::select('id', 'ten_giao_tinh')->get();
         $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
         $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();
         return view('tu_si.add', compact(
@@ -190,7 +189,6 @@ class TuSiController extends Controller
             $all_giao_xu = GiaoXu::select('id', 'ten_giao_xu', 'giao_xu_hoac_giao_ho')->get();
             $all_giao_hat = GiaoHat::select('id', 'ten_giao_hat')->get();
             $all_vi_tri = ViTri::select('id', 'ten_vi_tri')->get();
-            $all_giao_tinh = GiaoTinh::select('id', 'ten_giao_tinh')->get();
             $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
             $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
             $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();

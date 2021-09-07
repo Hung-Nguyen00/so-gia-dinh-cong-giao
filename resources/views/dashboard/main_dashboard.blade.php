@@ -174,7 +174,8 @@
                                     <div></div>
                                     <div></div>
                                 </div>
-                                <canvas id="myChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                                <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
+                                <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;" height="50"></canvas>
                             </div>
                             <div class="col-xl-6 col-xxl-6 col-sm-12 p-0">
                                 <label>Thông kê tu sĩ toàn giáo phận</label>

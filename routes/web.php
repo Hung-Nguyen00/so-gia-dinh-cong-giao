@@ -94,8 +94,12 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('home/sinh-hoac-tu/{id}', [HomeController::class, 'getGenderSinhOrTu']);
     // import chucVu, Vitri, TenThanh
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
-
+    // export
     Route::get('file-export-so-gia-dinh', [SoGiaDinhController::class, 'fileExport'])->name('sgdcg-file-export');
+    // print PDF SogiaDinhCongGiao
+    Route::get('so-gia-dinh/chi-tiet/index', [SoGiaDinhController::class, 'viewPDF'])->name('so-gia-dinh.viewPDF');
+    // print PDF SogiaDinhCongGiao
+    Route::get('so-gia-dinh/chi-tiet/download', [SoGiaDinhController::class, 'downloadPDF'])->name('so-gia-dinh.downloadPDF');
 
     Route::resources([
         'tai-khoan' => UserController::class,
