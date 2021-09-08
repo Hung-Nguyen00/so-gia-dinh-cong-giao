@@ -29,6 +29,10 @@ class SoGiaDinh extends Model
         return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id');
     }
 
+    public function thanhVienSo2(){
+        return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id_2');
+    }
+
     public function user($id){
         return User::find($id) ? User::find($id)->ho_va_ten : null;
     }

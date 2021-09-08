@@ -17,8 +17,10 @@ class ThanhVien extends Model
     protected $fillable = [
       'ho_va_ten',
       'ngay_sinh',
-        'gioi_tinh',
-       'chuc_vu_gd',
+      'so_gia_dinh_id_2',
+      'gioi_tinh',
+      'chuc_vu_gd',
+      'chuc_vu_gd_2',
       'ngay_mat',
       'quan_he',
       'dia_chi_hien_tai',
@@ -53,6 +55,7 @@ class ThanhVien extends Model
                 'ngay_sinh_nguoi_lam_chung_2',
                 'nguoi_khoi_tao']);
     }
+
 
 
     public function scopeSearch($query, $term){

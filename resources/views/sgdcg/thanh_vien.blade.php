@@ -37,7 +37,7 @@
 
                                     <div  class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example3" class="display" style="min-width: 845px">
+                                            <table id="example3" class="display" style="min-width: 845px  ;width: 1050px">
                                                 <thead>
                                                 <tr>
                                                     <th >STT</th>
@@ -66,7 +66,13 @@
                                                                 {{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}
                                                             @endif
                                                         </td>
-                                                        <td class="text-center">{{ $th->chuc_vu_gd }}</td>
+                                                        <td class="text-center">
+                                                            @if($i < 2 )
+                                                            {{ $th->chuc_vu_gd_2 ? $th->chuc_vu_gd_2 : $th->chuc_vu_gd }}
+                                                                @else
+                                                                {{ $th->chuc_vu_gd }}
+                                                            @endif
+                                                        </td>
                                                         <td class="text-center">
                                                            {{ $th->bi_tich_count }}
                                                         </td>

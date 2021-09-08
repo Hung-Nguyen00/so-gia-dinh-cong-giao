@@ -59,10 +59,28 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label ">Giới tính</lable>
+                                                            <select class="selectpicker form-control pt-2" name="gioi_tinh">
+                                                                <option value="0" {{ old('gioi_tinh') == 0 ? 'selected' : '' }}>Nữ</option>
+                                                                <option selected value="1" {{ old('gioi_tinh') == 1 ? 'selected' : '' }}>Nam</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('gioi_tinh'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('gioi_tinh') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize" style="margin-bottom: 7px;">Chức vụ trong gia đình</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('chuc_vu_gd') }}" name="chuc_vu_gd">
+                                                        <select class="selectpicker form-control pt-2" name="chuc_vu_gd">
+                                                            <option value="" selected>Chọn chức vụ gia đình</option>
+                                                            <option value="Cha">Cha</option>
+                                                            <option value="Mẹ">Mẹ</option>
+                                                            <option value="Con">Con</option>
+                                                        </select>
                                                     </div>
                                                     @if($errors->has('chuc_vu_gd'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('chuc_vu_gd') }}</span>

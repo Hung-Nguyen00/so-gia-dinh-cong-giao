@@ -33,14 +33,7 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
         $this->flag = false;
     }
 
-    public function getUpperCase($name){
-        preg_match_all('/[A-Z]/', $name, $matches, PREG_OFFSET_CAPTURE);
-        $letter_uc = '';
-        for ($i = 0 ; $i < sizeof($matches[0]); $i++){
-            $letter_uc = $letter_uc . $matches[0][$i][0];
-        }
-        return $letter_uc;
-    }
+
 
     public function collection(Collection $rows)
     {
@@ -137,6 +130,7 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                     'tu_si_id' => $tu_si_id->id,
                 ]);
             }
+
         }
     }
 }

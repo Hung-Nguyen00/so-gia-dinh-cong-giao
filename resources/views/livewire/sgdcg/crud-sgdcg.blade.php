@@ -39,7 +39,7 @@
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>{{ $g->ma_so }}</td>
                         <td>{{ \Carbon\Carbon::parse($g->ngay_tao_so)->format('d-m-Y') }}</td>
-                        <td class="text-center">{{ $g->thanh_vien_count }}
+                        <td class="text-center">{{ $g->thanh_vien_so2_count > 0 ? $g->thanh_vien_so2_count : $g->thanh_vien_count }}
                             <a href="{{ route('so-gia-dinh.show', $g)  }}"> <i class="la la-eye"></i></a>
                         <td>{{ $g->getUser->ho_va_ten }}</td>
                         <td>

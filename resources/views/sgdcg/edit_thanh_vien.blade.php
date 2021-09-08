@@ -60,10 +60,34 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label">Giới tính</lable>
+                                                            <select class="selectpicker form-control pt-2" name="gioi_tinh">
+                                                                <option value="0" {{ old('gioi_tinh') == 0 || $thanh_vien->gioi_tinh == 0 ? 'selected' : '' }}>Nữ</option>
+                                                                <option selected value="1" {{ old('gioi_tinh') == 1 || $thanh_vien->gioi_tinh == 1 ? 'selected' : '' }}>Nam</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('gioi_tinh'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('gioi_tinh') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize" style="margin-bottom: 7px;">Chức vụ trong gia đình</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('chuc_vu_gd') ?? $thanh_vien->chuc_vu_gd}}" name="chuc_vu_gd">
+                                                        <select class="selectpicker form-control pt-2" name="{{ $thanh_vien->chuc_vu_gd_2? 'chuc_vu_gd_2' : 'chuc_vu_gd'}}">
+                                                            <option value="" selected>Chọn chức vụ gia đình</option>
+                                                        @if($thanh_vien->chuc_vu_gd_2)
+                                                            <option value="Cha" {{ $thanh_vien->chuc_vu_gd_2 == 'Cha' || old('chuc_vu_gd_2') == 'Cha' ? 'selected' : '' }}>Cha</option>
+                                                            <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd_2 == 'Mẹ' || old('chuc_vu_gd_2') == 'Mẹ' ? 'selected' : '' }}>Mẹ</option>
+                                                            <option value="Con" {{ $thanh_vien->chuc_vu_gd_2 == 'Con' || old('chuc_vu_gd_2') == 'Con' ? 'selected' : ' ' }}>Con</option>
+                                                                @else
+                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd == 'Cha' || old('chuc_vu_gd') == 'Cha' ? 'selected' : '' }}>Cha</option>
+                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd == 'Mẹ' || old('chuc_vu_gd') == 'Mẹ' ? 'selected' : '' }}>Mẹ</option>
+                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd == 'Con' || old('chuc_vu_gd') == 'Con' ? 'selected' : '' }}>Con</option>
+                                                        @endif
+                                                        </select>
                                                     </div>
                                                     @if($errors->has('chuc_vu_gd'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('chuc_vu_gd') }}</span>
@@ -140,15 +164,17 @@
                                         <form action="{{ route('so-gia-dinh.storeBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien] ) }}" method="post" >
                                             @csrf
                                             <div class="row">
-                                                <div id="bi_tich" class="col-md-12 col-sm-12">
+                                                <div class="col-md-12 col-sm-12">
                                                     <h4><strong>Thêm bí tích</strong></h4>
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên bí tích</lable>
-                                                            <select onchange="changeForm()" id="bi_tich" class="selectpicker form-control pt-2" name="bi_tich_id" data-live-search="true" >
-                                                                <option selected value=""> Chọn tên bí tích</option>
+                                                            <select onchange="changeForm()" id="bi_tich"
+                                                                    class="selectpicker form-control pt-2"
+                                                                    name="bi_tich_id"
+                                                                    data-live-search="true" >
                                                                 @foreach($all_bi_tich as $cv)
                                                                     <option  value="{{ $cv->id }}" {{ old('bi_tich_id') == $cv->id ? 'selected' : '' }}>
                                                                         {{ $cv->ten_bi_tich }}</option>
@@ -164,10 +190,10 @@
                                                     <div class="form-group">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên linh mục hoặc giám mục</lable>
-                                                            <select class="selectpicker  form-control pt-2" name="tu_si_id" id="tu_si" data-live-search="true" >
+                                                            <select class="selectpicker  form-control pt-2"  name="tu_si_id" id="tu_si" data-live-search="true" >
                                                                 @foreach($all_tu_si as $cv)
                                                                     @if($cv->giaoXu)
-                                                                        @if($cv->giao_xu_id == $thanh_vien->giao_xu_id)
+                                                                        @if($cv->giao_xu_id == $sgdcg->giao_xu_id)
                                                                         <option  value="{{ $cv->id }}" selected>
                                                                             {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
                                                                         @else
@@ -438,21 +464,22 @@
 @endsection
 
 
-@section('scripts')
+@push('scripts')
     <script>
-        document.onload = changeForm();
-        function changeForm() {
+         function changeForm() {
             var x = document.getElementById("bi_tich"),
                 hon_nhan = document.getElementById('hon_nhan'),
                 then_suc = document.getElementById('them_suc');
-            var text = x.options[x.selectedIndex].text;
-            if(text.toLocaleLowerCase().indexOf('hôn') > -1){
+             var text = x.options[x.selectedIndex].text;
+
+             if(text.toLocaleLowerCase().indexOf('hôn') > -1){
                 hon_nhan.classList.remove('d-lg-none', 'd-sm-none');
                 then_suc.classList.add('d-lg-none', 'd-sm-none');
             }else{
                 hon_nhan.classList.add('d-lg-none', 'd-sm-none');
                 then_suc.classList.remove('d-lg-none', 'd-sm-none');
             }
-        }
+        };
+         changeForm();
     </script>
-@endsection
+@endpush

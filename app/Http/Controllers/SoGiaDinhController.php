@@ -17,24 +17,22 @@ use App\Models\TuSi;
 use Barryvdh\DomPDF\Facade as PDF;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
 
 class SoGiaDinhController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // SoGiaDinh Info
     public function index()
     {
         // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
+        // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
+        // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
       $all_so_gia_dinh = SoGiaDinh::with('getUser')
-          ->withCount('thanhVien')
+          ->withCount(['thanhVien', 'thanhVienSo2'])
             ->where('giao_xu_id', Auth::user()->giao_xu_id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -47,30 +45,140 @@ class SoGiaDinhController extends Controller
     return view('sgdcg.all', compact('all_so_gia_dinh', 'ten_giao_xu'));
     }
 
-
     public function show(SoGiaDinh $soGiaDinh)
     {
         $all_thanh_vien = ThanhVien::with(['tenThanh', 'getUser'])->withCount('biTich')
-            ->where('so_gia_dinh_id', $soGiaDinh->id)->get();
+            ->where('so_gia_dinh_id', $soGiaDinh->id)
+            ->orWhere('so_gia_dinh_id_2', $soGiaDinh->id)->get();
 
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));
     }
 
+    // convert HTMl to PDF SoGiaDinh
     public function viewPDF(){
         return view('print.print_sgdcg');
     }
 
     public  function downloadPDF(){
-        $contxt = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
-        ]);
+        $sgdcg = SoGiaDinh::with(['giaoXu.giaoPhan'])->withCount(['thanhVien', 'thanhVienSo2'])->find(74);
+        if ($sgdcg->thanh_vien_count == 0 && $sgdcg->thanh_vien_so2_count == 0){
+            Toastr::warning('Không có dữ liệu', 'Cảnh báo');
+            return back();
+        }
+        $query_so_gia_dinh_id = DB::table('thanh_vien as tv')
+            ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
+            ->where('so_gia_dinh_id', $sgdcg->id)
+            ->select('tv.id as thanh_vien_id',
+                'tv.dia_chi_hien_tai',
+                'tv.so_dien_thoai',
+                'chuc_vu_gd_2',
+                'tv.so_gia_dinh_id',
+                'ho_va_ten',
+                'ten_thanh',
+                'ngay_sinh')->get();
+        $query_so_gia_dinh_id_2 = DB::table('thanh_vien as tv')
+            ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
+            ->where('so_gia_dinh_id_2', $sgdcg->id)
+            ->select('tv.id as thanh_vien_id',
+                'tv.dia_chi_hien_tai',
+                'tv.so_dien_thoai',
+                'tv.so_gia_dinh_id',
+                'chuc_vu_gd_2',
+                'ho_va_ten',
+                'ten_thanh',
+                'ngay_sinh')->get();
+
+        $query_bi_tich = DB::table('bi_tich_da_nhan as btdn')
+            ->join('tu_si as ts', 'ts.id', '=', 'btdn.tu_si_id')
+            ->join('ten_thanh as tt', 'tt.id', '=', 'ts.ten_thanh_id')
+            ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
+            ->select('btdn.thanh_vien_id as thanh_vien_id',
+                'ts.ho_va_ten as ten_linh_muc',
+                'ten_bi_tich',
+                'tt.ten_thanh as ten_thanh_linh_muc',
+                'ngay_dien_ra',
+                'noi_dien_ra',
+                'ten_nguoi_lam_chung_1',
+                'ten_thanh_nguoi_lam_chung_1',
+                'ten_nguoi_lam_chung_2',
+                'ten_thanh_nguoi_lam_chung_2',
+                'ten_nguoi_do_dau',
+                'ten_thanh_nguoi_do_dau')
+            ->get();
+        $info_cha_me =DB::table('thanh_vien as tv')
+            ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
+            ->select('ten_thanh', 'ho_va_ten', 'so_gia_dinh_id', 'chuc_vu_gd')
+            ->whereIn('chuc_vu_gd', ['Cha', 'Mẹ'])->get();
+
+        //-----------------------------------
+        //------- Info Cha
+        $thanh_vien_cha = $query_so_gia_dinh_id->where('chuc_vu_gd', 'Cha')->first();
+        // if thanhVien's not exist in so_gia_dinh_id, we will make sure He is in so_gia_dinh_id,
+        // This is a second family
+        if (!$thanh_vien_cha){
+            $thanh_vien_cha = $query_so_gia_dinh_id_2
+                ->where('chuc_vu_gd_2', 'Cha')
+                ->first();
+        }
+
+        $info_cha_me_cha = $info_cha_me->where('so_gia_dinh_id', '=', $thanh_vien_cha->so_gia_dinh_id);
+
+        // get BiTich of Cha
+        $thanh_vien_cha_bt = $query_bi_tich->where('thanh_vien_id', $thanh_vien_cha->thanh_vien_id);
+
+        //------- Info of Me
+        $thanh_vien_me = $query_so_gia_dinh_id->where('chuc_vu_gd', 'Mẹ')->first();
+        if (!$thanh_vien_me){
+            $thanh_vien_me = $query_so_gia_dinh_id_2
+                ->where('chuc_vu_gd_2', 'Mẹ')
+                ->first();
+        }
+        $info_cha_me_me = $info_cha_me->where('so_gia_dinh_id', '=', $thanh_vien_me->so_gia_dinh_id);
+
+        // Get bi tich of Me
+        $thanh_vien_me_bt = $query_bi_tich->where('thanh_vien_id', $thanh_vien_me ? $thanh_vien_me->thanh_vien_id : '');
+
+        //------- Get Info and BiTich of Con
+        $thanh_vien_con = DB::table('thanh_vien as tv')
+            ->join('bi_tich_da_nhan as btdn', 'tv.id', '=', 'btdn.thanh_vien_id')
+            ->join('tu_si as ts', 'ts.id', '=', 'btdn.tu_si_id')
+            ->join('ten_thanh as tt', 'tt.id', '=', 'ts.ten_thanh_id')
+            ->join('ten_thanh as t1', 't1.id', '=', 'tv.ten_thanh_id')
+            ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
+            ->select('btdn.thanh_vien_id as thanh_vien_id',
+                'ts.ho_va_ten as ten_linh_muc',
+                'tv.ho_va_ten as ten_thanh_vien',
+                'tv.ngay_sinh as ngay_sinh_thanh_vien',
+                't1.ten_thanh as ten_thanh_thanh_vien',
+                'ten_bi_tich',
+                'tt.ten_thanh as ten_thanh_linh_muc',
+                'ngay_dien_ra',
+                'noi_dien_ra',
+                'tv.so_gia_dinh_id',
+                'tv.chuc_vu_gd',
+                'ten_nguoi_do_dau',
+                'ten_thanh_nguoi_do_dau')
+            ->where('chuc_vu_gd', 'Con')
+            ->where('so_gia_dinh_id', $sgdcg->id)
+            ->get();
+
+        // convert to PDF
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadView('print.print_data_sgdcg');
-        $pdf->getDomPDF()->setHttpContext($contxt);
+            ->loadView('print.print_data_sgdcg',
+                compact('thanh_vien_cha',
+                    'thanh_vien_me','thanh_vien_cha_bt',
+                    'info_cha_me_me', 'info_cha_me_cha',
+                    'thanh_vien_me_bt','thanh_vien_con', 'sgdcg'));
+
+        $pdf->getDomPDF()->setHttpContext(
+            stream_context_create([
+                'ssl' => [
+                    'allow_self_signed'=> TRUE,
+                    'verify_peer' => FALSE,
+                    'verify_peer_name' => FALSE,
+                ]
+            ])
+        );
         return $pdf->stream('SoGiaDinhCongGiao.pdf');
     }
 
@@ -181,13 +289,20 @@ class SoGiaDinhController extends Controller
             // take request and validate merge to a array, $sgdId use to check tu_si_id
             // match tu_si_id in sgdcg table because BiTICH: HonNhan must be tu_si in sgdcg promulgate
              $hon_nhan_info = $this->validateHonNhan($request, $validateData, $sgdcg);
-             $thanh_vien->biTich()->attach($request->bi_tich_id,
+            // create new SogiaDinh when he or she married
+            $new_sgdcg = $this->createNewSGDCG($request->ngay_dien_ra);
+            // update new SogiaDinh
+            $thanh_vien->update([
+               'so_gia_dinh_id_2' => $new_sgdcg->id,
+                'chuc_vu_gd_2' => $thanh_vien->gioi_tinh ? 'Cha': 'Mẹ'
+            ]);
+            // update
+            $thanh_vien->biTich()->attach($request->bi_tich_id,
                  array_merge($hon_nhan_info,
                      [ 'nguoi_khoi_tao' => Auth::id()]
                  ));
-
              Toastr::success('Cập nhập thành công', 'Thành công');
-             return redirect()->route('so-gia-dinh.editTV', ['sgdId' => $sgdId, 'tvId' => $thanh_vien->id]);
+             return redirect()->route('so-gia-dinh.show', $new_sgdcg);
         }else{
             $not_hon_nhan =  $this->validateNotHonNhan($request, $validateData);
             $thanh_vien->biTich()->attach($request->bi_tich_id,
@@ -356,6 +471,7 @@ class SoGiaDinhController extends Controller
             'ho_va_ten' => 'required|max:100',
             'ten_thanh_id' => 'required',
             'ngay_sinh' => 'date|nullable',
+            'gioi_tinh' => 'required',
             'ngay_mat' => 'date|nullable',
             'chuc_vu_gd' => 'required',
             'nam_sinh' => 'numeric|nullable',
@@ -369,6 +485,7 @@ class SoGiaDinhController extends Controller
             'nam_sinh.numeric' => ':attribute phải là giá trị số',
             'so_dien_thoai.min' =>':attribute nhỏ hơn :min',
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
+            'gioi_tinh.required' => 'Giới tính không được phép trống',
             'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
             'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống'
             ],
@@ -465,5 +582,34 @@ class SoGiaDinhController extends Controller
         }
         unset($validateData['nam_sinh_nguoi_do_dau']);
         return array_merge($FirstValidate, $validateData);
+    }
+
+    public function createNewSGDCG($ngay_dien_ra){
+        $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
+        $last_sgdcg = SoGiaDinh::all()->last();
+        $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
+        $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
+        $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
+        if ($last_sgdcg){
+            $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg->id + 1);
+        }else{
+            $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. 0;
+        }
+        // create so_gia_dinh
+        $so_gia_dinh = SoGiaDinh::create([
+            'ma_so' => $ma_so,
+            'ngay_tao_so' => $ngay_dien_ra,
+            'nguoi_khoi_tao' => Auth::id(),
+            'giao_xu_id' => Auth::user()->giao_xu_id,
+        ]);
+        return $so_gia_dinh;
+    }
+    public function getUpperCase($name){
+        preg_match_all('/[A-Z]/', $name, $matches, PREG_OFFSET_CAPTURE);
+        $letter_uc = '';
+        for ($i = 0 ; $i < sizeof($matches[0]); $i++){
+            $letter_uc = $letter_uc . $matches[0][$i][0];
+        }
+        return $letter_uc;
     }
 }

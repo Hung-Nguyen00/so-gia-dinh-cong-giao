@@ -27,6 +27,7 @@ class UpdateThanhVienRequest extends FormRequest
             'ho_va_ten' => 'required|max:100',
             'ten_thanh_id' => 'required',
             'ngay_sinh' => 'date|nullable',
+            'gioi_tinh' => 'required',
             'chuc_vu_gd' => 'required',
             'ngay_mat' => 'date|nullable',
             'nam_sinh' => 'numeric|nullable',
@@ -44,6 +45,7 @@ class UpdateThanhVienRequest extends FormRequest
             'ngay_mat.date' => ':attribute phải là giá trị ngày tháng năm',
             'nam_sinh.numeric' => ':attribute phải là giá trị số',
             'so_dien_thoai.min' =>':attribute nhỏ hơn :min',
+            'gioi_tinh.required' => 'Giới tính không được phép trống',
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
             'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
             'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống'

@@ -60,10 +60,34 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group ">
+                                                        <div>
+                                                            <lable class="form-label">Giới tính</lable>
+                                                            <select class="selectpicker form-control pt-2" name="gioi_tinh">
+                                                                <option value="0" {{ old('gioi_tinh') == 0 || $thanh_vien->gioi_tinh == 0 ? 'selected' : '' }}>Nữ</option>
+                                                                <option selected value="1" {{ old('gioi_tinh') == 1 || $thanh_vien->gioi_tinh == 1 ? 'selected' : '' }}>Nam</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('gioi_tinh'))
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('gioi_tinh') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize" style="margin-bottom: 7px;">Chức vụ trong gia đình</label>
-                                                        <input type="text" class="form-control"
-                                                               value="{{ old('chuc_vu_gd')  ??  $thanh_vien->chuc_vu_gd }}" name="chuc_vu_gd">
+                                                        <select class="selectpicker form-control pt-2" name="{{ $thanh_vien->chuc_vu_gd_2 ? 'chuc_vu_gd_2' : 'chuc_vu_gd'}}">
+                                                            <option value="" selected>Chọn chức vụ gia đình</option>
+                                                            @if($thanh_vien->chuc_vu_gd_2)
+                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd_2 == 'Cha' || old('chuc_vu_gd_2') == 'Cha' ? 'selected' : '' }}>Cha</option>
+                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd_2 == 'Mẹ' || old('chuc_vu_gd_2') == 'Mẹ' ? 'selected' : '' }}>Mẹ</option>
+                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd_2 == 'Con' || old('chuc_vu_gd_2') == 'Con' ? 'selected' : '' }}>Con</option>
+                                                            @else
+                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd == 'Cha' || old('chuc_vu_gd') == 'Cha' ? 'selected' : '' }}>Cha</option>
+                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd == 'Mẹ' || old('chuc_vu_gd') == 'Mẹ' ? 'selected' : '' }}>Con</option>
+                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd == 'Con' || old('chuc_vu_gd') == 'Con' ? 'selected' : '' }}>Con</option>
+                                                            @endif
+                                                        </select>
                                                     </div>
                                                     @if($errors->has('chuc_vu_gd'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('chuc_vu_gd') }}</span>
@@ -89,10 +113,10 @@
                                                         @endif
                                                     </div>
                                                     @if($errors->has('ngay_sinh'))
-                                                        <span class="text-danger">{{ $errors->first('ngay_sinh') }}</span>
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('ngay_sinh') }}</span>
                                                     @endif
                                                     @if($errors->has('nam_sinh'))
-                                                        <span class="text-danger">{{ $errors->first('nam_sinh') }}</span>
+                                                        <span class="text-danger font-weight-bold">{{ $errors->first('nam_sinh') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -131,7 +155,7 @@
                                                 <div class="col-lg-12 mt-2 col-md-12 col-sm-12">
                                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                                     <a class="btn btn-light"
-                                                       href="{{ route('so-gia-dinh.editTV', ['sgdId' => $sgdcg->id, 'tvId' => $thanh_vien->id])  }}">Quay lại
+                                                       href="{{ route('so-gia-dinh.show', $sgdcg)  }}">Quay lại
                                                     </a>
                                                 </div>
                                             </div>
@@ -150,14 +174,20 @@
                                                             <lable class="form-label text-capitalize">Tên linh mục hoặc giám mục</lable>
                                                             <select class="selectpicker  form-control pt-2" name="tu_si_id" id="tu_si" data-live-search="true" >
                                                                 @foreach($all_tu_si as $cv)
-                                                                    @if($cv->id == $bi_tich_detail->tu_si_id)
-                                                                        <option  value="{{ $cv->id }}" selected>
-                                                                            {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
-                                                                    @else
-                                                                        <option  value="{{ $cv->id }}"
-                                                                                {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
-                                                                            {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
-                                                                    @endif
+                                                                        @if($cv->giaoXu)
+                                                                            @if($cv->id == $bi_tich_detail->tu_si_id)
+                                                                                <option  value="{{ $cv->id }}" selected>
+                                                                                    {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                            @else
+                                                                                <option  value="{{ $cv->id }}"
+                                                                                        {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
+                                                                                    {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                            @endif
+                                                                        @else
+                                                                            <option  value="{{ $cv->id }}"
+                                                                                    {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
+                                                                                {{ $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                        @endif
                                                                 @endforeach
                                                             </select>
                                                         </div>
