@@ -28,7 +28,11 @@
                                 <div>
                                     <div class="card-header">
                                         <h4 class="card-title">Danh sách các thành viên </h4>
-                                        <div class="float-right">
+                                        <div class="float-right d-flex">
+                                            <a class="btn btn-outline-primary d-inline-block"
+                                               href="{{ route('so-gia-dinh.downloadPDF', ['id' =>  $soGiaDinh->id])}}">Xem sổ gia đình
+                                            </a>
+                                            @livewire('sgdcg.search-tv-add-to-sgdcg',['soGiaDinh' => $soGiaDinh])
                                             <a class="btn btn-primary"
                                                href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Thêm thành viên
                                             </a>

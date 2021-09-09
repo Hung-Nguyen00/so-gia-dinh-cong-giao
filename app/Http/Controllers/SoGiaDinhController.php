@@ -50,7 +50,6 @@ class SoGiaDinhController extends Controller
         $all_thanh_vien = ThanhVien::with(['tenThanh', 'getUser'])->withCount('biTich')
             ->where('so_gia_dinh_id', $soGiaDinh->id)
             ->orWhere('so_gia_dinh_id_2', $soGiaDinh->id)->get();
-
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));
     }
 
@@ -59,8 +58,8 @@ class SoGiaDinhController extends Controller
         return view('print.print_sgdcg');
     }
 
-    public  function downloadPDF(){
-        $sgdcg = SoGiaDinh::with(['giaoXu.giaoPhan'])->withCount(['thanhVien', 'thanhVienSo2'])->find(74);
+    public  function downloadPDF($id){
+        $sgdcg = SoGiaDinh::with(['giaoXu.giaoPhan'])->withCount(['thanhVien', 'thanhVienSo2'])->find($id);
         if ($sgdcg->thanh_vien_count == 0 && $sgdcg->thanh_vien_so2_count == 0){
             Toastr::warning('Không có dữ liệu', 'Cảnh báo');
             return back();
@@ -71,6 +70,7 @@ class SoGiaDinhController extends Controller
             ->select('tv.id as thanh_vien_id',
                 'tv.dia_chi_hien_tai',
                 'tv.so_dien_thoai',
+                'chuc_vu_gd',
                 'chuc_vu_gd_2',
                 'tv.so_gia_dinh_id',
                 'ho_va_ten',
@@ -87,7 +87,6 @@ class SoGiaDinhController extends Controller
                 'ho_va_ten',
                 'ten_thanh',
                 'ngay_sinh')->get();
-
         $query_bi_tich = DB::table('bi_tich_da_nhan as btdn')
             ->join('tu_si as ts', 'ts.id', '=', 'btdn.tu_si_id')
             ->join('ten_thanh as tt', 'tt.id', '=', 'ts.ten_thanh_id')
@@ -105,14 +104,15 @@ class SoGiaDinhController extends Controller
                 'ten_nguoi_do_dau',
                 'ten_thanh_nguoi_do_dau')
             ->get();
-        $info_cha_me =DB::table('thanh_vien as tv')
+        $info_cha_me = DB::table('thanh_vien as tv')
             ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
-            ->select('ten_thanh', 'ho_va_ten', 'so_gia_dinh_id', 'chuc_vu_gd')
+            ->select('ten_thanh', 'ho_va_ten', 'so_gia_dinh_id', 'chuc_vu_gd', 'tv.id as thanh_vien_id')
             ->whereIn('chuc_vu_gd', ['Cha', 'Mẹ'])->get();
 
         //-----------------------------------
         //------- Info Cha
         $thanh_vien_cha = $query_so_gia_dinh_id->where('chuc_vu_gd', 'Cha')->first();
+
         // if thanhVien's not exist in so_gia_dinh_id, we will make sure He is in so_gia_dinh_id,
         // This is a second family
         if (!$thanh_vien_cha){
@@ -120,11 +120,23 @@ class SoGiaDinhController extends Controller
                 ->where('chuc_vu_gd_2', 'Cha')
                 ->first();
         }
-
         $info_cha_me_cha = $info_cha_me->where('so_gia_dinh_id', '=', $thanh_vien_cha->so_gia_dinh_id);
-
         // get BiTich of Cha
         $thanh_vien_cha_bt = $query_bi_tich->where('thanh_vien_id', $thanh_vien_cha->thanh_vien_id);
+        // get GIaoXU and GIaoPhan of CHa
+        //  find  sgdcg previously.
+        $sgdcg_cha_cua_cha = $info_cha_me_cha->where('chuc_vu_gd', 'Cha')
+                                ->where('thanh_vien_id', '<>', $thanh_vien_cha->thanh_vien_id)
+                                ->first();
+        // if query don't find Cha of this sgdcg's Cha completely, then don't show GX GP
+        $gx_gp_cha = null;
+        $gx_gp_me = null;
+        if ($sgdcg_cha_cua_cha){
+            $gx_gp_cha = GiaoXu::with('giaoPhan')
+                ->whereHas('hoGiaDinh', function ($q) use($sgdcg_cha_cua_cha){
+                    $q->where('id', $sgdcg_cha_cua_cha->so_gia_dinh_id);
+                })->select('ten_giao_xu', 'giao_hat_id')->first();
+        }
 
         //------- Info of Me
         $thanh_vien_me = $query_so_gia_dinh_id->where('chuc_vu_gd', 'Mẹ')->first();
@@ -134,6 +146,17 @@ class SoGiaDinhController extends Controller
                 ->first();
         }
         $info_cha_me_me = $info_cha_me->where('so_gia_dinh_id', '=', $thanh_vien_me->so_gia_dinh_id);
+        // find sgdcg previously.
+        $sgdcg_cha_cua_me = $info_cha_me_me->where('chuc_vu_gd', 'Mẹ')
+            ->where('thanh_vien_id', '<>', $thanh_vien_me->thanh_vien_id)
+            ->first();
+        // if query don't find Cha of this sgdcg's Me completely, then don't show GX GP
+        if ($sgdcg_cha_cua_me){
+            $gx_gp_me = GiaoXu::with('giaoPhan')
+                ->whereHas('hoGiaDinh', function ($q) use($sgdcg_cha_cua_me){
+                    $q->where('id', $sgdcg_cha_cua_me->so_gia_dinh_id);
+                })->select('ten_giao_xu', 'giao_hat_id')->first();
+        }
 
         // Get bi tich of Me
         $thanh_vien_me_bt = $query_bi_tich->where('thanh_vien_id', $thanh_vien_me ? $thanh_vien_me->thanh_vien_id : '');
@@ -166,9 +189,15 @@ class SoGiaDinhController extends Controller
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadView('print.print_data_sgdcg',
                 compact('thanh_vien_cha',
-                    'thanh_vien_me','thanh_vien_cha_bt',
-                    'info_cha_me_me', 'info_cha_me_cha',
-                    'thanh_vien_me_bt','thanh_vien_con', 'sgdcg'));
+                    'gx_gp_cha',
+                    'gx_gp_me',
+                    'thanh_vien_me',
+                    'thanh_vien_cha_bt',
+                    'info_cha_me_me',
+                    'info_cha_me_cha',
+                    'thanh_vien_me_bt',
+                    'thanh_vien_con',
+                    'sgdcg'));
 
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([

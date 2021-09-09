@@ -99,7 +99,7 @@ Route::group(['middleware'=>'auth'],function()
     // print PDF SogiaDinhCongGiao
     Route::get('so-gia-dinh/chi-tiet/index', [SoGiaDinhController::class, 'viewPDF'])->name('so-gia-dinh.viewPDF');
     // print PDF SogiaDinhCongGiao
-    Route::get('so-gia-dinh/chi-tiet/download', [SoGiaDinhController::class, 'downloadPDF'])->name('so-gia-dinh.downloadPDF');
+    Route::get('so-gia-dinh/chi-tiet/download/{id}', [SoGiaDinhController::class, 'downloadPDF'])->name('so-gia-dinh.downloadPDF');
 
     Route::resources([
         'tai-khoan' => UserController::class,
