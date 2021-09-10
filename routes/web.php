@@ -51,7 +51,7 @@ Route::group(['middleware'=>'auth'],function()
         // create and update Bi Tich
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
         // href bookmark
-        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua#bi_tich', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editBTTV');
+        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua#them_bi_tich', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editBTTV');
         Route::get('tu-si/{tuSi}/edit/#cong_tac', [TuSiController::class, 'edit'])->name('tu-si.editCongTac');
 
         Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
@@ -96,8 +96,6 @@ Route::group(['middleware'=>'auth'],function()
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
     // export
     Route::get('file-export-so-gia-dinh', [SoGiaDinhController::class, 'fileExport'])->name('sgdcg-file-export');
-    // print PDF SogiaDinhCongGiao
-    Route::get('so-gia-dinh/chi-tiet/index', [SoGiaDinhController::class, 'viewPDF'])->name('so-gia-dinh.viewPDF');
     // print PDF SogiaDinhCongGiao
     Route::get('so-gia-dinh/chi-tiet/download/{id}', [SoGiaDinhController::class, 'downloadPDF'])->name('so-gia-dinh.downloadPDF');
 

@@ -97,7 +97,7 @@
                         <div class="col-xl-6 col-xxl-6 col-sm-12">
                             <div class="w-50">
                                 <label class="form-label">Chọn thống kê sinh hoặc tử</label>
-                                <select id="sinh_hoac_tu" class="form-control" wire:model="sinh_hoac_tu">
+                                <select id="sinh_hoac_tu" class="select form-control" wire:model="sinh_hoac_tu">
                                     <option value="1" selected>Sinh</option>
                                     <option value="2">Tử</option>
                                 </select>

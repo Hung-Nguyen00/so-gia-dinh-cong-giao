@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Sgdcg;
 
+use App\Models\BiTichDaNhan;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
 use App\Models\TenThanh;
+use App\Models\ThanhVien;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -18,6 +21,7 @@ class SearchTvAddToSgdcg extends Component
         $ten_thanh_id = null,
         $ngay_sinh = null,
         $chuc_vu_gd,
+        $gioi_tinh = null,
         $thanh_vien_id = null;
 
     public function render()
@@ -32,12 +36,50 @@ class SearchTvAddToSgdcg extends Component
                 $q->where('giao_phan_id', $giao_phan_id);
         })->select('id', 'ten_giao_xu', 'giao_hat_id')->get();
 
-        $thanh_vien = DB::table('thanh_vien as tv')
-                    ->join('ten_thanh as tt' , 'tv.ten_thanh_id', '=', 'tt.id')
-                    ->select('ngay_sinh', 'tt.id as ten_thanh_id','tv.id as thanh_vien_id', 'ten_thanh', 'ho_va_ten')
-                    ->where('ngay_sinh', '=', $this->ngay_sinh)
-                    ->where('ten_thanh_id', $this->ten_thanh_id)
-                    ->get();
+        if ($this->chuc_vu_gd == 'Cha'){
+            $this->gioi_tinh = 1;
+        }
+        if ($this->chuc_vu_gd == 'Mẹ'){
+            $this->gioi_tinh = 0;
+        }
+        $thanh_vien = DB::table('so_gia_dinh_cong_giao as sgd')
+                ->join('thanh_vien as tv', 'sgd.id', '=', 'tv.so_gia_dinh_id')
+                ->join('ten_thanh as tt' , 'tv.ten_thanh_id', '=', 'tt.id')
+                ->select('ngay_sinh', 'tt.id as ten_thanh_id','tv.id as thanh_vien_id',
+                    'ten_thanh',
+                    'sgd.id as sgdId',
+                    'ho_va_ten',
+                    'chuc_vu_gd',
+                    'chuc_vu_gd_2',
+                    'sgd.giao_xu_id'
+               )
+                ->where('gioi_tinh', $this->gioi_tinh)
+                ->where('ten_thanh_id', $this->ten_thanh_id)
+                ->where('ngay_sinh', $this->ngay_sinh)
+                ->where('giao_xu_id', $this->giao_xu_id)
+                ->get();
+
+
+        $info_thanh_vien = array();
+
+        $query = DB::table('thanh_vien as tv')
+            ->join('ten_thanh as tt' , 'tv.ten_thanh_id', '=', 'tt.id')
+            ->select('ho_va_ten', 'ten_thanh', 'chuc_vu_gd', 'chuc_vu_gd_2');
+        $key = 0;
+        foreach ($thanh_vien as $tv){
+            ++$key;
+            $query = $query->where('so_gia_dinh_id')
+                ->orWhere('so_gia_dinh_id_2', $tv->sgdId);
+            $cha = $query->where('chuc_vu_gd', 'Cha')->orWhere('chuc_vu_gd_2', 'Cha')->first();
+            $me = $query->where('chuc_vu_gd', 'Mẹ')->orWhere('chuc_vu_gd_2', 'Mẹ')->first();
+            $info_thanh_vien[$key]['ten_thanh_vien'] = $tv->ho_va_ten;
+            $info_thanh_vien[$key]['id'] = $tv->thanh_vien_id;
+            $info_thanh_vien[$key]['ten_thanh_cha'] = $cha->ten_thanh;
+            $info_thanh_vien[$key]['ten_thanh_me'] = $me->ten_thanh;
+            $info_thanh_vien[$key]['ho_ten_cha'] = $cha->ho_va_ten;
+            $info_thanh_vien[$key]['ho_ten_me'] = $me->ho_va_ten;
+        }
+        $thanh_vien = $info_thanh_vien;
         return view('livewire.sgdcg.search-tv-add-to-sgdcg', compact(
             'all_giao_phan',
                     'all_giao_xu',
@@ -51,13 +93,58 @@ class SearchTvAddToSgdcg extends Component
 
     public function store(){
         $thanh_vien_found = DB::table('thanh_vien')
+            ->select('id', 'so_gia_dinh_id_2', 'chuc_vu_gd_2')
             ->where('id', $this->thanh_vien_id)->limit(1);
+        $exist_tv_sgd = DB::table('thanh_vien as tv')
+                        ->join('bi_tich_da_nhan as btdn', 'btdn.thanh_vien_id', '=', 'tv.id')
+                        ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
+                        ->select(
+                            'btdn.bi_tich_id as bi_tich_id',
+                            'ten_nguoi_lam_chung_1',
+                            'ten_thanh_nguoi_lam_chung_1',
+                            'ten_bi_tich',
+                            'ngay_sinh_nguoi_lam_chung_1',
+                            'ten_nguoi_lam_chung_2',
+                            'ten_thanh_nguoi_lam_chung_2',
+                            'ngay_sinh_nguoi_lam_chung_2',
+                            'ngay_dien_ra',
+                            'noi_dien_ra',
+                            'tu_si_id')
+                        ->where('tv.so_gia_dinh_id', $this->soGiaDinh->id)
+                        ->orWhere('tv.so_gia_dinh_id_2', $this->soGiaDinh->id)
+                        ->where('ten_bi_tich', 'Hôn phối')
+                        ->first();
         if ($thanh_vien_found){
-            $thanh_vien_found->update([
-               'so_gia_dinh_id_2' => $this->soGiaDinh->id,
-               'chuc_vu_gd_2' => $this->chuc_vu_gd,
-            ]);
+
+            try{
+                DB::transaction(function () use($thanh_vien_found, $exist_tv_sgd){
+                    $thanh_vien_found->update([
+                        'so_gia_dinh_id_2' => $this->soGiaDinh->id,
+                        'chuc_vu_gd_2' => $this->chuc_vu_gd,
+                    ]);
+                    BiTichDaNhan::create([
+                        'bi_tich_id' => $exist_tv_sgd->bi_tich_id,
+                        'ten_nguoi_lam_chung_1' => $exist_tv_sgd->ten_nguoi_lam_chung_1,
+                        'ten_thanh_nguoi_lam_chung_1' => $exist_tv_sgd->ten_thanh_nguoi_lam_chung_1,
+                        'ngay_sinh_nguoi_lam_chung_1' => $exist_tv_sgd->ngay_sinh_nguoi_lam_chung_1,
+                        'ten_nguoi_lam_chung_2' => $exist_tv_sgd->ten_nguoi_lam_chung_2,
+                        'ten_thanh_nguoi_lam_chung_2' => $exist_tv_sgd->ten_thanh_nguoi_lam_chung_2,
+                        'ngay_sinh_nguoi_lam_chung_2' => $exist_tv_sgd->ngay_sinh_nguoi_lam_chung_2,
+                        'ngay_dien_ra'  => $exist_tv_sgd->ngay_dien_ra,
+                        'noi_dien_ra'   => $exist_tv_sgd->noi_dien_ra,
+                        'tu_si_id'  => $exist_tv_sgd->tu_si_id,
+                        'thanh_vien_id' => $thanh_vien_found->first()->id,
+                        'nguoi_khoi_tao' => Auth::id(),
+                    ]);
+                });
+            }catch (\Exception $ex){
+                Toastr::error('Có lỗi khi thêm thành viên', 'Lỗi');
+                return redirect()->route('so-gia-dinh.show', $this->soGiaDinh);
+            }
             Toastr::success('Thêm mới thành công', 'Thành công');
+            return redirect()->route('so-gia-dinh.show', $this->soGiaDinh);
+        }else{
+            Toastr::error('Không tìm thấy', 'Lỗi');
             return redirect()->route('so-gia-dinh.show', $this->soGiaDinh);
         }
     }

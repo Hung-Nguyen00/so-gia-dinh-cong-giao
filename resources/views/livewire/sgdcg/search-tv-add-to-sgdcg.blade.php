@@ -3,7 +3,7 @@
     <button class="btn btn-outline-danger"
             data-toggle="modal"
             data-target="#thanhVienModal"
-       >Thêm nam hoặc nữ
+       >Lập bí tích hôn phối
     </button>
 </div>
 

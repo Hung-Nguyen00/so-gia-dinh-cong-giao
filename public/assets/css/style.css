@@ -657,13 +657,23 @@ pre {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
-
+@media only screen and (max-width: 500px) and (min-width: 320px){
+  #ShowGD{
+    top: 2px;
+  }
+}
 @media (min-width: 576px) {
   .container, .container-sm {
-    max-width: 540px; } }
+    max-width: 540px; }
+}
+@media (min-width: 576px) {
+  .container, .container-sm {
+    max-width: 540px; }
+}
 @media (min-width: 768px) {
   .container, .container-sm, .container-md {
-    max-width: 720px; } }
+    max-width: 720px; }
+ }
 @media (min-width: 992px) {
   .container, .container-sm, .container-md, .container-lg {
     max-width: 960px; }
@@ -26961,8 +26971,19 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   transform: translate(-50%,-50%);
   z-index: 9;
 }
-
-
+#loadingAddTVSgdcg{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  z-index: 9;
+}
+#ShowGD{
+  position: absolute;
+  bottom: 0;
+}
 /*
  * Animations
  */

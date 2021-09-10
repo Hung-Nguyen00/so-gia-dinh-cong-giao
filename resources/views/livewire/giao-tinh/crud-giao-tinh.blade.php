@@ -1,17 +1,8 @@
 <div>
-    @include('giao_phan.import_giao_phan')
+
     @include('giao_tinh.edit')
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo tỉnh </h4>
-        <div>
-            <a href="{{ route('sgdcg-file-export', ['name' => 'giao_tinh'])}}"
-               class="btn btn-info">Excel mẫu
-            </a>
-            <button
-                    data-toggle="modal" data-target="#importModal"
-                    class="btn btn-primary">Import Excel
-            </button>
-        </div>
     </div>
     <div  class="card-body" wire:ignore>
         <div class="table-responsive">

@@ -11,7 +11,7 @@
             </a>
             <button
                     data-toggle="modal" data-target="#importModal"
-                    class="btn btn-info">Import dữ liệu
+                    class="btn btn-info">Import nhà dòng
             </button>
             <button
                     data-toggle="modal" data-target="#giaoHatModal"

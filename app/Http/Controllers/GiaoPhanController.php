@@ -81,7 +81,6 @@ class GiaoPhanController extends Controller
 
         try{
             DB::transaction(function () use ($request) {
-                Excel::import(new GiaoTinhImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoPhanImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoHatImport(), $request->file('file')->store('temp'));
                 Excel::import(new GiaoXuImport(), $request->file('file')->store('temp'));

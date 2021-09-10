@@ -73,6 +73,16 @@
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('gioi_tinh') }}</span>
                                                     @endif
                                                 </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" style="margin-bottom: 7px;">Nơi sinh</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('noi_sinh') ?? $thanh_vien->noi_sinh }}" name="noi_sinh">
+                                                    </div>
+                                                    @if($errors->has('noi_sinh'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('noi_sinh') }}</span>
+                                                    @endif
+                                                </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize" style="margin-bottom: 7px;">Chức vụ trong gia đình</label>
@@ -164,7 +174,7 @@
                                         <form action="{{ route('so-gia-dinh.storeBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien] ) }}" method="post" >
                                             @csrf
                                             <div class="row">
-                                                <div class="col-md-12 col-sm-12">
+                                                <div id="them_bi_tich" class="col-md-12 col-sm-12">
                                                     <h4><strong>Thêm bí tích</strong></h4>
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -222,6 +232,17 @@
                                                     </div>
                                                     @if($errors->has('ngay_dien_ra'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('ngay_dien_ra') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Hoặc nhập tên linh mục</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('linh_muc_ngoai')}}"
+                                                               name="linh_muc_ngoai">
+                                                    </div>
+                                                    @if($errors->has('linh_muc_ngoai'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('linh_muc_ngoai')  }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">

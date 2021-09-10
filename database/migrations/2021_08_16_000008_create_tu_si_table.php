@@ -34,6 +34,8 @@ class CreateTuSiTable extends Migration
             $table->date('ngay_nhan_chuc')->nullable();
             $table->string('noi_nhan_chuc', 250)->nullable();
             $table->boolean('dang_du_hoc')->nullable();
+            $table->char('la_tong_giam_muc', 1)->nullable();
+            $table->boolean('gioi_tinh');
             $table->timestamps();
             $table->softDeletes();
 

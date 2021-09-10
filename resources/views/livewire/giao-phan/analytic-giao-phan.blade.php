@@ -165,7 +165,7 @@
                        <div class="col-xl-6 col-xxl-6 col-sm-12">
                            <div class="w-50">
                                <label class="form-label">Chọn thống kê sinh hoặc tử</label>
-                               <select id="select" class="form-control" wire:model="sinh_hoac_tu">
+                               <select  class="form-control select" wire:model="sinh_hoac_tu">
                                    <option value="1" selected>Sinh</option>
                                    <option value="2">Tử</option>
                                </select>
@@ -294,6 +294,8 @@
         </div>
     </div>
 </div>
+
+
 @push('scripts')
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');

@@ -3,10 +3,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm thành viên</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tìm kiếm bên nam hoặc nữ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div wire:loading>
+                    <div id="loadingAddTVSgdcg" class="la-ball-circus la-2x">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <form wire:submit.prevent="store">
@@ -43,11 +52,11 @@
                                 </select>
                             </div>
                             <div class="col-md-6 pr-0">
-                                <label >Chức vụ gia đình</label>
+                                <label >Giới tính</label>
                                 <select class="select form-control selectpicker" wire:model="chuc_vu_gd">
-                                    <option value="" selected>Chọn chức vụ</option>
-                                    <option value="Cha">Cha</option>
-                                    <option value="Mẹ">Mẹ</option>
+                                    <option value="" selected>Chọn giới tính</option>
+                                    <option value="Cha">Nam</option>
+                                    <option value="Mẹ">Nữ</option>
                                 </select>
                             </div>
                         </div>
@@ -56,15 +65,23 @@
                             <input type="date" class="form-control" wire:model="ngay_sinh">
                         </div>
                         <div class="form-group">
-                            <label>Thành viên</label>
+                            <label>Tìm kiếm nam hoặc nữ</label>
                             <select class="select form-control selectpicker" wire:model="thanh_vien_id" data-live-search="true">
-                                <option value="" selected>Chọn thành viên</option>
-                                @foreach($thanh_vien as $th)
-                                    <option value="{{ $th->thanh_vien_id }}"> {{ $th->ho_va_ten }} </option>
-                                @endforeach
+                                <option value="" selected>Chọn nam hoặc nữ</option>
+                                @for($i = 1 ; $i < sizeof($thanh_vien) + 1 ; $i++)
+                                    <option value="{{ $thanh_vien[$i]['id'] }}">
+                                        {{  $thanh_vien[$i]['ten_thanh_vien']
+                                         .' - Con ông: '. $thanh_vien[$i]['ten_thanh_cha'] .' '. $thanh_vien[$i]['ho_ten_cha']
+                                         . ' Và bà: '.  $thanh_vien[$i]['ten_thanh_me'] .' '. $thanh_vien[$i]['ho_ten_me']
+                                          }} </option>
+                                @endfor
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary float-right">Thêm mới</button>
+                        <button type="submit" class="btn btn-primary float-right">Lưu lại</button>
+                        Hoặc
+                        <a class="btn btn-primary"
+                           href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Tạo thành viên
+                        </a>
                         <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy</button>
                     </form>
                 </div>

@@ -53,10 +53,7 @@ class SoGiaDinhController extends Controller
         return view('sgdcg.thanh_vien', compact('all_thanh_vien', 'soGiaDinh'));
     }
 
-    // convert HTMl to PDF SoGiaDinh
-    public function viewPDF(){
-        return view('print.print_sgdcg');
-    }
+
 
     public  function downloadPDF($id){
         $sgdcg = SoGiaDinh::with(['giaoXu.giaoPhan'])->withCount(['thanhVien', 'thanhVienSo2'])->find($id);
@@ -71,6 +68,9 @@ class SoGiaDinhController extends Controller
                 'tv.dia_chi_hien_tai',
                 'tv.so_dien_thoai',
                 'chuc_vu_gd',
+                'noi_sinh',
+                'giao_xu',
+                'giao_phan',
                 'chuc_vu_gd_2',
                 'tv.so_gia_dinh_id',
                 'ho_va_ten',
@@ -84,7 +84,10 @@ class SoGiaDinhController extends Controller
                 'tv.so_dien_thoai',
                 'tv.so_gia_dinh_id',
                 'chuc_vu_gd_2',
+                'noi_sinh',
                 'ho_va_ten',
+                'giao_xu',
+                'giao_phan',
                 'ten_thanh',
                 'ngay_sinh')->get();
         $query_bi_tich = DB::table('bi_tich_da_nhan as btdn')
@@ -104,11 +107,6 @@ class SoGiaDinhController extends Controller
                 'ten_nguoi_do_dau',
                 'ten_thanh_nguoi_do_dau')
             ->get();
-        $info_cha_me = DB::table('thanh_vien as tv')
-            ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
-            ->select('ten_thanh', 'ho_va_ten', 'so_gia_dinh_id', 'chuc_vu_gd', 'tv.id as thanh_vien_id')
-            ->whereIn('chuc_vu_gd', ['Cha', 'Mẹ'])->get();
-
         //-----------------------------------
         //------- Info Cha
         $thanh_vien_cha = $query_so_gia_dinh_id->where('chuc_vu_gd', 'Cha')->first();
@@ -120,23 +118,8 @@ class SoGiaDinhController extends Controller
                 ->where('chuc_vu_gd_2', 'Cha')
                 ->first();
         }
-        $info_cha_me_cha = $info_cha_me->where('so_gia_dinh_id', '=', $thanh_vien_cha->so_gia_dinh_id);
         // get BiTich of Cha
         $thanh_vien_cha_bt = $query_bi_tich->where('thanh_vien_id', $thanh_vien_cha->thanh_vien_id);
-        // get GIaoXU and GIaoPhan of CHa
-        //  find  sgdcg previously.
-        $sgdcg_cha_cua_cha = $info_cha_me_cha->where('chuc_vu_gd', 'Cha')
-                                ->where('thanh_vien_id', '<>', $thanh_vien_cha->thanh_vien_id)
-                                ->first();
-        // if query don't find Cha of this sgdcg's Cha completely, then don't show GX GP
-        $gx_gp_cha = null;
-        $gx_gp_me = null;
-        if ($sgdcg_cha_cua_cha){
-            $gx_gp_cha = GiaoXu::with('giaoPhan')
-                ->whereHas('hoGiaDinh', function ($q) use($sgdcg_cha_cua_cha){
-                    $q->where('id', $sgdcg_cha_cua_cha->so_gia_dinh_id);
-                })->select('ten_giao_xu', 'giao_hat_id')->first();
-        }
 
         //------- Info of Me
         $thanh_vien_me = $query_so_gia_dinh_id->where('chuc_vu_gd', 'Mẹ')->first();
@@ -145,19 +128,6 @@ class SoGiaDinhController extends Controller
                 ->where('chuc_vu_gd_2', 'Mẹ')
                 ->first();
         }
-        $info_cha_me_me = $info_cha_me->where('so_gia_dinh_id', '=', $thanh_vien_me->so_gia_dinh_id);
-        // find sgdcg previously.
-        $sgdcg_cha_cua_me = $info_cha_me_me->where('chuc_vu_gd', 'Mẹ')
-            ->where('thanh_vien_id', '<>', $thanh_vien_me->thanh_vien_id)
-            ->first();
-        // if query don't find Cha of this sgdcg's Me completely, then don't show GX GP
-        if ($sgdcg_cha_cua_me){
-            $gx_gp_me = GiaoXu::with('giaoPhan')
-                ->whereHas('hoGiaDinh', function ($q) use($sgdcg_cha_cua_me){
-                    $q->where('id', $sgdcg_cha_cua_me->so_gia_dinh_id);
-                })->select('ten_giao_xu', 'giao_hat_id')->first();
-        }
-
         // Get bi tich of Me
         $thanh_vien_me_bt = $query_bi_tich->where('thanh_vien_id', $thanh_vien_me ? $thanh_vien_me->thanh_vien_id : '');
 
@@ -174,6 +144,7 @@ class SoGiaDinhController extends Controller
                 'tv.ngay_sinh as ngay_sinh_thanh_vien',
                 't1.ten_thanh as ten_thanh_thanh_vien',
                 'ten_bi_tich',
+                'noi_sinh',
                 'tt.ten_thanh as ten_thanh_linh_muc',
                 'ngay_dien_ra',
                 'noi_dien_ra',
@@ -182,19 +153,15 @@ class SoGiaDinhController extends Controller
                 'ten_nguoi_do_dau',
                 'ten_thanh_nguoi_do_dau')
             ->where('chuc_vu_gd', 'Con')
+            ->orderBy('ten_thanh_vien', 'DESC')
             ->where('so_gia_dinh_id', $sgdcg->id)
             ->get();
-
         // convert to PDF
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadView('print.print_data_sgdcg',
                 compact('thanh_vien_cha',
-                    'gx_gp_cha',
-                    'gx_gp_me',
                     'thanh_vien_me',
                     'thanh_vien_cha_bt',
-                    'info_cha_me_me',
-                    'info_cha_me_cha',
                     'thanh_vien_me_bt',
                     'thanh_vien_con',
                     'sgdcg'));
@@ -233,8 +200,13 @@ class SoGiaDinhController extends Controller
         $validateData = $this->validateCreateThanhVien($request);
         $validate_biTich = $this->validateBiTich($request);
         $not_hon_nhan =  $this->validateNotHonNhan($request, $validate_biTich);
+        $gx_gp = GiaoXu::with('giaoPhan')
+                ->select('id', 'ten_giao_xu', 'giao_hat_id')
+                ->where('id', Auth::user()->giao_xu_id)->first();
         $thanh_vien = ThanhVien::create(array_merge($validateData,
                 ['nguoi_khoi_tao' => Auth::id(),
+                 'giao_xu' => $gx_gp->ten_giao_xu,
+                 'giao_phan' => $gx_gp->giaoPhan->ten_giao_phan,
                  'so_gia_dinh_id' => $sgdId]
         ));
 
@@ -368,7 +340,8 @@ class SoGiaDinhController extends Controller
     public  function updateBiTich(Request $request,$sgdId, ThanhVien $thanh_vien, $bi_tich_id){
         $validateData =  $this->validate($request, [
             'noi_dien_ra' => 'required|max:150',
-            'tu_si_id' => 'required',
+            'tu_si_id' => 'nullable',
+            'linh_muc_ngoai' => 'nullable',
             'ngay_dien_ra' => 'required|date'
         ],[
             'noi_dien_ra.required' => 'Nơi diễn ra không được phép trống',
@@ -418,10 +391,10 @@ class SoGiaDinhController extends Controller
     public function fileExport(Request $request){
 
         if ($request->name == 'sgdcg'){
-            $filepath = public_path('excels/ImportSGDCD.xlsx');
+            $filepath = public_path('excels/ImportSoGiaDinh.xlsx');
         }
         if ($request->name == 'ten_thanh'){
-            $filepath = public_path('excels/ImportChucVu ViTri TenThanh .xlsx');
+            $filepath = public_path('excels/ImportChucVu_ViTri_TenThanh.xlsx');
         }
         if ($request->name == 'nha_dong'){
             $filepath = public_path('excels/ImportNhaDong.xlsx');
@@ -429,11 +402,11 @@ class SoGiaDinhController extends Controller
         if ($request->name == 'tu_si'){
             $filepath = public_path('excels/ImportTuSi.xlsx');
         }
-        if ($request->name == 'bi_tich'){
-            $filepath = public_path('excels/ImportBiTich.xlsx');
+        if ($request->name == 'giao_phan'){
+            $filepath = public_path('excels/ImportGPGHGX.xlsx');
         }
-        if ($request->name == 'giao_tinh'){
-            $filepath = public_path('excels/ImportGPGXGH.xlsx');
+        if ($request->name == 'rua_toi_them_suc'){
+            $filepath = public_path('excels/ImportThieuNhiXungToiHoacThemSuc.xlsx');
         }
         return Response::download($filepath);
     }
@@ -461,8 +434,9 @@ class SoGiaDinhController extends Controller
     }
     // import biTich XungToi ThemSuc
     public function fileImportXTTS(Request $request){
-        Excel::import(new ImportBiTichXTTS(), $request->file('file')->store('temp'));
+
         try{
+            Excel::import(new ImportBiTichXTTS(), $request->file('file')->store('temp'));
         }catch (\InvalidArgumentException $ex){
             Toastr::error('Các cột hoặc thông tin trong tệp không đúng dạng','Lỗi');
             return back();
@@ -482,13 +456,13 @@ class SoGiaDinhController extends Controller
         $validateData =  $this->validate($request, [
             'bi_tich_id' => 'required',
             'noi_dien_ra' => 'required|max:150',
-            'tu_si_id' => 'required',
+            'tu_si_id' => 'nullable',
+            'linh_muc_ngoai' => 'nullable',
             'ngay_dien_ra' => 'required|date'
         ],[
             'bi_tich_id' => 'Bí tích không được phép trống',
             'noi_dien_ra.required' => 'Nơi diễn ra không được phép trống',
             'noi_dien_ra.max' => 'Nơi diễn ra không được phép vượt quá 150 ký tự',
-            'tu_si_id.required' => 'Linh mục hoặc giám mục ra không được phép trống',
             'ngay_dien_ra.required' => 'Ngày diễn ra không được phép trống',
             'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
             ]
@@ -498,8 +472,9 @@ class SoGiaDinhController extends Controller
     public function validateCreateThanhVien($request){
         $validateData =  $this->validate($request, [
             'ho_va_ten' => 'required|max:100',
-            'ten_thanh_id' => 'required',
+            'ten_thanh_id' => 'nullable',
             'ngay_sinh' => 'date|nullable',
+            'noi_sinh' => 'required|max:50',
             'gioi_tinh' => 'required',
             'ngay_mat' => 'date|nullable',
             'chuc_vu_gd' => 'required',
@@ -508,7 +483,6 @@ class SoGiaDinhController extends Controller
             'so_dien_thoai' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
         ],[
             'ho_va_ten.required' => ':attribute không được phép trống',
-            'ten_thanh_id.required' =>':attribute không được phép trống',
             'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
             'ngay_mat.date' => ':attribute phải là giá trị ngày tháng năm',
             'nam_sinh.numeric' => ':attribute phải là giá trị số',
@@ -516,11 +490,12 @@ class SoGiaDinhController extends Controller
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
             'gioi_tinh.required' => 'Giới tính không được phép trống',
             'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
-            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống'
+            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống',
+            'noi_sinh.required' => 'Nơi sinh không được phép trống',
+            'noi_sinh.max' => 'Nơi sinh không được vượt quá :max ký tự'
             ],
             [
             'ho_va_ten' => 'Họ và tên',
-            'ten_thanh_id' => 'Tên thánh',
             'ngay_sinh' => 'Ngày sinh',
             'ngay_mat' => 'Ngày mất',
             'nam_sinh' => 'Năm sinh',

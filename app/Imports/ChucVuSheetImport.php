@@ -47,22 +47,6 @@ class ChucVuSheetImport implements ToCollection, WithHeadingRow
                     'nguoi_khoi_tao' => Auth::id(),
                 ]);
             }
-            if (array_key_exists('ten_bi_tich', $row->toArray()) && $row['ten_bi_tich']){
-                $string_lower =  Str::lower($row['ten_bi_tich']);
-                if (strpos($string_lower, 'phối')){
-                    BiTich::create([
-                        'ten_bi_tich' => trim($row['ten_bi_tich']),
-                        'la_hon_nhan' => 1,
-                        'nguoi_khoi_tao' => Auth::id(),
-                    ]);
-                }else{
-                    BiTich::create([
-                        'ten_bi_tich' => trim($row['ten_bi_tich']),
-                        'nguoi_khoi_tao' => Auth::id(),
-                    ]);
-                }
-
-            }
         }
 
     }

@@ -17,10 +17,20 @@ class GiaoTinhSeeder extends Seeder
 
         GiaoTinh::create([
             'ten_giao_tinh' => 'Hà Nội',
-            'dia_chi' => 'Hà Nội',
-            'ten_nha_tho' => 'Nhà thờ Lớn Hà Nội',
-            'ngay_thanh_lap' => '1990/01/01',
             'nguoi_khoi_tao' => 1
-        ]);
+        ]
+        );
+        GiaoTinh::create(
+            [
+                'ten_giao_tinh' => 'Huế',
+                'nguoi_khoi_tao' => 1
+            ]);
+        GiaoTinh::create(
+        [
+            'ten_giao_tinh' => 'Sài Gòn',
+            'nguoi_khoi_tao' => 1
+        ]
+        );
+
     }
 }

@@ -102,6 +102,16 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
+                                                        <label class="form-label" style="margin-bottom: 7px;">Nơi sinh</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('noi_sinh') }}" name="noi_sinh">
+                                                    </div>
+                                                    @if($errors->has('noi_sinh'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('noi_sinh') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
                                                         <label class="form-label text-capitalize">Ngày mất</label>
                                                         <input type="date" class="form-control "
                                                                value="{{ old('ngay_mat')}}"
@@ -192,6 +202,17 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
+                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Hoặc nhập tên linh mục</label>
+                                                        <input type="text" class="form-control"
+                                                               value="{{ old('linh_muc_ngoai')}}"
+                                                               name="linh_muc_ngoai">
+                                                    </div>
+                                                    @if($errors->has('linh_muc_ngoai'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('linh_muc_ngoai')  }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                                                    <div class="form-group">
                                                         <label class="form-label text-capitalize">Nơi diễn ra</label>
                                                         <input type="text" class="form-control"
                                                                value="{{ old('noi_dien_ra') ?? 'Giáo xứ '. $ten_giao_xu->ten_giao_xu }}" name="noi_dien_ra">
@@ -202,16 +223,6 @@
                                                 </div>
                                                     <div class="col-md-12 col-sm-12">
                                                         <h5><strong> Thông tin người đỡ đầu </strong></h5>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 mt-2 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label text-capitalize">Họ và tên</label>
-                                                            <input type="text" class="form-control"
-                                                                   value="{{ old('ten_nguoi_do_dau')}}" name="ten_nguoi_do_dau">
-                                                        </div>
-                                                        @if($errors->has('ten_nguoi_do_dau'))
-                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
-                                                        @endif
                                                     </div>
                                                     <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                         <div class="form-group">
@@ -231,6 +242,17 @@
                                                             <span class="text-danger font-weight-bold">{{ $errors->first('ten_thanh_nguoi_do_dau') }}</span>
                                                         @endif
                                                     </div>
+                                                    <div class="col-lg-6 col-md-6 mt-2 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label text-capitalize">Họ và tên</label>
+                                                            <input type="text" class="form-control"
+                                                                   value="{{ old('ten_nguoi_do_dau')}}" name="ten_nguoi_do_dau">
+                                                        </div>
+                                                        @if($errors->has('ten_nguoi_do_dau'))
+                                                            <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
+                                                        @endif
+                                                    </div>
+
                                                     <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                         <label>Ngày sinh</label>
                                                         <div class="d-flex justify-content-between align-items-center">

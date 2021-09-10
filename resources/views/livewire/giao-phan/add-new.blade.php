@@ -1,11 +1,19 @@
 <div>
     @include('giao_phan.add_giao_phan')
     @include('giao_phan.edit_giao_phan')
+    @include('giao_phan.import_giao_phan')
     @include('giao_phan.delete_giao_phan')
 
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo phận </h4>
         <div>
+            <a href="{{ route('sgdcg-file-export', ['name' => 'giao_phan'])}}"
+               class="btn btn-info">Excel mẫu
+            </a>
+            <button
+                    data-toggle="modal" data-target="#importModal"
+                    class="btn btn-primary">Import giáo phận, giáo hạt, giáo xứ
+            </button>
             <button
                     data-toggle="modal" data-target="#exampleModal"
                     class="btn btn-primary">Thêm giáo phận mới

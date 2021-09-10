@@ -54,7 +54,7 @@ class AllThanhVien extends Component
         }
         if ($this->sinh_or_tu == 1){
             return view('livewire.sgdcg.all-thanh-vien', [
-                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'tenThanh'])
+                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'soGiaDinh2','tenThanh'])
                         ->whereHas('soGiaDinh', function ($q){
                             $q->where('giao_xu_id', Auth::user()->giao_xu_id);
                         })
@@ -68,7 +68,7 @@ class AllThanhVien extends Component
             );
         }elseif($this->sinh_or_tu == 2){
             return view('livewire.sgdcg.all-thanh-vien', [
-                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'tenThanh'])
+                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh','soGiaDinh2', 'tenThanh'])
                         ->whereHas('soGiaDinh', function ($q){
                             $q->where('giao_xu_id', Auth::user()->giao_xu_id);
                         })
@@ -82,7 +82,7 @@ class AllThanhVien extends Component
             );
         }else{
             return view('livewire.sgdcg.all-thanh-vien', [
-                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'tenThanh'])
+                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'soGiaDinh2', 'tenThanh'])
                         ->whereHas('soGiaDinh', function ($q){
                             $q->where('giao_xu_id', Auth::user()->giao_xu_id);
                         })

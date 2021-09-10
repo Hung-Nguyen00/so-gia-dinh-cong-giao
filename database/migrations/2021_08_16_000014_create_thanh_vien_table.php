@@ -29,18 +29,24 @@ class CreateThanhVienTable extends Migration
             $table->date('ngay_mat')->nullable();
             $table->string('dia_chi_hien_tai', 250)->nullable();
             $table->string('so_dien_thoai', 11)->nullable();
-
+            $table->string('giao_xu', 25)->nullable();
+            $table->string('giao_phan', 25)->nullable();
+            $table->string('noi_sinh', 50)->nullable();
+            $table->string('chuc_vu_gd_2', 5)->nullable();
+            $table->boolean('gioi_tinh');
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unsignedBigInteger('so_gia_dinh_id_2')->index()->nullable();
             $table->unsignedBigInteger('so_gia_dinh_id')->index();
-            $table->unsignedBigInteger('ten_thanh_id')->index();
+            $table->unsignedBigInteger('ten_thanh_id')->index()->nullable();
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
 
             $table->foreign('so_gia_dinh_id')
                 ->references('id')->on('so_gia_dinh_cong_giao')
                 ->onDelete('cascade');
-
+            $table->foreign('so_gia_dinh_id_2')
+                ->references('id')->on('so_gia_dinh_cong_giao')->onDelete('cascade');
             $table->foreign('ten_thanh_id')
                 ->references('id')->on('ten_thanh')
                 ->onDelete('cascade');

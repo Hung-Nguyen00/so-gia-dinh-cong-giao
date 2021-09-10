@@ -16,12 +16,15 @@ class ThanhVien extends Model
 
     protected $fillable = [
       'ho_va_ten',
+      'noi_sinh',
       'ngay_sinh',
       'so_gia_dinh_id_2',
       'gioi_tinh',
       'chuc_vu_gd',
       'chuc_vu_gd_2',
       'ngay_mat',
+      'giao_xu',
+      'giao_phan',
       'quan_he',
       'dia_chi_hien_tai',
       'so_dien_thoai',
@@ -36,6 +39,9 @@ class ThanhVien extends Model
 
     public function soGiaDinh(){
         return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id');
+    }
+    public function soGiaDinh2(){
+        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id_2', 'id');
     }
 
     public function biTich(){

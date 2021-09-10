@@ -6,13 +6,6 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách các bí tích </h4>
         <div>
-            <a href="{{ route('sgdcg-file-export', ['name' => 'bi_tich'])}}"
-               class="btn btn-info">Excel mẫu
-            </a>
-            <button
-                    data-toggle="modal" data-target="#importModal"
-                    class="btn btn-info">Import excel
-            </button>
             <button
                     data-toggle="modal" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm bí tích

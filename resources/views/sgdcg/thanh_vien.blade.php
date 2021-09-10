@@ -28,13 +28,13 @@
                                 <div>
                                     <div class="card-header">
                                         <h4 class="card-title">Danh sách các thành viên </h4>
-                                        <div class="float-right d-flex">
+                                        <div class="d-flex">
                                             <a class="btn btn-outline-primary d-inline-block"
                                                href="{{ route('so-gia-dinh.downloadPDF', ['id' =>  $soGiaDinh->id])}}">Xem sổ gia đình
                                             </a>
                                             @livewire('sgdcg.search-tv-add-to-sgdcg',['soGiaDinh' => $soGiaDinh])
                                             <a class="btn btn-primary"
-                                               href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Thêm thành viên
+                                               href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Thêm bí tích rửa tội
                                             </a>
                                         </div>
                                     </div>
@@ -45,8 +45,8 @@
                                                 <thead>
                                                 <tr>
                                                     <th >STT</th>
-                                                    <th>Họ và tên</th>
                                                     <th>Tên thánh</th>
+                                                    <th>Họ và tên</th>
                                                     <th>Ngày sinh</th>
                                                     <th>Chức vụ gia đình</th>
                                                     <th>Bí tích đã nhận</th>
@@ -59,10 +59,10 @@
                                                 @foreach($all_thanh_vien as $th)
                                                     <tr >
                                                         <td class="text-center"> {{ ++$i }}</td>
-                                                        <td> {{ $th->ho_va_ten }}</td>
                                                         <td>
                                                             {{ $th->tenThanh->ten_thanh }}
                                                         </td>
+                                                        <td> {{ $th->ho_va_ten }}</td>
                                                         <td>
                                                             @if(\Carbon\Carbon::parse($th->ngay_sinh)->format('d-m') == '01-01' && strtotime($th->ngay_sinh) < strtotime(1980))
                                                                 {{ \Carbon\Carbon::parse($th->ngay_sinh)->format('Y') }}
@@ -71,7 +71,7 @@
                                                             @endif
                                                         </td>
                                                         <td class="text-center">
-                                                            @if($i < 2 )
+                                                            @if($i < 3 )
                                                             {{ $th->chuc_vu_gd_2 ? $th->chuc_vu_gd_2 : $th->chuc_vu_gd }}
                                                                 @else
                                                                 {{ $th->chuc_vu_gd }}
@@ -81,11 +81,13 @@
                                                            {{ $th->bi_tich_count }}
                                                         </td>
                                                         <td class="text-center">
+                                                            @if($th->bi_tich_count  < 4)
                                                             <a type="button"
                                                                href="{{ route('so-gia-dinh.editBTTV', ['sgdId' => $soGiaDinh->id, 'tvId' => $th->id]) }}"
                                                                class="btn btn-sm btn-primary mr-2">
                                                                 <i class="la la-pencil"></i>
                                                             </a>
+                                                            @endif
                                                         </td>
                                                         <td class="text-center d-flex justify-content-center">
                                                             <a type="button"

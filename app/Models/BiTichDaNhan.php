@@ -17,6 +17,7 @@ class BiTichDaNhan extends Model
         'thanh_vien_id',
         'bi_tich_id',
         'ngay_dien_ra',
+        'linh_muc_ngoai',
         'noi_dien_ra',
         'ten_nguoi_do_dau',
         'ten_thanh_nguoi_do_dau',

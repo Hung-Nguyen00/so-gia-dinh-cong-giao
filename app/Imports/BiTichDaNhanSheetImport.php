@@ -34,6 +34,14 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
     }
 
 
+    public function getUpperCase($name){
+        preg_match_all('/[A-Z]/', $name, $matches, PREG_OFFSET_CAPTURE);
+        $letter_uc = '';
+        for ($i = 0 ; $i < sizeof($matches[0]); $i++){
+            $letter_uc = $letter_uc . $matches[0][$i][0];
+        }
+        return $letter_uc;
+    }
 
     public function collection(Collection $rows)
     {
@@ -84,6 +92,10 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                 $this->thanh_vien  = ThanhVien::create([
                     'ho_va_ten' => trim($row['ho_va_ten']),
                     'chuc_vu_gd' => $row['quan_he'],
+                    'chuc_vu_gd_2' => '',
+                    'giao_xu' =>  $row['giao_xu'],
+                    'giao_phan' =>  $row['giao_phan'],
+                    'noi_sinh' => $row['noi_sinh'],
                     'gioi_tinh' => $row['gioi_tinh'] == 'Nam' ? 1 : 0,
                     'ngay_sinh' =>  $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
                     'ngay_mat'  => $row['ngay_mat'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_mat']) : null,

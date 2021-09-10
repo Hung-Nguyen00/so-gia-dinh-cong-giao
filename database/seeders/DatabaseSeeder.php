@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GiaoHatSeeder::class);
         $this->call(NhaDongSeeder::class);
         $this->call(GiaoXuSeeder::class);
+        $this->call(BiTichSeeder::class);
          $this->call(UserSeeder::class);
     }
 }

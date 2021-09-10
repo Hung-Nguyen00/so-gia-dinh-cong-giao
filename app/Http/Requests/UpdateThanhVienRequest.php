@@ -28,6 +28,7 @@ class UpdateThanhVienRequest extends FormRequest
             'ten_thanh_id' => 'required',
             'ngay_sinh' => 'date|nullable',
             'gioi_tinh' => 'required',
+            'noi_sinh' => 'required|max:50',
             'chuc_vu_gd' => 'required',
             'ngay_mat' => 'date|nullable',
             'nam_sinh' => 'numeric|nullable',
@@ -40,15 +41,16 @@ class UpdateThanhVienRequest extends FormRequest
     {
         return [
             'ho_va_ten.required' => ':attribute không được phép trống',
-            'ten_thanh_id.required' =>':attribute không được phép trống',
             'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
             'ngay_mat.date' => ':attribute phải là giá trị ngày tháng năm',
             'nam_sinh.numeric' => ':attribute phải là giá trị số',
             'so_dien_thoai.min' =>':attribute nhỏ hơn :min',
+            'noi_sinh.required' => 'Nơi sinh không được phép trống',
             'gioi_tinh.required' => 'Giới tính không được phép trống',
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
             'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
-            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống'
+            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống',
+            'noi_sinh.max' => 'Nơi sinh không được phép vượt quá :max ký tự'
         ];
     }
 
@@ -56,7 +58,6 @@ class UpdateThanhVienRequest extends FormRequest
     {
         return[
             'ho_va_ten' => 'Họ và tên',
-            'ten_thanh_id' => 'Tên thánh',
             'ngay_sinh' => 'Ngày sinh',
             'ngay_mat' => 'Ngày mất',
             'nam_sinh' => 'Năm sinh',

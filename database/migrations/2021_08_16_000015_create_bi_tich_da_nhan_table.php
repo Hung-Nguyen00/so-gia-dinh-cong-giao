@@ -25,6 +25,7 @@ class CreateBiTichDaNhanTable extends Migration
             $table->id();
             $table->date('ngay_dien_ra')->nullable();
             $table->string('noi_dien_ra', 150)->nullable();
+            $table->string('linh_muc_ngoai', 100)->nullable();
             $table->string('ten_nguoi_do_dau', 100)->nullable();
             $table->string('ten_thanh_nguoi_do_dau', 50)->nullable();
             $table->date('ngay_sinh_nguoi_do_dau')->nullable();
@@ -40,7 +41,7 @@ class CreateBiTichDaNhanTable extends Migration
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
             $table->unsignedBigInteger('thanh_vien_id')->index();
             $table->unsignedBigInteger('bi_tich_id')->index();
-            $table->unsignedBigInteger('tu_si_id')->index();
+            $table->unsignedBigInteger('tu_si_id')->index()->nullable();
 
 
             $table->foreign('bi_tich_id')
