@@ -160,9 +160,9 @@
                         </div>
                         <div class="card-body" id="chart-responsive">
                             <div class="col-xl-6 col-xxl-6 col-sm-12 col-md-12 p-0">
-                                <div class="w-50">
-                                    <label class="form-label">Chọn thống kê sinh hoặc tử</label>
-                                    <select id="sinh_hoac_tu" class="form-control">
+                                <div class="w-75">
+                                    <label class="form-label">Chọn thống kê sinh hoặc tử năm {{ \Carbon\Carbon::now()->format('Y') }}</label>
+                                    <select id="sinh_hoac_tu" class="form-control w-auto">
                                         <option value="1" selected>Sinh</option>
                                         <option value="2">Tử</option>
                                     </select>

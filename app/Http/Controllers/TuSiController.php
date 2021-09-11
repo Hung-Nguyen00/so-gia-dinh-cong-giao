@@ -239,7 +239,6 @@ class TuSiController extends Controller
             return redirect()->route('tu-si.edit', $tuSi);
         }else{
             // save info when change GX to lich_su_cong_tac table
-
             if ($validateData['bat_dau_phuc_vu'] == null){
                 throw ValidationException::withMessages(['bat_dau_phuc_vu' => 'Ngày bắt đầu phục vụ không được phép trống']);
             }
@@ -255,7 +254,7 @@ class TuSiController extends Controller
             $tuSi->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
              LichSuCongTac::create([
                  'tu_si_id' => $tuSi->id,
-               'ten_giao_phan' => $old_tu_si->giaoPhan->ten_giao_phan,
+                'ten_giao_phan' => $old_tu_si->giaoPhan->ten_giao_phan,
                 'ten_giao_hat' => $old_tu_si->giaoHat->ten_giao_hat,
                 'ten_giao_xu' => $old_tu_si->giaoXu->ten_giao_xu,
                 'bat_dau_phuc_vu' => $old_tu_si->bat_dau_phuc_vu,
