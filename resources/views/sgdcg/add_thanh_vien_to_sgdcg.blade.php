@@ -68,7 +68,7 @@
                             <label>Tìm kiếm nam hoặc nữ</label>
                             <select class="select form-control selectpicker" wire:model="thanh_vien_id" data-live-search="true">
                                 <option value="" selected>Chọn nam hoặc nữ</option>
-                                @for($i = 1 ; $i < sizeof($thanh_vien) + 1 ; $i++)
+                                @for($i = 0 ; $i < sizeof($thanh_vien) ; $i++)
                                     <option value="{{ $thanh_vien[$i]['id'] }}">
                                         {{  $thanh_vien[$i]['ten_thanh_vien']
                                          .' - Con ông: '. $thanh_vien[$i]['ten_thanh_cha'] .' '. $thanh_vien[$i]['ho_ten_cha']

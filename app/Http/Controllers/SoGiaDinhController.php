@@ -153,7 +153,7 @@ class SoGiaDinhController extends Controller
                 'ten_nguoi_do_dau',
                 'ten_thanh_nguoi_do_dau')
             ->where('chuc_vu_gd', 'Con')
-            ->orderBy('ten_thanh_vien', 'DESC')
+            ->orderBy('ngay_sinh_thanh_vien', 'DESC')
             ->where('so_gia_dinh_id', $sgdcg->id)
             ->get();
         // convert to PDF

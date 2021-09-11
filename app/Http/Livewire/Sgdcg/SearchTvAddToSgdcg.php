@@ -9,6 +9,7 @@ use App\Models\GiaoXu;
 use App\Models\TenThanh;
 use App\Models\ThanhVien;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -48,38 +49,47 @@ class SearchTvAddToSgdcg extends Component
                 ->select('ngay_sinh', 'tt.id as ten_thanh_id','tv.id as thanh_vien_id',
                     'ten_thanh',
                     'sgd.id as sgdId',
+                    'gioi_tinh',
                     'ho_va_ten',
                     'chuc_vu_gd',
                     'chuc_vu_gd_2',
                     'sgd.giao_xu_id'
                )
-                ->where('gioi_tinh', $this->gioi_tinh)
-                ->where('ten_thanh_id', $this->ten_thanh_id)
                 ->where('ngay_sinh', $this->ngay_sinh)
+                ->where('ten_thanh_id', $this->ten_thanh_id)
                 ->where('giao_xu_id', $this->giao_xu_id)
                 ->get();
-
-
         $info_thanh_vien = array();
 
-        $query = DB::table('thanh_vien as tv')
-            ->join('ten_thanh as tt' , 'tv.ten_thanh_id', '=', 'tt.id')
-            ->select('ho_va_ten', 'ten_thanh', 'chuc_vu_gd', 'chuc_vu_gd_2');
         $key = 0;
-        foreach ($thanh_vien as $tv){
-            ++$key;
-            $query = $query->where('so_gia_dinh_id')
-                ->orWhere('so_gia_dinh_id_2', $tv->sgdId);
-            $cha = $query->where('chuc_vu_gd', 'Cha')->orWhere('chuc_vu_gd_2', 'Cha')->first();
-            $me = $query->where('chuc_vu_gd', 'Mẹ')->orWhere('chuc_vu_gd_2', 'Mẹ')->first();
-            $info_thanh_vien[$key]['ten_thanh_vien'] = $tv->ho_va_ten;
-            $info_thanh_vien[$key]['id'] = $tv->thanh_vien_id;
-            $info_thanh_vien[$key]['ten_thanh_cha'] = $cha->ten_thanh;
-            $info_thanh_vien[$key]['ten_thanh_me'] = $me->ten_thanh;
-            $info_thanh_vien[$key]['ho_ten_cha'] = $cha->ho_va_ten;
-            $info_thanh_vien[$key]['ho_ten_me'] = $me->ho_va_ten;
+        if ($thanh_vien->count() > 0){
+            foreach ($thanh_vien as $tv){
+
+                $id = $tv->sgdId;
+                $query = DB::table('thanh_vien as tv')
+                    ->join('ten_thanh as tt' , 'tv.ten_thanh_id', '=', 'tt.id')
+                    ->select('ho_va_ten', 'ten_thanh', 'chuc_vu_gd', 'chuc_vu_gd_2',
+                        'so_gia_dinh_id', 'so_gia_dinh_id_2')
+                    ->where(function ($q) use ($id){
+                        $q->where('so_gia_dinh_id', $id)
+                            ->orWhere('so_gia_dinh_id_2', $id);
+                    })->get();;
+                $info_thanh_vien[$key]['ten_thanh_vien'] = $tv->ho_va_ten;
+                $info_thanh_vien[$key]['id'] = $tv->thanh_vien_id;
+                foreach($query as $q){
+                    if ($q->chuc_vu_gd == 'Cha' ||  $q->chuc_vu_gd_2 == 'Cha'){
+                        $info_thanh_vien[$key]['ten_thanh_cha'] = $q->ten_thanh;
+                        $info_thanh_vien[$key]['ho_ten_cha'] = $q->ho_va_ten;
+                    }
+                    if ($q->chuc_vu_gd == 'Mẹ' ||  $q->chuc_vu_gd_2 == 'Mẹ'){
+                        $info_thanh_vien[$key]['ten_thanh_me'] = $q->ten_thanh;
+                        $info_thanh_vien[$key]['ho_ten_me'] = $q->ho_va_ten;
+                    }
+                }
+                $key++;
+            }
+            $thanh_vien = $info_thanh_vien;
         }
-        $thanh_vien = $info_thanh_vien;
         return view('livewire.sgdcg.search-tv-add-to-sgdcg', compact(
             'all_giao_phan',
                     'all_giao_xu',

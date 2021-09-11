@@ -29,11 +29,13 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Danh sách các thành viên </h4>
                                         <div class="d-flex">
-                                            <a class="btn btn-outline-primary d-inline-block"
+                                            <a class="btn btn-outline-primary d-inline-block mr-1"
                                                href="{{ route('so-gia-dinh.downloadPDF', ['id' =>  $soGiaDinh->id])}}">Xem sổ gia đình
                                             </a>
+                                            @if($all_thanh_vien->count() < 2)
                                             @livewire('sgdcg.search-tv-add-to-sgdcg',['soGiaDinh' => $soGiaDinh])
-                                            <a class="btn btn-primary"
+                                            @endif
+                                            <a class="ml-1 btn btn-primary"
                                                href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Thêm bí tích rửa tội
                                             </a>
                                         </div>

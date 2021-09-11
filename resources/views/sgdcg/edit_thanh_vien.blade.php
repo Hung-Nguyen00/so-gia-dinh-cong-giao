@@ -201,6 +201,7 @@
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên linh mục hoặc giám mục</lable>
                                                             <select class="selectpicker  form-control pt-2"  name="tu_si_id" id="tu_si" data-live-search="true" >
+                                                                <option value="" selected>Chọn linh mục</option>
                                                                 @foreach($all_tu_si as $cv)
                                                                     @if($cv->giaoXu)
                                                                         @if($cv->giao_xu_id == $sgdcg->giao_xu_id)
