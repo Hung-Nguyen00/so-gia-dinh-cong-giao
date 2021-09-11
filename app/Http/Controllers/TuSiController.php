@@ -42,12 +42,12 @@ class TuSiController extends Controller
     }
 
     public function fileImport(Request $request){
-        Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
-        Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
-        Excel::import(new LichSuNhanChucImport(), $request->file('file')->store('temp'));
+
         try{
             DB::transaction(function () use ($request) {
-
+                Excel::import(new TuSIImport(), $request->file('file')->store('temp'));
+                Excel::import(new LichSuCongTacImport(), $request->file('file')->store('temp'));
+                Excel::import(new LichSuNhanChucImport(), $request->file('file')->store('temp'));
             });
 
         }catch (\InvalidArgumentException $ex){
@@ -196,7 +196,6 @@ class TuSiController extends Controller
                 'all_chuc_vu',
                 'all_giao_xu',
                 'all_giao_hat',
-                'all_giao_tinh',
                 'all_nha_dong',
                 'all_giao_phan',
                 'all_ten_thanh',
