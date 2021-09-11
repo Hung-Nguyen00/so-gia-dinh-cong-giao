@@ -127,7 +127,6 @@ class TuSiController extends Controller
         return view('tu_si.add', compact(
             'all_chuc_vu',
             'all_nha_dong',
-            'all_giao_tinh',
             'all_giao_phan',
             'all_ten_thanh'
             ));
