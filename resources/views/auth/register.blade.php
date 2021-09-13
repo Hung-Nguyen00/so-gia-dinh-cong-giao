@@ -27,7 +27,7 @@
                                         <h4 class="card-title">Thông tin tài khoản</h4>
                                     </div>
                                     <div  class="card-body">
-                                        <form action="{{ route('register.user') }}" method="post" >
+                                        <form action="{{ route('register.store') }}" method="post" >
                                             @csrf
                                             <div class="row">
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">

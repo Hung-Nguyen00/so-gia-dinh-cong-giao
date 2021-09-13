@@ -43,10 +43,10 @@
 
                                     <div  class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example3" class="display" style="min-width: 845px  ;width: 1050px">
+                                            <table id="example3" class="display" style="min-width: 1050px;">
                                                 <thead>
                                                 <tr>
-                                                    <th >STT</th>
+                                                    <th>STT</th>
                                                     <th>Tên thánh</th>
                                                     <th>Họ và tên</th>
                                                     <th>Ngày sinh</th>

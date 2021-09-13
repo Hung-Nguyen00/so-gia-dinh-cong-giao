@@ -35,8 +35,8 @@ Route::group(['middleware'=>'auth'],function()
         // search Tusi is belong Nha Dong
         Route::get('tu-dong/search', [TuSiController::class, 'searchTuSiDong'])->name('tu-dong.search');
         //// ------------------------------ register ---------------------------------//
-        Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.user');
-        Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
+        Route::get('them-tai-khoan', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.user');
+        Route::post('dang-ki', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register.store');
 
         Route::resources([
             'giao-tinh' => GiaoTinhController::class,

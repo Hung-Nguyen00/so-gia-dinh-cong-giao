@@ -73,7 +73,7 @@
                     @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen !== 'admin')
                         <li><a href="{{ route('tai-khoan.create')}}">Thêm tài khoản</a></li>
                     @else
-                        <li><a href="{{ route('register')}}">Thêm tài khoản</a></li>
+                        <li><a href="{{ route('register.user')}}">Thêm tài khoản</a></li>
                     @endif
                 </ul>
             </li>

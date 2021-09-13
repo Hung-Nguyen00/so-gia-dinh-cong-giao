@@ -20,11 +20,11 @@ class AllThanhVien extends Component
         $ten_thanh_id,
         $ho_va_ten,
         $sinh_or_tu = null,
-        $paginate_number = 20,
+        $paginate_number,
         $ten_thanh;
 
     // can use $updatesQueryString to encode url
-    protected $queryString  = ['ho_va_ten', 'ten_thanh_id', 'start_date', 'end_date', 'sinh_or_tu'];
+    protected $queryString  = ['ho_va_ten', 'ten_thanh_id', 'start_date', 'paginate_number','end_date', 'sinh_or_tu'];
 
     public function updatingSearch()
     {
@@ -38,10 +38,15 @@ class AllThanhVien extends Component
         $this->start_date = Carbon::parse(request()->query('start_date', $this->start_date))->format('Y-m-d');
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->sinh_or_tu = request()->query('sinh_or_tu', $this->sinh_or_tu);
+        $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
         if ($this->ho_va_ten == null){
             $this->start_date = null;
             $this->end_date = null;
         }
+        if (!$this->paginate_number){
+            $this->paginate_number = 20;
+        }
+
     }
 
 

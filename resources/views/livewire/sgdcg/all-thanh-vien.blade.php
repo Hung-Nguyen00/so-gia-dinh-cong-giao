@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-3 mt-3">
                 <label>Sinh hoặc tử</label>
-                <select class="form-control" wire:model="sinh_or_tu">
+                <select class="form-control select" wire:model="sinh_or_tu">
                     <option value="null" selected>Lựa chọn sinh hoặc tử</option>
                     <option value="1">Sinh</option>
                     <option value="2">Tử</option>
@@ -34,11 +34,11 @@
             <div class="col-md-2 mt-3">
                 <div id="ShowGD">
                     <label>Hiển thị</label>
-                    <select class="form-control w-auto" wire:model="paginate_number">
-                        <option value="5" selected>5</option>
+                    <select class="form-control select w-auto" wire:model="paginate_number">
+                        <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
-                        <option value="25">25</option>
+                        <option value="20" selected>20</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
                     </select>
