@@ -7,7 +7,7 @@
         <h4 class="card-title">Danh sách các bí tích </h4>
         <div>
             <button
-                    data-toggle="modal" data-target="#giaoHatModal"
+                    data-toggle="modal" wire:click="clearData()" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm bí tích
             </button>
         </div>

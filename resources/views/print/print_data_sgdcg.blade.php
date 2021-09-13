@@ -32,6 +32,9 @@
         .text-center{
             text-align: center;
         }
+        .text-left{
+            text-align: left;
+        }
         .fs-20{
             font-size: 20px;
         }
@@ -88,7 +91,7 @@
                         <p class="fs-25">Điện thoại:{{ $thanh_vien_cha->so_dien_thoai ? $thanh_vien_cha->so_dien_thoai : '.....................................................................' }}</p>
                     </div>
                     <div class="page-break"></div>
-                    <h4 class="title text-right fs-25">Chứng nhận</h4>
+                    <h4 class="title text-left fs-25">Chứng nhận</h4>
                     <h4 class="mt--3 fs-25" >Bên Nam</h4>
                     <h4 class="module">1. Thông tin</h4>
                     <div class="mt--3">
@@ -164,7 +167,7 @@
                                     @endif
                                 @endif
                        @endforeach
-                        <h4 class="title fs-22" style="text-align: right">Đã chịu phép hôn phối</h4>
+                        <h4 class="title fs-22 text-left" >Đã chịu phép hôn phối</h4>
                         @foreach($thanh_vien_me_bt as $bt)
                             @if($bt->ten_bi_tich == 'Hôn phối')
                                 <div class="mt--3">

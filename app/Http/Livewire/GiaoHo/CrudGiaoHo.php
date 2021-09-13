@@ -62,6 +62,15 @@ class CrudGiaoHo extends Component
         return view('livewire.giao-ho.crud-giao-ho');
     }
 
+    public function clearData(){
+        $this->ten_giao_xu = '';
+        $this->ngay_thanh_lap = '';
+        $this->dia_chi = '';
+        $this->nam_thanh_lap = '';
+        $this->giao_hat_id = '';
+        $this->giao_xu_id = '';
+        $this->change_to_giao_xu = '';
+    }
     public function store()
     {
         $validatedData = $this->validate();

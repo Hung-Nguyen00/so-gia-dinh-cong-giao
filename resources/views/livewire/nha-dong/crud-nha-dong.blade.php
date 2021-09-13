@@ -10,7 +10,7 @@
                class="btn btn-info">Excel mẫu
             </a>
             <button
-                    data-toggle="modal" data-target="#importModal"
+                    data-toggle="modal" wire:click="clearData" data-target="#importModal"
                     class="btn btn-info">Import nhà dòng
             </button>
             <button
@@ -21,17 +21,17 @@
     </div>
     <div  class="card-body" wire:ignore>
         <div class="table-responsive">
-            <table id="example3" class="display" style="min-width: 845px; width: 1180px">
+            <table id="example3" class="display" style="min-width: 1080px;">
                 <thead>
                 <tr>
                     <th style="width: 10px">STT</th>
-                    <th style="width: 90px">Tên dòng</th>
-                    <th style="width: 120px">Địa chỉ</th>
-                    <th style="width: 80px">Năm thành lập</th>
-                    <th style="width: 50px">Số lượng giáo họ</th>
-                    <th style="width: 90px">Người cập nhập</th>
-                    <th style="width: 50px">Cập nhập lần cuối</th>
-                    <th style="width: 50px">Chỉnh sửa</th>
+                    <th >Tên dòng</th>
+                    <th>Địa chỉ</th>
+                    <th>Năm thành lập</th>
+                    <th>Số lượng giáo họ</th>
+                    <th >Người cập nhập</th>
+                    <th>Cập nhập lần cuối</th>
+                    <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody >
@@ -42,15 +42,17 @@
                         <td>{{ $nha_dong->ten_nha_dong }}</td>
                         <td>{{ $nha_dong->dia_chi }}</td>
                         <td class="text-center">
-                            @if(\Carbon\Carbon::parse($nha_dong->ngay_thanh_lap)->format('d-m') == '01-01' )
+                            @if($nha_dong->ngay_thanh_lap)
+                            @if(\Carbon\Carbon::parse($nha_dong->ngay_thanh_lap)->format('d-m') == '01-01' && strtotime($nha_dong->ngay_thanh_lap) < strtotime(2000) )
                                 {{ \Carbon\Carbon::parse($nha_dong->ngay_thanh_lap)->format('Y') }}
                             @else
                                 {{ \Carbon\Carbon::parse($nha_dong->ngay_thanh_lap)->format('d-m-Y') }}
                             @endif
+                            @endif
                         </td>
                         <td class="text-center">{{ $nha_dong->tu_si_count }}</td>
                         <td>{{ $nha_dong->getUser->ho_va_ten }}</td>
-                        <td>{{ \Carbon\Carbon::parse($nha_dong->updated_at)->format('d-m-Y  H:i') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($nha_dong->updated_at)->format('d-m-Y H:i') }}</td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $nha_dong->id }})"

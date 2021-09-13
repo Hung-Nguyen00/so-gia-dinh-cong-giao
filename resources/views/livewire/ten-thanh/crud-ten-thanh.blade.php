@@ -14,7 +14,7 @@
                     class="btn btn-info">Import tên thánh, chức vụ, vị trí giáo xứ
             </button>
             <button
-                    data-toggle="modal" data-target="#giaoHatModal"
+                    data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm tên thánh
             </button>
         </div>

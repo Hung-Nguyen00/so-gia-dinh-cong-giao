@@ -7,7 +7,7 @@
         <div>
             {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
             <button
-                    data-toggle="modal" data-target="#giaoHatModal"
+                    data-toggle="modal" wire:click="clearData()" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm giáo xứ mới
             </button>
         </div>
@@ -66,3 +66,11 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript">
+        window.addEventListener('contentChanged', event => {
+            $('.select').selectpicker();
+        });
+    </script>
+@endpush

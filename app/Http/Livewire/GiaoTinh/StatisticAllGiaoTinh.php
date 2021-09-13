@@ -18,10 +18,11 @@ class StatisticAllGiaoTinh extends Component
         $giao_hat_id,
         $sinh_hoac_tu = 1,
         $start_date,
+        $giao_phan_id,
         $sinh_tu_follow_year,
         $end_date;
 
-    protected $queryString = ['start_date', 'end_date','sinh_hoac_tu', 'sinh_tu_follow_year'];
+    protected $queryString = ['start_date', 'end_date','sinh_hoac_tu', 'sinh_tu_follow_year', 'giao_phan_id'];
 
     public function mount()
     {
@@ -29,6 +30,7 @@ class StatisticAllGiaoTinh extends Component
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->sinh_tu_follow_year = request()->query('sinh_tu_follow_year', $this->sinh_tu_follow_year);
         $this->sinh_hoac_tu = request()->query('sinh_hoac_tu', $this->sinh_hoac_tu);
+        $this->giao_phan_id = request()->query('giao_phan_id', $this->giao_phan_id);
         if (!$this->start_date){
             $this->start_date = Carbon::now()->subYear(1)->format('Y-m-d');
         }
@@ -50,7 +52,9 @@ class StatisticAllGiaoTinh extends Component
         }
         // show table for each GiaoPhan
         $statistics_giao_phan = GiaoPhan::withCount(['giaoXu', 'giaoHat','giaoDan', 'tuSi']);
-
+        if ($this->giao_phan_id){
+            $statistics_giao_phan = $statistics_giao_phan->where('id', $this->giao_phan_id);
+        }
         // get Year in from start date - end Date
         $start = (int)Carbon::parse($this->start_date)->format('Y');
         $end = (int)Carbon::parse($this->end_date)->format('Y');
@@ -77,6 +81,7 @@ class StatisticAllGiaoTinh extends Component
         'count', 'analytics_bi_tich', 'start_end_year'))
             ->with(['analytic_tu_si' => json_encode($analytic_tu_si),
                 'statistics_giao_phan' => $statistics_giao_phan->paginate($this->paginate_number),
+                'all_giao_phan' => GiaoPhan::select('id', 'ten_giao_phan')->get(),
                 'analytic_gender' => json_encode($getGender)]);
     }
 

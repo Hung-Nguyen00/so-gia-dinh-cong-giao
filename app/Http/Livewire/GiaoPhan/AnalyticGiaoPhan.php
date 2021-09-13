@@ -7,6 +7,7 @@ use App\Models\GiaoPhan;
 use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +17,7 @@ class AnalyticGiaoPhan extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $giao_phan_id = 1,
+    public $giao_phan_id,
         $giam_muc,
         $paginate_number = 5,
         $giao_hat_id,
@@ -35,6 +36,9 @@ class AnalyticGiaoPhan extends Component
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->sinh_tu_follow_year = request()->query('sinh_tu_follow_year', $this->sinh_tu_follow_year);
         $this->sinh_hoac_tu = request()->query('sinh_hoac_tu', $this->sinh_hoac_tu);
+        if (!$this->giao_phan_id){
+            $this->giao_phan_id = GiaoPhan::find(Auth::user()->giao_xu_id)->id;
+        }
         $this->giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
             $q->where('ten_chuc_vu', 'Giám mục');
         })->where('giao_phan_id',$this->giao_phan_id)
@@ -49,11 +53,13 @@ class AnalyticGiaoPhan extends Component
         if (!$this->end_date){
             $this->end_date = Carbon::now()->format('Y-m-d');
         }
+
     }
 
     public function render()
     {
         $this->dispatchBrowserEvent('contentChanged');
+
         // get Year in from start date - end Date
         $start = (int)Carbon::parse($this->start_date)->format('Y');
         $end = (int)Carbon::parse($this->end_date)->format('Y');

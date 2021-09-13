@@ -14,20 +14,20 @@
                     class="btn btn-info">Import dữ liệu
             </button>
             <button
-                    data-toggle="modal"  data-target="#createModal"
+                    data-toggle="modal" wire:click="clearData()" data-target="#createModal"
                     class="btn btn-primary">Thêm mới
             </button>
         </div>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div  class="card-body">
         <div class="table-responsive">
-            <table id="example3" class="display" style="min-width: 845px;">
+            <table class="table display" style="min-width: 840px;">
                 <thead>
                 <tr>
                     <th>STT</th>
                     <th>Mã sổ</th>
                     <th>Ngày tạo sổ</th>
-                    <th>Số lượng thành viên</th>
+                    <th class="text-center">Số lượng thành viên</th>
                     <th>Người khởi tạo</th>
                     <th>Chỉnh sửa</th>
                 </tr>
@@ -61,6 +61,17 @@
                 @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end">
+                {{ $all_so_gia_dinh->links() }}
+            </div>
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        window.addEventListener('contentChanged', event => {
+            $('.select').selectpicker();
+        });
+    </script>
+@endpush

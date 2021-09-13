@@ -14,7 +14,7 @@
                     class="btn btn-info">Import dữ liệu
             </button>
             <button
-                    data-toggle="modal" data-target="#giaoHatModal"
+                    data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm chức vụ
             </button>
         </div>

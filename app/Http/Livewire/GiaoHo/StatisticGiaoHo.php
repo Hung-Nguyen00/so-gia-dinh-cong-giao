@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\GiaoXu;
+namespace App\Http\Livewire\GiaoHo;
 
 use App\Models\GiaoXu;
 use App\Models\TuSi;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class StatictisGiaoXu extends Component
+class StatisticGiaoHo extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -26,8 +26,6 @@ class StatictisGiaoXu extends Component
         $sinh_hoac_tu = 1;
     protected $queryString = ['giao_xu_id','sinh_hoac_tu', 'start_date', 'end_date', 'sinh_tu_follow_year'];
 
-
-
     public function mount()
     {
         $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
@@ -35,6 +33,9 @@ class StatictisGiaoXu extends Component
         $this->start_date = request()->query('start_date', $this->start_date);
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->sinh_tu_follow_year = request()->query('sinh_tu_follow_year', $this->sinh_tu_follow_year);
+        $this->linh_muc_chanh_xu = TuSi::with('tenThanh')
+            ->where('giao_xu_id',$this->giao_xu_id)
+            ->first();
         if (!$this->start_date){
             $this->start_date = Carbon::now()->subYear(1)->format('Y-m-d');
         }
@@ -42,15 +43,7 @@ class StatictisGiaoXu extends Component
             $this->end_date = Carbon::now()->format('Y-m-d');
         }
         if (!$this->giao_xu_id){
-            $this->giao_xu_id = GiaoXu::find(Auth::user()->giao_xu_id)->id;
-        }
-        $this->linh_muc_chanh_xu = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
-            $q->where('ten_vi_tri', 'Cha xứ');
-        })->where('giao_xu_id',$this->giao_xu_id)
-            ->first();
-        if (!$this->linh_muc_chanh_xu){
-            Toastr::warning('Không có dữ liệu', 'Cảnh báo');
-            return redirect()->route('home');
+            $this->giao_xu_id = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)->first()->id;
         }
     }
 
@@ -71,9 +64,9 @@ class StatictisGiaoXu extends Component
             ->first();
         // all giao xu
         $all_giao_xu = GiaoXu::with('giaoHat')
-            ->where('giao_xu_hoac_giao_ho', 0)
+            ->where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
             ->get();
-            
+
         // draw chart
         if (!$this->sinh_tu_follow_year){
             $this->sinh_tu_follow_year = $start_end_year[0];
@@ -83,7 +76,7 @@ class StatictisGiaoXu extends Component
         $this->emit('updateLineChart', json_encode($analytic_gender));
         $this->emit('updatePieChart', json_encode($analytics_bi_tich));
         // search GiaoHat By Id
-        return view('livewire.giao-xu.statictis-giao-xu',
+        return view('livewire.giao-ho.statistic-giao-ho',
             compact('statistics_giao_xu', 'analytics_bi_tich', 'start_end_year', 'all_giao_xu'))
             ->with(['giam_muc' => $this->linh_muc_chanh_xu,
                 'analytic_gender' => json_encode($analytic_gender),

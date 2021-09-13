@@ -41,6 +41,10 @@ class ViTri extends Component
         $this->validateOnly($propertyName);
     }
 
+    public  function clearData(){
+        $this->ten_vi_tri = '';
+    }
+
     public function edit($id){
         $this->ten_vi_tri = \App\Models\ViTri::find($id)->ten_vi_tri;
         $this->vi_tri_model = \App\Models\ViTri::find($id);

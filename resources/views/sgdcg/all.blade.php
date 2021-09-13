@@ -23,7 +23,7 @@
                     <div class="row tab-content">
                         <div id="list-view" class="tab-pane fade active show col-lg-12">
                             <div class="card">
-                                @livewire('sgdcg.crud-sgdcg', ['all_so_gia_dinh' => $all_so_gia_dinh])
+                                @livewire('sgdcg.crud-sgdcg')
                             </div>
                         </div>
                     </div>
@@ -32,3 +32,4 @@
         </div>
     </div>
 @endsection
+

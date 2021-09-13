@@ -7,7 +7,7 @@
         <div>
             {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
             <button
-                    data-toggle="modal" data-target="#giaoHatModal"
+                    data-toggle="modal" wire:click="clearData()" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm giáo hạt mới
             </button>
         </div>

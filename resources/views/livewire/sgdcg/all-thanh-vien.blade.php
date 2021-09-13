@@ -46,18 +46,18 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="display table" style="min-width: 1000px;">
+            <table class="display table" style="min-width: 1180px; margin-top: -10px">
                 <thead>
                 <tr>
                     <th style="width: 50px">STT</th>
                     <th style="width: 100px">Tên thánh</th>
-                    <th style="width: 200px">Họ và tên</th>
+                    <th style="width: 150px">Họ và tên</th>
                     <th style="width: 110px">Ngày sinh</th>
                     <th style="width: 110px">Ngày mất</th>
                     <th style="width: 80px">Số điện thoại</th>
                     <th  style="width: 150px">Địa chỉ</th>
-                    <th style="width: 60px">Sổ gia đình hiện tại</th>
-                    <th style="width: 60px">Sổ gia đình gốc</th>
+                    <th style="width: 100px">Sổ gia đình hiện tại</th>
+                    <th style="width: 100px">Sổ gia đình gốc</th>
                     <th style="width: 50px">Xem chi tiết</th>
                 </tr>
                 </thead>
@@ -69,7 +69,7 @@
                         <td>
                             {{ $th->tenThanh->ten_thanh }}
                         </td>
-                        <td> {{ $th->ho_va_ten }}</td>
+                        <td class="text-break"> {{ $th->ho_va_ten }}</td>
                         <td>
                             @if(\Carbon\Carbon::parse($th->ngay_sinh)->format('d-m') == '01-01' && strtotime($th->ngay_sinh) < strtotime(1980))
                                 {{ \Carbon\Carbon::parse($th->ngay_sinh)->format('Y') }}
@@ -83,7 +83,7 @@
                         <td>
                             {{ $th->so_dien_thoai }}
                         </td>
-                        <td >
+                        <td class="text-break">
                             {{ $th->dia_chi_hien_tai}}
                         </td>
                         @if($th->soGiaDinh2)

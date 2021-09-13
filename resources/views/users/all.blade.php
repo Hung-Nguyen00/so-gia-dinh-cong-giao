@@ -40,7 +40,7 @@
                                     </div>
                                     <div  class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example3" class="display" style="min-width: 845px; width: 1000px;">
+                                            <table id="example3" class="display" style="min-width: 1000px;">
                                                 <thead>
                                                 <tr>
                                                     <th >STT</th>

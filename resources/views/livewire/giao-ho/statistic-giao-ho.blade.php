@@ -3,7 +3,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-7 p-md-0">
                 <div class="welcome-text d-flex justify-content-start align-items-center">
-                    <h4>Thống kê giáo xứ</h4>
+                    <h4>Thống kê giáo họ</h4>
                 </div>
             </div>
             <div class="col-sm-5 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -14,14 +14,14 @@
             </div>
         </div>
         <div class="row page-titles mx-0">
-            <h5>Tìm kiếm theo giáo xứ</h5>
+            <h5>Tìm kiếm theo giáo họ</h5>
             <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
-                <div class="col-md-4 form-group">
-                    <label>Thống kê giáo xứ</label>
+                <div class="col-md-3 form-group mr-2">
+                    <label>Thống kê giáo họ</label>
                     <select class="selectpicker w-100 select form-control"  wire:model="giao_xu_id"
                             value="{{ old('giao_xu_id') }}"  data-live-search="true" >
                         @foreach($all_giao_xu as $cv)
-                            <option value="{{ $cv->id }}">GH: {{ $cv->giaoHat->ten_giao_hat }} - GX: {{ $cv->ten_giao_xu }} </option>
+                            <option value="{{ $cv->id }}">{{ $cv->ten_giao_xu }} </option>
                         @endforeach
                     </select>
                 </div>
@@ -47,30 +47,13 @@
         <div class="row">
             <div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card">
-                    <div class="card-body">
-                        <div class="media">
-                             <span class="mr-3">
-                                <img style="border-radius: 50%; max-width: 60px"
-                                     src="{{ asset('images/nha_tho.png') }}" alt="Giáo họ">
-                            </span>
-                            <div class="media-body">
-                                <p class="mb-1">Số lượng giáo họ</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->giao_ho_count }}</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-xxl-3 col-sm-6">
-                <div class="widget-stat card">
-                    <div class="card-body">
+                    <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
-                                 <span class="mr-3">
-                                      <img style="border-radius: 50%; max-width: 60px"
-                                           src="{{ asset('images/linhmuc.jpg') }}" alt="Linh mục">
-                                </span>
+                        <span class="mr-3">
+                            <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/linhmuc.jpg') }}" alt="Linh mục">
+                        </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng <br> linh mục</p>
+                                <p class="mb-1">Linh mục</p>
                                 <h4 class="mb-0">{{ $statistics_giao_xu->tu_si_count }}</h4>
                             </div>
                         </div>
@@ -79,14 +62,28 @@
             </div>
             <div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card">
-                    <div class="card-body">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="media">
+                             <span class="mr-3">
+                                <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
+                            </span>
+                            <div class="media-body">
+                                <p class="mb-1">Hộ gia<br> đình</p>
+                                <h4 class="mb-0">{{ $statistics_giao_xu->giao_ho_count }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card">
+                    <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                <img style="border-radius: 50%; max-width: 60px"
-                                     src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
+                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/chuyen_xu.jpg') }}" alt="Đã chuyển xứ">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng hộ gia đình</p>
+                                <p class="mb-1">Đã chuyển xứ</p>
                                 <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
                             </div>
                         </div>
@@ -95,14 +92,13 @@
             </div>
             <div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card">
-                    <div class="card-body">
+                    <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                <img style="border-radius: 50%; max-width: 60px"
-                                     src="{{ asset('images/chuyen_xu.jpg') }}" alt="Hộ gia đình">
+                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/chuyen_xu.jpg') }}" alt="Đã chuyển xứ">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Chuyển xứ</p>
+                                <p class="mb-1">Đã nhập xứ</p>
                                 <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
                             </div>
                         </div>
@@ -111,30 +107,13 @@
             </div>
             <div class="col-xl-3 col-xxl-3 col-sm-6">
                 <div class="widget-stat card">
-                    <div class="card-body">
-                        <div class="media ai-icon">
-                                <span class="mr-3">
-                                <img style="border-radius: 50%; max-width: 60px"
-                                     src="{{ asset('images/chuyen_xu.jpg') }}" alt="Hộ gia đình">
-                                </span>
-                            <div class="media-body">
-                                <p class="mb-1">Nhập xứ</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-xxl-3 col-sm-6">
-                <div class="widget-stat card">
-                    <div class="card-body">
+                    <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                  <span class="mr-3">
-                                  <img style="border-radius: 50%; max-width: 60px"
-                                       src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
+                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Tổng số <br> giáo dân</p>
+                                <p class="mb-1">Giáo dân</p>
                                 <h4 class="mb-0" >{{ $statistics_giao_xu->giao_dan_count }}</h4>
                             </div>
                         </div>
@@ -233,42 +212,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-7 col-lg-7 col-xxl-7 col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Thông tin giáo họ</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table display" style="min-width: 500px;">
-                                <thead>
-                                <tr>
-                                    <th width="25">STT</th>
-                                    <th width="50">Tên giáo họ</th>
-                                    <th width="100">Địa chỉ</th>
-                                    <th width="50">Năm thành lập</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @php $i = 0; @endphp
-                                @if($statistics_giao_xu->giaoHo->count() > 0)
-                                    @foreach($statistics_giao_xu->giaoHo as $th)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            <td>{{ $th->ten_giao_xu }}</td>
-                                            <td>{{ $th->dia_chi }}</td>
-                                            <td class="text-center">
-                                                {{ \Carbon\Carbon::parse($th->ngay_thanh_lap)->format('Y')}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-xl-5 col-lg-5 col-xxl-5 h-50 col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -281,7 +224,9 @@
                                 <tr>
                                     <td>Linh mục:</td>
                                     <td class="font-medium  text-break text-dark-medium">
+                                        @if($linh_muc_chanh_xu)
                                         {{ $linh_muc_chanh_xu->tenThanh->ten_thanh }} {{ $linh_muc_chanh_xu->ho_va_ten }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>

@@ -66,17 +66,17 @@
                 </div>
             </div>
         <div class="table-responsive">
-            <table class="table display" style="min-width: 870px; width: 950px; margin-top: -10px">
+            <table class="table display" style="min-width: 850px;  margin-top: 10px">
                 <thead>
                 <tr>
                     <th style="width: 20px;" >STT</th>
-                    <th>Họ và tên</th>
                     <th>Tên thánh</th>
-                    <th style="width: 110px">Ngày sinh</th>
-                    <th style="width:60px;">Du học</th>
-                    <th style="width:170px;">Đang phục vụ</th>
-                    <th  style="width:60px;">Chuyển công tác</th>
-                    <th style="width:60px;">Chỉnh sửa</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Du học</th>
+                    <th>Đang phục vụ</th>
+                    <th class="text-center">Chuyển công tác</th>
+                    <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody >
@@ -84,10 +84,10 @@
                 @foreach($all_tu_si as $th)
                     <tr >
                         <td class="text-center"> {{ ++$i }}</td>
-                        <td> {{ $th->ho_va_ten }}</td>
                         <td>
                             {{ $th->tenThanh->ten_thanh }}
                         </td>
+                        <td> {{ $th->ho_va_ten }}</td>
                         <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
                         <td>
                             @if($th->dang_du_hoc == 1)

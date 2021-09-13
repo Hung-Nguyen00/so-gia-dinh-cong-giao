@@ -47,6 +47,10 @@ class CrudBiTich extends Component
         $this->bi_tich_model = BiTich::find($id);
     }
 
+    public function clearData(){
+        $this->ten_bi_tich = '';
+    }
+
     public function update(){
         $validateData = $this->validate();
         if ($this->bi_tich_model){

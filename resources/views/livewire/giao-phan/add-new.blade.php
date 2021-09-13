@@ -15,7 +15,7 @@
                     class="btn btn-primary">Import giáo phận, giáo hạt, giáo xứ
             </button>
             <button
-                    data-toggle="modal" data-target="#exampleModal"
+                    data-toggle="modal" wire:click="clearData()" data-target="#exampleModal"
                     class="btn btn-primary">Thêm giáo phận mới
             </button>
         </div>

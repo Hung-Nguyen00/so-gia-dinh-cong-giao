@@ -41,6 +41,10 @@ class CrudChucVu extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function clearData(){
+        $this->ten_chuc_vu = '';
+    }
+
     public function edit($id){
         $this->ten_chuc_vu = ChucVu::find($id)->ten_chuc_vu;
         $this->chuc_vu_model = ChucVu::find($id);

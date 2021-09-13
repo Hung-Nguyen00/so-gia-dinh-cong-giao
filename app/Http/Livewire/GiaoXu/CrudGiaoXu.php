@@ -62,10 +62,20 @@ class CrudGiaoXu extends Component
 
     public function render()
     {
+        $this->dispatchBrowserEvent('contentChanged');
         $this->giao_hat = GiaoHat::all();
         return view('livewire.giao-xu.crud-giao-xu');
     }
- 
+
+    public function clearData(){
+        $this->ten_giao_xu = '';
+        $this->ngay_thanh_lap = '';
+        $this->dia_chi = '';
+        $this->giao_hat_id = '';
+        $this->nam_thanh_lap = '';
+        $this->dispatchBrowserEvent('contentChanged');
+    }
+
     public function store()
     {
         $validatedData = $this->validate();

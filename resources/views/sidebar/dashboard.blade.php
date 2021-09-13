@@ -58,6 +58,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('giaoXu.showTuSi') }}">Tu sĩ</a></li>
+                    <li><a href="{{ route('giao-ho.statistic') }}">Thống kê giáo họ</a></li>
                     <li><a href="{{ route('giao-ho.index') }}">Giáo họ</a></li>
                     <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
                     <li><a href="{{ route('thanh-vien.index') }}">Giáo dân</a></li>

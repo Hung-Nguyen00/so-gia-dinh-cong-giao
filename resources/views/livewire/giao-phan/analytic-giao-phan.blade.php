@@ -19,7 +19,7 @@
             <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
                 <div class="col-md-3 form-group mr-2">
                     <label for="">Tên giáo phận</label>
-                    <select class="selectpicker w-auto select form-control"  wire:model="giao_phan_id"
+                    <select class="selectpicker w-100 select form-control"  wire:model="giao_phan_id"
                             value="{{ old('giao_phan_id') }}"  data-live-search="true" >
                         @foreach($all_giao_phan as $cv)
                             <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}</option>
@@ -51,7 +51,8 @@
                     <div class="card-body">
                         <div class="media">
                              <span class="mr-3">
-                                <i class="la la-home"></i>
+                                 <img style="border-radius: 50%; max-width: 60px"
+                                      src="{{ asset('images/giao_phan.jpg') }}" alt="Giáo phận">
                             </span>
                             <div class="media-body">
                                 <p class="mb-1">Số lượng giáo hạt</p>
@@ -66,7 +67,8 @@
                     <div class="card-body">
                         <div class="media ai-icon">
                                  <span class="mr-3">
-                                   <i class="la la-home"></i>
+                                  <img style="border-radius: 50%; max-width: 60px"
+                                       src="{{ asset('images/nha_tho.png') }}" alt="Giáo xứ">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Số lượng <br> giáo xứ</p>
@@ -81,10 +83,11 @@
                     <div class="card-body">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                  <i class="la la-book"></i>
+                                  <img style="border-radius: 50%; max-width: 60px"
+                                       src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng hộ gia đình</p>
+                                <p class="mb-1">Số lượng hộ <br> gia đình</p>
                                 <h4 class="mb-0">{{ $analytics_bi_tich['count_sgd'] }}</h4>
                             </div>
                         </div>
@@ -96,7 +99,8 @@
                     <div class="card-body">
                         <div class="media ai-icon">
                                  <span class="mr-3">
-                                  <i class="la la-users"></i>
+                                  <img style="border-radius: 50%; max-width: 60px"
+                                       src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Tổng số <br> giáo dân</p>
@@ -111,7 +115,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-street-view"></i>
+                                      <img style="border-radius: 50%; max-width: 60px"
+                                           src="{{ asset('images/rua_toi.png') }}" alt="Rửa tội">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Rửa tội</p>
@@ -128,7 +133,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-user-secret"></i>
+                                     <img style="border-radius: 50%; max-width: 50px"
+                                          src="{{ asset('images/rua_toi.jpg') }}" alt="Xưng tội">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Xưng tội</p>
@@ -145,7 +151,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-glass"></i>
+                                    <img style="border-radius: 50%; height: 60px; width: 60px"
+                                         src="{{ asset('images/them_suc.jpg') }}" alt="Thên sức">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Thêm sức</p>
@@ -162,7 +169,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-heart"></i>
+                                     <img style="border-radius: 50%; max-width: 50px"
+                                          src="{{ asset('images/hon_nhan.png') }}" alt="Hôn nhân">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1" style="width: 120px;">Hôn phối</p>

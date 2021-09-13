@@ -30,7 +30,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-home"></i>
+                                    <img style="border-radius: 50%; max-width: 50px"
+                                         src="{{ asset('images/giao_phan.jpg') }}" alt="Giáo phận">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Tổng số giáo phận</p>
@@ -47,10 +48,11 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-home"></i>
+                                    <img style="border-radius: 50%; max-width: 50px"
+                                         src="{{ asset('images/nha_tho.png') }}" alt="Giáo xứ">
                                 </span>
                             <div class="text-white">
-                                <p class="mb-1">Tổng số giáo xứ</p>
+                                Tổng giáo xứ
                             </div>
                         </div>
                         <div class="text-center">
@@ -64,7 +66,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-graduation-cap"></i>
+                                     <img style="border-radius: 50%; max-width: 60px"
+                                          src="{{ asset('images/linhmuc.jpg') }}" alt="Linh mục">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Tổng số tu sĩ</p>
@@ -81,7 +84,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-users"></i>
+                                   <img class="mt-1" style="border-radius: 50%; max-width: 50px"
+                                        src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1" style="width: 120px;">Tổng số giáo dân</p>
@@ -98,7 +102,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-street-view"></i>
+                                   <img style="border-radius: 50%; max-width: 50px"
+                                        src="{{ asset('images/rua_toi.png') }}" alt="Rửa tội">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Rửa tội</p>
@@ -115,7 +120,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-user-secret"></i>
+                                  <img style="border-radius: 50%; max-width: 50px"
+                                       src="{{ asset('images/rua_toi.jpg') }}" alt="Xưng tội">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Xưng tội</p>
@@ -132,7 +138,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-glass"></i>
+                                      <img style="border-radius: 50%; width: 60px; height: 60px;"
+                                           src="{{ asset('images/them_suc.jpg') }}" alt="Thêm sức">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1">Thêm sức</p>
@@ -149,7 +156,8 @@
                     <div class="card-body">
                         <div class="media">
                                 <span class="mr-3">
-                                    <i class="la la-heart"></i>
+                                     <img style="border-radius: 50%; max-width: 55px"
+                                          src="{{ asset('images/hon_nhan.png') }}" alt="Hôn nhân">
                                 </span>
                             <div class="text-white">
                                 <p class="mb-1" style="width: 120px;">Hôn phối</p>
@@ -206,13 +214,24 @@
                         <h4 class="card-title">Danh sách thống kê giáo phận</h4>
                     </div>
                     <div class="card-body">
-                        <div class="col-md-6 d-flex align-items-center p-0" style="margin-top: -10px">
-                            <label for="">Hiển thị</label>
-                            <select class="ml-2 form-control w-auto select" wire:model="paginate_number">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                            </select>
+                        <div class="col-md-12 d-flex align-items-center justify-content-between p-0" style="margin-top: -10px">
+                            <div>
+                                <label for="">Hiển thị</label>
+                                <select class="ml-2 form-control w-auto select" wire:model="paginate_number">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                            <div>
+                                <lable>Tìm kiếm giáo phận</lable>
+                                <select class="select form-control w-auto" wire:model="giao_phan_id" data-live-search="true">
+                                    <option value="" selected>Tìm kiếm giáo phận</option>
+                                    @foreach($all_giao_phan as $gp)
+                                        <option value="{{ $gp->id }}">{{ $gp->ten_giao_phan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="table-responsive recentOrderTable">
                             <table class="table display"  style="min-width: 100%;">

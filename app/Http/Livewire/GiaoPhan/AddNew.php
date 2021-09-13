@@ -70,6 +70,14 @@ class AddNew extends Component
         return view('livewire.giao-phan.add-new');
     }
 
+    public function clearData(){
+        $this->ten_giao_phan = '';
+        $this->dia_chi  = '';
+        $this->giao_tinh_id = '';
+        $this->ngay_thanh_lap = '';
+        $this->ten_nha_tho = '';
+        $this->nam_thanh_lap = '';
+    }
     public function store()
     {
         $validatedData = $this->validate();

@@ -15,4 +15,8 @@ class GiaoHoController extends Controller
         $all_giao_ho = $giao_xu->giaoHo;
         return view('giao_ho.all_giao_ho', compact('all_giao_ho'));
     }
+
+    public function statistic(){
+        return view('giao_ho.statistic');
+    }
 }

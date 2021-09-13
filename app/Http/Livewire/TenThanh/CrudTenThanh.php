@@ -40,6 +40,9 @@ class CrudTenThanh extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function clearData(){
+        $this->ten_thanh = '';
+    }
     public function edit($id){
         $this->ten_thanh = TenThanh::find($id)->ten_thanh;
         $this->ten_thanh_model = TenThanh::find($id);

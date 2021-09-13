@@ -57,7 +57,13 @@ class CrudNhaDong extends Component
     {
         return view('livewire.nha-dong.crud-nha-dong');
     }
-
+    public function clearData(){
+        $this->ten_nha_dong = '';
+        $this->ngay_thanh_lap = '';
+        $this->dia_chi = '';
+        $this->nam_thanh_lap = '';
+        $this->nha_dong_id = '';
+    }
     public function store()
     {
         $validatedData = $this->validate();

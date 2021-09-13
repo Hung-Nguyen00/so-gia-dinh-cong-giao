@@ -76,7 +76,7 @@ Route::group(['middleware'=>'auth'],function()
         Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
         Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
-
+        Route::get('giao-ho-/thong-ke', [GiaoHoController::class, 'statistic'])->name('giao-ho.statistic');
         Route::resources([
             'so-gia-dinh' => SoGiaDinhController::class,
             'thanh-vien' => ThanhVienController::class,

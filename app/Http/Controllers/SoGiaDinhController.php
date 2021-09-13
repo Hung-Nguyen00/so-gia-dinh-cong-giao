@@ -28,21 +28,14 @@ class SoGiaDinhController extends Controller
     // SoGiaDinh Info
     public function index()
     {
-        // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
-        // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
-        // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
-      $all_so_gia_dinh = SoGiaDinh::with('getUser')
-          ->withCount(['thanhVien', 'thanhVienSo2'])
-            ->where('giao_xu_id', Auth::user()->giao_xu_id)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+
     $ten_giao_xu = GiaoXu::where('id', Auth::user()->giao_xu_id)->first();
     if ($ten_giao_xu == null){
         return back();
     }else{
         $ten_giao_xu = $ten_giao_xu->ten_giao_xu;
     }
-    return view('sgdcg.all', compact('all_so_gia_dinh', 'ten_giao_xu'));
+    return view('sgdcg.all', compact('ten_giao_xu'));
     }
 
     public function show(SoGiaDinh $soGiaDinh)
