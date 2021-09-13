@@ -20,7 +20,7 @@ class AllThanhVien extends Component
         $ten_thanh_id,
         $ho_va_ten,
         $sinh_or_tu = null,
-        $paginate_number = 5,
+        $paginate_number = 20,
         $ten_thanh;
 
     // can use $updatesQueryString to encode url

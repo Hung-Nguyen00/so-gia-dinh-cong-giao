@@ -46,18 +46,18 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="display table" style="min-width: 845px; width: 1050px">
+            <table class="display table" style="min-width: 1000px;">
                 <thead>
                 <tr>
                     <th style="width: 50px">STT</th>
                     <th style="width: 100px">Tên thánh</th>
-                    <th style="width: 150px">Họ và tên</th>
+                    <th style="width: 200px">Họ và tên</th>
                     <th style="width: 110px">Ngày sinh</th>
                     <th style="width: 110px">Ngày mất</th>
                     <th style="width: 80px">Số điện thoại</th>
-                    <th >Địa chỉ</th>
-                    <th style="width: 110px">Sổ gia đình hiện tại</th>
-                    <th style="width: 100px">Sổ gia đình gốc</th>
+                    <th  style="width: 150px">Địa chỉ</th>
+                    <th style="width: 60px">Sổ gia đình hiện tại</th>
+                    <th style="width: 60px">Sổ gia đình gốc</th>
                     <th style="width: 50px">Xem chi tiết</th>
                 </tr>
                 </thead>

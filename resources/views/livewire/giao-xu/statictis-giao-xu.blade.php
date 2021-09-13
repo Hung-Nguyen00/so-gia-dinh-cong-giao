@@ -19,6 +19,28 @@
                 </ol>
             </div>
         </div>
+        <div class="row page-titles mx-0">
+            <h5>Tìm kiếm theo giáo xứ</h5>
+            <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
+                <div class="col-md-3 form-group mr-2">
+                    <label>Thống kê giáo xứ</label>
+                    <select class="selectpicker w-auto select form-control"  wire:model="giao_xu_id"
+                            value="{{ old('giao_xu_id') }}"  data-live-search="true" >
+                        @foreach($all_giao_xu as $cv)
+                            <option value="{{ $cv->id }}">GH: {{ $cv->giaoHat->ten_giao_hat }} - GX: {{ $cv->ten_giao_xu }} </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Ngày bắt đầu</label>
+                    <input type="date" wire:model="start_date" class="form-control w-100">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Ngày kết thúc</label>
+                    <input type="date" class="form-control w-100" wire:model="end_date">
+                </div>
+            </div>
+        </div>
         <div wire:loading>
             <div id="loadingStaticGiaoPhan" class="la-ball-circus la-2x">
                 <div></div>
@@ -96,8 +118,14 @@
                     <div class="card-body" id="chart-responsive">
                         <div class="col-xl-6 col-xxl-6 col-sm-12">
                             <div class="w-75">
-                                <label class="form-label">Chọn thống kê sinh hoặc tử năm {{ \Carbon\Carbon::now()->format('Y') }}</label>
-                                <select id="sinh_hoac_tu" class="select form-control w-auto" wire:model="sinh_hoac_tu">
+                                <label class="form-label">Chọn thống kê sinh hoặc tử năm
+                                </label>
+                                <select  class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
+                                    @for($i = 0; $i < sizeof($start_end_year); $i++)
+                                        <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
+                                    @endfor
+                                </select>
+                                <select  class="form-control select w-auto" wire:model="sinh_hoac_tu">
                                     <option value="1" selected>Sinh</option>
                                     <option value="2">Tử</option>
                                 </select>

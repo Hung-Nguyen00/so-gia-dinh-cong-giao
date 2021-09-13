@@ -1,22 +1,39 @@
 <div>
     <div class="container-fluid position-relative">
         <div class="row page-titles mx-0">
-            <div class="col-sm-7 p-md-0">
-                <div class="welcome-text d-flex justify-content-start align-items-center">
+            <div class="col-sm-9 p-md-0">
+                <div class="welcome-text mb-2">
                     <h4>Thống kê giáo phận</h4>
-                    <select class="selectpicker w-auto select form-control ml-2"  wire:model="giao_phan_id"
+                </div>
+
+            </div>
+            <div class="col-sm-3 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Thống kê giáo phận</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row page-titles mx-0">
+            <h5>Tìm kiếm theo giáo phận</h5>
+            <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
+                <div class="col-md-3 form-group mr-2">
+                    <label for="">Tên giáo phận</label>
+                    <select class="selectpicker w-auto select form-control"  wire:model="giao_phan_id"
                             value="{{ old('giao_phan_id') }}"  data-live-search="true" >
                         @foreach($all_giao_phan as $cv)
                             <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-            <div class="col-sm-5 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Thống kê giáo phận</a></li>
-                </ol>
+                <div class="col-md-3 form-group">
+                    <label>Ngày bắt đầu</label>
+                    <input type="date" wire:model="start_date" class="form-control w-100">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>Ngày kết thúc</label>
+                    <input type="date" class="form-control w-100" wire:model="end_date">
+                </div>
             </div>
         </div>
         <div wire:loading>
@@ -164,7 +181,13 @@
                    <div class="card-body" id="chart-responsive">
                        <div class="col-xl-6 col-xxl-6 col-sm-12">
                            <div class="w-75">
-                               <label class="form-label">Chọn thống kê sinh hoặc tử năm {{ \Carbon\Carbon::now()->format('Y') }}</label>
+                               <label class="form-label">Chọn thống kê sinh hoặc tử năm
+                               </label>
+                               <select  class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
+                                   @for($i = 0; $i < sizeof($start_end_year); $i++)
+                                       <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
+                                   @endfor
+                               </select>
                                <select  class="form-control select w-auto" wire:model="sinh_hoac_tu">
                                    <option value="1" selected>Sinh</option>
                                    <option value="2">Tử</option>

@@ -15,14 +15,25 @@ class StatictisGiaoXu extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $giao_xu_id = 1, $linh_muc_chanh_xu, $paginate_number = 5, $giao_ho_id, $sinh_hoac_tu = 1;
-    protected $queryString = ['giao_xu_id'];
+    public $giao_xu_id = 1,
+        $linh_muc_chanh_xu,
+        $paginate_number = 5,
+        $giao_ho_id,
+        $start_date,
+        $end_date,
+        $sinh_tu_follow_year,
+        $sinh_hoac_tu = 1;
+    protected $queryString = ['giao_xu_id','sinh_hoac_tu', 'start_date', 'end_date', 'sinh_tu_follow_year'];
 
 
 
     public function mount()
     {
         $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
+        $this->sinh_hoac_tu = request()->query('sinh_hoac_tu', $this->sinh_hoac_tu);
+        $this->start_date = request()->query('start_date', $this->start_date);
+        $this->end_date = request()->query('end_date', $this->end_date);
+        $this->sinh_tu_follow_year = request()->query('sinh_tu_follow_year', $this->sinh_tu_follow_year);
         $this->linh_muc_chanh_xu = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
             $q->where('ten_vi_tri', 'Cha xứ');
         })->where('giao_xu_id',$this->giao_xu_id)
@@ -31,12 +42,26 @@ class StatictisGiaoXu extends Component
             Toastr::warning('Không có dữ liệu', 'Cảnh báo');
             return redirect()->route('home');
         }
+        if (!$this->start_date){
+            $this->start_date = Carbon::now()->subYear(1)->format('Y-m-d');
+        }
+        if (!$this->end_date){
+            $this->end_date = Carbon::now()->format('Y-m-d');
+        }
     }
 
     public function render()
     {
         $this->dispatchBrowserEvent('Changed');
-
+        // get Year in from start date - end Date
+        $start = (int)Carbon::parse($this->start_date)->format('Y');
+        $end = (int)Carbon::parse($this->end_date)->format('Y');
+        $start_end_year = array();
+        $key = 0;
+        for ($i = $start; $i < $end + 1; $i++){
+            $start_end_year[$key] = $start++;
+            $key++;
+        }
         $statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
             ->where('id', $this->giao_xu_id)
             ->first();
@@ -46,20 +71,23 @@ class StatictisGiaoXu extends Component
             ->get();
             
         // draw chart
-        $analytic_gender = $this->getGender($this->sinh_hoac_tu);
+        if (!$this->sinh_tu_follow_year){
+            $this->sinh_tu_follow_year = $start_end_year[0];
+        }
+        $analytic_gender = $this->getGender($this->sinh_hoac_tu, $this->sinh_tu_follow_year);
         $analytics_bi_tich = $this->analyticBiTich();
         $this->emit('updateLineChart', json_encode($analytic_gender));
         $this->emit('updatePieChart', json_encode($analytics_bi_tich));
         // search GiaoHat By Id
         return view('livewire.giao-xu.statictis-giao-xu',
-            compact('statistics_giao_xu', 'analytics_bi_tich', 'all_giao_xu'))
+            compact('statistics_giao_xu', 'analytics_bi_tich', 'start_end_year', 'all_giao_xu'))
             ->with(['giam_muc' => $this->linh_muc_chanh_xu,
                 'analytic_gender' => json_encode($analytic_gender),
                 'analytics_bi_tich' => json_encode($analytics_bi_tich)]);
     }
     // get gender to Chart
-    public function getGender($id){
-        $get_current_year = Carbon::now()->format('Y');
+    public function getGender($id, $year){
+        $get_current_year = $year;
         // prepare query
         $gender_all_giao_xu = DB::table('giao_xu as x')
             ->leftJoin('so_gia_dinh_cong_giao as sgd', 'x.id', '=', 'sgd.giao_xu_id')
@@ -121,8 +149,9 @@ class StatictisGiaoXu extends Component
             ->join('bi_tich_da_nhan as btdn', 'tv.id', '=', 'btdn.thanh_vien_id')
             ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
             ->where('x.id', $this->giao_xu_id)
+            ->whereBetween('ngay_dien_ra', [$this->start_date, $this->end_date])
             ->orderBy('btdn.created_at', 'DESC')
-            ->select('tv.id as ThanhVien', 'bt.ten_bi_tich as BiTich')
+            ->select('tv.id as ThanhVien', 'btdn.ngay_dien_ra', 'bt.ten_bi_tich as BiTich')
             ->chunk(1000, function ($value) use(&$count_rua_toi, &$count_xung_toi, &$count_them_suc, &$count_hon_phoi){
                 $count_rua_toi += $value->where('BiTich', 'Rửa tội')->count();
                 $count_them_suc += $value->where('BiTich', 'Thêm sức')->count();
