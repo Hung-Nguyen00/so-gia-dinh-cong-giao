@@ -40,7 +40,7 @@ class CrudSgdcg extends Component
          $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
         //get ma_code from GP GH GX
         if (!$this->ma_so){
-            $last_sgdcg = SoGiaDinh::latest()->first()->id;
+            $last_sgdcg = SoGiaDinh::latest()->withTrashed()->first()->id;
             $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
             $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
             $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
@@ -80,13 +80,13 @@ class CrudSgdcg extends Component
     }
 
     protected $rules = [
-        'ma_so' => 'required|max:15|unique:so_gia_dinh_cong_giao',
+        'ma_so' => 'required|max:20|unique:so_gia_dinh_cong_giao',
         'ngay_tao_so' => 'required|date',
     ];
 
     protected $messages = [
         'ma_so.required' => ':attribute không được phép trống',
-        'ma_so.max'     => ':attribute không vợt quá 15',
+        'ma_so.max'     => ':attribute không vợt quá 20',
         'ma_so.unique' => ':attribute đã tồn tại',
         'ngay_tao_so.required' => ':attribute không được phép trống',
         'ngay_tao_so.date' => ':attribute phải đúng dạng ngày tháng năm'
@@ -102,7 +102,8 @@ class CrudSgdcg extends Component
         $this->validateOnly($propertyName);
     }
     public function clearData(){
-        $this->ma_so = '';
+        $this->ma_so = null;
+        $this->sgdcg_modal = null;
         $this->ngay_tao_so = '';
     }
     public function store()
@@ -128,7 +129,6 @@ class CrudSgdcg extends Component
             $this->ma_so = $this->sgdcg_modal->ma_so;
             $this->ngay_tao_so = $this->sgdcg_modal->ngay_tao_so;
             $this->giao_xu_id = $this->sgdcg_modal->giao_xu_id;
-
             $giao_xu = GiaoXu::with('giaoHat.giaoPhan')->find($this->sgdcg_modal->giao_xu_id);
             $this->giao_phan_id = $giao_xu->giaoHat->giaoPhan->id;
             $this->giao_hat_id = $giao_xu->giaoHat->id;

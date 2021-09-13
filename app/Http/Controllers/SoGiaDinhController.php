@@ -583,7 +583,7 @@ class SoGiaDinhController extends Controller
 
     public function createNewSGDCG($ngay_dien_ra){
         $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
-        $last_sgdcg = SoGiaDinh::latest()->first()->id;
+        $last_sgdcg = SoGiaDinh::latest()->withTrashed()->first()->id;
         $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
         $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
         $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);

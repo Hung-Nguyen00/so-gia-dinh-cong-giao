@@ -10,11 +10,11 @@
                class="btn btn-info">Excel mẫu
             </a>
             <button
-                    data-toggle="modal" wire:click="clearData" data-target="#importModal"
+                    data-toggle="modal"  data-target="#importModal"
                     class="btn btn-info">Import nhà dòng
             </button>
             <button
-                    data-toggle="modal" data-target="#giaoHatModal"
+                    data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm mới
             </button>
         </div>
