@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\GiaoHo;
 
 use App\Models\GiaoXu;
+use App\Models\LichSuSgdcg;
 use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -67,6 +68,11 @@ class StatisticGiaoHo extends Component
             ->where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
             ->get();
 
+        // statistic age
+        $statistic_age = $this->statisticAge();
+        // statistic Chuyen Xu
+        $statistic_chuyen_xu = LichSuSgdcg::where('giao_xu_id', $this->giao_xu_id)->count();
+
         // draw chart
         if (!$this->sinh_tu_follow_year){
             $this->sinh_tu_follow_year = $start_end_year[0];
@@ -77,7 +83,7 @@ class StatisticGiaoHo extends Component
         $this->emit('updatePieChart', json_encode($analytics_bi_tich));
         // search GiaoHat By Id
         return view('livewire.giao-ho.statistic-giao-ho',
-            compact('statistics_giao_xu', 'analytics_bi_tich', 'start_end_year', 'all_giao_xu'))
+            compact('statistics_giao_xu', 'analytics_bi_tich', 'statistic_chuyen_xu', 'statistic_age', 'start_end_year', 'all_giao_xu'))
             ->with(['giam_muc' => $this->linh_muc_chanh_xu,
                 'analytic_gender' => json_encode($analytic_gender),
                 'analytics_bi_tich' => json_encode($analytics_bi_tich)]);
@@ -162,6 +168,45 @@ class StatisticGiaoHo extends Component
             'Hôn phối' => $count_them_suc,];
 
         return $analytics_bi_tich;
+    }
+
+    public function statisticAge(){
+        $count_so_sinh = 0;
+        $count_nhi_dong = 0;
+        $count_thanh_nien = 0;
+        $count_trung_nien = 0;
+        $count_thieu_nhi = 0;
+        $count_tuoi_gia = 0;
+        DB::table('giao_xu as x')
+            ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
+            ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
+            ->where('x.id', $this->giao_xu_id)
+            ->orderBy('tv.created_at', 'DESC')
+            ->select('tv.id as ThanhVien',
+                DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
+            ->chunk(1000, function ($value)
+            use(
+                &$count_so_sinh,
+                &$count_thieu_nhi,
+                &$count_tuoi_gia,
+                &$count_thanh_nien,
+                &$count_nhi_dong,
+                &$count_trung_nien){
+                $count_so_sinh += $value->where('age', '<', 1)->count();
+                $count_nhi_dong += $value->where('age', '>', 1)->Where('age', '<', 5)->count();
+                $count_thieu_nhi += $value->where('age', '>', 5)->Where('age', '<', 18)->count();
+                $count_thanh_nien += $value->where('age', '>', 17)->Where('age', '<', 41)->count();
+                $count_trung_nien += $value->where('age', '>', 40)->Where('age', '<', 65)->count();
+                $count_tuoi_gia += $value->where('age', '>', 64)->count();
+            });
+        $statistic_age = ['so_sinh' => $count_so_sinh,
+            'thieu_nhi' => $count_thieu_nhi,
+            'nhi_dong' => $count_nhi_dong,
+            'trung_nien' => $count_trung_nien,
+            'thanh_nien' => $count_thanh_nien,
+            'tuoi_gia' => $count_tuoi_gia];
+
+        return $statistic_age;
     }
 
 }

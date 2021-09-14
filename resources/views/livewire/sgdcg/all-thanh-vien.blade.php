@@ -5,7 +5,7 @@
             <div class="col-md-3 mt-3">
                 <label>Tên thánh</label>
                 <select data-live-search="true" class="selectpicker  select form-control" wire:model="ten_thanh_id">
-                    <option value="" selected>Chọn tên thánh</option>
+                    <option value="" selected>Hiển thị tất cả</option>
                     @foreach($all_ten_thanh as $t)
                         <option value="{{ $t->id }}">{{ $t->ten_thanh }}</option>
                     @endforeach
@@ -18,7 +18,7 @@
             <div class="col-md-3 mt-3">
                 <label>Sinh hoặc tử</label>
                 <select class="form-control select" wire:model="sinh_or_tu">
-                    <option value="null" selected>Lựa chọn sinh hoặc tử</option>
+                    <option value="null" selected>Hiển thị tất cả</option>
                     <option value="1">Sinh</option>
                     <option value="2">Tử</option>
                 </select>

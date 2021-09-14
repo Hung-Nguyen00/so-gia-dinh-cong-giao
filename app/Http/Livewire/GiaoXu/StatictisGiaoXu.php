@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\GiaoXu;
 
 use App\Models\GiaoXu;
+use App\Models\LichSuSgdcg;
+use App\Models\SoGiaDinh;
 use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -73,7 +75,14 @@ class StatictisGiaoXu extends Component
         $all_giao_xu = GiaoXu::with('giaoHat')
             ->where('giao_xu_hoac_giao_ho', 0)
             ->get();
-            
+         // statistic age
+        $statistic_age = $this->statisticAge();
+        // statistic Chuyen Xu
+        $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho',$this->giao_xu_id)
+            ->orWhere('id',  $this->giao_xu_id)
+            ->pluck('id');
+        $statistic_chuyen_xu = LichSuSgdcg::whereIn('giao_xu_id', $giao_ho)->count();
+
         // draw chart
         if (!$this->sinh_tu_follow_year){
             $this->sinh_tu_follow_year = $start_end_year[0];
@@ -84,7 +93,8 @@ class StatictisGiaoXu extends Component
         $this->emit('updatePieChart', json_encode($analytics_bi_tich));
         // search GiaoHat By Id
         return view('livewire.giao-xu.statictis-giao-xu',
-            compact('statistics_giao_xu', 'analytics_bi_tich', 'start_end_year', 'all_giao_xu'))
+            compact('statistics_giao_xu',
+                'analytics_bi_tich', 'start_end_year', 'all_giao_xu', 'statistic_age', 'statistic_chuyen_xu'))
             ->with(['giam_muc' => $this->linh_muc_chanh_xu,
                 'analytic_gender' => json_encode($analytic_gender),
                 'analytics_bi_tich' => json_encode($analytics_bi_tich)]);
@@ -146,7 +156,6 @@ class StatictisGiaoXu extends Component
         $count_xung_toi = 0;
         $count_them_suc = 0;
         $count_hon_phoi = 0;
-
         DB::table('giao_xu as x')
             ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
             ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
@@ -155,20 +164,64 @@ class StatictisGiaoXu extends Component
             ->where('x.id', $this->giao_xu_id)
             ->whereBetween('ngay_dien_ra', [$this->start_date, $this->end_date])
             ->orderBy('btdn.created_at', 'DESC')
-            ->select('tv.id as ThanhVien', 'btdn.ngay_dien_ra', 'bt.ten_bi_tich as BiTich')
-            ->chunk(1000, function ($value) use(&$count_rua_toi, &$count_xung_toi, &$count_them_suc, &$count_hon_phoi){
-                $count_rua_toi += $value->where('BiTich', 'Rửa tội')->count();
-                $count_them_suc += $value->where('BiTich', 'Thêm sức')->count();
-                $count_hon_phoi += $value->where('BiTich', 'Hôn phối')->count();
-                $count_xung_toi += $value->where('BiTich', 'Xưng tội')->count();
+            ->select('tv.id as ThanhVien', 'btdn.ngay_dien_ra', 'bt.ten_bi_tich as BiTich',
+                DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
+            ->chunk(1000, function ($value)
+                use(&$count_rua_toi,
+                    &$count_xung_toi,
+                    &$count_them_suc,
+                    &$count_hon_phoi
+                   ){
+                        $count_rua_toi += $value->where('BiTich', 'Rửa tội')->count();
+                        $count_them_suc += $value->where('BiTich', 'Thêm sức')->count();
+                        $count_hon_phoi += $value->where('BiTich', 'Hôn phối')->count();
+                        $count_xung_toi += $value->where('BiTich', 'Xưng tội')->count();
             });
         // add result from above query to array. It's will be access, and also pass it
         $analytics_bi_tich = ['Rửa tội' => $count_rua_toi,
             'Xưng tội' => $count_xung_toi,
             'Thêm sức' => $count_them_suc,
             'Hôn phối' => $count_them_suc,];
-
         return $analytics_bi_tich;
+    }
+
+    public function statisticAge(){
+        $count_so_sinh = 0;
+        $count_nhi_dong = 0;
+        $count_thanh_nien = 0;
+        $count_trung_nien = 0;
+        $count_thieu_nhi = 0;
+        $count_tuoi_gia = 0;
+        DB::table('giao_xu as x')
+            ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
+            ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
+            ->where('x.id', $this->giao_xu_id)
+            ->orderBy('tv.created_at', 'DESC')
+            ->select('tv.id as ThanhVien',
+                DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
+            ->chunk(1000, function ($value)
+            use(
+                &$count_so_sinh,
+                &$count_thieu_nhi,
+                &$count_tuoi_gia,
+                &$count_thanh_nien,
+                &$count_nhi_dong,
+                &$count_trung_nien){
+                $count_so_sinh += $value->where('age', '<', 1)->count();
+                $count_nhi_dong += $value->where('age', '>', 1)->Where('age', '<', 5)->count();
+                $count_thieu_nhi += $value->where('age', '>', 5)->Where('age', '<', 18)->count();
+                $count_thanh_nien += $value->where('age', '>', 17)->Where('age', '<', 41)->count();
+                $count_trung_nien += $value->where('age', '>', 40)->Where('age', '<', 65)->count();
+                $count_tuoi_gia += $value->where('age', '>', 64)->count();
+            });
+        $statistic_age = ['so_sinh' => $count_so_sinh,
+            'thieu_nhi' => $count_thieu_nhi,
+            'nhi_dong' => $count_nhi_dong,
+            'trung_nien' => $count_trung_nien,
+            'thanh_nien' => $count_thanh_nien,
+            'tuoi_gia' => $count_tuoi_gia];
+
+        return $statistic_age;
     }
 
 }

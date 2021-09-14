@@ -38,7 +38,7 @@ class ThanhVien extends Model
     }
 
     public function soGiaDinh(){
-        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id');
+        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id','id');
     }
     public function soGiaDinh2(){
         return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id_2', 'id');

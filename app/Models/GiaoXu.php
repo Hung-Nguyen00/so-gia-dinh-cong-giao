@@ -52,6 +52,11 @@ class GiaoXu extends Model
         return $this->hasMany(SoGiaDinh::class, 'giao_xu_id', 'id');
     }
 
+    public function lichSuSgdcg(){
+        return $this->belongsToMany(GiaoXu::class,'lich_su_sgdcg',
+            'giao_xu_id', 'sgdcg_id')->withTimestamps();
+    }
+
     public function getGiaoHo($id){
         $ten_giao_ho = GiaoXu::find($id)->ten_giao_xu;
         if ($ten_giao_ho){

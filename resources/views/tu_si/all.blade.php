@@ -38,7 +38,7 @@
                                             </a>
                                             <button type="button"
                                                     data-toggle="modal" data-target="#importModal"
-                                                    class="btn btn-info mr-2" style="margin-top: 11px !important;">Import Excel
+                                                    class="btn btn-info mr-2" style="margin-top: 11px !important;">Import tu sĩ
                                             </button>
 
                                             <a href="{{ route('tu-si.create') }}"

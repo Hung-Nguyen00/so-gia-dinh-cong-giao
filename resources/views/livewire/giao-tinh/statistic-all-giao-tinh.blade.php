@@ -5,11 +5,14 @@
                 <div class="welcome-text">
                     <h4>Thống kê toàn giáo phận</h4>
                     <div class="d-flex flex-wrap justify-content-start pt-2 pl-0">
-                        <div class="col-md-3 form-group mr-5">
+                        <div class="col-md-3 form-group mr-3">
                             <label>Ngày bắt đầu</label>
                             <input type="date" wire:model="start_date" class="form-control w-auto">
                         </div>
-                        <div class="col-md-3 form-group">
+                        <div class="text-center d-flex align-items-end justify-content-center">
+                            <p class="font-weight-bold" style="font-size: 20px"> - </p>
+                        </div>
+                        <div class="col-md-3 form-group ml-2">
                             <label>Ngày kết thúc</label>
                             <input type="date" class="form-control w-auto" wire:model="end_date">
                         </div>

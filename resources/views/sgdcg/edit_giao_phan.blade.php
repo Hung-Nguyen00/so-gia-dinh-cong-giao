@@ -8,6 +8,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div wire:loading>
+                    <div id="loadingAddTVSgdcg" class="la-ball-circus la-2x">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
                 <div class="modal-body">
                     <form wire:submit.prevent="update">
                         <div class="form-group">
@@ -19,7 +28,7 @@
                         </div>
                         <div class="form-group" >
                             <label for="giao_phan">Tên giáo phận</label>
-                            <select id="giao_phan_id" class="select form-control mb-3" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
+                            <select data-live-search="true"  class="select form-control bg-light mb-3" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
                                 <option selected>Chọn giáo phận</option>
                                 @foreach($all_giao_phan as $gt)
                                     <option value="{{ $gt->id }}"> {{ $gt->ten_giao_phan  }}</option>
@@ -27,8 +36,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="giao_phan">Tên giáo xứ</label>
-                            <select id="giao_hat" class="select form-control mb-3" name="giao_hat_id"  wire:model="giao_hat_id">
+                            <label for="giao_phan">Tên giáo hạt</label>
+                            <select data-live-search="true" class="select form-control bg-light mb-3" name="giao_hat_id"  wire:model="giao_hat_id">
                                 @if($giao_hat_id == null)
                                 <option selected value="">Chọn giáo hạt</option>
                                 @endif
@@ -41,7 +50,7 @@
                         </div>
                         <div class="form-group" >
                             <label for="giao_phan">Tên giáo xứ</label>
-                            <select class="form-control select " name="giao_xu_id" wire:model="giao_xu_id">
+                            <select data-live-search="true" class="form-control select " name="giao_xu_id" wire:model="giao_xu_id">
                                 @if($giao_xu_id == null)
                                     <option selected value="">Chọn giáo xứ</option>
                                 @endif

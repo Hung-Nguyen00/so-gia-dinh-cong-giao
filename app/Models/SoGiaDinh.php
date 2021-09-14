@@ -26,11 +26,22 @@ class SoGiaDinh extends Model
     }
 
     public function thanhVien(){
-        return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id');
+        return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id', 'id');
     }
 
     public function thanhVienSo2(){
-        return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id_2');
+        return $this->hasMany(ThanhVien::class, 'so_gia_dinh_id_2', 'id');
+    }
+
+    public function lichSuChuyenXu(){
+        return $this->belongsToMany(GiaoXu::class,
+            'lich_su_sgdcg',
+            'sgdcg_id',
+            'giao_xu_id')->withTimestamps()->withPivot([
+            'created_at',
+            'giao_xu_id',
+            'sgdcg_id',
+        ]);
     }
 
     public function user($id){

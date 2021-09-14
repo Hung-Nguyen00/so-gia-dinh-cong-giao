@@ -103,7 +103,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Chuyển xứ</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
+                                <h4 class="mb-0">{{ $statistic_chuyen_xu }}</h4>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Nhập xứ</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
+                                <h4 class="mb-0">0</h4>
                             </div>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Trẻ sơ sinh</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->tu_si_count }}</h4>
+                                <h4 class="mb-0">{{ $statistic_age['so_sinh'] }}</h4>
                             </div>
                         </div>
                     </div>
@@ -161,11 +161,41 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media">
                              <span class="mr-3">
-                                <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Vị thành niên">
+                                <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}" alt="Trẻ em">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1" style="min-width: 105px;">Vị thành niên <br> (12t - 20t) </p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->giao_ho_count }}</h4>
+                                <p class="mb-1" style="min-width: 105px;">Nhi đồng<br>(2t - 5t) </p>
+                                <h4 class="mb-0">{{ $statistic_age['nhi_dong'] }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="media ai-icon">
+                                <span class="mr-3">
+                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
+                                </span>
+                            <div class="media-body">
+                                <p class="mb-1">Thiếu nhi <br> (6t - 17t)</p>
+                                <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="media ai-icon">
+                                <span class="mr-3">
+                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/thanh_nien.jpg') }}" alt="Thanh niên">
+                                </span>
+                            <div class="media-body">
+                                <p class="mb-1">Thanh niên <br> (18t - 39t)</p>
+                                <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>
                     </div>
@@ -179,8 +209,8 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/trung_nien.png') }}" alt="Trung niên">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Trung niên (40t - 60t)</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
+                                <p class="mb-1">Trung niên (40t - 64t)</p>
+                                <h4 class="mb-0">{{ $statistic_age['trung_nien']  }}</h4>
                             </div>
                         </div>
                     </div>
@@ -194,8 +224,8 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tuoi_gia.jpg') }}" alt="Tuổi già">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Tuổi già (>60t)</p>
-                                <h4 class="mb-0" >{{ $statistics_giao_xu->giao_dan_count }}</h4>
+                                <p class="mb-1">Tuổi già (>65t)</p>
+                                <h4 class="mb-0" >{{ $statistic_age['tuoi_gia'] }}</h4>
                             </div>
                         </div>
                     </div>

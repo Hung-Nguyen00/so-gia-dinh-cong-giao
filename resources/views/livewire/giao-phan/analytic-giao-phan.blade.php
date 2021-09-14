@@ -17,7 +17,7 @@
         <div class="row page-titles mx-0">
             <h5>Tìm kiếm theo giáo phận</h5>
             <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
-                <div class="col-md-3 form-group mr-2">
+                <div class="col-md-4 form-group">
                     <label for="">Tên giáo phận</label>
                     <select class="selectpicker w-100 select form-control"  wire:model="giao_phan_id"
                             value="{{ old('giao_phan_id') }}"  data-live-search="true" >
@@ -308,7 +308,7 @@
                                 </tr>
                                 <tr>
                                     <td>Số lượng linh mục</td>
-                                    <td class="font-medium text-dark-medium"></td>
+                                    <td class="font-medium text-dark-medium"> {{ $statistics_giao_phan->tu_si_count }} </td>
                                 </tr>
                                 <tr>
                                     <td>Năm thành lập</td>

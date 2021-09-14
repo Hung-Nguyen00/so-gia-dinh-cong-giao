@@ -3,32 +3,74 @@
     @include('sgdcg.edit_giao_phan')
     @include('sgdcg.delete_giao_phan')
     @include('sgdcg.import');
-    <div class="card-header">
+    <div class="card-header pt-0 pb-0">
         <h4 class="card-title">Danh sách các sổ gia đình công giáo </h4>
         <div>
             <a href="{{ route('sgdcg-file-export', ['name' => 'sgdcg'])}}"
-                    class="btn btn-info">Excel mẫu
+                    class="btn btn-info mt-1">Excel mẫu
             </a>
             <button
                     data-toggle="modal" data-target="#importModal"
-                    class="btn btn-info">Import dữ liệu
+                    class="btn btn-info mt-1">Import dữ liệu
             </button>
             <button
                     data-toggle="modal" wire:click="clearData()" data-target="#createModal"
-                    class="btn btn-primary">Thêm mới
+                    class="btn btn-primary mt-1">Thêm mới
             </button>
         </div>
     </div>
     <div  class="card-body">
         <div class="table-responsive">
+            <h5>Tìm kiếm</h5>
+            <div class="d-flex flex-wrap ">
+                <div class="form-group col-md-3 ">
+                    <label for="">Giáo họ</label>
+                    <select class="form-control select" wire:model="giao_ho_id">
+                        <option value="" selected >Tất cả</option>
+                       @foreach($all_giao_ho as $gh)
+                            <option value="{{ $gh->id }}">{{ $gh->ten_giao_xu }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Chủ hộ</label>
+                    <input type="text" wire:model="ten_chu_ho" class="form-control">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="">Ngày lập sổ</label>
+                   <div class="d-flex flex-wrap justify-content-start">
+                       <input type="date" wire:model="start_date" class="form-control mr-2 w-auto">
+                       <span style="font-size: 20px" class="font-weight-bold"> - </span>
+                       <input type="date" wire:model="end_date" class="ml-2 form-control w-auto">
+                   </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="">Hiển thị</label>
+                    <select class="form-control select w-auto" wire:model="page_number">
+                        <option value="5" >5</option>
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="form-check col-md-2 d-flex align-items-start pt-2">
+                    <input class="form-check-input" type="checkbox" wire:model="chuyen_xu">
+                    <label class="form-check-label">
+                        Đã chuyển xứ
+                    </label>
+                </div>
+            </div>
             <table class="table display" style="min-width: 840px;">
                 <thead>
                 <tr>
-                    <th>STT</th>
+                    <th class="text-center">STT</th>
                     <th>Mã sổ</th>
                     <th>Ngày tạo sổ</th>
                     <th class="text-center">Số lượng thành viên</th>
-                    <th>Người khởi tạo</th>
+                    <th>Thuộc</th>
+                    <th>Chủ hộ</th>
+                    <th class="text-center">Đã chuyển xứ</th>
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
@@ -41,7 +83,47 @@
                         <td>{{ \Carbon\Carbon::parse($g->ngay_tao_so)->format('d-m-Y') }}</td>
                         <td class="text-center">{{ $g->thanh_vien_so2_count > 0 ? $g->thanh_vien_so2_count : $g->thanh_vien_count }}
                             <a href="{{ route('so-gia-dinh.show', $g)  }}"> <i class="la la-eye"></i></a>
-                        <td>{{ $g->getUser->ho_va_ten }}</td>
+                        <td>
+                            @if($g->giaoXu)
+                                @if($g->giaoXu->giao_xu_hoac_giao_ho == 0)
+                                   Giáo xứ
+                                @else
+                                   Giáo họ: {{ $g->giaoXu->ten_giao_xu }}
+                                @endif
+                            @endif
+                        </td>
+
+                        <td>@if($g->thanhVien->count() > 0)
+                                @foreach($g->thanhVien as $t)
+                                    @if($t->tenThanh)
+                                        {{ $t->tenThanh->ten_thanh . ' '. $t->ho_va_ten }}
+                                    @else
+                                        {{ $t->ho_va_ten }}
+                                    @endif
+                                    @break
+                               @endforeach
+                            @else
+                            @if($g->thanhVienSo2)
+                                @foreach($g->thanhVienSo2 as $t)
+                                    @if($t->tenThanh)
+                                        {{ $t->tenThanh->ten_thanh . ' '. $t->ho_va_ten }}
+                                    @else
+                                        {{ $t->ho_va_ten }}
+                                    @endif
+                                    @break
+                                @endforeach
+                            @endif
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($g->lichSuChuyenXu->count() > 0)
+                                @foreach($g->lichSuChuyenXu as $ls)
+                                    <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
+
+                                    @break
+                                @endforeach
+                            @endif
+                        </td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $g->id }})"

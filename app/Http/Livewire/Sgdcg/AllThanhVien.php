@@ -68,6 +68,9 @@ class AllThanhVien extends Component
                         ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
                             $q->whereIn('giao_xu_id', $giao_ho);
                         })
+                        ->orWhereHas('soGiaDinh2', function ($q) use ($giao_ho){
+                            $q->whereIn('giao_xu_id', $giao_ho);
+                        })
                         ->search(trim($this->ho_va_ten))
                         ->whereBetween('ngay_sinh', [$this->start_date, $this->end_date])
                         ->WhereIn('ten_thanh_id', array_values($this->ten_thanh))
@@ -80,6 +83,9 @@ class AllThanhVien extends Component
             return view('livewire.sgdcg.all-thanh-vien', [
                     'all_thanh_vien' => ThanhVien::with(['soGiaDinh','soGiaDinh2', 'tenThanh'])
                         ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
+                            $q->whereIn('giao_xu_id', $giao_ho);
+                        })
+                        ->orWhereHas('soGiaDinh2', function ($q) use ($giao_ho){
                             $q->whereIn('giao_xu_id', $giao_ho);
                         })
                         ->search(trim($this->ho_va_ten))

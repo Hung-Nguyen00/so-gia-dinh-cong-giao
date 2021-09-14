@@ -31,10 +31,7 @@ class GiaoXuController extends Controller
     }
 
     public function showTuSiByGiaoXu(){
-        $all_tu_si = TuSi::with(['chucVu', 'tenThanh', 'viTri', 'nhaDong', 'getUser'])
-            ->where('giao_xu_id', Auth::user()->giao_xu_id)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+
         $count_linh_muc = TuSi::whereHas('chucVu', function ($q){
             $q->where('ten_chuc_vu', 'Linh mục');
         })->where('giao_xu_id', Auth::user()->giao_xu_id)
@@ -51,7 +48,7 @@ class GiaoXuController extends Controller
             ->count();
 
         return view('giao_xu.show_tu_si_by_user', compact(
-            'count_linh_muc', 'count_so', 'count_chung_sinh', 'all_tu_si'
+            'count_linh_muc', 'count_so', 'count_chung_sinh'
         ));
     }
 

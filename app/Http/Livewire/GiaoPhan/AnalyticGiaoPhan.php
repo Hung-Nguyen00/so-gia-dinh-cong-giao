@@ -71,9 +71,9 @@ class AnalyticGiaoPhan extends Component
         }
 
         // get Giao Phan
-        $statistics_giao_phan = GiaoPhan::select('id')
+        $statistics_giao_phan = GiaoPhan::select('id', 'dia_chi', 'ten_nha_tho')
             ->with('giaoHat')
-            ->withCount(['giaoXu', 'giaoHat'])
+            ->withCount(['giaoXu', 'giaoHat', 'tuSi'])
             ->where('id', $this->giao_phan_id)
             ->first();
         // draw chart
