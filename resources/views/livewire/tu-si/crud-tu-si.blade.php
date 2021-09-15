@@ -211,7 +211,7 @@
                                             <span class="mb-0">Ngày sinh</span><strong>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}  </strong></li>
                                         <li class="list-group-item px-0 d-flex justify-content-between">
                                             <span class="mb-0">Ngày mất</span><strong>
-                                                @if($th->ngay_sinh)
+                                                @if($th->ngay_mat)
                                                     {{ \Carbon\Carbon::parse($th->ngay_mat)->format('d-m-Y') }}
                                                 @endif
                                             </strong></li>

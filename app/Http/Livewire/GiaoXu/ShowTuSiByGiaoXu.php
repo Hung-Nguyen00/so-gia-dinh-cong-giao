@@ -15,15 +15,20 @@ class ShowTuSiByGiaoXu extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $giao_ho_id,
+        $start_date,
+        $end_date,
         $ten_thanh_id,
         $ho_va_ten,
+        $sinh_hoac_tu,
         $chuc_vu_id,
+        $active = false,
         $date_of_birth,
         $paginate_number = 20;
 
     // can use $updatesQueryString to encode url
     protected $queryString  = ['ho_va_ten',
-        'ten_thanh_id', 'giao_ho_id', 'chuc_vu_id', 'paginate_number', 'date_of_birth'];
+        'ten_thanh_id', 'giao_ho_id', 'chuc_vu_id',
+        'paginate_number', 'date_of_birth', 'sinh_hoac_tu', 'start_date', 'end_date', 'active'];
     public function updatingSearch()
     {
         $this->resetPage();
@@ -65,6 +70,12 @@ class ShowTuSiByGiaoXu extends Component
         if ($this->date_of_birth){
             $tu_si->where('ngay_sinh',$this->date_of_birth);
         }
+        if ($this->sinh_hoac_tu == 1 && $this->start_date && $this->end_date){
+            $tu_si->whereBetween('ngay_sinh', [$this->start_date, $this->end_date]);
+        }
+        if($this->sinh_hoac_tu == 2 && $this->start_date && $this->end_date){
+            $tu_si->whereBetween('ngay_mat', [$this->start_date, $this->end_date]);
+        }
         $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)->get();
         return view('livewire.giao-xu.show-tu-si-by-giao-xu')->with([
             'all_tu_si' => $tu_si->paginate(10),
@@ -72,5 +83,8 @@ class ShowTuSiByGiaoXu extends Component
             'all_ten_thanh'=> TenThanh::select('id', 'ten_thanh')->get(),
             'all_chuc_vu' => ChucVu::select('id', 'ten_chuc_vu')->get(),
         ]);
+    }
+    public function changeView(){
+        $this->active = !$this->active;
     }
 }
