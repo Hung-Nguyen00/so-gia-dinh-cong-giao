@@ -23,6 +23,7 @@ class CrudTuSi extends Component
         $giao_xu_id,
         $ten_thanh_id,
         $ho_va_ten,
+        $active = false,
         $chuc_vu_id,
         $date_of_birth,
         $giao_phan_id,
@@ -31,7 +32,7 @@ class CrudTuSi extends Component
 
     // can use $updatesQueryString to encode url
     protected $queryString  = ['ho_va_ten',
-        'ten_thanh_id', 'giao_phan_id', 'giao_hat_id','date_of_birth', 'nha_dong_id',
+        'ten_thanh_id', 'giao_phan_id', 'giao_hat_id','date_of_birth', 'nha_dong_id','active',
         'giao_xu_id', 'chuc_vu_id', 'paginate_number' ];
 
 
@@ -45,6 +46,7 @@ class CrudTuSi extends Component
         $this->chuc_vu_id = request()->query('chuc_vu_id', $this->chuc_vu_id);
         $this->date_of_birth =  request()->query('date_of_birth', $this->date_of_birth);
         $this->nha_dong_id =  request()->query('nha_dong_id', $this->nha_dong_id);
+        $this->active =  request()->query('active', $this->active);
         $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
         if (!$this->paginate_number){
             $this->paginate_number = 20;
@@ -123,5 +125,8 @@ class CrudTuSi extends Component
     public function changeGiaoPhan(){
         $this->giao_hat_id = '';
         $this->giao_xu_id = '';
+    }
+    public function changeView(){
+       $this->active = !$this->active;
     }
 }

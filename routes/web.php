@@ -112,6 +112,10 @@ Route::group(['middleware'=>'auth'],function()
 
 Auth::routes();
 
+
+Route::get('/test', function (){
+    return view('dashboard.student_dashboard');
+});
 // -----------------------------login----------------------------------------//
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);

@@ -1,6 +1,17 @@
 <div>
+    <div style="padding-left: 20px">
+        @if($active)
+            <button class="btn btn-sm btn-outline-danger font-weight-bold" wire:click.prevent="changeView">
+                Xem bảng
+            </button>
+        @else
+            <button  wire:click.prevent="changeView" class="font-weight-bold btn btn-sm btn-outline-danger">
+                Xem dạng thẻ
+            </button>
+        @endif
+    </div>
     <div class="card-body">
-            <h4 class="font-weight-bold">Tìm kiếm</h4>
+        <h4 class="font-weight-bold">Tìm kiếm</h4>
             <div class="d-flex flex-wrap mb-3">
                 <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <label>Tên thánh</label>
@@ -77,72 +88,134 @@
                     </select>
                 </div>
             </div>
-        <div class="table-responsive">
-            <table class="table display" style="min-width: 1080px;  margin-top: 10px">
-                <thead>
-                <tr>
-                    <th style="width: 20px;" >STT</th>
-                    <th>Tên thánh</th>
-                    <th>Họ và tên</th>
-                    <th>Ngày sinh</th>
-                    <th>Ngày tử</th>
-                    <th>Du học</th>
-                    <th>Đang phục vụ</th>
-                    <th class="text-center">Chuyển công tác</th>
-                    <th>Chỉnh sửa</th>
-                </tr>
-                </thead>
-                <tbody >
-                @php $i= 0; @endphp
-                @foreach($all_tu_si as $th)
-                    <tr >
-                        <td class="text-center"> {{ ++$i }}</td>
-                        <td>
-                            {{ $th->tenThanh->ten_thanh }}
-                        </td>
-                        <td> {{ $th->ho_va_ten }}</td>
-                        <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
-                        <td>@if($th->ngay_tu)
-                                {{ \Carbon\Carbon::parse($th->ngay_tu)->format('d-m-Y') }}
-                            @endif
-                        </td>
-                        <td>
-                            @if($th->dang_du_hoc == 1)
-                                <span class="badge badge-rounded badge-success">Du học</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($th->giao_xu_id)
-                                Giáo hạt: {{ $th->giaoHat->ten_giao_hat }}
-                                <br>
-                                Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
-                            @else
-
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <a type="button"
-                               href="{{ route('tu-si.editCongTac', $th)}}"
-                               class="btn btn-sm btn-primary mb-1">
-                                <i class="la la-pencil"></i>
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a type="button"
-                               href="{{ route('tu-si.edit', $th)}}"
-                               class="btn btn-sm btn-primary mb-1">
-                                <i class="la la-pencil"></i>
-                            </a>
-                        </td>
+        @if(!$active)
+        <div>
+            <div class="table-responsive" >
+                <table class="table display" style="min-width: 1080px;  margin-top: 10px">
+                    <thead>
+                    <tr>
+                        <th style="width: 20px;" >STT</th>
+                        <th>Tên thánh</th>
+                        <th>Họ và tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Ngày tử</th>
+                        <th>Du học</th>
+                        <th>Đang phục vụ</th>
+                        <th class="text-center">Chuyển công tác</th>
+                        <th>Chỉnh sửa</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <div class="d-flex col-md-12 justify-content-end">
-                {{ $all_tu_si->links()}}
+                    </thead>
+                    <tbody >
+                    @php $i= 0; @endphp
+                    @foreach($all_tu_si as $th)
+                        <tr >
+                            <td class="text-center"> {{ ++$i }}</td>
+                            <td>
+                                {{ $th->tenThanh->ten_thanh }}
+                            </td>
+                            <td> {{ $th->ho_va_ten }}</td>
+                            <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
+                            <td>@if($th->ngay_tu)
+                                    {{ \Carbon\Carbon::parse($th->ngay_tu)->format('d-m-Y') }}
+                                @endif
+                            </td>
+                            <td>
+                                @if($th->dang_du_hoc == 1)
+                                    <span class="badge badge-rounded badge-success">Du học</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($th->giao_xu_id)
+                                    Giáo hạt: {{ $th->giaoHat->ten_giao_hat }}
+                                    <br>
+                                    Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
+                                @else
+
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <a type="button"
+                                   href="{{ route('tu-si.editCongTac', $th)}}"
+                                   class="btn btn-sm btn-primary mb-1">
+                                    <i class="la la-pencil"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a type="button"
+                                   href="{{ route('tu-si.edit', $th)}}"
+                                   class="btn btn-sm btn-primary mb-1">
+                                    <i class="la la-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
             </div>
         </div>
+        @else
+            <div class="col-lg-12">
+            <div class="row">
+                @foreach($all_tu_si as $th)
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                        <div class="card card-profile" style="border: 1px solid gainsboro">
+                            <div class="card-header justify-content-end pb-0">
+                                <div class="dropdown">
+                                    <button class="btn btn-link" type="button" data-toggle="dropdown">
+                                        <span class="dropdown-dots fs--1"></span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right border py-0">
+                                        <div class="py-2">
+                                            <a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                                            <a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-2">
+                                <div class="text-center">
+                                    <div class="profile-photo">
+                                        <img class="rounded-circle" width="35" src="{{ asset('images/hon_nhan.png') }}" alt="">
+                                    </div>
+                                    <h5 class="mt-4 mb-1">{{ $th->tenThanh->ten_thanh . ' '. $th->ho_va_ten }}</h5>
+                                    <p class="text-muted">{{ $th->chucVu->ten_chuc_vu }}</p>
+                                    <ul class="list-group mb-3 list-group-flush">
+                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                            <span>Email</span><strong>{{ $th->email }}</strong></li>
+                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                            <span>Số điện thoại</span><strong>{{ $th->so_dien_thoai }}</strong></li>
+                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                            <span>Ngày nhận chức</span><strong>{{ \Carbon\Carbon::parse($th->ngay_nhan_chuc)->format('d-m-Y') }}</strong></li>
+                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                            <span class="mb-0">Ngày sinh</span><strong>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}  </strong></li>
+                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                            <span class="mb-0">Ngày mất</span><strong>{{ \Carbon\Carbon::parse($th->ngay_mat)->format('d-m-Y') }}</strong></li>
+                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                            <span class="mb-0">Đang phục vụ</span><strong class="text-left">
+                                                @if($th->giao_xu_id)
+                                                    Giáo hạt: {{ $th->giaoHat->ten_giao_hat }}
+                                                    <br>
+                                                    Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
+                                                @else
+
+                                                @endif</strong>
+                                        </li>
+                                    </ul>
+                                    <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+        <div class="d-flex col-md-12 justify-content-end">
+            {{ $all_tu_si->links()}}
+        </div>
     </div>
+
 </div>
 @section('scripts')
     <script>
