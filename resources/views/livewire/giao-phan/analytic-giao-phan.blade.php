@@ -71,7 +71,7 @@
                                        src="{{ asset('images/nha_tho.png') }}" alt="Giáo xứ">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng <br> giáo xứ</p>
+                                <p class="mb-1">Số lượng giáo xứ</p>
                                 <h4 class="mb-0">{{ $statistics_giao_phan->giao_xu_count }}</h4>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                        src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng hộ <br> gia đình</p>
+                                <p class="mb-1">Số lượng hộ gia đình</p>
                                 <h4 class="mb-0">{{ $analytics_bi_tich['count_sgd'] }}</h4>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                                        src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Tổng số <br> giáo dân</p>
+                                <p class="mb-1">Tổng số giáo dân</p>
                                 <h4 class="mb-0" >{{ $analytics_bi_tich['count_tv'] }}</h4>
                             </div>
                         </div>

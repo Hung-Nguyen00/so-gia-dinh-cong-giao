@@ -68,7 +68,7 @@
                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1">Hộ gia<br> đình</p>
+                                <p class="mb-1">Hộ gia đình</p>
                                 <h4 class="mb-0">{{ $statistics_giao_xu->giao_ho_count }}</h4>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                                    <img style="max-width: 50px; border-radius: 50%" src="{{ asset('images/tre_so_sinh.jpg') }}" alt="Trẻ sơ sinh">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Trẻ sơ sinh</p>
+                                <p class="mb-1">Trẻ sơ sinh (1)</p>
                                 <h4 class="mb-0">{{ $statistic_age['so_sinh'] }}</h4>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}" alt="Trẻ em">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1" style="min-width: 105px;">Nhi đồng<br>(2t - 5t) </p>
+                                <p class="mb-1" style="min-width: 105px;">Nhi đồng (2t - 5t) </p>
                                 <h4 class="mb-0">{{ $statistic_age['nhi_dong'] }}</h4>
                             </div>
                         </div>
@@ -158,7 +158,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Thiếu nhi (6t - 17t)</p>
+                                <p class="mb-1 w-auto">Thiếu nhi (6t - 17t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/thanh_nien.jpg') }}" alt="Thanh niên">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Thanh niên (18t - 39t)</p>
+                                <p class="mb-1 w-auto">Thanh niên (18t - 39t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/trung_nien.png') }}" alt="Trung niên">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Trung niên (40t - 64t)</p>
+                                <p class="mb-1 w-auto">Trung niên (40t - 64t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['trung_nien']  }}</h4>
                             </div>
                         </div>

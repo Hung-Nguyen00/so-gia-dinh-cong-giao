@@ -70,7 +70,7 @@
                                            src="{{ asset('images/linhmuc.jpg') }}" alt="Linh mục">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng <br> linh mục</p>
+                                <p class="mb-1">Số lượng linh mục</p>
                                 <h4 class="mb-0">{{ $statistics_giao_xu->tu_si_count }}</h4>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                                        src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Tổng số <br> giáo dân</p>
+                                <p class="mb-1">Tổng số giáo dân</p>
                                 <h4 class="mb-0" >{{ $statistics_giao_xu->giao_dan_count }}</h4>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}" alt="Trẻ em">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1" style="min-width: 105px;">Nhi đồng<br>(2t - 5t) </p>
+                                <p class="mb-1" style="min-width: 105px;">Nhi đồng (2t - 5t) </p>
                                 <h4 class="mb-0">{{ $statistic_age['nhi_dong'] }}</h4>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Thiếu nhi <br> (6t - 17t)</p>
+                                <p class="mb-1">Thiếu nhi (6t - 17t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>
@@ -194,7 +194,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/thanh_nien.jpg') }}" alt="Thanh niên">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Thanh niên <br> (18t - 39t)</p>
+                                <p class="mb-1">Thanh niên (18t - 39t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>
