@@ -149,7 +149,7 @@
                                    <img style="max-width: 50px; border-radius: 50%" src="{{ asset('images/tre_so_sinh.jpg') }}" alt="Trẻ sơ sinh">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Trẻ sơ sinh</p>
+                                <p class="mb-1">Trẻ sơ sinh (1)</p>
                                 <h4 class="mb-0">{{ $statistic_age['so_sinh'] }}</h4>
                             </div>
                         </div>
