@@ -26,6 +26,9 @@ class CrudTuSi extends Component
         $active = false,
         $chuc_vu_id,
         $date_of_birth,
+        $start_date,
+        $end_date,
+        $sinh_hoac_tu,
         $giao_phan_id,
         $nha_dong_id,
         $paginate_number = 20;
@@ -33,7 +36,7 @@ class CrudTuSi extends Component
     // can use $updatesQueryString to encode url
     protected $queryString  = ['ho_va_ten',
         'ten_thanh_id', 'giao_phan_id', 'giao_hat_id','date_of_birth', 'nha_dong_id','active',
-        'giao_xu_id', 'chuc_vu_id', 'paginate_number' ];
+        'giao_xu_id', 'chuc_vu_id', 'paginate_number', 'start_date', 'end_date', 'sinh_hoac_tu'];
 
 
     public function mount()
@@ -45,7 +48,10 @@ class CrudTuSi extends Component
         $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
         $this->chuc_vu_id = request()->query('chuc_vu_id', $this->chuc_vu_id);
         $this->date_of_birth =  request()->query('date_of_birth', $this->date_of_birth);
+        $this->start_date =  request()->query('start_date', $this->start_date);
+        $this->end_date =  request()->query('end_date', $this->end_date);
         $this->nha_dong_id =  request()->query('nha_dong_id', $this->nha_dong_id);
+        $this->sinh_hoac_tu =  request()->query('sinh_hoac_tu', $this->sinh_hoac_tu);
         $this->active =  request()->query('active', $this->active);
         $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
         if (!$this->paginate_number){
@@ -82,6 +88,12 @@ class CrudTuSi extends Component
         }
         if ($this->nha_dong_id){
             $tu_si->where('nha_dong_id', $this->nha_dong_id);
+        }
+        if ($this->sinh_hoac_tu == 1 && $this->start_date && $this->end_date){
+            $tu_si->whereBetween('ngay_sinh', [$this->start_date, $this->end_date]);
+        }
+        if($this->sinh_hoac_tu == 2 && $this->start_date && $this->end_date){
+            $tu_si->whereBetween('ngay_mat', [$this->start_date, $this->end_date]);
         }
         $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
         $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();

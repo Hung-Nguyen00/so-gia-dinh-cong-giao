@@ -77,7 +77,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-lg-2 pt-2 col-md-2 col-sm-2">
+                <div class="col-lg-3 mt-2 col-md-3 col-sm-3" style="padding-top: 2px">
                     <label class="col-form-label w-100 d-inline-block">Hiển thị</label>
                     <select class="form-control selectpicker w-auto select" wire:model="paginate_number">
                         <option value="5">5</option>
@@ -86,6 +86,22 @@
                         <option value="50">50</option>
                         <option value="100">100</option>
                     </select>
+                </div>
+                <div class="col-md-3 col-lg-3 mt-3">
+                    <label>Sinh hoặc tử</label>
+                    <select class="form-control select" wire:model="sinh_hoac_tu">
+                        <option value="null" selected>Hiển thị tất cả</option>
+                        <option value="1">Sinh</option>
+                        <option value="2">Tử</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mt-3">
+                    <label>Ngày bắt đầu</label>
+                    <input type="date" wire:model="start_date" class="form-control">
+                </div>
+                <div class="col-md-3 mt-3">
+                    <label>Ngày kết thúc</label>
+                    <input type="date"  wire:model="end_date"  class="form-control">
                 </div>
             </div>
         @if(!$active)
@@ -194,7 +210,11 @@
                                         <li class="list-group-item px-0 d-flex justify-content-between">
                                             <span class="mb-0">Ngày sinh</span><strong>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}  </strong></li>
                                         <li class="list-group-item px-0 d-flex justify-content-between">
-                                            <span class="mb-0">Ngày mất</span><strong>{{ \Carbon\Carbon::parse($th->ngay_mat)->format('d-m-Y') }}</strong></li>
+                                            <span class="mb-0">Ngày mất</span><strong>
+                                                @if($th->ngay_sinh)
+                                                    {{ \Carbon\Carbon::parse($th->ngay_mat)->format('d-m-Y') }}
+                                                @endif
+                                            </strong></li>
                                         <li class="list-group-item px-0 d-flex justify-content-between">
                                             <span class="mb-0">Đang phục vụ</span><strong class="text-left">
                                                 @if($th->giao_xu_id)
