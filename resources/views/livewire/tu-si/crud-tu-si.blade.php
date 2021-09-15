@@ -167,8 +167,8 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right border py-0">
                                         <div class="py-2">
-                                            <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                            <a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
+                                            <a class="dropdown-item font-weight-bold" href="{{ route('tu-si.edit', $th)}}">Edit</a>
+                                            <a class="dropdown-item font-weight-bold text-danger" href="javascript:void(0);">Delete</a>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,11 @@
                             <div class="card-body pt-2">
                                 <div class="text-center">
                                     <div class="profile-photo">
-                                        <img class="rounded-circle" width="35" src="{{ asset('images/hon_nhan.png') }}" alt="">
+                                        @if($th->gioi_tinh == 1)
+                                        <img class="rounded-circle" width="100" src="{{ asset('images/tusi.jpg') }}" alt="">
+                                            @else
+                                            <img class="rounded-circle" width="100" src="{{ asset('images/tusiNu.png') }}" alt="">
+                                        @endif
                                     </div>
                                     <h5 class="mt-4 mb-1">{{ $th->tenThanh->ten_thanh . ' '. $th->ho_va_ten }}</h5>
                                     <p class="text-muted">{{ $th->chucVu->ten_chuc_vu }}</p>
@@ -202,7 +206,6 @@
                                                 @endif</strong>
                                         </li>
                                     </ul>
-                                    <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="">Xem chi tiết</a>
                                 </div>
                             </div>
                         </div>
