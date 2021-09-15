@@ -287,7 +287,8 @@
         var dataTuSi = <?php echo $analytic_tu_si; ?>;
         var piechart = document.getElementById('pieChart').getContext('2d');
         var pieChart = new Chart(piechart, {
-            type: 'pie',
+            plugins: [ChartDataLabels],
+            type: 'doughnut',
             data: {
                 labels: Object.keys(dataTuSi),
                 datasets: [{
@@ -302,6 +303,33 @@
                     hoverOffset: 4
                 }],
             },
+            options: {
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: (value, dnct1) => {
+                            let sum = 0;
+                            let dataArr = dnct1.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value *100 / sum).toFixed(2);
+                            if (percentage > 0){
+                                return percentage+'%';
+                            }else{
+                                return '';
+                            }
+                        },
+                        color: 'black',
+                        font: {
+                            size: 15,
+                            weight: 'bold'
+                        },
+                    }
+                }
+            }
         });
         var analytics = <?php echo $analytic_gender; ?>;
         myChart = new Chart(ctx, {

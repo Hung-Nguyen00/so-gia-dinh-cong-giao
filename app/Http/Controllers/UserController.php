@@ -8,6 +8,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -152,5 +153,30 @@ class UserController extends Controller
             'so_dien_thoai.min' => 'Số điện thoại không được phép nhỏ hơn 10 chữ số'
         ]);
         return $validateData;
+    }
+
+    public function changePassword(Request $request){
+        $request->validate([
+            'password' => 'required|string|confirmed',
+            'old_password' => 'required|string',
+            'password_confirmation' => 'required'
+        ], [
+            'password.required' => 'Mật khẩu mới không được phép trống',
+            'password_confirmation.required' => 'Mật khẩu nhập lại không được phép trống',
+            'password.confirmed' => 'Mật khẩu không trùng khớp',
+            'old_password.required' => 'Mật khẩu cũ không được phép trống',
+        ]);
+        $password = $request->old_password;
+        if(auth()->attempt(['password'=>$password, 'email' => Auth::user()->email]))
+        {
+            \Illuminate\Support\Facades\Auth::user()->update([
+                'password' => Hash::make($password)
+            ]);
+            Toastr::success('Cập nhập thành công', 'Thành công');
+            return redirect()->back();
+        }else{
+            Toastr::error('Mật khẩu cũ không đúng', 'Lỗi');
+            return redirect()->back();
+        }
     }
 }

@@ -10,6 +10,9 @@ use Auth;
 use DB;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Validation\ValidationException;
 use Session;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -74,6 +77,8 @@ class LoginController extends Controller
             return back();
         }
     }
+
+
 
     public function logout()
     {

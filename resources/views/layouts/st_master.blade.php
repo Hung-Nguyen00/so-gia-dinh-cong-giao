@@ -83,7 +83,9 @@
     @livewireScripts
     <!-- Required vendors -->
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
+    {{--chart--}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
     <script src="{{ URL::to('assets/vendor/toastr/js/toastr.min.js') }}"></script>
 	<script src="{{ URL::to('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>

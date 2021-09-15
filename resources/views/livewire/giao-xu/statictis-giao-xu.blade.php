@@ -351,7 +351,8 @@
         var dataBiTich = <?php echo $analytics_bi_tich; ?>;
         var piechart = document.getElementById('pieChart').getContext('2d');
         var pieChart = new Chart(piechart, {
-            type: 'pie',
+            type: 'doughnut',
+            plugins: [ChartDataLabels],
             data: {
                 labels: Object.keys(dataBiTich),
                 datasets: [{
@@ -366,6 +367,33 @@
                     hoverOffset: 4
                 }],
             },
+            options: {
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: (value, dnct1) => {
+                            let sum = 0;
+                            let dataArr = dnct1.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value *100 / sum).toFixed(2);
+                            if (percentage > 0){
+                                return percentage+'%';
+                            }else{
+                                return '';
+                            }
+                        },
+                        color: 'white',
+                        font: {
+                            size: 15,
+                            weight: 'bold'
+                        },
+                    }
+                }
+            }
         });
         var analytics = <?php echo $analytic_gender; ?>;
         var ctx = document.getElementById('myChart').getContext('2d');

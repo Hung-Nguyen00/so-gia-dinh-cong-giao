@@ -98,7 +98,7 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('file-export-so-gia-dinh', [SoGiaDinhController::class, 'fileExport'])->name('sgdcg-file-export');
     // print PDF SogiaDinhCongGiao
     Route::get('so-gia-dinh/chi-tiet/download/{id}', [SoGiaDinhController::class, 'downloadPDF'])->name('so-gia-dinh.downloadPDF');
-
+    Route::patch('doi-mat-khau', [UserController::class, 'changePassword'])->name('changePassword');
     Route::resources([
         'tai-khoan' => UserController::class,
         'ten-thanh' => TenThanhController::class,
