@@ -9,14 +9,16 @@ use App\Models\GiaoXu;
 use App\Models\NhaDong;
 use App\Models\TenThanh;
 use App\Models\TuSi;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class CrudTuSi extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
     protected $paginationTheme = 'bootstrap';
 
     public  $giao_hat_id,
@@ -25,11 +27,15 @@ class CrudTuSi extends Component
         $ho_va_ten,
         $active = false,
         $chuc_vu_id,
+        $avatar,
         $date_of_birth,
         $start_date,
         $end_date,
+        $ten_thanh_tu_si,
+        $ten_tu_si,
         $sinh_hoac_tu,
         $giao_phan_id,
+        $tu_si_id,
         $nha_dong_id,
         $paginate_number = 20;
 
@@ -140,5 +146,48 @@ class CrudTuSi extends Component
     }
     public function changeView(){
        $this->active = !$this->active;
+    }
+
+    public function edit($id){
+        $tu_si = TuSi::with('tenThanh')->whereId($id)
+            ->select('id', 'ten_thanh_id', 'ho_va_ten')->first();
+        $this->tu_si_id = $id;
+        $this->ten_thanh_tu_si  = $tu_si->tenThanh->ten_thanh;
+        $this->ten_tu_si = $tu_si->ho_va_ten;
+    }
+
+    public function changeAvatar(){
+        $this->validate([
+            'avatar' => 'image|max:5120|required',
+        ], [
+                'avatar.max' => 'Kích thước hình ảnh không được quá lớn hơn 5 Mb',
+                'avatar.image' => 'Ảnh đại diện phải mà file hình ảnh',
+                'avatar.required' => 'Ảnh đại diện không được phép trống',
+        ]
+        );
+        $tu_si = TuSi::find($this->tu_si_id);
+        if ($tu_si){
+            $avatar = $this->avatar->store('images', 'public');
+            $tu_si->update([
+                'avatar' => $avatar,
+            ]);
+            $this->dispatchBrowserEvent('alert',
+                ['type' => 'success',  'message' => 'Cập nhập thành công']);
+        }else{
+            $this->dispatchBrowserEvent('alert',
+                ['type' => 'error',  'message' => 'Không tìm thấy tu sĩ']);
+        }
+
+    }
+    public function delete(){
+        $tu_si = TuSi::find($this->tu_si_id);
+        if ($tu_si){
+            $tu_si->delete();
+            $this->dispatchBrowserEvent('alert',
+                ['type' => 'success',  'message' => 'Xóa thành công']);
+        }else{
+            $this->dispatchBrowserEvent('alert',
+                ['type' => 'error',  'message' => 'Không tìm thấy']);
+        }
     }
 }

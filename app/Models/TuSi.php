@@ -24,6 +24,7 @@ class TuSi extends Model
         'dia_chi_hien_tai',
         'so_dien_thoai',
         'ngay_nhan_chuc',
+        'avatar',
         'noi_nhan_chuc',
         'dang_du_hoc',
         'nguoi_khoi_tao',

@@ -1,4 +1,6 @@
 <div>
+    @include('tu_si.upload_avatar')
+    @include('tu_si.delete_tu_si')
     <div style="padding-left: 20px">
         @if($active)
             <button class="btn btn-sm btn-outline-danger font-weight-bold" wire:click.prevent="changeView">
@@ -183,8 +185,13 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right border py-0">
                                         <div class="py-2">
-                                            <a class="dropdown-item font-weight-bold" href="{{ route('tu-si.edit', $th)}}">Edit</a>
-                                            <a class="dropdown-item font-weight-bold text-danger" href="javascript:void(0);">Delete</a>
+                                            <a class="dropdown-item font-weight-bold" href="{{ route('tu-si.edit', $th)}}">Chỉnh sửa</a>
+                                            <button class="dropdown-item font-weight-bold"
+                                                    wire:click="edit({{ $th->id }})"
+                                                    data-toggle="modal" data-target="#uploadAvatar" >Đổi ảnh đại diện</button>
+                                            <button class="dropdown-item font-weight-bold text-danger"
+                                                    wire:click="edit({{ $th->id }})"
+                                                    data-toggle="modal" data-target="#deleteTuSi">Xóa</button>
                                         </div>
                                     </div>
                                 </div>
@@ -192,10 +199,14 @@
                             <div class="card-body pt-2">
                                 <div class="text-center">
                                     <div class="profile-photo">
-                                        @if($th->gioi_tinh == 1)
-                                        <img class="rounded-circle" width="100" src="{{ asset('images/tusi.jpg') }}" alt="">
+                                        @if($th->avatar)
+                                            <img class="rounded-circle"  style="width: 100px; height: 100px" src="{{ asset($th->avatar) }}" alt="{{ $th->ho_va_ten }}">
                                             @else
-                                            <img class="rounded-circle" width="100" src="{{ asset('images/tusiNu.png') }}" alt="">
+                                            @if($th->gioi_tinh == 1)
+                                                <img class="rounded-circle" style="width: 100px; height: 100px" src="{{ asset('images/tusi.jpg') }}" alt="{{ $th->ho_va_ten }}">
+                                            @else
+                                                <img class="rounded-circle" style="width: 100px; height: 100px" src="{{ asset('images/tusiNu.png') }}" alt="{{ $th->ho_va_ten }}">
+                                            @endif
                                         @endif
                                     </div>
                                     <h5 class="mt-4 mb-1">{{ $th->tenThanh->ten_thanh . ' '. $th->ho_va_ten }}</h5>
@@ -244,6 +255,15 @@
     <script>
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
+        });
+    </script>
+    <script>
+        window.addEventListener('alert', event => {
+            toastr[event.detail.type](event.detail.message,
+                event.detail.title ?? ''), toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+            }
         });
     </script>
 @endsection
