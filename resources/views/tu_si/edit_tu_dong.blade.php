@@ -200,14 +200,12 @@
             var url = $(location).attr("origin");
             $('#giao_phan_id').change(function () {
                 var id = $(this).val();
-                console.log(id);
                 $('#giao_hat').find('option').not(':first').remove();
                 $.ajax({
                     url: url+'/tu-si/giao-hat/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
-                        console.log(response.data);
                         var len = 0;
                         if (response.data != null) {
                             len = response.data.length;
@@ -226,14 +224,12 @@
             });
             $('#giao_hat').change(function () {
                 var id = $(this).val();
-                console.log(id);
                 $('#giao_xu').find('option').not(':first').remove();
                 $.ajax({
                     url: url+'/tu-si/giao-xu/'+id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
-                        console.log(response.data);
                         var len = 0;
                         if (response.data != null) {
                             len = response.data.length;
@@ -242,7 +238,12 @@
                             for (var i = 0; i<len; i++) {
                                 var id = response.data[i].id;
                                 var name = response.data[i].ten_giao_xu;
-                                var option = "<option value='"+id+"'>"+name+"</option>";
+                                var option = '';
+                                if (response.data[i].giao_xu_hoac_giao_ho !== 0)
+                                    option = "<option value='"+id+"'>Giáo họ "+name+"</option>";
+                                else {
+                                    option = "<option value='"+id+"'>Giáo xứ "+name+"</option>";
+                                }
                                 $("#giao_xu").append(option);
                             }
                         }
@@ -251,6 +252,58 @@
                 })
             });
         });
-
+        $(window).on('load', function() {
+            var giao_phan_id = $('#giao_phan_id').val();
+            $('#giao_hat').find('option').not(':first').remove();
+            $.ajax({
+                url: url+'/tu-si/giao-hat/'+giao_phan_id,
+                type:'get',
+                dataType:'json',
+                success:function (response) {
+                    var len = 0;
+                    if (response.data != null) {
+                        len = response.data.length;
+                    }
+                    if (len>0) {
+                        for (var i = 0; i<len; i++) {
+                            var id = response.data[i].id;
+                            var name = response.data[i].ten_giao_hat;
+                            var option = "<option value='"+id+"'>"+name+"</option>";
+                            $("#giao_hat").append(option);
+                        }
+                    }
+                    $('#giao_hat').selectpicker('refresh');
+                }
+            })
+            var giao_hat_id = $('#giao_hat').val();
+            if (giao_hat_id){
+                $('#giao_xu').find('option').not(':first').remove();
+                $.ajax({
+                    url: url+'/tu-si/giao-xu/'+giao_hat_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (response) {
+                        var len = 0;
+                        if (response.data != null) {
+                            len = response.data.length;
+                        }
+                        if (len>0) {
+                            for (var i = 0; i<len; i++) {
+                                var id = response.data[i].id;
+                                var name = response.data[i].ten_giao_xu;
+                                var option = '';
+                                if (response.data[i].giao_xu_hoac_giao_ho !== 0)
+                                    option = "<option value='"+id+"'>Giáo họ "+name+"</option>";
+                                else {
+                                    option = "<option value='"+id+"'>Giáo xứ "+name+"</option>";
+                                }
+                                $("#giao_xu").append(option);
+                            }
+                        }
+                        $('#giao_xu').selectpicker('refresh');
+                    }
+                })
+            }
+        });
     </script>
 @endsection
