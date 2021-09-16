@@ -82,7 +82,7 @@
                                                                 <option selected value=""> Chọn tên chức vị</option>
                                                                 <option value="T" {{ old('la_tong_giam_muc') == 'T' ? 'selected' : '' }}>Tổng giám mục</option>
                                                                 <option value="P" {{ old('la_tong_giam_muc') == 'P' ? 'selected' : '' }}>Giám mục phụ tá</option>
-                                                                <option value="Q" {{ old('la_tong_giam_muc') == 'Q' ? 'selected' : '' }}>Linh mục quản hạt</option>
+                                                                <option value="Q" {{ old('la_tong_giam_muc') == 'Q' ? 'selected' : '' }}>Cha quản hạt</option>
                                                             </select>
                                                         </div>
                                                     </div>

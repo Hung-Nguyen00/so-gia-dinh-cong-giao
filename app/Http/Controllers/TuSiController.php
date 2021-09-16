@@ -37,8 +37,14 @@ class TuSiController extends Controller
      */
     public function index()
     {
-        $ten_giao_phan = GiaoPhan::find(Auth::user()->giao_phan_id)->ten_giao_phan;
-        return view('tu_si.all', compact('ten_giao_phan'));
+        if (Auth::user()->quanTri->ten_quyen == 'Giáo xứ'){
+            Toastr::warning('Bạn không có quyền truy cập trang này', 'Cảnh báo');
+           return redirect()->route('home');
+        }else{
+            $ten_giao_phan = GiaoPhan::find(Auth::user()->giao_phan_id)->ten_giao_phan;
+            return view('tu_si.all', compact('ten_giao_phan'));
+        }
+
     }
 
     public function fileImport(Request $request){

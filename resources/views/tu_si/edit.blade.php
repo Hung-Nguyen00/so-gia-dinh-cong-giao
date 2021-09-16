@@ -93,7 +93,7 @@
                                                                 <option value="P" {{ old('la_tong_giam_muc') == 'P'|| $tu_si->la_tong_giam_muc == 'P'  ? 'selected' : '' }}>
                                                                     Giám mục phụ tá</option>
                                                                 <option value="Q" {{ old('la_tong_giam_muc') == 'Q'|| $tu_si->la_tong_giam_muc == 'Q'  ? 'selected' : '' }}>
-                                                                    Linh mục quản hạt</option>
+                                                                    Cha quản hạt</option>
                                                             </select>
                                                         </div>
                                                     </div>

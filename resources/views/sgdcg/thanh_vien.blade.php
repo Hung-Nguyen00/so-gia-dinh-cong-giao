@@ -6,16 +6,16 @@
         <!-- row -->
         <div class="container-fluid">
             <div class="row page-titles mx-0">
-                <div class="col-sm-6 p-md-0">
+                <div class="col-sm-4 p-md-0">
                     <div class="welcome-text">
                         <h4>Thông tin mã sổ <strong>{{ $soGiaDinh->ma_so }}</strong></h4>
                     </div>
                 </div>
-                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <div class="col-sm-8 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Quản lý giáo xứ</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $soGiaDinh)}}">Sổ gia đình công giáo</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $soGiaDinh)}}">Thông tin sổ gia đình</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Thành viên</a></li>
                     </ol>
                 </div>

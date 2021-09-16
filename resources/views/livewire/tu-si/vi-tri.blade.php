@@ -7,15 +7,15 @@
         <h4 class="card-title">Danh sách vị trí phục vụ giáo xứ </h4>
         <div>
             <a href="{{ route('sgdcg-file-export', ['name' => 'ten_thanh'])}}"
-               class="btn btn-info">Excel mẫu
+               class="btn btn-info mt-1">Excel mẫu
             </a>
             <button
                     data-toggle="modal" data-target="#importModal"
-                    class="btn btn-info">Import dữ liệu
+                    class="btn btn-info mt-1">Import dữ liệu
             </button>
             <button
                     data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
-                    class="btn btn-primary">Thêm mới vị trí
+                    class="btn btn-primary mt-1">Thêm mới vị trí
             </button>
         </div>
     </div>

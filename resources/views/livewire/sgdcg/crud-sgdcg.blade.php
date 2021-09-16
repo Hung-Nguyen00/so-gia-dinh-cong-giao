@@ -54,7 +54,7 @@
                         <option value="100">100</option>
                     </select>
                 </div>
-                <div class="form-check col-md-2 d-flex align-items-start pt-2">
+                <div class="form-check col-md-2 d-flex align-items-start ml-3 pt-2">
                     <input class="form-check-input" type="checkbox" wire:model="chuyen_xu">
                     <label class="form-check-label">
                         Đã chuyển xứ

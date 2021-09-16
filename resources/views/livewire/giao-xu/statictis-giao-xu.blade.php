@@ -70,7 +70,7 @@
                                            src="{{ asset('images/linhmuc.jpg') }}" alt="Linh mục">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Số lượng linh mục</p>
+                                <p class="mb-1  width-card">Số lượng linh mục</p>
                                 <h4 class="mb-0">{{ $statistics_giao_xu->tu_si_count }}</h4>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Nhập xứ</p>
-                                <h4 class="mb-0">0</h4>
+                                <h4 class="mb-0">{{ $statistic_nhap_xu }}</h4>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                        src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Tổng số giáo dân</p>
+                                <p class="mb-1 width-card">Tổng số giáo dân</p>
                                 <h4 class="mb-0" >{{ $statistics_giao_xu->giao_dan_count }}</h4>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}" alt="Trẻ em">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1" style="min-width: 105px;">Nhi đồng (2t - 5t) </p>
+                                <p class="mb-1 width-card" >Nhi đồng (2t - 5t) </p>
                                 <h4 class="mb-0">{{ $statistic_age['nhi_dong'] }}</h4>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Thiếu nhi (6t - 17t)</p>
+                                <p class="mb-1 width-card">Thiếu nhi (6t - 17t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>
@@ -270,29 +270,34 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table display" style="min-width: 500px;">
+                            <table class="table display" style="min-width: 650px;">
                                 <thead>
                                 <tr>
                                     <th width="25">STT</th>
-                                    <th width="50">Tên giáo họ</th>
+                                    <th>Tên giáo họ</th>
+                                    <th>Linh mục</th>
                                     <th width="100">Địa chỉ</th>
-                                    <th width="50">Năm thành lập</th>
+                                    <th>Năm thành lập</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php $i = 0; @endphp
-                                @if($statistics_giao_xu->giaoHo->count() > 0)
-                                    @foreach($statistics_giao_xu->giaoHo as $th)
+                                    @foreach($all_giao_ho as $th)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $th->ten_giao_xu }}</td>
-                                            <td>{{ $th->dia_chi }}</td>
+                                            <td>@if($th->tuSi->count() > 0)
+                                                    @foreach($th->tuSi as $t)
+                                                        {{ $t->tenThanh->ten_thanh .' '. $t->ho_va_ten }}
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td class="text-break">{{ $th->dia_chi }}</td>
                                             <td class="text-center">
                                                 {{ \Carbon\Carbon::parse($th->ngay_thanh_lap)->format('Y')}}
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -311,7 +316,9 @@
                                 <tr>
                                     <td>Linh mục:</td>
                                     <td class="font-medium  text-break text-dark-medium">
+                                        @if($linh_muc_chanh_xu)
                                         {{ $linh_muc_chanh_xu->tenThanh->ten_thanh }} {{ $linh_muc_chanh_xu->ho_va_ten }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>

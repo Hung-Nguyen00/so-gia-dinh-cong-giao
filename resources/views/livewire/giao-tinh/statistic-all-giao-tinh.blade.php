@@ -4,15 +4,12 @@
             <div class="col-sm-8 p-md-0">
                 <div class="welcome-text">
                     <h4>Thống kê toàn giáo phận</h4>
-                    <div class="d-flex flex-wrap justify-content-start pt-2 pl-0">
-                        <div class="col-md-3 form-group mr-3">
+                    <div class="d-flex col-sm-12 col-md-12 flex-wrap justify-content-start pt-2 pl-0">
+                        <div class="col-md-4 col-sm-3 col-xs-3 form-group" style="max-width: 50%;">
                             <label>Ngày bắt đầu</label>
                             <input type="date" wire:model="start_date" class="form-control w-auto">
                         </div>
-                        <div class="text-center d-flex align-items-end justify-content-center">
-                            <p class="font-weight-bold" style="font-size: 20px"> - </p>
-                        </div>
-                        <div class="col-md-3 form-group ml-2">
+                        <div class="col-md-4 col-xs-3 col-sm-3 form-group" style="max-width: 50%;">
                             <label>Ngày kết thúc</label>
                             <input type="date" class="form-control w-auto" wire:model="end_date">
                         </div>
@@ -37,7 +34,7 @@
                                          src="{{ asset('images/giao_phan.jpg') }}" alt="Giáo phận">
                                 </span>
                             <div class="text-white">
-                                <p class="mb-1">Tổng số giáo phận</p>
+                                <p class="mb-1 width-card">Tổng số giáo phận</p>
                             </div>
                         </div>
                         <div class="text-center">
@@ -219,7 +216,7 @@
                     <div class="card-body">
                         <div class="col-md-12 d-flex align-items-center justify-content-between p-0" style="margin-top: -10px">
                             <div>
-                                <label for="">Hiển thị</label>
+                                <label for="" class="ml-2">Hiển thị</label>
                                 <select class="ml-2 form-control w-auto select" wire:model="paginate_number">
                                     <option value="5">5</option>
                                     <option value="10">10</option>

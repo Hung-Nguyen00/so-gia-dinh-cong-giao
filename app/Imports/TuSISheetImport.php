@@ -35,6 +35,7 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach($rows as $row){
+            $la_tong_giam_muc = '';
             $chuc_vu = $this->chuc_vu->where('ten_chuc_vu', trim($row['ten_chuc_vu']))->first();
             $vi_tri = $this->vi_tri->where('ten_vi_tri', trim($row['ten_vi_tri_phuc_vu']))->first();
             $giao_phan = $this->giao_phan->where('ten_giao_phan', trim($row['ten_giao_phan']))->first();
@@ -42,9 +43,23 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
             $giao_xu = $this->giao_xu->where('ten_giao_xu', trim($row['ten_giao_xu']))->first();
             $ten_thanh = $this->ten_thanh->where('ten_thanh', trim($row['ten_thanh']))->first();
             $ten_dong = $this->ten_dong->where('ten_nha_dong', trim($row['ten_dong_neu_co']))->first();
+
+            if (trim($row['chuc_vi']) == 'Tổng giám mục')
+            {
+                $la_tong_giam_muc = 'T';
+            }
+            if (trim($row['chuc_vi']) == 'Giám mục phụ tá')
+            {
+                $la_tong_giam_muc = 'P';
+            }
+            if (trim($row['chuc_vi']) == 'Cha quản hạt')
+            {
+                $la_tong_giam_muc = 'Q';
+            }
             TuSi::create([
                 'ho_va_ten' => trim($row['ho_va_ten']),
                 'email' => $row['email'],
+                'la_tong_giam_muc' => $la_tong_giam_muc,
                 'gioi_tinh' => $row['gioi_tinh'] == 'Nam' ? 1 : 0,
                 'ngay_sinh' => $row['ngay_sinh'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_sinh']) : null,
                 'ngay_mat' => $row['ngay_mat'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_mat']) : null,

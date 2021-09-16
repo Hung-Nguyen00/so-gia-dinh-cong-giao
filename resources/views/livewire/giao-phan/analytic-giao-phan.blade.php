@@ -26,11 +26,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-3 col-sm-6  form-group">
                     <label>Ngày bắt đầu</label>
                     <input type="date" wire:model="start_date" class="form-control w-100">
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-3  col-sm-6  form-group">
                     <label>Ngày kết thúc</label>
                     <input type="date" class="form-control w-100" wire:model="end_date">
                 </div>
@@ -103,7 +103,7 @@
                                        src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1">Tổng số giáo dân</p>
+                                <p class="mb-1 width-card">Tổng số giáo dân</p>
                                 <h4 class="mb-0" >{{ $analytics_bi_tich['count_tv'] }}</h4>
                             </div>
                         </div>
@@ -291,7 +291,9 @@
                                 <tr>
                                     <td>Giám mục:</td>
                                     <td class="font-medium  text-break text-dark-medium">
-                                        {{ $giam_muc->tenThanh->ten_thanh }} {{ $giam_muc->ho_va_ten }}
+                                        @if($giam_muc)
+                                            {{ $giam_muc->tenThanh->ten_thanh }} {{ $giam_muc->ho_va_ten }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>

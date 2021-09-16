@@ -4,6 +4,7 @@ namespace App\Http\Livewire\GiaoHo;
 
 use App\Models\GiaoXu;
 use App\Models\LichSuSgdcg;
+use App\Models\SoGiaDinh;
 use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -34,9 +35,6 @@ class StatisticGiaoHo extends Component
         $this->start_date = request()->query('start_date', $this->start_date);
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->sinh_tu_follow_year = request()->query('sinh_tu_follow_year', $this->sinh_tu_follow_year);
-        $this->linh_muc_chanh_xu = TuSi::with('tenThanh')
-            ->where('giao_xu_id',$this->giao_xu_id)
-            ->first();
         if (!$this->start_date){
             $this->start_date = Carbon::now()->subYear(1)->format('Y-m-d');
         }
@@ -60,6 +58,10 @@ class StatisticGiaoHo extends Component
             $start_end_year[$key] = $start++;
             $key++;
         }
+        // get linh muc
+        $this->linh_muc_chanh_xu = TuSi::with('tenThanh')
+            ->where('giao_xu_id',$this->giao_xu_id)
+            ->first();
         $statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
             ->where('id', $this->giao_xu_id)
             ->first();
@@ -71,7 +73,20 @@ class StatisticGiaoHo extends Component
         // statistic age
         $statistic_age = $this->statisticAge();
         // statistic Chuyen Xu
-        $statistic_chuyen_xu = LichSuSgdcg::where('giao_xu_id', $this->giao_xu_id)->count();
+        $statistic_chuyen_xu = LichSuSgdcg::where('giao_xu_id', $this->giao_xu_id)
+            ->whereBetween('created_at', [$this->start_date, $this->end_date])
+            ->count();
+
+        // count SGDCG by LichSuChuyenXU. It's mean this sgdcg come from other GiaoXu
+        // and go to this GiaoXu(giao_xu_id)
+        $count_from_other_giao_xu = SoGiaDinh::where('giao_xu_id', $this->giao_xu_id)
+            ->whereHas('lichSuChuyenXu')
+            ->count();
+        // count sgdcg when User create new sgdcg and ngay_tao_so is between start_date and end_date
+        $count_create_new_sgdcg = SoGiaDinh::where('giao_xu_id', $this->giao_xu_id)
+            ->whereBetween('ngay_tao_so', [$this->start_date, $this->end_date])
+            ->count();
+        $statistic_nhap_xu = $count_from_other_giao_xu + $count_create_new_sgdcg;
 
         // draw chart
         if (!$this->sinh_tu_follow_year){
@@ -83,7 +98,13 @@ class StatisticGiaoHo extends Component
         $this->emit('updatePieChart', json_encode($analytics_bi_tich));
         // search GiaoHat By Id
         return view('livewire.giao-ho.statistic-giao-ho',
-            compact('statistics_giao_xu', 'analytics_bi_tich', 'statistic_chuyen_xu', 'statistic_age', 'start_end_year', 'all_giao_xu'))
+            compact('statistics_giao_xu',
+                'analytics_bi_tich',
+                'statistic_chuyen_xu',
+                'statistic_age',
+                'statistic_nhap_xu',
+                'start_end_year',
+                'all_giao_xu'))
             ->with(['giam_muc' => $this->linh_muc_chanh_xu,
                 'analytic_gender' => json_encode($analytic_gender),
                 'analytics_bi_tich' => json_encode($analytics_bi_tich)]);

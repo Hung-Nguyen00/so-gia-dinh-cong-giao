@@ -39,14 +39,6 @@ class AnalyticGiaoPhan extends Component
         if (!$this->giao_phan_id){
             $this->giao_phan_id = GiaoPhan::find(Auth::user()->giao_xu_id)->id;
         }
-        $this->giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
-            $q->where('ten_chuc_vu', 'Giám mục');
-        })->where('giao_phan_id',$this->giao_phan_id)
-            ->first();
-        if (!$this->giam_muc){
-            Toastr::warning('Không có dữ liệu', 'Cảnh báo');
-            return redirect()->route('home');
-        }
         if (!$this->start_date){
             $this->start_date = Carbon::now()->subYear(1)->format('Y-m-d');
         }
@@ -59,7 +51,11 @@ class AnalyticGiaoPhan extends Component
     public function render()
     {
         $this->dispatchBrowserEvent('contentChanged');
-
+        $this->giam_muc = TuSi::with('tenThanh')->whereHas('chucVu', function ($q){
+            $q->where('ten_chuc_vu', 'Giám mục');
+        })->where('la_tong_giam_muc', 'T')
+            ->where('giao_phan_id',$this->giao_phan_id)
+            ->first();
         // get Year in from start date - end Date
         $start = (int)Carbon::parse($this->start_date)->format('Y');
         $end = (int)Carbon::parse($this->end_date)->format('Y');

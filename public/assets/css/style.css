@@ -16,7 +16,7 @@
         _mixin
         _variable
 
-    2. bootstrap 
+    2. bootstrap
         -Here goes all official bootstrap scss files
 
     3. Global/Base
@@ -665,14 +665,23 @@ pre {
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px; }
+  .width-card{
+    width: 100% !important;
+  }
 }
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px; }
+  .width-card{
+    width: 100% !important;
+  }
 }
 @media (min-width: 768px) {
   .container, .container-sm, .container-md {
     max-width: 720px; }
+  .width-card{
+    width: 100%;
+  }
  }
 @media (min-width: 992px) {
   .container, .container-sm, .container-md, .container-lg {
@@ -685,6 +694,9 @@ pre {
     max-width: 1140px; }
   #chart-responsive {
     display: flex;
+  }
+  .width-card{
+    width: 90px !important;
   }
 }
 .row {

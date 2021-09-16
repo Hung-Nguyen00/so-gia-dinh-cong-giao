@@ -13,8 +13,8 @@
                 <div class="col-sm-8 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Quản lý giáo xứ</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $sgdcg)}}">Sổ gia đình công giáo</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $sgdcg)}}">Thông tin sổ gia đình</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Thêm thành viên</a></li>
                     </ol>
                 </div>

@@ -46,20 +46,18 @@ class StatictisGiaoXu extends Component
         if (!$this->giao_xu_id){
             $this->giao_xu_id = GiaoXu::find(Auth::user()->giao_xu_id)->id;
         }
-        $this->linh_muc_chanh_xu = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
-            $q->where('ten_vi_tri', 'Cha xứ');
-        })->where('giao_xu_id',$this->giao_xu_id)
-            ->first();
-        if (!$this->linh_muc_chanh_xu){
-            Toastr::warning('Không có dữ liệu', 'Cảnh báo');
-            return redirect()->route('home');
-        }
     }
 
     public function render()
     {
         $this->dispatchBrowserEvent('Changed');
-        // get Year in from start date - end Date
+        // get Linh Muc
+        $this->linh_muc_chanh_xu = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
+            $q->where('ten_vi_tri', 'Cha xứ');
+        })->where('giao_xu_id',$this->giao_xu_id)
+            ->first();
+
+        // get Year for Form in interface start date - end Date (filter: sinh_hoac_tu)
         $start = (int)Carbon::parse($this->start_date)->format('Y');
         $end = (int)Carbon::parse($this->end_date)->format('Y');
         $start_end_year = array();
@@ -68,20 +66,43 @@ class StatictisGiaoXu extends Component
             $start_end_year[$key] = $start++;
             $key++;
         }
+        // statistics GiaoXu
         $statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
             ->where('id', $this->giao_xu_id)
             ->first();
+        // get all_giao_ho
+        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $statistics_giao_xu->id)
+            ->with(['tuSi' => function ($q) {
+                    $q->with('tenThanh');
+            }])->get();
         // all giao xu
         $all_giao_xu = GiaoXu::with('giaoHat')
             ->where('giao_xu_hoac_giao_ho', 0)
             ->get();
+
          // statistic age
         $statistic_age = $this->statisticAge();
+
         // statistic Chuyen Xu
         $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho',$this->giao_xu_id)
             ->orWhere('id',  $this->giao_xu_id)
             ->pluck('id');
-        $statistic_chuyen_xu = LichSuSgdcg::whereIn('giao_xu_id', $giao_ho)->count();
+
+        // get static chuyen_xu and nhap_xu
+        $statistic_chuyen_xu = LichSuSgdcg::whereIn('giao_xu_id', $giao_ho)
+            ->whereBetween('created_at', [$this->start_date, $this->end_date])
+            ->count();
+
+        // count SGDCG by LichSuChuyenXU. It's mean this sgdcg come from other GiaoXu
+        // and go to this GiaoXu(giao_xu_id)
+        $count_from_other_giao_xu = SoGiaDinh::whereIn('giao_xu_id', $giao_ho)
+            ->whereHas('lichSuChuyenXu')
+            ->count();
+        // count sgdcg when User create new sgdcg and ngay_tao_so is between start_date and end_date
+        $count_create_new_sgdcg = SoGiaDinh::whereIn('giao_xu_id', $giao_ho)
+            ->whereBetween('ngay_tao_so', [$this->start_date, $this->end_date])
+            ->count();
+        $statistic_nhap_xu = $count_from_other_giao_xu + $count_create_new_sgdcg;
 
         // draw chart
         if (!$this->sinh_tu_follow_year){
@@ -91,14 +112,22 @@ class StatictisGiaoXu extends Component
         $analytics_bi_tich = $this->analyticBiTich();
         $this->emit('updateLineChart', json_encode($analytic_gender));
         $this->emit('updatePieChart', json_encode($analytics_bi_tich));
-        // search GiaoHat By Id
+
         return view('livewire.giao-xu.statictis-giao-xu',
             compact('statistics_giao_xu',
-                'analytics_bi_tich', 'start_end_year', 'all_giao_xu', 'statistic_age', 'statistic_chuyen_xu'))
+                'analytics_bi_tich',
+                'start_end_year',
+                'all_giao_ho',
+                'statistic_nhap_xu',
+                'all_giao_xu',
+                'statistic_age',
+                'statistic_chuyen_xu'))
             ->with(['giam_muc' => $this->linh_muc_chanh_xu,
                 'analytic_gender' => json_encode($analytic_gender),
                 'analytics_bi_tich' => json_encode($analytics_bi_tich)]);
     }
+
+
     // get gender to Chart
     public function getGender($id, $year){
         $get_current_year = $year;

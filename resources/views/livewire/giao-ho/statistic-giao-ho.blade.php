@@ -9,7 +9,7 @@
             <div class="col-sm-5 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Thống kê giáo xứ</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Thống kê giáo họ</a></li>
                 </ol>
             </div>
         </div>
@@ -99,7 +99,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Đã nhập xứ</p>
-                                <h4 class="mb-0">{{ $statistics_giao_xu->ho_gia_dinh_count }}</h4>
+                                <h4 class="mb-0">{{ $statistic_nhap_xu }}</h4>
                             </div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}" alt="Trẻ em">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1" style="min-width: 105px;">Nhi đồng (2t - 5t) </p>
+                                <p class="mb-1 width-card" >Nhi đồng (2t - 5t) </p>
                                 <h4 class="mb-0">{{ $statistic_age['nhi_dong'] }}</h4>
                             </div>
                         </div>
@@ -158,7 +158,7 @@
                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
                                 </span>
                             <div class="media-body">
-                                <p class="mb-1 w-auto">Thiếu nhi (6t - 17t)</p>
+                                <p class="mb-1 width-card">Thiếu nhi (6t - 17t)</p>
                                 <h4 class="mb-0">{{ $statistic_age['thieu_nhi']  }}</h4>
                             </div>
                         </div>

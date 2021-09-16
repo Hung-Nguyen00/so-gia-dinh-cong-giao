@@ -11,16 +11,16 @@
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Thông tin tài khoản</a></li>
                     </ol>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 p-0">
                     <div class="row tab-content">
-                        <div id="list-view" class="tab-pane d-flex fade active show col-lg-12">
-                           <div class="col-md-8">
+                        <div id="list-view" class="tab-pane d-flex flex-wrap fade active show col-lg-12">
+                           <div class="col-md-8 col-sm-12 col-xs-12">
                                <div class="card ">
                                    <div class="card-header">
                                        <h4 class="font-weight-bold">Thông tin tài khoản</h4>
@@ -127,7 +127,7 @@
                                    </div>
                                </div>
                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-12 col-xs-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="font-weight-bold">Đổi mật khẩu</h4>

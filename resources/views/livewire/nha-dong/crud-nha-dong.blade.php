@@ -7,15 +7,15 @@
         <h4 class="card-title">Danh sách các nhà dòng</h4>
         <div>
             <a href="{{ route('sgdcg-file-export', ['name' => 'nha_dong'])}}"
-               class="btn btn-info">Excel mẫu
+               class="btn btn-info mt-1">Excel mẫu
             </a>
             <button
                     data-toggle="modal"  data-target="#importModal"
-                    class="btn btn-info">Import nhà dòng
+                    class="btn btn-info mt-1">Import nhà dòng
             </button>
             <button
                     data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
-                    class="btn btn-primary">Thêm mới
+                    class="btn btn-primary mt-1">Thêm mới
             </button>
         </div>
     </div>
