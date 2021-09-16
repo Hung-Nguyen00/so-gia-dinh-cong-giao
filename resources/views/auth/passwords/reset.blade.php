@@ -22,7 +22,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label><strong>Mật khẩu</strong></label>
+                                            <label><strong>Mật khẩu mới</strong></label>
                                             <input type="password" class="form-control @error('password') is-invalid @enderror"
                                                    name="password"
                                                    placeholder="Nhập mật khẩu">

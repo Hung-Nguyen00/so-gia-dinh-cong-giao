@@ -32,9 +32,9 @@ class ForgotPasswordController extends Controller
             ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
         );
         Mail::send('auth.verify',['token' => $token], function($message) use ($request) {
-                  $message->from($request->email);
-                  $message->to('thanhhung041100@gmail.com');
-                  $message->subject('Reset Password Notification');
+                  $message->from('thanhhung041100@gmail.com');
+                  $message->to($request->email);
+                  $message->subject('Thay đổi mật khẩu');
                });
 
         return back()->with('message', 'Đã gửi mật khẩu qua email');

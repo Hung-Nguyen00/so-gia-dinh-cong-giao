@@ -59,6 +59,7 @@ class CrudGiaoHo extends Component
 
     public function render()
     {
+        $this->dispatchBrowserEvent('contentChanged');
         return view('livewire.giao-ho.crud-giao-ho');
     }
 

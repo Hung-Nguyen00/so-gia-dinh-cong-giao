@@ -63,6 +63,10 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
+        ], [
+            'email.required' => 'Tài khoản đăng nhập không được trống',
+            'email.email' => 'Tài khoản đăng nhập phải đúng dạng email',
+            'password.required' => 'Mật khẩu không được trống',
         ]);
 
         $email    = $request->email;

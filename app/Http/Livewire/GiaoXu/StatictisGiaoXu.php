@@ -86,8 +86,8 @@ class StatictisGiaoXu extends Component
         // statistic Chuyen Xu
         $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho',$this->giao_xu_id)
             ->orWhere('id',  $this->giao_xu_id)
-            ->pluck('id');
-
+            ->pluck('id')->toArray();
+        $giao_ho = array_values($giao_ho);
         // get static chuyen_xu and nhap_xu
         $statistic_chuyen_xu = LichSuSgdcg::whereIn('giao_xu_id', $giao_ho)
             ->whereBetween('created_at', [$this->start_date, $this->end_date])

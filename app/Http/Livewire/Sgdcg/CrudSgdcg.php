@@ -30,6 +30,7 @@ class CrudSgdcg extends Component
         $giao_ho_id,
         $start_date,
         $end_date,
+        $note,
         $ten_chu_ho,
         $chuyen_xu,
         $all_giao_phan,
@@ -47,6 +48,7 @@ class CrudSgdcg extends Component
         $this->chuyen_xu = request()->query('chuyen_xu', $this->chuyen_xu);
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->page_number = request()->query('page_number', $this->page_number);
+        $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
         if (!$this->page_number){
             $this->page_number = 20;
         }
@@ -61,8 +63,10 @@ class CrudSgdcg extends Component
                                 ->get();
         $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
             ->orWhere('id', Auth::user()->giao_xu_id)
-            ->pluck('id');
-         $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
+            ->pluck('id')->toArray();
+        $giao_ho = array_values($giao_ho);
+
+        $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
         //get ma_code from GP GH GX
         if (!$this->ma_so){
             $last_sgdcg = SoGiaDinh::latest()->withTrashed()->first()->id;
@@ -77,22 +81,20 @@ class CrudSgdcg extends Component
             }
         }
 
-        $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
         $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();
         $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
-
         // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
         // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
         // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
         if (!$this->ten_chu_ho){
             $all_so_gia_dinh = SoGiaDinh::with(['getUser', 'lichSuChuyenXu' => function($q) use ($giao_ho){
-                $q->whereIn('giao_xu_id', $giao_ho)->first();
+                $q->whereIn('giao_xu_id', $giao_ho);
             },'giaoXu', 'thanhVien' => function($q){
                 $q->with('tenThanh')
-                    ->where('chuc_vu_gd', 'Cha')->get();
+                    ->where('chuc_vu_gd', 'Cha');
             }, 'thanhVienSo2' => function($q){
                 $q->with('tenThanh')
-                    ->where('chuc_vu_gd_2', 'Cha')->get();
+                    ->where('chuc_vu_gd_2', 'Cha');
             } ])
                 ->withCount(['thanhVien', 'thanhVienSo2'])
                 ->orderBy('created_at', 'DESC');
@@ -102,18 +104,18 @@ class CrudSgdcg extends Component
             'thanhVien' => function($q) use($chu_ho){
                 $q->with('tenThanh')
                     ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                    ->where('chuc_vu_gd', 'Cha')->get();
+                    ->where('chuc_vu_gd', 'Cha');
             }, 'thanhVienSo2' => function($q) use($chu_ho){
                 $q->with('tenThanh')
                     ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                    ->where('chuc_vu_gd_2', 'Cha')->get();
+                    ->where('chuc_vu_gd_2', 'Cha');
             } ])
                 ->withCount(['thanhVien', 'thanhVienSo2'])
                 ->orderBy('created_at', 'DESC');
         }
 
         if (!$this->giao_ho_id){
-            if ($this->chuyen_xu){
+            if ($this->chuyen_xu == 'true'){
                 $all_so_gia_dinh = $all_so_gia_dinh
                     ->WhereHas('lichSuChuyenXu', function ($q) use($giao_ho){
                         $q->whereIn('giao_xu_id', $giao_ho);
@@ -140,7 +142,6 @@ class CrudSgdcg extends Component
                     });
             }
         }
-
         if ($this->start_date && $this->end_date){
             $all_so_gia_dinh = $all_so_gia_dinh->whereBetween('ngay_tao_so',[$this->start_date, $this->end_date]);
         }
@@ -188,6 +189,8 @@ class CrudSgdcg extends Component
         $this->ma_so = null;
         $this->sgdcg_modal = null;
         $this->ngay_tao_so = '';
+        $this->giao_hat_id = '';
+        $this->giao_phan_id = '';
     }
     public function store()
     {
@@ -207,6 +210,7 @@ class CrudSgdcg extends Component
     }
 
     public function edit($id){
+        $this->clearData();
         $this->sgdcg_modal = SoGiaDinh::with('lichSuChuyenXu')->find($id);
         if ($this->sgdcg_modal){
             $this->ma_so = $this->sgdcg_modal->ma_so;
@@ -222,7 +226,9 @@ class CrudSgdcg extends Component
     public function update(){
         if ($this->sgdcg_modal){
             if ($this->sgdcg_modal->giao_xu_id !== $this->giao_xu_id){
-               $this->sgdcg_modal->lichSuChuyenXu()->attach($this->sgdcg_modal->giao_xu_id);
+               $this->sgdcg_modal->lichSuChuyenXu()->attach($this->sgdcg_modal->giao_xu_id, [
+                   'note' => $this->note,
+               ]);
             }
             $this->sgdcg_modal->update([
                 'ma_so' => $this->ma_so,

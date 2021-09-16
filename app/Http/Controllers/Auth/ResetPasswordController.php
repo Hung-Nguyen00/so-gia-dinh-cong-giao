@@ -9,7 +9,6 @@ use Hash;
 class ResetPasswordController extends Controller
 {
     public function getPassword($token) {
-
        return view('auth.passwords.reset', ['token' => $token]);
     }
 
@@ -20,7 +19,15 @@ class ResetPasswordController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required',
 
-        ]);
+        ],[
+            'email.required' => 'Tài khoản không được phép trống',
+            'email.exists' => 'Tài khoản không tồn tại',
+            'password.required' => 'Mật khẩu không được phép trống',
+            'password_confirmation.required' => 'Mật khẩu nhập lại không được phép trống',
+            'password.confirmed' => 'Mật khẩu nhập lại không trùng khớp',
+            'password.min' => 'Mật khẩu không được nhỏ hơn :min',
+            ]
+         );
 
         $updatePassword = DB::table('password_resets')
                             ->where(['email' => $request->email, 'token' => $request->token])

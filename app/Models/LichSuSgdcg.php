@@ -13,6 +13,7 @@ class LichSuSgdcg extends Model
 
     protected $fillable = [
         'giao_xu_id',
-      'sgdcg_id',
+        'note',
+        'sgdcg_id',
     ];
 }

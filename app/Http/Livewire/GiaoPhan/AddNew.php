@@ -66,6 +66,7 @@ class AddNew extends Component
 
     public function render()
     {
+        $this->dispatchBrowserEvent('contentChanged');
         $this->giao_tinh = GiaoTinh::all();
         return view('livewire.giao-phan.add-new');
     }

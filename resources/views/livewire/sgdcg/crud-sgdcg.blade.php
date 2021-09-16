@@ -2,6 +2,7 @@
     @include('sgdcg.add_giao_phan')
     @include('sgdcg.edit_giao_phan')
     @include('sgdcg.delete_giao_phan')
+    @include('sgdcg.edit_sgdcg')
     @include('sgdcg.import');
     <div class="card-header pt-0 pb-0">
         <h4 class="card-title">Danh sách các sổ gia đình công giáo </h4>
@@ -61,7 +62,7 @@
                     </label>
                 </div>
             </div>
-            <table class="table display" style="min-width: 840px;">
+            <table class="table display" style="min-width: 1080px;">
                 <thead>
                 <tr>
                     <th class="text-center">STT</th>
@@ -71,6 +72,7 @@
                     <th>Thuộc</th>
                     <th>Chủ hộ</th>
                     <th class="text-center">Đã chuyển xứ</th>
+                    <th>Chuyển xứ</th>
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
@@ -82,7 +84,7 @@
                         <td>{{ $g->ma_so }}</td>
                         <td>{{ \Carbon\Carbon::parse($g->ngay_tao_so)->format('d-m-Y') }}</td>
                         <td class="text-center">{{ $g->thanh_vien_so2_count > 0 ? $g->thanh_vien_so2_count : $g->thanh_vien_count }}
-                            <a href="{{ route('so-gia-dinh.show', $g)  }}"> <i class="la la-eye"></i></a>
+                            <a  href="{{ route('so-gia-dinh.show', $g)  }}"> <i style="font-size: 20px; color: blue" class="la la-eye"></i></a>
                         <td>
                             @if($g->giaoXu)
                                 @if($g->giaoXu->giao_xu_hoac_giao_ho == 0)
@@ -119,17 +121,25 @@
                             @if($g->lichSuChuyenXu->count() > 0)
                                 @foreach($g->lichSuChuyenXu as $ls)
                                     <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
-
                                     @break
                                 @endforeach
                             @endif
+                        </td>
+                        <td class="text-center">
+                            <button type="button"
+                                    wire:click="edit({{ $g->id }})"
+                                    class="btn btn-sm btn-primary mb-1"
+                                    data-toggle="modal"
+                                    data-target="#editModal">
+                                <i class="la  fs-16 la-street-view"></i>
+                            </button>
                         </td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $g->id }})"
                                     class="btn btn-sm btn-primary mb-1"
                                     data-toggle="modal"
-                                    data-target="#editModal">
+                                    data-target="#editSgdcg">
                                 <i class="la  fs-16 la-pencil"></i>
                             </button>
                             <button type="button" wire:click="edit({{ $g->id }})"
