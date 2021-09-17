@@ -34,6 +34,7 @@ class CrudSgdcg extends Component
         $end_date,
         $ngay_chuyen_xu,
         $note,
+        $is_giao_ho_id,
         $giao_xu,
         $ten_chu_ho,
         $chuyen_xu_nhap_xu = 1,
@@ -230,10 +231,19 @@ class CrudSgdcg extends Component
     {
         $validatedData = $this->validate();
         $this->la_nhap_xu == 'true' ? $this->la_nhap_xu = 1 : $this->la_nhap_xu = 0;
-        $sgdcg = SoGiaDinh::create(array_merge($validatedData,
-            ['nguoi_khoi_tao' => Auth::id(),
-             'la_nhap_xu' => $this->la_nhap_xu,
-             'giao_xu_id' => Auth::user()->giao_xu_id]));
+        // if this sgdcg is own GiaoHo, then save is_giao_ho_id to sgcg
+        //if this sgdcg is  null, it means it's own GiaoXu and save id of user.
+        if ($this->is_giao_ho_id){
+            $sgdcg = SoGiaDinh::create(array_merge($validatedData,
+                ['nguoi_khoi_tao' => Auth::id(),
+                    'la_nhap_xu' => $this->la_nhap_xu,
+                    'giao_xu_id' => $this->is_giao_ho_id]));
+        }else{
+            $sgdcg = SoGiaDinh::create(array_merge($validatedData,
+                ['nguoi_khoi_tao' => Auth::id(),
+                    'la_nhap_xu' => $this->la_nhap_xu,
+                    'giao_xu_id' => Auth::user()->giao_xu_id]));
+        }
         Toastr::success('Tạo mới thành công','Thành công');
         return redirect()->route('so-gia-dinh.createTV', $sgdcg->id);
     }
@@ -269,6 +279,7 @@ class CrudSgdcg extends Component
      if ($this->sgdcg_modal){
             $this->ma_so = $this->sgdcg_modal->ma_so;
             $this->ngay_tao_so = $this->sgdcg_modal->ngay_tao_so;
+            $this->is_giao_ho_id = $this->sgdcg_modal->giao_xu_id;
             //get GiaoXu from SGDC. If  giao_xu_hoac_giao_ho == 0 then this is of GX
             // If  giao_xu_hoac_giao_ho == 0 then this is of GH, we must find GX's id from GH's id
             $this->giao_xu = GiaoXu::with('giaoHat.giaoPhan')->find($this->sgdcg_modal->giao_xu_id);
@@ -334,11 +345,20 @@ class CrudSgdcg extends Component
     public function updateSGD(){
         if ($this->sgdcg_modal) {
             $this->la_nhap_xu == 'true' || $this->la_nhap_xu == 1 ? $this->la_nhap_xu = 1 : $this->la_nhap_xu = 0;
-            $this->sgdcg_modal->update([
-                'la_nhap_xu' => $this->la_nhap_xu,
-                'ngay_tao_so' => $this->ngay_tao_so,
-                'nguoi_khoi_tao' => Auth::id()
-            ]);
+            if ($this->is_giao_ho_id){
+                $this->sgdcg_modal->update([
+                    'la_nhap_xu' => $this->la_nhap_xu,
+                    'ngay_tao_so' => $this->ngay_tao_so,
+                    'giao_xu_id' => $this->is_giao_ho_id,
+                    'nguoi_khoi_tao' => Auth::id()
+                ]);
+            }else{
+                $this->sgdcg_modal->update([
+                    'la_nhap_xu' => $this->la_nhap_xu,
+                    'ngay_tao_so' => $this->ngay_tao_so,
+                    'nguoi_khoi_tao' => Auth::id()
+                ]);
+            }
         }
         Toastr::success('Cập nhập thành công','Thành công');
         return redirect()->route('so-gia-dinh.index');

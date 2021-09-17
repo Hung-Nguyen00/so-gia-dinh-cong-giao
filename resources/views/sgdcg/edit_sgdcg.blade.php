@@ -26,6 +26,15 @@
                                 <span class="text-danger">{{ $errors->first('ma_so') }}</span>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label for="">Giáo họ</label>
+                            <select class="form-control select" wire:model="is_giao_ho_id">
+                                <option value="" selected>Chọn giáo họ</option>
+                                @foreach($all_giao_ho as $h)
+                                    <option value="{{ $h->id }}">{{ $h->ten_giao_xu }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group ">
                             <label >Ngày tạo sổ</label>
                             <input type="date" wire:model="ngay_tao_so" class="form-control col-md-5">
