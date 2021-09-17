@@ -54,7 +54,14 @@ class GiaoXu extends Model
 
     public function lichSuSgdcg(){
         return $this->belongsToMany(GiaoXu::class,'lich_su_sgdcg',
-            'giao_xu_id', 'sgdcg_id')->withTimestamps();
+            'giao_xu_id', 'sgdcg_id')
+            ->withTimestamps()
+            ->withPivot([
+            'created_at',
+            'giao_xu_id',
+            'note',
+            'sgdcg_id',
+        ]);
     }
 
     public function getGiaoHo($id){

@@ -17,6 +17,7 @@ class SoGiaDinh extends Model
     protected $fillable = [
       'ma_so',
       'ngay_tao_so',
+      'la_nhap_xu',
       'nguoi_khoi_tao',
       'giao_xu_id',
     ];
@@ -37,9 +38,12 @@ class SoGiaDinh extends Model
         return $this->belongsToMany(GiaoXu::class,
             'lich_su_sgdcg',
             'sgdcg_id',
-            'giao_xu_id')->withTimestamps()->withPivot([
+            'giao_xu_id')
+            ->withTimestamps()
+            ->withPivot([
             'created_at',
             'giao_xu_id',
+            'note',
             'sgdcg_id',
         ]);
     }

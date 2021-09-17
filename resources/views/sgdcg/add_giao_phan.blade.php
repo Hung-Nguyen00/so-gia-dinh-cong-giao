@@ -29,6 +29,12 @@
                                     <span class="text-danger">{{ $errors->first('ngay_tao_so') }}</span>
                                 @endif
                             </div>
+                            <div class="form-check col-md-6 d-flex align-items-start pt-2">
+                                <input class="form-check-input" type="checkbox" wire:model="la_nhap_xu">
+                                <label class="form-check-label">
+                                   Sổ gia đình nhập xứ
+                                </label>
+                            </div>
                             <button type="submit" class="btn btn-primary float-right">Thêm mới</button>
                             <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy</button>
                         </form>

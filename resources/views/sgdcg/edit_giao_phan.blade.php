@@ -3,7 +3,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa sổ gia đình công giáo</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Thông tin chuyển xứ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group" >
                             <label for="giao_phan">Tên giáo phận</label>
-                            <select data-live-search="true"  class="select form-control bg-light mb-3" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
+                            <select data-live-search="true"  class="select form-control bg-light" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
                                 <option selected>Chọn giáo phận</option>
                                 @foreach($all_giao_phan as $gt)
                                     <option value="{{ $gt->id }}"> {{ $gt->ten_giao_phan  }}</option>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label for="giao_phan">Tên giáo hạt</label>
-                            <select data-live-search="true" class="select form-control bg-light mb-3" name="giao_hat_id"  wire:model="giao_hat_id">
+                            <select data-live-search="true" class="select form-control bg-light" name="giao_hat_id"  wire:model="giao_hat_id">
                                 @if($giao_hat_id == null)
                                 <option selected value="">Chọn giáo hạt</option>
                                 @endif
@@ -62,11 +62,27 @@
                                 <span class="text-danger">{{ $errors->first('giao_xu_id') }}</span>
                             @endif
                         </div>
-                        <div class="form-group ">
-                            <label >Ngày tạo sổ</label>
-                            <input type="date" wire:model="ngay_tao_so" class="form-control col-md-5">
-                            @if($errors->has('ngay_tao_so'))
-                                <span class="text-danger">{{ $errors->first('ngay_tao_so') }}</span>
+                        <div class="form-group d-flex flex-wrap justify-content-between">
+                            <div class="col-md-5 mt-1 p-0">
+                                <label class="pl-1">Ngày chuyển xứ</label>
+                                <input type="date" wire:model="ngay_chuyen_xu" class="form-control">
+                                @if($errors->has('ngay_chuyen_xu'))
+                                    <span class="text-danger">{{ $errors->first('ngay_chuyen_xu') }}</span>
+                                @endif
+                            </div>
+                            <div class="col-md-5 p-0 mt-1">
+                                <label>Ngày tạo sổ</label>
+                                <input type="date" wire:model="ngay_tao_so" class="form-control ">
+                                @if($errors->has('ngay_tao_so'))
+                                    <span class="text-danger">{{ $errors->first('ngay_tao_so') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Chú thích</label>
+                            <textarea wire:model.lazy="note" class="form-control" rows="3"> {{ $note }}</textarea>
+                            @if($errors->has('note'))
+                                <span class="text-danger">{{ $errors->first('note') }}</span>
                             @endif
                         </div>
                         <button type="submit" class="btn btn-primary float-right">Lưu lại</button>

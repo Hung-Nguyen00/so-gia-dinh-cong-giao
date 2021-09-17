@@ -15,7 +15,7 @@
                     class="btn btn-info mt-1">Import dữ liệu
             </button>
             <button
-                    data-toggle="modal" wire:click="clearData()" data-target="#createModal"
+                    data-toggle="modal" wire:click="setCurrentTime" data-target="#createModal"
                     class="btn btn-primary mt-1">Thêm mới
             </button>
         </div>
@@ -56,7 +56,7 @@
                     </select>
                 </div>
                 <div class="form-check col-md-2 d-flex align-items-start ml-3 pt-2">
-                    <input class="form-check-input" type="checkbox" wire:model="chuyen_xu">
+                    <input class="form-check-input" checked type="checkbox" wire:model="chuyen_xu">
                     <label class="form-check-label">
                         Đã chuyển xứ
                     </label>
@@ -67,10 +67,11 @@
                 <tr>
                     <th class="text-center">STT</th>
                     <th>Mã sổ</th>
-                    <th>Ngày tạo sổ</th>
-                    <th class="text-center">Số lượng thành viên</th>
-                    <th>Thuộc</th>
                     <th>Chủ hộ</th>
+                    <th>Ngày tạo sổ</th>
+                    <th class="text-center">Số lượng <br> thành viên</th>
+                    <th>Thuộc</th>
+                    <th>Đã nhập xứ</th>
                     <th class="text-center">Đã chuyển xứ</th>
                     <th>Chuyển xứ</th>
                     <th>Chỉnh sửa</th>
@@ -82,6 +83,28 @@
                     <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>{{ $g->ma_so }}</td>
+                        <td>@if($g->thanhVien->count() > 0)
+                                @foreach($g->thanhVien as $t)
+                                    @if($t->tenThanh)
+                                        {{ $t->tenThanh->ten_thanh . ' '. $t->ho_va_ten }}
+                                    @else
+                                        {{ $t->ho_va_ten }}
+                                    @endif
+                                    @break
+                                @endforeach
+                            @else
+                                @if($g->thanhVienSo2)
+                                    @foreach($g->thanhVienSo2 as $t)
+                                        @if($t->tenThanh)
+                                            {{ $t->tenThanh->ten_thanh . ' '. $t->ho_va_ten }}
+                                        @else
+                                            {{ $t->ho_va_ten }}
+                                        @endif
+                                        @break
+                                    @endforeach
+                                @endif
+                            @endif
+                        </td>
                         <td>{{ \Carbon\Carbon::parse($g->ngay_tao_so)->format('d-m-Y') }}</td>
                         <td class="text-center">{{ $g->thanh_vien_so2_count > 0 ? $g->thanh_vien_so2_count : $g->thanh_vien_count }}
                             <a  href="{{ route('so-gia-dinh.show', $g)  }}"> <i style="font-size: 20px; color: blue" class="la la-eye"></i></a>
@@ -94,35 +117,32 @@
                                 @endif
                             @endif
                         </td>
-
-                        <td>@if($g->thanhVien->count() > 0)
-                                @foreach($g->thanhVien as $t)
-                                    @if($t->tenThanh)
-                                        {{ $t->tenThanh->ten_thanh . ' '. $t->ho_va_ten }}
-                                    @else
-                                        {{ $t->ho_va_ten }}
-                                    @endif
-                                    @break
-                               @endforeach
-                            @else
-                            @if($g->thanhVienSo2)
-                                @foreach($g->thanhVienSo2 as $t)
-                                    @if($t->tenThanh)
-                                        {{ $t->tenThanh->ten_thanh . ' '. $t->ho_va_ten }}
-                                    @else
-                                        {{ $t->ho_va_ten }}
-                                    @endif
-                                    @break
-                                @endforeach
+                        <td>
+                            @if($g->la_nhap_xu == 1)
+                                <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ngay_tao_so)->format('d-m-Y') }}</span>
                             @endif
+                            @if($g->giao_xu_id == \Auth::user()->giao_xu_id)
+                                @if($g->lichSuChuyenXu->count() > 0)
+                                    @php $i = 0; @endphp
+                                    @foreach($g->lichSuChuyenXu as $ls)
+                                        @php ++$i; @endphp
+                                        @if($i == $g->lichSuChuyenXu->count())
+                                            <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
+                                        @endif
+                                    @endforeach
+                                @endif
                             @endif
                         </td>
                         <td class="text-center">
-                            @if($g->lichSuChuyenXu->count() > 0)
-                                @foreach($g->lichSuChuyenXu as $ls)
-                                    <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
-                                    @break
-                                @endforeach
+                            @if($g->giao_xu_id !== \Auth::user()->giao_xu_id)
+                                @if($g->lichSuChuyenXu->count() > 0)
+                                    @foreach($g->lichSuChuyenXu as $ls)
+                                        @if($ls->pivot->giao_xu_id == \Auth::user()->giao_xu_id)
+                                        <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
+                                        @break
+                                        @endif
+                                    @endforeach
+                                @endif
                             @endif
                         </td>
                         <td class="text-center">
