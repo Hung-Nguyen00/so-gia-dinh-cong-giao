@@ -17,11 +17,11 @@
             <table id="example3" class="display" style="min-width: 845px">
                 <thead>
                 <tr>
-                    <th >STT</th>
+                    <th style="width: 20px">STT</th>
                     <th>Tên bí tích</th>
                     <th>Người cập nhập</th>
                     <th>Cập nhập lần cuối</th>
-                    <th >Chỉnh sửa</th>
+                    <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody >

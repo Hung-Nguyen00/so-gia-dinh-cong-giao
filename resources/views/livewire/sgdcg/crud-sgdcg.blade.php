@@ -3,6 +3,7 @@
     @include('sgdcg.edit_giao_phan')
     @include('sgdcg.delete_giao_phan')
     @include('sgdcg.edit_sgdcg')
+    @include('sgdcg.show_history')
     @include('sgdcg.import');
     <div class="card-header pt-0 pb-0">
         <h4 class="card-title">Danh sách các sổ gia đình công giáo </h4>
@@ -45,8 +46,18 @@
                        <input type="date" wire:model="end_date" class="ml-2 form-control w-auto">
                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="">Hiển thị</label>
+                <div class="form-group col-md-3">
+                    <label>
+                        Chuyển xứ hoặc nhập xứ
+                    </label>
+                    <select class="form-control select w-auto" wire:model="chuyen_xu_nhap_xu">
+                        <option value="1" selected>Tất cả</option>
+                        <option value="2">Nhập xứ</option>
+                        <option value="3">Chuyển xứ</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2 d-flex align-items-end">
+                    <label class="mr-2">Hiển thị</label>
                     <select class="form-control select w-auto" wire:model="page_number">
                         <option value="5" >5</option>
                         <option value="10">10</option>
@@ -55,14 +66,8 @@
                         <option value="100">100</option>
                     </select>
                 </div>
-                <div class="form-check col-md-2 d-flex align-items-start ml-3 pt-2">
-                    <input class="form-check-input" checked type="checkbox" wire:model="chuyen_xu">
-                    <label class="form-check-label">
-                        Đã chuyển xứ
-                    </label>
-                </div>
             </div>
-            <table class="table display" style="min-width: 1080px;">
+            <table class="table display" style="min-width: 1280px;">
                 <thead>
                 <tr>
                     <th class="text-center">STT</th>
@@ -73,15 +78,16 @@
                     <th>Thuộc</th>
                     <th>Đã nhập xứ</th>
                     <th class="text-center">Đã chuyển xứ</th>
+                    <th>Lịch sử <br> chuyển xứ</th>
                     <th>Chuyển xứ</th>
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody >
-                @php $i= 0; @endphp
+                @php $flag= 0; @endphp
                 @foreach($all_so_gia_dinh as $g)
                     <tr>
-                        <td class="text-center"> {{ ++$i }}</td>
+                        <td class="text-center"> {{ ++$flag }}</td>
                         <td>{{ $g->ma_so }}</td>
                         <td>@if($g->thanhVien->count() > 0)
                                 @foreach($g->thanhVien as $t)
@@ -133,16 +139,27 @@
                                 @endif
                             @endif
                         </td>
-                        <td class="text-center">
+                        <td>
                             @if($g->giao_xu_id !== \Auth::user()->giao_xu_id)
                                 @if($g->lichSuChuyenXu->count() > 0)
                                     @foreach($g->lichSuChuyenXu as $ls)
                                         @if($ls->pivot->giao_xu_id == \Auth::user()->giao_xu_id)
-                                        <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
-                                        @break
+                                            <span class="badge badge-rounded badge-success"> {{ \Carbon\Carbon::parse($ls->pivot->created_at)->format('d-m-Y') }}</span>
+                                            @break
                                         @endif
                                     @endforeach
                                 @endif
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($g->lichSuChuyenXu->count() > 0)
+                                <button type="button"
+                                        wire:click="getHistory({{ $g->id }})"
+                                        class="btn btn-sm btn-primary mb-1"
+                                        data-toggle="modal"
+                                        data-target="#historySgdcg">
+                                    <i class="la  fs-16 la-bookmark"></i>
+                                </button>
                             @endif
                         </td>
                         <td class="text-center">

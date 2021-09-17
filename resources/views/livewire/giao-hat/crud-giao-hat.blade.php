@@ -5,7 +5,6 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo hạt </h4>
         <div>
-            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
             <button
                     data-toggle="modal" wire:click="clearData()" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm giáo hạt mới

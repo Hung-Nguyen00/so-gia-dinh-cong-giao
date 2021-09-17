@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label >Giáo Hạt</label>
-                            <select class="custom-select form-control mb-3" name="giao_hat_id" wire:model="giao_hat_id">
+                            <select class="custom-select select form-control mb-3" name="giao_hat_id" data-live-search="true" wire:model="giao_hat_id">
                                 <option selected>Chọn Giáo Hạt</option>
                                 @foreach($giao_hat as $gt)
                                     <option value="{{ $gt->id }}"> {{ $gt->ten_giao_hat }}</option>

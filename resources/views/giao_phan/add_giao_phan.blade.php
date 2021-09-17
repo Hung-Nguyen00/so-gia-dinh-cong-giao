@@ -47,7 +47,7 @@
                             </div>
                             <div class="form-group">
                                 <label >Giáo tỉnh</label>
-                                <select class="custom-select form-control mb-3" name="giao_tinh_id" wire:model="giao_tinh_id">
+                                <select class="custom-select select form-control mb-3" name="giao_tinh_id" wire:model="giao_tinh_id">
                                     <option selected>Chọn giáo tỉnh</option>
                                     @foreach($giao_tinh as $gt)
                                         <option value="{{ $gt->id }}"> {{ $gt->ten_giao_tinh }}</option>

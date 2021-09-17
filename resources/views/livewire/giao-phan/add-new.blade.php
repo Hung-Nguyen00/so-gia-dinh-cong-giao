@@ -74,3 +74,12 @@
         </div>
     </div>
 </div>
+
+
+@push('scripts')
+    <script>
+        window.addEventListener('contentChanged', event => {
+            $('.select').selectpicker();
+        });
+    </script>
+@endpush
