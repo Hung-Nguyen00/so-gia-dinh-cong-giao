@@ -67,7 +67,7 @@
                                                 <td class="text-center">{{ ++$i }}</td>
                                                 <td>Từ: <strong>GP: {{ $s->giaoPhan->ten_giao_phan }} - GX: {{ $s->ten_giao_xu }} </strong>
                                                     <br>
-                                                    Đến:  <strong>GP: {{ $s->giaoPhan->ten_giao_phan }} - GX: {{ $s->ten_giao_xu }}</strong>
+                                                    Đến: <strong>GP: {{ $giao_xu->giaoPhan->ten_giao_phan }} - GX: {{ $giao_xu->ten_giao_xu }}</strong>
                                                 </td>
                                                 <td class="text-center">{{ \Carbon\Carbon::parse($s->pivot->created_at)->format('d-m-Y') }}
 
