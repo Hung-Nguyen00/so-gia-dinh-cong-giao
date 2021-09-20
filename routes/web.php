@@ -60,7 +60,9 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
         Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
 
-        // create TuDong
+        //statistic
+        Route::get('giao-xu/thong-ke', [GiaoPhanController::class, 'indexGiaoXu'])->name('giaoXu.statistic');
+
         Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
         Route::get('giao-xu/tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
         Route::post('giao-xu/tu-dong', [GiaoXuController::class, 'storeTuDong'])->name('giaoXu.storeTuDong');
@@ -87,11 +89,12 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/home/giao-phan', [GiaoPhanController::class, 'indexGiaoPhan'])->name('home.giaoPhan');
     Route::get('/home/giao-xu', [GiaoPhanController::class, 'indexGiaoXu'])->name('home.giaoXu');
+    Route::get('home/sinh-hoac-tu/{id}', [HomeController::class, 'getGenderSinhOrTu']);
     // request Ajax for select option
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
     Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
-    Route::get('home/sinh-hoac-tu/{id}', [HomeController::class, 'getGenderSinhOrTu']);
+
     // import chucVu, Vitri, TenThanh
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
     // export

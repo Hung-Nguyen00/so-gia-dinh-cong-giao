@@ -35,8 +35,29 @@
                     </select>
                 </div>
                 <div class="form-group col-md-3">
+                    <label>
+                        Tên thánh
+                    </label>
+                    <select class="form-control select " data-live-search="true"   wire:model="search_ten_thanh_id">
+                        <option value="" selected>Chọn tên thánh</option>
+                        @foreach($all_ten_thanh as $t)
+                            <option value="{{ $t->id }}">{{$t->ten_thanh }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
                     <label for="">Chủ hộ</label>
                     <input type="text" wire:model="ten_chu_ho" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>
+                        Chuyển xứ hoặc nhập xứ
+                    </label>
+                    <select class="form-control select" wire:model="chuyen_xu_nhap_xu">
+                        <option value="1" selected>Tất cả</option>
+                        <option value="2">Nhập xứ</option>
+                        <option value="3">Chuyển xứ</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Ngày lập sổ</label>
@@ -46,16 +67,7 @@
                        <input type="date" wire:model="end_date" class="ml-2 form-control w-auto">
                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label>
-                        Chuyển xứ hoặc nhập xứ
-                    </label>
-                    <select class="form-control select w-auto" wire:model="chuyen_xu_nhap_xu">
-                        <option value="1" selected>Tất cả</option>
-                        <option value="2">Nhập xứ</option>
-                        <option value="3">Chuyển xứ</option>
-                    </select>
-                </div>
+
                 <div class="form-group col-md-2 d-flex align-items-end">
                     <label class="mr-2">Hiển thị</label>
                     <select class="form-control select w-auto" wire:model="page_number">

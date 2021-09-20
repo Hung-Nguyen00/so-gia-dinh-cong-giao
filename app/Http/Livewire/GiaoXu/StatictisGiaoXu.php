@@ -72,6 +72,7 @@ class StatictisGiaoXu extends Component
             ->first();
         // get all_giao_ho
         $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $statistics_giao_xu->id)
+            ->withCount('giaoDan')
             ->with(['tuSi' => function ($q) {
                     $q->with('tenThanh');
             }])->get();
@@ -99,6 +100,7 @@ class StatictisGiaoXu extends Component
             ->count();
         // count sgdcg when User create new sgdcg and ngay_tao_so is between start_date and end_date
         $count_create_new_sgdcg = SoGiaDinh::whereIn('giao_xu_id', $giao_ho)
+            ->where('la_nhap_xu', 1)
             ->whereBetween('ngay_tao_so', [$this->start_date, $this->end_date])
             ->count();
         $statistic_nhap_xu = $count_from_other_giao_xu + $count_create_new_sgdcg;

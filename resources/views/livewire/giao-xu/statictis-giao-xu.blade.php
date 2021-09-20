@@ -270,13 +270,14 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table display" style="min-width: 650px;">
+                            <table class="table display" style="min-width: 800px;">
                                 <thead>
                                 <tr>
                                     <th width="25">STT</th>
                                     <th>Tên giáo họ</th>
                                     <th>Linh mục</th>
                                     <th width="100">Địa chỉ</th>
+                                    <th>Tổng giáo dân</th>
                                     <th>Năm thành lập</th>
                                 </tr>
                                 </thead>
@@ -293,6 +294,7 @@
                                                 @endif
                                             </td>
                                             <td class="text-break">{{ $th->dia_chi }}</td>
+                                            <td class="text-center">{{ $th->giao_dan_count }}</td>
                                             <td class="text-center">
                                                 {{ \Carbon\Carbon::parse($th->ngay_thanh_lap)->format('Y')}}
                                             </td>

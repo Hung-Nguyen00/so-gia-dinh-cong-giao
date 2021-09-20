@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group" >
                             <label for="giao_phan">Tên giáo phận</label>
-                            <select data-live-search="true" {{ \Auth::user()->giao_xu_id == $giao_xu_id ? '' : 'disabled'}} class="select form-control bg-light" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
+                            <select data-live-search="true" {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }} class="select form-control bg-light" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
                                 <option selected>Chọn giáo phận</option>
                                 @foreach($all_giao_phan as $gt)
                                     <option value="{{ $gt->id }}"> {{ $gt->ten_giao_phan  }}</option>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label for="giao_phan">Tên giáo hạt</label>
-                            <select data-live-search="true"  {{ \Auth::user()->giao_xu_id == $giao_xu_id ? '' : 'disabled'}}  class="select form-control bg-light" name="giao_hat_id"  wire:model="giao_hat_id">
+                            <select data-live-search="true"   {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }} class="select form-control bg-light" name="giao_hat_id"  wire:model="giao_hat_id">
                                 @if($giao_hat_id == null)
                                 <option selected value="">Chọn giáo hạt</option>
                                 @endif
@@ -50,7 +50,8 @@
                         </div>
                         <div class="form-group" >
                             <label for="giao_phan">Tên giáo xứ</label>
-                            <select data-live-search="true" {{ \Auth::user()->giao_xu_id == $giao_xu_id ? '' : 'disabled'}}  class="form-control select " name="giao_xu_id" wire:model="giao_xu_id">
+                            <select data-live-search="true"  {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }}
+                            class="form-control select " name="giao_xu_id" wire:model="giao_xu_id">
                                 @if($giao_xu_id == null)
                                     <option selected value="">Chọn giáo xứ</option>
                                 @endif

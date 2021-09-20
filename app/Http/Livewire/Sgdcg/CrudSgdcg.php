@@ -7,6 +7,7 @@ use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
 use App\Models\LichSuSgdcg;
 use App\Models\SoGiaDinh;
+use App\Models\TenThanh;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,8 @@ class CrudSgdcg extends Component
         $note,
         $is_giao_ho_id,
         $giao_xu,
+        $search_ten_thanh_id,
+        $giao_xu_id_old,
         $ten_chu_ho,
         $chuyen_xu_nhap_xu = 1,
         $all_giao_phan,
@@ -43,13 +46,16 @@ class CrudSgdcg extends Component
         $giao_phan_id,
         $page_number,
         $giao_hat_id;
-    public  $queryString = ['giao_ho_id', 'ten_chu_ho', 'chuyen_xu_nhap_xu','start_date', 'end_date', 'page_number'];
+    public  $queryString = ['giao_ho_id', 'ten_chu_ho',
+        'search_ten_thanh_id',
+        'chuyen_xu_nhap_xu','start_date', 'end_date', 'page_number'];
 
     public function mount()
     {
         $this->giao_ho_id = request()->query('giao_ho_id', $this->giao_ho_id);
         $this->ten_chu_ho = request()->query('ten_chu_ho', $this->ten_chu_ho);
         $this->start_date = request()->query('start_date', $this->start_date);
+        $this->search_ten_thanh_id = request()->query('search_ten_thanh_id', $this->search_ten_thanh_id);
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->page_number = request()->query('page_number', $this->page_number);
         $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
@@ -92,98 +98,75 @@ class CrudSgdcg extends Component
         // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
         // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
         // search By Chu Ho or not
-        if (!$this->ten_chu_ho){
-            $all_so_gia_dinh = SoGiaDinh::with(['getUser', 'lichSuChuyenXu','giaoXu', 'thanhVien' => function($q){
-                $q->with('tenThanh')
-                    ->where('chuc_vu_gd', 'Cha');
-            }, 'thanhVienSo2' => function($q){
-                $q->with('tenThanh')
-                    ->where('chuc_vu_gd_2', 'Cha');
-            }])
-                ->withCount(['thanhVien', 'thanhVienSo2'])
-                ->orderBy('created_at', 'DESC');
-        }else{
-            $chu_ho = $this->ten_chu_ho;
-            $all_so_gia_dinh = SoGiaDinh::with(['getUser','giaoXu', 'lichSuChuyenXu',
-            'thanhVien' , 'thanhVienSo2'])
-                ->withCount(['thanhVien', 'thanhVienSo2'])
-                ->whereHas('thanhVien', function($q) use($chu_ho){
-                    $q->with('tenThanh')
-                        ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                        ->where('chuc_vu_gd', 'Cha');
-                })
-                ->orWhereHas('thanhVienSo2',function($q) use($chu_ho){
-                    $q->with('tenThanh')
-                        ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                        ->where('chuc_vu_gd_2', 'Cha');
-                })
-                ->orderBy('created_at', 'DESC');
-        }
 
         // search By GiaoHo or not
-        if (!$this->giao_ho_id){
-            // search by All
-            if ($this->chuyen_xu_nhap_xu == 1){
-                $all_so_gia_dinh = $all_so_gia_dinh
-                    ->whereIn('giao_xu_id', $giao_ho)
-                    ->orWhereHas('lichSuChuyenXu', function ($q){
-                        $q->where('giao_xu_id', Auth::user()->giao_xu_id);
-                    });
-            }
-            // search by Nhap Xu
-            // if giao_xu_id of SGDCG == User->giao_xu_id and This SGDCG has multiple LichSuChuyenXu
-            if ($this->chuyen_xu_nhap_xu == 2){
-                $all_so_gia_dinh = $all_so_gia_dinh
-                    ->whereIn('giao_xu_id', $giao_ho)
-                    ->Where('la_nhap_xu',  1)
-                    ->orWhereHas('lichSuChuyenXu', function ($q) {
-                        $q->where('so_gia_dinh_cong_giao.giao_xu_id', Auth::user()->giao_xu_id)
-                        ;
-                    });
-            }
-            // search by Chuyen Xu
-            // if giao_xu_id of SGDCG !== User->giao_xu_id and This SGDCG has multiple LichSuChuyenXu
-            if ($this->chuyen_xu_nhap_xu == 3){
-                $all_so_gia_dinh = $all_so_gia_dinh
-                    ->WhereHas('lichSuChuyenXu', function ($q) use($giao_ho){
-                        $q->where('giao_xu_id', Auth::user()->giao_xu_id);
-                    })->where('giao_xu_id', '<>', Auth::user()->giao_xu_id);
-            }
-        }else{
+        $all_so_gia_dinh = SoGiaDinh::with(['getUser', 'lichSuChuyenXu','giaoXu', 'thanhVien' => function($q){
+            $q->with('tenThanh')
+                ->where('chuc_vu_gd', 'Cha');
+        }, 'thanhVienSo2' => function($q){
+            $q->with('tenThanh')
+                ->where('chuc_vu_gd_2', 'Cha');
+        }])
+            ->withCount(['thanhVien', 'thanhVienSo2'])
+            ->orderBy('created_at', 'DESC');
+
+        if ($this->giao_ho_id){
             $giao_ho_id = $this->giao_ho_id;
-            // search by All
-            if ($this->chuyen_xu_nhap_xu == 1){
-                $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $this->giao_ho_id)
-                    ->orWhereHas('lichSuChuyenXu', function ($q){
-                        $q->where('giao_xu_id', Auth::user()->giao_xu_id)->havingRaw('count(sgdcg_id) > 1');
-                    });
-            }
-            // search by Chuyen Xu
-            // if giao_xu_id of SGDCG == User->giao_xu_id and This SGDCG has multiple LichSuChuyenXu
+            $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $giao_ho_id);
+        }
+        if (!$this->giao_ho_id && $this->chuyen_xu_nhap_xu < 3){
+                // search by All
+            $all_so_gia_dinh = $all_so_gia_dinh->whereIn('giao_xu_id', $giao_ho);
+
             if ($this->chuyen_xu_nhap_xu == 2){
                 $all_so_gia_dinh = $all_so_gia_dinh
                     ->Where('la_nhap_xu',  1)
-                    ->where('giao_xu_id', Auth::user()->giao_xu_id)
-                    ->orWhereHas('lichSuChuyenXu', function ($q) use($giao_ho_id){
+                    ->orWhereHas('lichSuChuyenXu', function ($q){
                         $q->where('so_gia_dinh_cong_giao.giao_xu_id', Auth::user()->giao_xu_id);
                     });
             }
-            // search by Chuyen Xu
-            // if giao_xu_id of SGDCG !== User->giao_xu_id and This SGDCG has multiple LichSuChuyenXu
             if ($this->chuyen_xu_nhap_xu == 3){
-                $all_so_gia_dinh = $all_so_gia_dinh
-                    ->WhereHas('lichSuChuyenXu', function ($q) use($giao_ho_id){
-                        $q->where('giao_xu_id', Auth::user()->giao_xu_id);
-                    })->where('giao_xu_id', '<>', Auth::user()->giao_xu_id);
+                $all_so_gia_dinh = $all_so_gia_dinh->WhereHas('lichSuChuyenXu', function ($q){
+                    $q->where('lich_su_sgdcg.giao_xu_id', Auth::user()->giao_xu_id);
+                })->whereNotIn('giao_xu_id', $giao_ho);
             }
         }
         if ($this->start_date && $this->end_date){
             $all_so_gia_dinh = $all_so_gia_dinh->whereBetween('ngay_tao_so',[$this->start_date, $this->end_date]);
         }
+        if ($this->chuyen_xu_nhap_xu == 1 && !$this->ten_chu_ho ){
+            $all_so_gia_dinh = $all_so_gia_dinh->orWhereHas('lichSuChuyenXu', function ($q){
+                $q->where('giao_xu_id', Auth::user()->giao_xu_id);
+            });
+        }
+        if ($this->ten_chu_ho || $this->search_ten_thanh_id){
+        $chu_ho = $this->ten_chu_ho;
+        $search_ten_thanh = $this->search_ten_thanh_id;
+        $all_so_gia_dinh = $all_so_gia_dinh
+            ->whereHas('thanhVien', function($q) use($chu_ho, $search_ten_thanh){
+                $q->with('tenThanh')
+                    ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
+                    ->where('chuc_vu_gd', 'Cha');
+                if ($search_ten_thanh){
+                    $q->where('ten_thanh_id', $search_ten_thanh);
+                }
+            })
+            ->orWhereHas('thanhVienSo2',function($q) use($chu_ho, $search_ten_thanh){
+                $q->with('tenThanh')
+                    ->where('ho_va_ten', 'like', '%' . $chu_ho . '%')
+                    ->where('chuc_vu_gd_2', 'Cha');
+                if ($search_ten_thanh) {
+                    $q->where('ten_thanh_id', $search_ten_thanh);
+                }
+            })
+            ->orderBy('created_at', 'DESC');
+
+    }
         $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)->select('ten_giao_xu', 'id')->get();
         return view('livewire.sgdcg.crud-sgdcg')->with([
             'all_so_gia_dinh' => $all_so_gia_dinh->paginate($this->page_number),
             'all_giao_ho' => $all_giao_ho,
+            'all_ten_thanh' => TenThanh::select('id', 'ten_thanh')->get(),
         ]);
     }
 
@@ -295,10 +278,12 @@ class CrudSgdcg extends Component
                 $this->giao_xu = GiaoXu::with('giaoHat.giaoPhan')
                     ->find($this->giao_xu->giao_xu_hoac_giao_ho);
                 $this->giao_xu_id = $this->giao_xu->id;
+                $this->giao_xu_id_old =  $this->giao_xu->id;
                 $this->giao_phan_id = $this->giao_xu->giaoHat->giaoPhan->id;
                 $this->giao_hat_id = $this->giao_xu->giaoHat->id;
             }else{
                 $this->giao_xu_id =  $this->giao_xu->id;
+                $this->giao_xu_id_old =  $this->giao_xu->id;
                 $this->giao_phan_id =  $this->giao_xu->giaoHat->giaoPhan->id;
                 $this->giao_hat_id =  $this->giao_xu->giaoHat->id;
             }
@@ -321,11 +306,20 @@ class CrudSgdcg extends Component
         if ($this->sgdcg_modal){
             // Save info to LichSusgdcg when Chuyen Xu
             // $this->giao_xu->id get from edit().
-            if ($this->giao_xu->id !== $this->giao_xu_id && $this->giao_xu_id == Auth::user()->giao_xu_id){
+            if ($this->giao_xu->id !== $this->giao_xu_id && $this->giao_xu_id_old == Auth::user()->giao_xu_id){
                $this->sgdcg_modal->lichSuChuyenXu()->attach($this->giao_xu->id, [
                    'note' => $this->note,
                    'created_at' => $this->ngay_chuyen_xu,
                ]);
+                // convert GiaoXU
+                $this->sgdcg_modal->update([
+                    'ma_so' => $this->ma_so,
+                    'giao_xu_id' => $this->giao_xu_id,
+                    'ngay_tao_so' => $this->ngay_tao_so,
+                    'nguoi_khoi_tao' => Auth::id()
+                ]);
+                Toastr::success('Cập nhập thành công','Thành công');
+                return redirect()->route('so-gia-dinh.index');
             }else{
             // update Info sgdcg when chuyen xu.
                 $ls = LichSuSgdcg::where('sgdcg_id', $this->sgdcg_modal->id)
@@ -336,15 +330,10 @@ class CrudSgdcg extends Component
                         'created_at'  => $this->ngay_chuyen_xu,
                     ]);
                 }
+                Toastr::success('Cập nhập thành công','Thành công');
+                return redirect()->route('so-gia-dinh.index');
             }
-            // convert GiaoXU
-            $this->sgdcg_modal->update([
-                'ma_so' => $this->ma_so,
-                'giao_xu_id' => $this->giao_xu_id,
-                'ngay_tao_so' => $this->ngay_tao_so,
-                'nguoi_khoi_tao' => Auth::id()
-            ]);
-            Toastr::success('Cập nhập thành công','Thành công');
+            Toastr::error('Không có quyền chỉnh sửa','error');
             return redirect()->route('so-gia-dinh.index');
         }
     }
