@@ -114,12 +114,11 @@ class CrudSgdcg extends Component
             $giao_ho_id = $this->giao_ho_id;
             $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $giao_ho_id);
         }
-        if (!$this->giao_ho_id && $this->chuyen_xu_nhap_xu < 3){
+        if (!$this->giao_ho_id){
                 // search by All
-            $all_so_gia_dinh = $all_so_gia_dinh->whereIn('giao_xu_id', $giao_ho);
-
             if ($this->chuyen_xu_nhap_xu == 2){
                 $all_so_gia_dinh = $all_so_gia_dinh
+                    ->whereIn('giao_xu_id', $giao_ho)
                     ->Where('la_nhap_xu',  1)
                     ->orWhereHas('lichSuChuyenXu', function ($q){
                         $q->where('so_gia_dinh_cong_giao.giao_xu_id', Auth::user()->giao_xu_id);
@@ -137,7 +136,7 @@ class CrudSgdcg extends Component
         if ($this->chuyen_xu_nhap_xu == 1 && !$this->ten_chu_ho ){
             $all_so_gia_dinh = $all_so_gia_dinh->orWhereHas('lichSuChuyenXu', function ($q){
                 $q->where('giao_xu_id', Auth::user()->giao_xu_id);
-            });
+            })->orWhereIn('giao_xu_id', $giao_ho);
         }
         if ($this->ten_chu_ho || $this->search_ten_thanh_id){
         $chu_ho = $this->ten_chu_ho;
