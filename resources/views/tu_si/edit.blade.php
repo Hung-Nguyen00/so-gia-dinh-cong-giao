@@ -450,34 +450,13 @@
             });
 
         });
-        $(window).on('load', function() {
-            var giao_phan_id = $('#giao_phan_id').val();
-            $('#giao_hat').find('option').not(':first').remove();
-            $.ajax({
-                url: url+'/tu-si/giao-hat/'+giao_phan_id,
-                type:'get',
-                dataType:'json',
-                success:function (response) {
-                    var len = 0;
-                    if (response.data != null) {
-                        len = response.data.length;
-                    }
-                    if (len>0) {
-                        for (var i = 0; i<len; i++) {
-                            var id = response.data[i].id;
-                            var name = response.data[i].ten_giao_hat;
-                            var option = "<option value='"+id+"'>"+name+"</option>";
-                            $("#giao_hat").append(option);
-                        }
-                    }
-                    $('#giao_hat').selectpicker('refresh');
-                }
-            })
-            var giao_hat_id = $('#giao_hat').val();
-            if (giao_hat_id){
-                $('#giao_xu').find('option').not(':first').remove();
+        var giao_hat_select = $('#giao_hat').val();
+        if (!giao_hat_select || giao_hat_select === undefined){
+            $(window).on('load', function() {
+                var giao_phan_id = $('#giao_phan_id').val();
+                $('#giao_hat').find('option').not(':first').remove();
                 $.ajax({
-                    url: url+'/tu-si/giao-xu/'+giao_hat_id,
+                    url: url+'/tu-si/giao-hat/'+giao_phan_id,
                     type:'get',
                     dataType:'json',
                     success:function (response) {
@@ -488,21 +467,44 @@
                         if (len>0) {
                             for (var i = 0; i<len; i++) {
                                 var id = response.data[i].id;
-                                var name = response.data[i].ten_giao_xu;
-                                var option = '';
-                                if (response.data[i].giao_xu_hoac_giao_ho !== 0)
-                                    option = "<option value='"+id+"'>Giáo họ "+name+"</option>";
-                                else {
-                                    option = "<option value='"+id+"'>Giáo xứ "+name+"</option>";
-                                }
-                                $("#giao_xu").append(option);
+                                var name = response.data[i].ten_giao_hat;
+                                var option = "<option value='"+id+"'>"+name+"</option>";
+                                $("#giao_hat").append(option);
                             }
                         }
-                        $('#giao_xu').selectpicker('refresh');
+                        $('#giao_hat').selectpicker('refresh');
                     }
-                })
-            }
-        });
-
+                });
+                var giao_hat_id = $('#giao_hat').val();
+                if (giao_hat_id){
+                    $('#giao_xu').find('option').not(':first').remove();
+                    $.ajax({
+                        url: url+'/tu-si/giao-xu/'+giao_hat_id,
+                        type:'get',
+                        dataType:'json',
+                        success:function (response) {
+                            var len = 0;
+                            if (response.data != null) {
+                                len = response.data.length;
+                            }
+                            if (len>0) {
+                                for (var i = 0; i<len; i++) {
+                                    var id = response.data[i].id;
+                                    var name = response.data[i].ten_giao_xu;
+                                    var option = '';
+                                    if (response.data[i].giao_xu_hoac_giao_ho !== 0)
+                                        option = "<option value='"+id+"'>Giáo họ "+name+"</option>";
+                                    else {
+                                        option = "<option value='"+id+"'>Giáo xứ "+name+"</option>";
+                                    }
+                                    $("#giao_xu").append(option);
+                                }
+                            }
+                            $('#giao_xu').selectpicker('refresh');
+                        }
+                    })
+                }
+            });
+        }
     </script>
 @endsection

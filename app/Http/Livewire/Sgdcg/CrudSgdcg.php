@@ -314,7 +314,7 @@ class CrudSgdcg extends Component
         if ($this->sgdcg_modal){
             // Save info to LichSusgdcg when Chuyen Xu
             // $this->giao_xu->id get from edit().
-            if ($this->giao_xu->id !== $this->giao_xu_id){
+            if ($this->giao_xu->id !== $this->giao_xu_id && $this->giao_xu_id == Auth::user()->giao_xu_id){
                $this->sgdcg_modal->lichSuChuyenXu()->attach($this->giao_xu->id, [
                    'note' => $this->note,
                    'created_at' => $this->ngay_chuyen_xu,
