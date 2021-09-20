@@ -104,19 +104,24 @@ class CrudSgdcg extends Component
                 ->orderBy('created_at', 'DESC');
         }else{
             $chu_ho = $this->ten_chu_ho;
-            $all_so_gia_dinh = SoGiaDinh::with(['getUser','giaoXu',
-            'thanhVien' => function($q) use($chu_ho){
-                $q->with('tenThanh')
-                    ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                    ->where('chuc_vu_gd', 'Cha');
-            }, 'thanhVienSo2' => function($q) use($chu_ho){
-                $q->with('tenThanh')
-                    ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                    ->where('chuc_vu_gd_2', 'Cha');
-            } ])
+            $all_so_gia_dinh = SoGiaDinh::with(['getUser','giaoXu', 'lichSuChuyenXu',
+            'thanhVien' , 'thanhVienSo2'])
                 ->withCount(['thanhVien', 'thanhVienSo2'])
+                ->whereHas('thanhVien', function($q) use($chu_ho){
+                    $q->with('tenThanh')
+                        ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
+                        ->havingRaw('count(id) > 0')
+                        ->where('chuc_vu_gd', 'Cha');
+                })
+                ->orWhereHas('thanhVienSo2',function($q) use($chu_ho){
+                    $q->with('tenThanh')
+                        ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
+                        ->havingRaw('count(id) > 0')
+                        ->where('chuc_vu_gd_2', 'Cha');
+                })
                 ->orderBy('created_at', 'DESC');
         }
+
         // search By GiaoHo or not
         if (!$this->giao_ho_id){
             // search by All
@@ -195,7 +200,7 @@ class CrudSgdcg extends Component
     }
 
     protected $rules = [
-        'ma_so' => 'required|max:20|unique:so_gia_dinh_cong_giao',
+        'ma_so' => 'required',
         'ngay_tao_so' => 'required|date',
         'note' => 'max:1000',
     ];
@@ -231,6 +236,9 @@ class CrudSgdcg extends Component
     {
         $validatedData = $this->validate();
         $this->la_nhap_xu == 'true' ? $this->la_nhap_xu = 1 : $this->la_nhap_xu = 0;
+        if (SoGiaDinh::where('ma_so', $this->ma_so)->exists()){
+            Toastr::error('Mã sổ đã tồn tại','error');
+        }
         // if this sgdcg is own GiaoHo, then save is_giao_ho_id to sgcg
         //if this sgdcg is  null, it means it's own GiaoXu and save id of user.
         if ($this->is_giao_ho_id){
@@ -269,6 +277,7 @@ class CrudSgdcg extends Component
             $q->with('tenThanh')
                 ->where('chuc_vu_gd_2', 'Cha');
         }])->whereId($id)->first();
+        $this->edit($id);
     }
 
     public function edit($id){

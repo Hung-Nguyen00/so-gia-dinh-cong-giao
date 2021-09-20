@@ -22,9 +22,9 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
-Route::group(['middleware'=>'auth'],function()
+Route::group(['middleware'=>['auth',  'revalidate']],function()
 {
-    Route::group(['middleware'=> 'roleGiaoPhan'], function (){
+    Route::group(['middleware'=> ['roleGiaoPhan', 'revalidate']], function (){
         // import TuSi, ChucVu, ViTri
         Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
         // search TuSI by ChucVu
@@ -47,7 +47,7 @@ Route::group(['middleware'=>'auth'],function()
 
     });
 
-    Route::group(['middleware'=> 'roleGiaoXu'], function (){
+    Route::group(['middleware'=> ['roleGiaoXu', 'revalidate']], function (){
         // create and update Bi Tich
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
         // href bookmark

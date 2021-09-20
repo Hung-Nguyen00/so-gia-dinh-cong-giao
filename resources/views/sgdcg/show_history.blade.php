@@ -1,5 +1,5 @@
 <div>
-    <div wire:ignore.self class="modal  fade" id="historySgdcg" tabindex="-1" role="dialog"
+    <div wire:ignore.self class="modal fade" id="historySgdcg" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -48,30 +48,68 @@
                 <div class="modal-body">
                     <div  class="card-body">
                         <div class="table-responsive">
-                            <table  class="table display" style="min-width: 500px">
+                            <table  class="table display" style="min-width: 600px">
                                 <thead class="thead-primary">
                                 <tr>
                                     <th class="text-center" style="width: 50px">STT</th>
-                                    <th style="width: 150px">Tên giáo xứ</th>
-                                    <th class="text-center" style="width: 150px">Ngày chuyển xứ</th>
+                                    <th style="width: 400px">Tên giáo xứ</th>
+                                    <th class="text-center" style="width: 200px">Ngày chuyển xứ</th>
                                     <th class="text-center" style="width: 250px;">Ghi chú</th>
                                 </tr>
                                 </thead>
                                 <tbody >
-                                 @php $i = 0; @endphp
+                                 @php $i = 0; $history_before = null; $t = 0 @endphp
                                  @if($show_history_sgdcg)
                                     @foreach($show_history_sgdcg->lichSuChuyenXu as $s)
-                                    <tr>
-                                        <td class="text-center">{{ ++$i }}</td>
-                                        <td>GP: {{ $s->giaoPhan->ten_giao_phan }}
-                                            <br>
-                                            GX: {{ $s->ten_giao_xu }}
-                                        </td>
-                                        <td class="text-center">{{ \Carbon\Carbon::parse($s->pivot->created_at)->format('d-m-Y') }}</td>
-                                        <td class="text-break">{{ $s->pivot->note }}</td>
-                                    </tr>
+                                        @php ++$t; @endphp
+                                        @if(sizeof($show_history_sgdcg->lichSuChuyenXu) == 1)
+                                            <tr>
+                                                <td class="text-center">{{ ++$i }}</td>
+                                                <td>Từ: <strong>GP: {{ $s->giaoPhan->ten_giao_phan }} - GX: {{ $s->ten_giao_xu }} </strong>
+                                                    <br>
+                                                    Đến:  <strong>GP: {{ $s->giaoPhan->ten_giao_phan }} - GX: {{ $s->ten_giao_xu }}</strong>
+                                                </td>
+                                                <td class="text-center">{{ \Carbon\Carbon::parse($s->pivot->created_at)->format('d-m-Y') }}
+
+                                                </td>
+                                                <td class="text-break">{{ $s->pivot->note }}</td>
+                                            </tr>
+                                        @endif
+                                        @if($t == 1)
+                                            @php  $history_before = $s @endphp
+                                            @continue
+                                        @endif
+
+                                        @if($history_before !== null)
+                                            <tr>
+                                                <td class="text-center">{{ ++$i }}</td>
+                                                <td>Từ: <strong>GP: {{ $history_before->giaoPhan->ten_giao_phan }} - GX: {{ $history_before->ten_giao_xu }} </strong>
+                                                    @if($history_before !== $s)
+                                                        <br>
+                                                        Đến:  <strong>GP: {{ $s->giaoPhan->ten_giao_phan }} - GX: {{ $s->ten_giao_xu }}</strong>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{ \Carbon\Carbon::parse($history_before->pivot->created_at)->format('d-m-Y') }}
+
+                                                </td>
+                                                <td class="text-break">{{ $history_before->pivot->note }}</td>
+                                            </tr>
+                                            @if($t == sizeof($show_history_sgdcg->lichSuChuyenXu))
+                                               <tr>
+                                                   <td class="text-center">{{ ++$i }}</td>
+                                                   <td>Từ: <strong>GP: {{ $s->giaoPhan->ten_giao_phan }} - GX: {{ $s->ten_giao_xu }} </strong>
+                                                       <br>
+                                                       Đến: <strong>GP: {{ $giao_xu->giaoPhan->ten_giao_phan }} - GX: {{ $giao_xu->ten_giao_xu }}</strong>
+                                                   </td>
+                                                   <td class="text-center">{{ \Carbon\Carbon::parse($s->pivot->created_at)->format('d-m-Y') }}
+                                                   </td>
+                                                   <td class="text-break">{{ $s->pivot->note }}</td>
+                                               </tr>
+                                            @endif
+                                            @php  $history_before = $s @endphp
+                                        @endif
                                     @endforeach
-                             @endif
+                                @endif
                                 </tbody>
                             </table>
                         </div>

@@ -4,8 +4,8 @@
     @include('sgdcg.delete_giao_phan')
     @include('sgdcg.edit_sgdcg')
     @include('sgdcg.show_history')
-    @include('sgdcg.import');
-    <div class="card-header pt-0 pb-0">
+    @include('sgdcg.import')
+    <div class="card-header pt-2 pb-0">
         <h4 class="card-title">Danh sách các sổ gia đình công giáo </h4>
         <div>
             <a href="{{ route('sgdcg-file-export', ['name' => 'sgdcg'])}}"
@@ -172,6 +172,7 @@
                             </button>
                         </td>
                         <td>
+                            @if(\Auth::user()->giao_xu_id == $g->giao_xu_id)
                             <button type="button"
                                     wire:click="edit({{ $g->id }})"
                                     class="btn btn-sm btn-primary mb-1"
@@ -185,6 +186,22 @@
                                     class="btn btn-outline-danger btn-sm d-inline-block mb-1">
                                 <i class="la la-trash-o"></i>
                             </button>
+                            @else
+                                <button type="button"
+                                        disabled
+                                        class="btn btn-sm btn-primary mb-1"
+                                        data-toggle="modal"
+                                        data-target="#editSgdcg">
+                                    <i class="la  fs-16 la-pencil"></i>
+                                </button>
+                                <button type="button"
+                                        disabled
+                                        data-toggle="modal"
+                                        data-target="#deleteModal"
+                                        class="btn btn-sm btn-danger mb-1">
+                                    <i class="la la-trash-o"></i>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

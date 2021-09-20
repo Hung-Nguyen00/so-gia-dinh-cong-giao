@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckRoleGiaoPhan;
 use App\Http\Middleware\CheckRoleGiaoXu;
+use App\Http\Middleware\RevalidateBackHistory;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roleGiaoPhan' => CheckRoleGiaoPhan::class,
         'roleGiaoXu' => CheckRoleGiaoXu::class,
+        'revalidate' => RevalidateBackHistory::class,
     ];
 }

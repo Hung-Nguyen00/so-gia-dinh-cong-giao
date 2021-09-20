@@ -12,10 +12,7 @@
                         <form wire:submit.prevent="store">
                             <div class="form-group">
                                 <label for="">Mã sổ</label>
-                                <input type="text" wire:model="ma_so" class="form-control" placeholder="Nhập mã sổ">
-                                @if($errors->has('ma_so'))
-                                    <span class="text-danger">{{ $errors->first('ma_so') }}</span>
-                                @endif
+                                <input type="text" wire:model="ma_so" disabled class="form-control bg-light" placeholder="Nhập mã sổ">
                             </div>
                             <div class="form-group">
                                 <label for="">Giáo họ (nếu thuộc giáo họ)</label>
