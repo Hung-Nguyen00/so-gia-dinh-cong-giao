@@ -110,13 +110,11 @@ class CrudSgdcg extends Component
                 ->whereHas('thanhVien', function($q) use($chu_ho){
                     $q->with('tenThanh')
                         ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                        ->havingRaw('count(id) > 0')
                         ->where('chuc_vu_gd', 'Cha');
                 })
                 ->orWhereHas('thanhVienSo2',function($q) use($chu_ho){
                     $q->with('tenThanh')
                         ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                        ->havingRaw('count(id) > 0')
                         ->where('chuc_vu_gd_2', 'Cha');
                 })
                 ->orderBy('created_at', 'DESC');
