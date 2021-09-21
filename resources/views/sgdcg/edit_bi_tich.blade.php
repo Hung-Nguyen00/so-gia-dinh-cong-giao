@@ -173,6 +173,7 @@
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên linh mục hoặc giám mục</lable>
                                                             <select class="selectpicker  form-control pt-2" name="tu_si_id" id="tu_si" data-live-search="true" >
+                                                                <option value="" selected>Chọn tu sĩ</option>
                                                                 @foreach($all_tu_si as $cv)
                                                                         @if($cv->giaoXu)
                                                                             @if($cv->id == $bi_tich_detail->tu_si_id)
@@ -213,6 +214,9 @@
                                                                value="{{ old('linh_muc_ngoai') ?? $bi_tich_detail->linh_muc_ngoai }}"
                                                                name="linh_muc_ngoai">
                                                     </div>
+                                                    @if($errors->has('linh_muc_ngoai'))
+                                                        <span class="text-danger  font-weight-bold">{{ $errors->first('linh_muc_ngoai')  }}</span>
+                                                    @endif
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
@@ -463,7 +467,12 @@
                                                                 {{ $th->noi_dien_ra }}
                                                             </td>
                                                             <td>
-                                                                {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
+                                                                @if($th->tuSi)
+                                                                 {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
+                                                                @endif
+                                                                @if($th->linh_muc_ngoai)
+                                                                    {{ $th->linh_muc_ngoai}}
+                                                                @endif
                                                             </td>
                                                             <td class="text-center d-flex justify-content-center">
                                                                 @if($th->id == $bi_tich_detail->id)

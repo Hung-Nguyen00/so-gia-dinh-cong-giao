@@ -61,7 +61,7 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
 
         //statistic
-        Route::get('giao-xu/thong-ke', [GiaoPhanController::class, 'indexGiaoXu'])->name('giaoXu.statistic');
+
 
         Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
         Route::get('giao-xu/tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
@@ -94,7 +94,8 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
     Route::get('tu-si/giao-ho/{id}', [GiaoHatController::class, 'getGiaoHo']);
-
+    // statistic
+    Route::get('giao-xu/thong-ke', [GiaoPhanController::class, 'indexGiaoXu'])->name('giaoXu.statistic');
     // import chucVu, Vitri, TenThanh
     Route::post('file-import-chuc-vu', [TenThanhController::class, 'fileImport'])->name('ten-thanh-import');
     // export

@@ -63,18 +63,13 @@ class GiaoPhanController extends Controller
         $linh_muc = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
             $q->where('ten_vi_tri', 'Cha xứ');
         })->where('giao_xu_id', Auth::user()->giao_xu_id)->first();
-        if ($linh_muc && $giao_xu){
-            return view('dashboard.static_giao_xu', compact(
-                'giao_xu',
-                'static_tu',
-                'static_ket_hon',
-                'static_sinh',
-                'linh_muc'));
-        }else{
-            Toastr::error('Không có dữ liệu', 'Cảnh báo');
-            return redirect()->route('home');
-        }
 
+        return view('dashboard.static_giao_xu', compact(
+            'giao_xu',
+            'static_tu',
+            'static_ket_hon',
+            'static_sinh',
+            'linh_muc'));
     }
 
     public function fileImport(Request $request){

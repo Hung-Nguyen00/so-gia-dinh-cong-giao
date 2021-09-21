@@ -47,7 +47,6 @@ class ImportBiTichXTTSSheet implements ToCollection, WithHeadingRow
                 })
                 ->first();
 
-
             $so_gia_dinh = SoGiaDinh::with('thanhVien')
                 ->whereHas('thanhVien',
                     function ($q) use($ho_va_ten_cha, $ten_thanh_cha) {

@@ -61,16 +61,16 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
             if ($count == 0 || $this->flag){
                 // get id GX by User
                 $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
-                $last_sgdcg = SoGiaDinh::latest()->withTrashed()->first()->id;
+
                 $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
                 $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
                 $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
 
-                if ($last_sgdcg){
-                    $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg + 1);
-                }else{
-                    $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. 0;
-                }
+                $ma_giao_xu = $name_GP. '-'.$name_GH. '-'. $name_GX .'-';
+                $last_sgdcg = SoGiaDinh::latest('giao_xu_id')->withTrashed()
+                    ->where('ma_so', 'like', $ma_giao_xu.'%')
+                    ->count();
+                $ma_so = $ma_giao_xu.($last_sgdcg + 1);
                 // create so_gia_dinh
                 $this->so_gia_dinh = SoGiaDinh::create([
                     'ma_so' => $ma_so,

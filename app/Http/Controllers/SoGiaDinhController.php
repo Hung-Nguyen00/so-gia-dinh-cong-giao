@@ -84,14 +84,15 @@ class SoGiaDinhController extends Controller
                 'ten_thanh',
                 'ngay_sinh')->get();
         $query_bi_tich = DB::table('bi_tich_da_nhan as btdn')
-            ->join('tu_si as ts', 'ts.id', '=', 'btdn.tu_si_id')
-            ->join('ten_thanh as tt', 'tt.id', '=', 'ts.ten_thanh_id')
-            ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
+            ->leftJoin('tu_si as ts', 'ts.id', '=', 'btdn.tu_si_id')
+            ->leftJoin('ten_thanh as tt', 'tt.id', '=', 'ts.ten_thanh_id')
+            ->leftJoin('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
             ->select('btdn.thanh_vien_id as thanh_vien_id',
                 'ts.ho_va_ten as ten_linh_muc',
                 'ten_bi_tich',
                 'tt.ten_thanh as ten_thanh_linh_muc',
                 'ngay_dien_ra',
+                'linh_muc_ngoai',
                 'noi_dien_ra',
                 'ten_nguoi_lam_chung_1',
                 'ten_thanh_nguoi_lam_chung_1',
@@ -276,27 +277,31 @@ class SoGiaDinhController extends Controller
     public function storeBiTich(Request $request, $sgdId, ThanhVien $thanh_vien){
         $validateData = $this->validateBiTich($request);
         $bi_tich = BiTich::find($request->bi_tich_id);
-        $sgdcg = SoGiaDinh::with('giaoXu')->find($sgdId);
         // check BiTich HonNhan
-        if ($bi_tich->la_hon_nhan == 1)
+        if ($bi_tich->ten_bi_tich == 'Hôn phối')
         {
             // take request and validate merge to a array, $sgdId use to check tu_si_id
-            // match tu_si_id in sgdcg table because BiTICH: HonNhan must be tu_si in sgdcg promulgate
-             $hon_nhan_info = $this->validateHonNhan($request, $validateData, $sgdcg);
+             $hon_nhan_info = $this->validateHonNhan($request, $validateData);
             // create new SogiaDinh when he or she married
-            $new_sgdcg = $this->createNewSGDCG($request->ngay_dien_ra);
-            // update new SogiaDinh
-            $thanh_vien->update([
-               'so_gia_dinh_id_2' => $new_sgdcg->id,
-                'chuc_vu_gd_2' => $thanh_vien->gioi_tinh ? 'Cha': 'Mẹ'
-            ]);
+            $sgdcg = null;
+            if ($thanh_vien->chuc_vu_gd == 'Con'){
+                $sgdcg = $this->createNewSGDCG($request->ngay_dien_ra);
+                // update new SogiaDinh
+                $thanh_vien->update([
+                    'so_gia_dinh_id_2' => $sgdcg->id,
+                    'chuc_vu_gd_2' => $thanh_vien->gioi_tinh ? 'Cha': 'Mẹ'
+                ]);
+            }
+            if (!$sgdcg){
+                $sgdcg = SoGiaDinh::find($sgdId);
+            }
             // update
             $thanh_vien->biTich()->attach($request->bi_tich_id,
                  array_merge($hon_nhan_info,
                      [ 'nguoi_khoi_tao' => Auth::id()]
                  ));
              Toastr::success('Cập nhập thành công', 'Thành công');
-             return redirect()->route('so-gia-dinh.show', $new_sgdcg);
+             return redirect()->route('so-gia-dinh.show', $sgdcg);
         }else{
             $not_hon_nhan =  $this->validateNotHonNhan($request, $validateData);
             $thanh_vien->biTich()->attach($request->bi_tich_id,
@@ -344,12 +349,14 @@ class SoGiaDinhController extends Controller
             'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
             ]
         );
-        $sgdcg = SoGiaDinh::find($sgdId);
+        if ($request->linh_muc_ngoai && $request->tu_si_id ){
+            throw ValidationException::withMessages(['linh_muc_ngoai' => 'Không được phép nhập 2 linh mục cùng một lúc.']);
+        }
         $bi_tich_received = BiTichDaNhan::find($bi_tich_id);
         $la_hon_nhan = $bi_tich_received->getBiTich($bi_tich_received->bi_tich_id)->la_hon_nhan;
         // check to save the right data
         if ($la_hon_nhan){
-            $nhan_bi_tich = $this->validateHonNhan($request, $validateData, $sgdcg);
+            $nhan_bi_tich = $this->validateHonNhan($request, $validateData);
             $bi_tich_received->update(array_merge($nhan_bi_tich,
                 ['nguoi_khoi_tao' => Auth::id()]
             ));;
@@ -453,13 +460,16 @@ class SoGiaDinhController extends Controller
             'linh_muc_ngoai' => 'nullable',
             'ngay_dien_ra' => 'required|date'
         ],[
-            'bi_tich_id' => 'Bí tích không được phép trống',
+            'bi_tich_id.required' => 'Bí tích không được phép trống',
             'noi_dien_ra.required' => 'Nơi diễn ra không được phép trống',
             'noi_dien_ra.max' => 'Nơi diễn ra không được phép vượt quá 150 ký tự',
             'ngay_dien_ra.required' => 'Ngày diễn ra không được phép trống',
             'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
             ]
         );
+        if ($request->linh_muc_ngoai && $request->tu_si_id ){
+            throw ValidationException::withMessages(['linh_muc_ngoai' => 'Linh mục trong lựa chọn ở trên không được phép có giá trị']);
+        }
         return $validateData;
     }
     public function validateCreateThanhVien($request){
@@ -507,12 +517,8 @@ class SoGiaDinhController extends Controller
         }
         return $validateData;
     }
-    public function validateHonNhan($request, $FirstValidate, $sgdcg){
+    public function validateHonNhan($request, $FirstValidate){
 
-        $tu_si = TuSi::find($request->tu_si_id);
-        if ($tu_si->giao_xu_id !== $sgdcg->giaoXu->id){
-            throw ValidationException::withMessages(['tu_si_id' => 'Linh mục phải trùng khớp trong sổ gia đình công giáo']);
-        }
         $validateData = $this->validate($request, [
             'ten_nguoi_lam_chung_1' => 'required|max:100',
             'ten_thanh_nguoi_lam_chung_1' => 'required|exists:App\Models\TenThanh,ten_thanh',
@@ -583,15 +589,15 @@ class SoGiaDinhController extends Controller
 
     public function createNewSGDCG($ngay_dien_ra){
         $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])->where('id', Auth::user()->giao_xu_id)->first();
-        $last_sgdcg = SoGiaDinh::latest()->withTrashed()->first()->id;
         $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
         $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
         $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
-        if ($last_sgdcg){
-            $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg + 1);
-        }else{
-            $ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. 0;
-        }
+
+        $ma_giao_xu = $name_GP. '-'.$name_GH. '-'. $name_GX .'-';
+        $last_sgdcg = SoGiaDinh::latest('giao_xu_id')->withTrashed()
+            ->where('ma_so', 'like', $ma_giao_xu.'%')
+            ->count();
+        $ma_so = $ma_giao_xu.($last_sgdcg + 1);
         // create so_gia_dinh
         $so_gia_dinh = SoGiaDinh::create([
             'ma_so' => $ma_so,

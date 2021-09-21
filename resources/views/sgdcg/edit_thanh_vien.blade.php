@@ -453,7 +453,12 @@
                                                                     {{ $th->noi_dien_ra }}
                                                                 </td>
                                                                 <td>
-                                                                    {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
+                                                                    @if($th->tuSi)
+                                                                        {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
+                                                                    @endif
+                                                                    @if($th->linh_muc_ngoai)
+                                                                        {{ $th->linh_muc_ngoai}}
+                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <a type="button"

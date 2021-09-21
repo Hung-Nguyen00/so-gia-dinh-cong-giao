@@ -80,16 +80,15 @@ class CrudSgdcg extends Component
             ->where('id', Auth::user()->giao_xu_id)->first();
         //create ma_code from GP GH GX
         if (!$this->ma_so){
-            $last_sgdcg = SoGiaDinh::latest('giao_xu_id')->withTrashed()->first()->id;
             $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
             $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
             $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
 
-            if (!$last_sgdcg){
-                $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. 0;
-            }else{
-                $this->ma_so = $name_GP. '-'.$name_GH. '-'. $name_GX .'-'. ($last_sgdcg + 1);
-            }
+            $ma_giao_xu = $name_GP. '-'.$name_GH. '-'. $name_GX .'-';
+            $last_sgdcg = SoGiaDinh::latest('giao_xu_id')->withTrashed()
+                ->where('ma_so', 'like', $ma_giao_xu.'%')
+                ->count();
+            $this->ma_so = $ma_giao_xu.($last_sgdcg + 1);
         }
 
         $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();

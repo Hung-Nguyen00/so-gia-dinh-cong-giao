@@ -143,7 +143,7 @@
                                 <p class="pl-2">- Người đỡ đầu {{ $bt->ten_thanh_nguoi_do_dau. ' '. $bt->ten_nguoi_do_dau }}</p>
                             @endif
                                 @php $countLoop ++; @endphp
-                                @if($countLoop == $thanh_vien_me_bt->count())
+                                @if($countLoop == $thanh_vien_cha_bt->count())
                                     @if($countLoop == 2)
                                         <p>2.2 Xưng tội sức ngày: ..............................
                                             tại: ....................................</p>
@@ -168,7 +168,7 @@
                                 @endif
                        @endforeach
                         <h4 class="title fs-22 text-left" >Đã chịu phép hôn phối</h4>
-                        @foreach($thanh_vien_me_bt as $bt)
+                        @foreach($thanh_vien_cha_bt as $bt)
                             @if($bt->ten_bi_tich == 'Hôn phối')
                                 <div class="mt--3">
                                     <p>Người chứng 1: {{ $bt->ten_thanh_nguoi_lam_chung_2 .' '. $bt->ten_nguoi_lam_chung_2 }}</p>
@@ -260,7 +260,13 @@
                             @if($bt->ten_bi_tich == 'Hôn phối')
                             <h4 class="title fs-22" style="text-align: left">Ngày: {{ \Carbon\Carbon::parse($bt->ngay_dien_ra)->format('d-m-Y') }}  tại {{ $bt->noi_dien_ra }}</h4>
                             <div class="mt--3">
-                                <p>Linh mục chứng hôn: {{ $bt->ten_thanh_linh_muc .' '. $bt->ten_linh_muc }}</p>
+                                <p>Linh mục chứng hôn:
+                                    @if($bt->linh_muc_ngoai)
+                                        {{ $bt->linh_muc_ngoai }}
+                                        @else
+                                        {{ $bt->ten_thanh_linh_muc .' '. $bt->ten_linh_muc }}
+                                    @endif
+                                </p>
                                 <p>Người chứng 1: {{ $bt->ten_thanh_nguoi_lam_chung_2 .' '. $bt->ten_nguoi_lam_chung_2 }}</p>
                                 <p>Người chứng 2: {{ $bt->ten_thanh_nguoi_lam_chung_2 .' '. $bt->ten_nguoi_lam_chung_2 }}</p>
                             </div>
