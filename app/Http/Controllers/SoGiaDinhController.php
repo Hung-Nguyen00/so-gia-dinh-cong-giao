@@ -594,10 +594,14 @@ class SoGiaDinhController extends Controller
         $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
 
         $ma_giao_xu = $name_GP. '-'.$name_GH. '-'. $name_GX .'-';
-        $last_sgdcg = SoGiaDinh::latest('giao_xu_id')->withTrashed()
+        $last_sgdcg = SoGiaDinh::latest('id')->withTrashed()
             ->where('ma_so', 'like', $ma_giao_xu.'%')
-            ->count();
-        $ma_so = $ma_giao_xu.($last_sgdcg + 1);
+            ->orderBy('created_at', 'ASC')
+            ->first();
+        // get number max ma_code
+        preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
+        $max_number = $matches[0][0];
+        $ma_so = $ma_giao_xu.($max_number + 1);
         // create so_gia_dinh
         $so_gia_dinh = SoGiaDinh::create([
             'ma_so' => $ma_so,
