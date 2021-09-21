@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ 'home }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý tài khoản</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Thêm tài khoản</a></li>
                     </ol>
@@ -123,6 +123,9 @@
                                                                     data-live-search="true"
                                                                     class="selectpicker form-control pt-2">
                                                                 <option selected value=""> Chọn tên giáo hạt</option>
+                                                                @foreach($all_giao_hat as $gh)
+                                                                    <option value="{{ $gh->id }}" {{ old('giao_hat_id') == $gh->id ? 'selected' : '' }}> {{ $gh->ten_giao_hat }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -136,6 +139,9 @@
                                                                     id="giao_xu"
                                                                     name="giao_xu_id">
                                                                 <option selected value="">Chọn tên giáo xứ</option>
+                                                                @foreach($all_giao_xu as $gh)
+                                                                    <option value="{{ $gh->id }}" {{ old('giao_xu_id') == $gh->id ? 'selected' : '' }}> {{ $gh->ten_giao_hat }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>

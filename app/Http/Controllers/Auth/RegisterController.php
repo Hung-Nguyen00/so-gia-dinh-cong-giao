@@ -23,7 +23,7 @@ class RegisterController extends Controller
         $all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho',0)->get();
         $all_quyen_han = QuyenQuanTri::all();
         return view('auth.register', compact('all_quyen_han',
-            'all_giao_phan', 'all_giao_hat', $all_giao_xu));
+            'all_giao_phan', 'all_giao_hat', 'all_giao_xu'));
     }
     public function storeUser(Request $request)
     {
@@ -61,7 +61,6 @@ class RegisterController extends Controller
         if ($name_role->ten_quyen === 'Giáo phận' && $request->giao_xu_id){
             throw  ValidationException::withMessages(['giao_xu_id' => 'Giáo xứ sẽ không được chọn khi quyền hạn là Giáo phận']);
         }
-
         return $validateData;
     }
 }

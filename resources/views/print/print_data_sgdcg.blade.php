@@ -74,7 +74,7 @@
                 <div class="pl-3">
                     <h4 class="title fs-50 text-center">Sổ gia đình</h4>
                     <div class="logo" style="margin-bottom: 90px">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgGAdNsYO4aX4lapdhBf3nEhoHaQVvFfv1w&usqp=CAU" alt="">
+                        <img src="https://res.cloudinary.com/def1jq5sb/image/upload/v1632200244/images_qsi31r.jpg" alt="">
                     </div>
                     <h4 class="title fs-25" style="margin-top: 20px">Gia đình: {{ $thanh_vien_cha->ten_thanh . ' ' . $thanh_vien_cha->ho_va_ten }}</h4>
                     <div class="mt--3">

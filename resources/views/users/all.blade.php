@@ -33,7 +33,7 @@
                                             </div>
                                          @else
                                             <div class="d-flex justify-content-around">
-                                                <a class="btn btn-primary" href="{{ route('register') }}">Tạo tài khoản</a>
+                                                <a class="btn btn-primary" href="{{ route('register.user') }}">Tạo tài khoản</a>
                                             </div>
                                         @endif
 
