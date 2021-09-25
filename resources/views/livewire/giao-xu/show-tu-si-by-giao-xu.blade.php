@@ -93,8 +93,8 @@
                             <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Họ và tên</th>
                                 <th>Tên thánh</th>
+                                <th>Họ và tên</th>
                                 <th >Ngày sinh</th>
                                 <th >Ngày tử</th>
                                 <th>Tên dòng</th>
@@ -108,10 +108,10 @@
                             @foreach($all_tu_si as $th)
                                 <tr >
                                     <td class="text-center"> {{ ++$i }}</td>
-                                    <td> {{ $th->ho_va_ten }}</td>
                                     <td>
                                         {{ $th->tenThanh->ten_thanh }}
                                     </td>
+                                    <td> {{ $th->ho_va_ten }}</td>
                                     <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
                                     <td>@if($th->ngay_tu)
                                         {{ \Carbon\Carbon::parse($th->ngay_tu)->format('d-m-Y') }}
