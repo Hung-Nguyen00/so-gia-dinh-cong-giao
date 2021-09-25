@@ -189,6 +189,11 @@
                                             <button class="dropdown-item font-weight-bold"
                                                     wire:click="edit({{ $th->id }})"
                                                     data-toggle="modal" data-target="#uploadAvatar" >Đổi ảnh đại diện</button>
+                                            <a type="button"
+                                               href="{{ route('tu-si.editCongTac', $th)}}"
+                                               class="dropdown-item font-weight-bold">
+                                               Chuyển xứ
+                                            </a>
                                             <button class="dropdown-item font-weight-bold text-danger"
                                                     wire:click="edit({{ $th->id }})"
                                                     data-toggle="modal" data-target="#deleteTuSi">Xóa</button>

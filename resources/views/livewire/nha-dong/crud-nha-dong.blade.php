@@ -28,7 +28,7 @@
                     <th >Tên dòng</th>
                     <th>Địa chỉ</th>
                     <th>Năm thành lập</th>
-                    <th>Số lượng giáo họ</th>
+                    <th>Số lượng tu sĩ</th>
                     <th >Người cập nhập</th>
                     <th>Cập nhập lần cuối</th>
                     <th>Chỉnh sửa</th>
