@@ -75,7 +75,7 @@ class LoginController extends Controller
         $remember_me    =   $request->has('remember_me')? true:false;
         if(auth()->attempt(['email'=>$email,'password'=>$password],$remember_me))
         {
-            return redirect()->intended('home');
+            return redirect()->route('ten-thanh.index');
         }else{
             Toastr::error('Tài khoản hoặc mật khẩu không chính xác','Error');
             return back();
