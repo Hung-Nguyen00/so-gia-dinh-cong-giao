@@ -18,18 +18,18 @@ class CrudNhaDong extends Component
         $all_nha_dong;
 
     protected $rules = [
-        'ten_nha_dong' => 'required:max:100',
+        'ten_nha_dong' => 'required:max:50',
         'dia_chi' => 'required|max:250',
-        'nam_thanh_lap' => 'max:2500',
-        'ngay_thanh_lap' => 'date|nullable'
+        'nam_thanh_lap' => 'digits:4',
+        'ngay_thanh_lap' => 'nullable'
     ];
 
     protected $messages = [
         'ten_nha_dong.required' => ':attribute không được phép trống',
-        'ten_nha_dong.max' => ':attribute không được vượt quá 100 kí tự',
+        'ten_nha_dong.max' => ':attribute không được vượt quá :max kí tự',
         'dia_chi.required' => ':attribute không được phép trống',
         'dia_chi.max' => ':attribute không vượt quá :max ký tự',
-        'nam_thanh_lap.max' => ':attribute không được phép lớn hơn :max',
+        'nam_thanh_lap.digits' => ':attribute chỉ được phép 4 chữ số',
         'ngay_thanh_lap.date' => ':attribute phải đúng dạng ngày tháng năm'
     ];
 

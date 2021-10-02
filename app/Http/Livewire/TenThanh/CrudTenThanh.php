@@ -21,24 +21,20 @@ class CrudTenThanh extends Component
     }
 
     protected $rules = [
-        'ten_thanh' => 'required|max:50',
-
+        'ten_thanh' => 'required|max:50|unique:ten_thanh,ten_thanh',
     ];
 
     protected $messages = [
         'ten_thanh.required' => ':attribute không được phép trống',
         'ten_thanh.max' => ':attribute không được vượt quá :max',
-
+        'ten_thanh.unique' => ':attribute đã tồn tại'
     ];
 
     protected $validationAttributes = [
         'ten_thanh' => 'Tên thánh',
 
     ];
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
+
 
     public function clearData(){
         $this->ten_thanh = '';
@@ -50,10 +46,16 @@ class CrudTenThanh extends Component
     }
 
     public function update(){
-        $validateData = $this->validate();
+        $validatedData = $this->validate([
+            'ten_thanh' => 'required|max:50',
+        ],[
+            'ten_thanh.required' => ':attribute không được phép trống',
+            'ten_thanh.max' => ':attribute không được vượt quá :max',
+         ]
+        );
         TenThanh::find($this->ten_thanh_id);
         if ($this->ten_thanh_model){
-            $this->ten_thanh_model->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
+            $this->ten_thanh_model->update(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
             Toastr::success('Cập nhập tên thánh thành công','Thành công');
             return redirect()->route('ten-thanh.index');
         }else{
