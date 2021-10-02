@@ -44,7 +44,6 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
             'giao-hat' => GiaoHatController::class,
             'chuc-vu' => ChucVuController::class,
         ]);
-
     });
 
     Route::group(['middleware'=> ['roleGiaoXu', 'revalidate']], function (){

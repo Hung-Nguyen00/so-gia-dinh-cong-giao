@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class CrudChucVu extends Component
 {
-  
+
     public  $all_chuc_vu, $ten_chuc_vu, $chuc_vu_id, $chuc_vu_model;
 
     public function render()

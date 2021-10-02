@@ -44,14 +44,15 @@ class CrudTenThanh extends Component
         $this->ten_thanh = '';
     }
     public function edit($id){
-        $this->ten_thanh = TenThanh::find($id)->ten_thanh;
-        $this->ten_thanh_model = TenThanh::find($id);
+       $ten_thanh = TenThanh::find($id);
+        $this->ten_thanh = $ten_thanh->ten_thanh;
+        $this->ten_thanh_model = $ten_thanh;
     }
 
     public function update(){
         $validateData = $this->validate();
         TenThanh::find($this->ten_thanh_id);
-        if ($this->ten_thanh_model ){
+        if ($this->ten_thanh_model){
             $this->ten_thanh_model->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id()]));
             Toastr::success('Cập nhập tên thánh thành công','Thành công');
             return redirect()->route('ten-thanh.index');
