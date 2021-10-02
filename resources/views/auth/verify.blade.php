@@ -10,7 +10,7 @@
                        </div>
                    @endif
                       <p>Click vào nút bên dưới để chuyển sang trang đặt lại mặt khẩu</p>
-                   <button class="btn btn-outline-primary" href="{{ url('/reset-password/'.$token) }}">Đặt lại mật khẩu</button>
+                   <a class="btn btn-outline-primary" href="{{ url('/reset-password/'.$token) }}">Đặt lại mật khẩu</a>
                </div>
            </div>
        </div>
