@@ -29,7 +29,7 @@ class GiaoPhanController extends Controller
         $all_giao_phan = GiaoPhan::with('getUser')
             ->withCount('giaoHat')
             ->orderBy('created_at', 'DESC')
-            ->get();;
+            ->get();
 
         return view('giao_phan.all_giao_phan', compact('all_giao_phan'));
     }

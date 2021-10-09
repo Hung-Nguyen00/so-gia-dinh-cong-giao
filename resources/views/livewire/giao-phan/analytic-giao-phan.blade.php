@@ -429,5 +429,6 @@
             pieChart.data.labels = Object.keys(dataBiTich);
             pieChart.update();
         });
+
     </script>
 @endpush

@@ -2,41 +2,41 @@
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label first">Các menu chính</li>
-            {{--<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">--}}
-                    {{--<i class="la la-home"></i>--}}
-                    {{--<span class="nav-text">Bảng thống kê</span>--}}
-                {{--</a>--}}
-                {{--<ul aria-expanded="false">--}}
-                    {{--<li><a href="{{ route('home') }}">Toàn giáo hội công giáo</a></li>--}}
-                    {{--<li>--}}
-                        {{--<a href="{{ route('home.giaoPhan') }}">--}}
-                            {{--Thống kê giáo phận</a></li>--}}
-                    {{--<li>--}}
-                        {{--<a href="{{ route('home.giaoXu')}}">--}}
-                            {{--Thống kê giáo xứ</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-            {{--@if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')--}}
-            {{--<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">--}}
-                    {{--<i class="la la-home"></i>--}}
-                    {{--<span class="nav-text">Quản lý giáo phận</span>--}}
-                {{--</a>--}}
-                {{--<ul aria-expanded="false">--}}
-                    {{--<li><a href="{{ route('giao-tinh.index') }}">Các giáo tỉnh</a></li>--}}
-                    {{--<li><a href="{{ route('giao-phan.index')}}">Các giáo phận</a></li>--}}
-                    {{--<li><a href="{{ route('giao-hat.index') }}">Các giáo hạt</a></li>--}}
-                    {{--<li><a href="{{ route('giao-xu.index') }}">Các giáo xứ</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-            {{--<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">--}}
-                    {{--<i class="la la-users"></i>--}}
-                    {{--<span class="nav-text">Quản lý tu sĩ</span>--}}
-                {{--</a>--}}
-                {{--<ul aria-expanded="false">--}}
-                    {{--<li><a href="{{ route('tu-si.index')}}">Tu sĩ</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-            {{--@endif--}}
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-home"></i>
+                    <span class="nav-text">Bảng thống kê</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('home') }}">Toàn giáo hội công giáo</a></li>
+                    <li>
+                        <a href="{{ route('home.giaoPhan') }}">
+                            Thống kê giáo phận</a></li>
+                    <li>
+                        <a href="{{ route('home.giaoXu')}}">
+                            Thống kê giáo xứ</a></li>
+                </ul>
+            </li>
+            @if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-home"></i>
+                    <span class="nav-text">Quản lý giáo phận</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('giao-tinh.index') }}">Các giáo tỉnh</a></li>
+                    <li><a href="{{ route('giao-phan.index')}}">Các giáo phận</a></li>
+                    <li><a href="{{ route('giao-hat.index') }}">Các giáo hạt</a></li>
+                    <li><a href="{{ route('giao-xu.index') }}">Các giáo xứ</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-users"></i>
+                    <span class="nav-text">Quản lý tu sĩ</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('tu-si.index')}}">Tu sĩ</a></li>
+                </ul>
+            </li>
+            @endif
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-pencil"></i>
                     <span class="nav-text">Quản lý chung</span>
