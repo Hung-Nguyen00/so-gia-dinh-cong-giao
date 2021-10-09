@@ -11,9 +11,9 @@
                     <li>
                         <a href="{{ route('home.giaoPhan') }}">
                             Thống kê giáo phận</a></li>
-                    <li>
-                        <a href="{{ route('home.giaoXu')}}">
-                            Thống kê giáo xứ</a></li>
+                    {{--<li>--}}
+                        {{--<a href="{{ route('home.giaoXu')}}">--}}
+                            {{--Thống kê giáo xứ</a></li>--}}
                 </ul>
             </li>
             @if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')
