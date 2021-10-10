@@ -32,8 +32,6 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         // import and export excel GT GP GH GX
         Route::post('file-import', [GiaoPhanController::class, 'fileImport'])->name('GP-file-import');
         Route::get('file-export', [GiaoPhanController::class, 'fileExport'])->name('GP-file-export');
-        // search Tusi is belong Nha Dong
-        Route::get('tu-dong/search', [TuSiController::class, 'searchTuSiDong'])->name('tu-dong.search');
         //// ------------------------------ register ---------------------------------//
         Route::get('them-tai-khoan', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.user');
         Route::post('dang-ki', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register.store');

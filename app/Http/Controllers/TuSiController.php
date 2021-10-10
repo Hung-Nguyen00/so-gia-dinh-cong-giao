@@ -70,9 +70,6 @@ class TuSiController extends Controller
         return back();
     }
 
-//    public function fileExport(){
-//        return Excel::download(new GiaoPhanExport, 'giao-phan.xlsx');
-//    }
 
 
     public function searchTuSi(Request $request){
@@ -104,21 +101,6 @@ class TuSiController extends Controller
 
     }
 
-    public function searchTuSiDong(Request $request){
-        if (ChucVu::find($request->chuc_vu_id)){
-            $all_tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu'])
-                ->where('chuc_vu_id', $request->chuc_vu_id)
-                ->whereNotNull('nha_dong_id')
-                ->orderBy('created_at', 'DESC')
-                ->get();
-            $chuc_vu_id = ChucVu::find($request->chuc_vu_id)->id;
-            $all_chuc_vu = ChucVu::all();
-            return view('tu_si.thuoc_dong', compact('all_tu_si', 'chuc_vu_id', 'all_chuc_vu'));
-        }else{
-            return back();
-        }
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -126,16 +108,7 @@ class TuSiController extends Controller
      */
     public function create()
     {
-        $all_ten_thanh = TenThanh::orderBy('ten_thanh')->get();
-        $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-        $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
-        $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();
-        return view('tu_si.add', compact(
-            'all_chuc_vu',
-            'all_nha_dong',
-            'all_giao_phan',
-            'all_ten_thanh'
-            ));
+        return view('tu_si.add');
     }
 
     /**
@@ -180,32 +153,25 @@ class TuSiController extends Controller
      */
     public function edit(TuSi $tuSi)
     {
+        $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
+            ->orWhere('id',  Auth::user()->giao_xu_id)
+            ->pluck('id');
         if (Auth::user()->quanTri->ten_quyen == 'admin') {
             $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
                 ->where('id', $tuSi->id)->first();
-        }else{
+        }elseif(Auth::user()->quanTri->ten_quyen == 'Giáo phận'){
             $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
                 ->where('giao_phan_id', Auth::user()->giao_phan_id)
-                ->where('id', $tuSi->id)
+                ->whereId($tuSi->id)
+                ->first();
+        }else{
+            $tu_si = TuSi::with(['giaoPhan', 'giaoHat', 'giaoXu', 'tenThanh', 'chucVu', 'viTri'])
+                ->whereIn('giao_xu_id', $giao_ho)
+                ->whereId($tuSi->id)
                 ->first();
         }
         if($tu_si){
-            $all_ten_thanh = TenThanh::select('id', 'ten_thanh')->orderBy('ten_thanh')->get();
-            $all_giao_xu = GiaoXu::select('id', 'ten_giao_xu', 'giao_xu_hoac_giao_ho')->get();
-            $all_giao_hat = GiaoHat::select('id', 'ten_giao_hat')->get();
-            $all_vi_tri = ViTri::select('id', 'ten_vi_tri')->get();
-            $all_nha_dong = NhaDong::select('id', 'ten_nha_dong')->get();
-            $all_giao_phan = GiaoPhan::with('giaoTinh')->get();
-            $all_chuc_vu = ChucVu::select('id', 'ten_chuc_vu')->get();
-            return view('tu_si.edit', compact('tu_si',
-                'all_chuc_vu',
-                'all_giao_xu',
-                'all_giao_hat',
-                'all_nha_dong',
-                'all_giao_phan',
-                'all_ten_thanh',
-                'all_vi_tri'));
-
+            return view('tu_si.edit', compact('tu_si'));
         }else{
             return back();
         }
@@ -220,57 +186,6 @@ class TuSiController extends Controller
      */
     public function update(TuSiRequest $request, TuSi $tuSi)
     {
-        $validateData = $request->validated();
-        $dang_du_hoc = 0;
-        // save old info when change GX.
-        $old_tu_si = $tuSi;
-        // check textbox from form
-        if (array_key_exists('dang_du_hoc', $validateData)){
-            $dang_du_hoc = 1;
-        }
-        if ($validateData['check_save_info'] == 1){
-
-            // save info when change Chuc_Vu to lich_su_nhan_chuc table
-            if ($validateData['chuc_vu_id'] !== $tuSi->chuc_vu_id && $validateData['ngay_nhan_chuc'] !== $tuSi->ngay_nhan_chuc ){
-                LichSuNhanChuc::create([
-                    'ngay_nhan_chuc' => $old_tu_si->ngay_nhan_choi,
-                    'noi_nhan_chuc' => $old_tu_si->noi_nhan_chuc,
-                    'chuc_vu' => $old_tu_si->chucVu->ten_chuc_vu,
-                    'tu_si_id' => $tuSi->id,
-                    'nguoi_khoi_tao' => Auth::id(),
-                ]);
-            }
-            $tuSi->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
-            Toastr::success('Cập nhập thành công','Thành công');
-            return redirect()->route('tu-si.edit', $tuSi);
-        }else{
-            // save info when change GX to lich_su_cong_tac table
-            if ($validateData['bat_dau_phuc_vu'] == null){
-                throw ValidationException::withMessages(['bat_dau_phuc_vu' => 'Ngày bắt đầu phục vụ không được phép trống']);
-            }
-            if ($validateData['ket_thuc_phuc_vu'] == null){
-                throw ValidationException::withMessages(['ket_thuc_phuc_vu' => 'Ngày kết thúc phục vụ không được phép trống']);
-            }
-            if ($validateData['giao_xu_id'] == null){
-                throw ValidationException::withMessages(['giao_xu_id' => 'Giáo xứ không được phép trống']);
-            }
-            if ($validateData['vi_tri_id'] == null){
-                throw ValidationException::withMessages(['giao_xu_id' => 'Vị trí không được phép trống']);
-            }
-            $tuSi->update(array_merge($validateData, ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $dang_du_hoc]));
-             LichSuCongTac::create([
-                 'tu_si_id' => $tuSi->id,
-                'ten_giao_phan' => $old_tu_si->giaoPhan->ten_giao_phan,
-                'ten_giao_hat' => $old_tu_si->giaoHat->ten_giao_hat,
-                'ten_giao_xu' => $old_tu_si->giaoXu->ten_giao_xu,
-                'bat_dau_phuc_vu' => $old_tu_si->bat_dau_phuc_vu,
-                'ket_thuc_phuc_vu' => $tuSi->ket_thuc_phuc_vu,
-                'ten_vi_tri' => $old_tu_si->viTri->ten_vi_tri
-            ]);
-            Toastr::success('Cập nhập thành công','Thành công');
-            return redirect()->route('tu-si.edit', $tuSi);
-        }
-
 
     }
 
