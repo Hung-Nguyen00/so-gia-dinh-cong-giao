@@ -210,7 +210,7 @@
             </div>
             <div class="col-lg-12 mt-2 col-md-12 col-sm-12 mt-3">
                 <div id="cong_tac" class="form-group ">
-                    <h5 class="font-weight-bold">Thông tin chuyển nơi phục vụ giáo xứ</h5>
+                    <h5 class="font-weight-bold">Thông tin về phục vụ giáo xứ</h5>
                 </div>
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -264,7 +264,7 @@
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group">
-                    <label class="form-label">Ngày bắt đầu phục vụ giáo xứ mới</label>
+                    <label class="form-label">Ngày bắt đầu nhiệm sở mới</label>
                     <input type="date" class="form-control "
                            value="{{ old('bat_dau_phuc_vu') ?? $tu_si->bat_dau_phuc_vu }}"
                            wire:model="bat_dau_phuc_vu"
@@ -277,7 +277,7 @@
 
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group">
-                    <label class="form-label">Ngày kết thúc giáo xứ đã phục vụ</label>
+                    <label class="form-label">Ngày kết thúc nhiệm sở cũ</label>
                     <input type="date" class="form-control "
                            value="{{ old('ket_thuc_phuc_vu') ?? $tu_si->ket_thuc_phuc_vu }}"
                            wire:model="ket_thuc_phuc_vu"
