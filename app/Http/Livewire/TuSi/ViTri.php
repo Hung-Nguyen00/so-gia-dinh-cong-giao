@@ -22,7 +22,7 @@ class ViTri extends Component
     }
 
     protected $rules = [
-        'ten_vi_tri' => 'required|max:50',
+        'ten_vi_tri' => 'required|max:45',
 
     ];
 

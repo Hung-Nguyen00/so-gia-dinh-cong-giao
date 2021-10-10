@@ -19,7 +19,7 @@ class CrudNhaDong extends Component
 
     protected $rules = [
         'ten_nha_dong' => 'required:max:50',
-        'dia_chi' => 'required|max:250',
+        'dia_chi' => 'required|max:100',
         'nam_thanh_lap' => 'digits:4',
         'ngay_thanh_lap' => 'nullable'
     ];

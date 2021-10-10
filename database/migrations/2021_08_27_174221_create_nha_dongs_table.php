@@ -16,7 +16,7 @@ class CreateNhaDongsTable extends Migration
         Schema::create('nha_dong', function (Blueprint $table) {
             $table->id();
             $table->string('ten_nha_dong', 50);
-            $table->string('dia_chi', 250);
+            $table->string('dia_chi', 100);
             $table->date('ngay_thanh_lap')->nullable();
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
 

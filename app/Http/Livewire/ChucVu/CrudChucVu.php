@@ -22,7 +22,7 @@ class CrudChucVu extends Component
     }
 
     protected $rules = [
-        'ten_chuc_vu' => 'required:max:50',
+        'ten_chuc_vu' => 'required:max:45',
 
     ];
 

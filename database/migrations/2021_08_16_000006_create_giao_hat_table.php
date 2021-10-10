@@ -23,7 +23,7 @@ class CreateGiaoHatTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ten_giao_hat', 100)->nullable();
+            $table->string('ten_giao_hat', 45)->nullable();
             $table->date('ngay_thanh_lap')->nullable();
             $table->integer('nguoi_khoi_tao')->nullable();
             $table->timestamps();

@@ -22,8 +22,8 @@ class CrudGiaoHat extends Component
         $loading = false;
 
     protected $rules = [
-        'ten_giao_hat' => 'required:max:100',
-        'nam_thanh_lap' => 'max:2500',
+        'ten_giao_hat' => 'required:max:45',
+        'nam_thanh_lap' => 'digits:4',
         'giao_phan_id' => 'required',
         'ngay_thanh_lap' => 'date|nullable'
     ];
@@ -32,7 +32,7 @@ class CrudGiaoHat extends Component
         'ten_giao_hat.required' => ':attribute không được phép trống',
         'ten_giao_hat.max' => ':attribute không được vượt quá 100 kí tự',
         'giao_phan_id.required' => ':attribute không được phép trống',
-        'nam_thanh_lap.max' => ':attribute không được phép lớn hơn :max',
+        'nam_thanh_lap.digits' =>  ':attribute chỉ được phép 4 chữ số',
         'ngay_thanh_lap.date' => ':attribute phải đúng dạng ngày tháng năm'
     ];
 

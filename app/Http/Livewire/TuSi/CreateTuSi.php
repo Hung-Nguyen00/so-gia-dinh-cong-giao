@@ -41,7 +41,7 @@ class CreateTuSi extends Component
 
 
     protected $rules = [
-        'ho_va_ten' => 'required|max:100',
+        'ho_va_ten' => 'required|max:45',
         'ten_thanh_id' => 'required',
         'nha_dong_id' => 'nullable',
         'chuc_vu_id' => 'required',
@@ -54,8 +54,8 @@ class CreateTuSi extends Component
         'ngay_sinh' => 'required|date|nullable',
         'ngay_mat' => 'date|nullable|after:ngay_sinh',
         'so_dien_thoai' =>'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        'dia_chi_hien_tai' => 'max:250|nullable',
-        'noi_nhan_chuc' => 'max:250|nullable',
+        'dia_chi_hien_tai' => 'max:100|nullable',
+        'noi_nhan_chuc' => 'max:100|nullable',
         'dang_du_hoc' => 'nullable',
     ];
 

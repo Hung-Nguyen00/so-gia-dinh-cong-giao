@@ -23,16 +23,16 @@ class CreateTuSiTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ho_va_ten', 100)->nullable();
-            $table->string('email', 100)->nullable();
+            $table->string('ho_va_ten', 50)->nullable();
+            $table->string('email', 50)->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->date('ngay_mat')->nullable();
             $table->date('bat_dau_phuc_vu')->nullable();
             $table->date('ket_thuc_phuc_vu')->nullable();
-            $table->string('dia_chi_hien_tai', 250)->nullable();
+            $table->string('dia_chi_hien_tai', 100)->nullable();
             $table->string('so_dien_thoai', 11)->nullable();
             $table->date('ngay_nhan_chuc')->nullable();
-            $table->string('noi_nhan_chuc', 250)->nullable();
+            $table->string('noi_nhan_chuc', 100)->nullable();
             $table->boolean('dang_du_hoc')->nullable();
             $table->char('la_tong_giam_muc', 1)->nullable();
             $table->boolean('gioi_tinh');

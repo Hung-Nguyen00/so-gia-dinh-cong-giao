@@ -23,11 +23,11 @@ class CreateThanhVienTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ho_va_ten', 100)->nullable();
+            $table->string('ho_va_ten', 50)->nullable();
             $table->string('chuc_vu_gd', 10)->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->date('ngay_mat')->nullable();
-            $table->string('dia_chi_hien_tai', 250)->nullable();
+            $table->string('dia_chi_hien_tai', 100)->nullable();
             $table->string('so_dien_thoai', 11)->nullable();
             $table->string('giao_xu', 25)->nullable();
             $table->string('giao_phan', 25)->nullable();

@@ -23,12 +23,12 @@ class AddNew extends Component
         $nam_thanh_lap;
 
     protected $rules = [
-        'ten_giao_phan' => 'required:max:100',
-        'dia_chi' => 'required|max:250',
+        'ten_giao_phan' => 'required:max:45',
+        'dia_chi' => 'required|max:100',
         'ngay_thanh_lap' => 'nullable|date',
         'nam_thanh_lap' => 'max:2500',
         'giao_tinh_id' => 'required',
-        'ten_nha_tho' => 'required|max:100'
+        'ten_nha_tho' => 'required|max:45'
     ];
 
     protected $messages = [

@@ -23,7 +23,7 @@ class CrudBiTich extends Component
     }
 
     protected $rules = [
-        'ten_bi_tich' => 'required:max:50',
+        'ten_bi_tich' => 'required:max:45',
 
     ];
 

@@ -23,9 +23,9 @@ class CreateGiaoPhanTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ten_giao_phan', 100)->nullable();
-            $table->string('dia_chi', 250)->nullable();
-            $table->string('ten_nha_tho', 100)->nullable();
+            $table->string('ten_giao_phan', 45)->nullable();
+            $table->string('dia_chi', 100)->nullable();
+            $table->string('ten_nha_tho', 45)->nullable();
             $table->date('ngay_thanh_lap')->nullable();
             $table->timestamps();
             $table->softDeletes();

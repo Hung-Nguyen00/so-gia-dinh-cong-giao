@@ -24,7 +24,7 @@ class CreateLichSuNhanChucTable extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->date('ngay_nhan_chuc')->nullable();
-            $table->string('noi_nhan_chuc', 250)->nullable();
+            $table->string('noi_nhan_chuc', 50)->nullable();
             $table->string('chuc_vu', 50)->nullable();
 
             $table->timestamps();

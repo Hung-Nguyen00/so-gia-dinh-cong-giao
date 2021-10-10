@@ -22,9 +22,9 @@ class CrudGiaoHo extends Component
         $giao_ho_id;
 
     protected $rules = [
-        'ten_giao_xu' => 'required:max:100',
-        'dia_chi' => 'required|max:250',
-        'nam_thanh_lap' => 'max:2500',
+        'ten_giao_xu' => 'required:max:45',
+        'dia_chi' => 'required|max:100',
+        'nam_thanh_lap' => 'digits:4',
         'ngay_thanh_lap' => 'date|nullable',
     ];
 
@@ -33,7 +33,7 @@ class CrudGiaoHo extends Component
         'ten_giao_xu.max' => ':attribute không được vượt quá 100 kí tự',
         'dia_chi.required' => ':attribute không được phép trống',
         'dia_chi.max' => ':attribute không vượt quá :max ký tự',
-        'nam_thanh_lap.max' => ':attribute không được phép lớn hơn :max',
+        'nam_thanh_lap.digits' =>  ':attribute chỉ được phép 4 chữ số',
         'ngay_thanh_lap.date' => ':attribute phải đúng dạng ngày tháng năm'
     ];
 

@@ -21,7 +21,7 @@ class CrudGiaoTinh extends Component
         $nam_thanh_lap;
 
     protected $rules = [
-        'ten_giao_tinh' => 'required:max:100',
+        'ten_giao_tinh' => 'required:max:45',
     ];
 
     protected $messages = [

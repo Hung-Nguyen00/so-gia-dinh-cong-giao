@@ -21,7 +21,7 @@ class CrudTenThanh extends Component
     }
 
     protected $rules = [
-        'ten_thanh' => 'required|max:50|unique:ten_thanh,ten_thanh',
+        'ten_thanh' => 'required|max:45|unique:ten_thanh,ten_thanh',
     ];
 
     protected $messages = [

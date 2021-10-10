@@ -23,8 +23,8 @@ class CreateGiaoXuTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('ten_giao_xu', 100)->nullable();
-            $table->string('dia_chi', 250)->nullable();
+            $table->string('ten_giao_xu', 45)->nullable();
+            $table->string('dia_chi', 100)->nullable();
             $table->date('ngay_thanh_lap')->nullable();
             $table->integer('giao_xu_hoac_giao_ho')->default(0);
 

@@ -22,8 +22,8 @@ class CrudGiaoXu extends Component
         $all_giao_xu;
 
     protected $rules = [
-        'ten_giao_xu' => 'required:max:100',
-        'dia_chi' => 'required|max:250',
+        'ten_giao_xu' => 'required:max:45',
+        'dia_chi' => 'required|max:100',
         'nam_thanh_lap' => 'max:2500',
         'giao_hat_id' => 'required',
         'ngay_thanh_lap' => 'date|nullable'
