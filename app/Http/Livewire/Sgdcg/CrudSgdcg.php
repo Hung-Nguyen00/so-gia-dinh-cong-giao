@@ -90,9 +90,13 @@ class CrudSgdcg extends Component
                 ->orderBy('created_at', 'ASC')
                 ->first();
             // get number max ma_code
-            preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
-            $max_number = $matches[0][0];
-            $this->ma_so = $ma_giao_xu.($max_number + 1);
+            $max_number = null;
+            if($last_sgdcg){
+                preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
+                $max_number = $matches[0][0];
+            }
+            $number = $max_number ? $max_number : 0;
+            $this->ma_so = $ma_giao_xu.($number + 1);
         }
 
         $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();

@@ -61,56 +61,27 @@ class AllThanhVien extends Component
         if ($this->ten_thanh_id !== null && $this->ten_thanh_id !== ''){
             $this->ten_thanh = TenThanh::where('id', $this->ten_thanh_id)->first('id')->toArray();
         }
+        $all_thanh_vien = ThanhVien::with(['soGiaDinh', 'soGiaDinh2','tenThanh'])
+            ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
+                $q->whereIn('giao_xu_id', $giao_ho);
+            })
+            ->orWhereHas('soGiaDinh2', function ($q) use ($giao_ho){
+                $q->whereIn('giao_xu_id', $giao_ho);
+            })
+            ->search(trim($this->ho_va_ten))
+            ->WhereIn('ten_thanh_id', array_values($this->ten_thanh));
+
         if ($this->sinh_or_tu == 1){
+            $all_thanh_vien = $all_thanh_vien->whereBetween('ngay_sinh', [$this->start_date, $this->end_date]);
 
-            return view('livewire.sgdcg.all-thanh-vien', [
-                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'soGiaDinh2','tenThanh'])
-                        ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
-                            $q->whereIn('giao_xu_id', $giao_ho);
-                        })
-                        ->orWhereHas('soGiaDinh2', function ($q) use ($giao_ho){
-                            $q->whereIn('giao_xu_id', $giao_ho);
-                        })
-                        ->search(trim($this->ho_va_ten))
-                        ->whereBetween('ngay_sinh', [$this->start_date, $this->end_date])
-                        ->WhereIn('ten_thanh_id', array_values($this->ten_thanh))
-                        ->paginate($this->paginate_number),
-                    'all_bi_tich' => BiTich::all(),
-                    'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
-                ]
-            );
-        }elseif($this->sinh_or_tu == 2){
-            return view('livewire.sgdcg.all-thanh-vien', [
-                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh','soGiaDinh2', 'tenThanh'])
-                        ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
-                            $q->whereIn('giao_xu_id', $giao_ho);
-                        })
-                        ->orWhereHas('soGiaDinh2', function ($q) use ($giao_ho){
-                            $q->whereIn('giao_xu_id', $giao_ho);
-                        })
-                        ->search(trim($this->ho_va_ten))
-                        ->whereBetween('ngay_mat', [$this->start_date, $this->end_date])
-                        ->WhereIn('ten_thanh_id', array_values($this->ten_thanh))
-                        ->paginate($this->paginate_number),
-                    'all_bi_tich' => BiTich::all(),
-                    'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
-                ]
-            );
-        }else{
-            return view('livewire.sgdcg.all-thanh-vien', [
-                    'all_thanh_vien' => ThanhVien::with(['soGiaDinh', 'soGiaDinh2', 'tenThanh'])
-                        ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
-                            $q->whereIn('giao_xu_id', $giao_ho);
-                        })
-                        ->search(trim($this->ho_va_ten))
-                        ->WhereIn('ten_thanh_id', array_values($this->ten_thanh))
-                        ->paginate($this->paginate_number),
-                    'all_bi_tich' => BiTich::all(),
-                    'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
-                ]
-            );
+        }elseif ($this->sinh_or_tu == 2){
+            $all_thanh_vien = $all_thanh_vien->whereBetween('ngay_mat', [$this->start_date, $this->end_date]);
         }
+        return view('livewire.sgdcg.all-thanh-vien', [
+                'all_thanh_vien' => $all_thanh_vien->paginate($this->paginate_number),
+                'all_bi_tich' => BiTich::all(),
+                'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
+            ]
+        );
     }
-
-
 }

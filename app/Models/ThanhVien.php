@@ -69,7 +69,6 @@ class ThanhVien extends Model
         $query->where(function ($query) use ($term){
            $query->where('ho_va_ten', 'like', $term);
         });
-
     }
 
     public function getUser(){

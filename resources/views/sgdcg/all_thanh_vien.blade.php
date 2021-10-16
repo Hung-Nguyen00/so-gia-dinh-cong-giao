@@ -36,7 +36,7 @@
                                                     class="btn btn-primary" style="margin-top: 11px !important;">Import  thêm sức hoặc xưng tội
                                             </button>
                                         </div>
-                                    </div>c
+                                    </div>
                                     <div class="p-4">
                                         @livewire('sgdcg.all-thanh-vien')
                                     </div>

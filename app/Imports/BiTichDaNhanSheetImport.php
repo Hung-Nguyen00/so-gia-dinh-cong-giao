@@ -71,9 +71,13 @@ class BiTichDaNhanSheetImport implements ToCollection, WithHeadingRow
                     ->where('ma_so', 'like', $ma_giao_xu.'%')
                     ->orderBy('created_at', 'ASC')
                     ->first();
-                preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
-                $max_number = $matches[0][0];
-                $ma_so = $ma_giao_xu.($max_number + 1);
+                $max_number = null;
+                if($last_sgdcg){
+                    preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
+                    $max_number = $matches[0][0];
+                }
+                $number = $max_number ? $max_number : 0;
+                $ma_so = $ma_giao_xu.($number + 1);
                 // create so_gia_dinh
                 $this->so_gia_dinh = SoGiaDinh::create([
                     'ma_so' => $ma_so,
