@@ -35,6 +35,9 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach($rows as $row){
+            if ($row['ho_va_ten'] == null){
+                break;
+            }
             $la_tong_giam_muc = '';
             $chuc_vu = $this->chuc_vu->where('ten_chuc_vu', trim($row['ten_chuc_vu']))->first();
             $vi_tri = $this->vi_tri->where('ten_vi_tri', trim($row['ten_vi_tri_phuc_vu']))->first();
@@ -72,11 +75,11 @@ class TuSISheetImport implements ToCollection, WithHeadingRow
                 'giao_phan_id' => $giao_phan ?  $giao_phan->id : null,
                 'giao_hat_id' => $giao_hat ? $giao_hat->id : null,
                 'giao_xu_id' => $giao_xu ? $giao_xu->id : null,
-                'ten_thanh_id' => $ten_thanh->id ,
+                'ten_thanh_id' => $ten_thanh->id,
                 'chuc_vu_id' => $chuc_vu->id,
                 'nha_dong_id' => $ten_dong ? $ten_dong->id : null,
                 'bat_dau_phuc_vu' => $row['ngay_bat_dau_phuc_vu'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_bat_dau_phuc_vu']) : null,
-                'vi_tri_id' =>  $vi_tri ? $vi_tri->id : null
+                'vi_tri_id' =>  $vi_tri ? $vi_tri->id : null,
             ]);
         }
 

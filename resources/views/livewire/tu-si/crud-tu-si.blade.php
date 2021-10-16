@@ -144,7 +144,7 @@
                             </td>
                             <td>
                                 @if($th->giao_xu_id)
-                                    Giáo hạt: {{ $th->giaoHat->ten_giao_hat }}
+                                    Giáo hạt: {{ $th->giaoHat ? $th->giaoHat->ten_giao_hat : '' }}
                                     <br>
                                     Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
                                 @else
