@@ -12,7 +12,7 @@ class LichSuPhucVu extends Component
 
     public function render()
     {
-        $this->lich_su_cong_tac = LichSuCongTac::where('tu_si_id', $this->tu_si->id)->get();
+        $this->lich_su_cong_tac = LichSuCongTac::where('tu_si_id', $this->tu_si->id)->orderBy('id', 'DESC')->get();
         return view('livewire.tu-si.lich-su-phuc-vu');
     }
 

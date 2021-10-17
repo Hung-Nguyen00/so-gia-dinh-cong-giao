@@ -1,6 +1,7 @@
 <div>
     @include('tu_si.upload_avatar')
     @include('tu_si.delete_tu_si')
+    @include('tu_si.update_ngay_mat')
     <div style="padding-left: 20px">
         @if($active)
             <button class="btn btn-sm btn-outline-danger font-weight-bold" wire:click.prevent="changeView">
@@ -106,7 +107,7 @@
                     <input type="date"  wire:model="end_date"  class="form-control">
                 </div>
             </div>
-        @if(!$active)
+        @if($active==0)
         <div>
             <div class="table-responsive" >
                 <table class="table display" style="min-width: 1080px;  margin-top: 10px">
@@ -116,7 +117,7 @@
                         <th>Tên thánh</th>
                         <th>Họ và tên</th>
                         <th>Ngày sinh</th>
-                        <th>Ngày tử</th>
+                        <th class="text-center">Ngày mất</th>
                         <th>Du học</th>
                         <th>Đang phục vụ</th>
                         <th class="text-center">Chuyển công tác</th>
@@ -133,9 +134,16 @@
                             </td>
                             <td> {{ $th->ho_va_ten }}</td>
                             <td>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}</td>
-                            <td>@if($th->ngay_tu)
-                                    {{ \Carbon\Carbon::parse($th->ngay_tu)->format('d-m-Y') }}
+                            <td class="text-center">@if($th->ngay_mat)
+                                    {{ \Carbon\Carbon::parse($th->ngay_mat)->format('d-m-Y') }}
                                 @endif
+                                <button type="button"
+                                        wire:click="edit({{ $th->id }})"
+                                        class="btn btn-sm btn-primary mb-1"
+                                        data-toggle="modal"
+                                        data-target="#updateNgayMat">
+                                    <i class="la  fs-16 la-pencil"></i>
+                                </button>
                             </td>
                             <td>
                                 @if($th->dang_du_hoc == 1)
@@ -256,7 +264,7 @@
     </div>
 
 </div>
-@section('scripts')
+@push('scripts')
     <script>
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
@@ -271,4 +279,4 @@
             }
         });
     </script>
-@endsection
+@endpush

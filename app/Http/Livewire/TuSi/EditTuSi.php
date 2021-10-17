@@ -80,8 +80,6 @@ class EditTuSi extends Component
         $this->ngay_nhan_chuc = $this->tu_si->ngay_nhan_chuc;
         $this->noi_nhan_chuc = $this->tu_si->noi_nhan_chuc;
         $this->dang_du_hoc = $this->tu_si->dang_du_hoc ? true : false;
-        $this->bat_dau_phuc_vu = $this->tu_si->bat_dau_phuc_vu;
-        $this->ket_thuc_phuc_vu = $this->tu_si->ket_thuc_phuc_vu;
         $this->giao_hat_id = $this->tu_si->giao_hat_id ;
         $this->giao_xu_id = $this->tu_si->giao_xu_id ;
         $this->ten_thanh_id = $this->tu_si->ten_thanh_id ;
@@ -108,7 +106,6 @@ class EditTuSi extends Component
         'noi_nhan_chuc' => 'max:100|nullable',
         'bat_dau_phuc_vu' => 'date|nullable|after:ket_thuc_phuc_vu',
         'ket_thuc_phuc_vu' => 'date|nullable',
-        'check_save_info' => 'required',
         'giao_xu_id' => 'nullable',
         'giao_hat_id' => 'nullable',
         'vi_tri_id' => 'nullable'
@@ -132,7 +129,6 @@ class EditTuSi extends Component
         'ket_thuc_phuc_vu.date' => ':attribute phải là giá trị ngày tháng năm',
         'so_dien_thoai.min' => ':attribute không được nhỏ hơn :min ký tự',
         'so_dien_thoai.regex' => ':attribute phải là chữ số',
-        'check_save_info.required' => 'Hãy lựa chọn phương thức lưu thông tin',
         'bat_dau_phuc_vu.after' => 'Ngày bắt đầu phục vụ giáo xứ mới phải lớn hơn ngày kết thúc.',
         'email.email' => 'Giá trị nhập phải đúng dạng email',
         'la_tong_giam_muc.max' => 'Chức vị không trùng khớp',
@@ -154,58 +150,87 @@ class EditTuSi extends Component
         'so_dien_thoai' => 'Số điện thoại'
     ];
 
+
     public function update()
     {
         $validatedData = $this->validate();
         $this->dang_du_hoc = $this->dang_du_hoc ? 1 : 0;
-        if ($validatedData['check_save_info'] == 1) {
-            if ($validatedData['chuc_vu_id'] !== $this->tu_si->chuc_vu_id
-                && $validatedData['ngay_nhan_chuc'] !== $this->tu_si->ngay_nhan_chuc) {
-                LichSuNhanChuc::create([
-                    'ngay_nhan_chuc' => $this->tu_si->ngay_nhan_choi,
-                    'noi_nhan_chuc' => $this->tu_si->noi_nhan_chuc,
-                    'chuc_vu' => $this->tu_si->chucVu->ten_chuc_vu,
-                    'tu_si_id' => $this->tu_si->id,
-                    'nguoi_khoi_tao' => Auth::id(),
-                ]);
-            }
-            $this->tu_si->update(array_merge($validatedData,
-                ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $this->dang_du_hoc]
-            ));
-            Toastr::success('Cập nhập thành công', 'Thành công');
-            return redirect()->route('tu-si.edit', $this->tu_si);
-        } else {
-            // save info when change GX to lich_su_cong_tac table
-            $this->validateForChuyenXu($validatedData);
-            LichSuCongTac::create([
+        if ($validatedData['chuc_vu_id'] !== $this->tu_si->chuc_vu_id
+            && $validatedData['ngay_nhan_chuc'] !== $this->tu_si->ngay_nhan_chuc) {
+            LichSuNhanChuc::create([
+                'ngay_nhan_chuc' => $this->tu_si->ngay_nhan_chuc,
+                'noi_nhan_chuc' => $this->tu_si->noi_nhan_chuc,
+                'chuc_vu' => $this->tu_si->chucVu->ten_chuc_vu,
                 'tu_si_id' => $this->tu_si->id,
-                'ten_giao_phan' => $this->tu_si->giaoPhan->ten_giao_phan,
-                'ten_giao_hat' =>$this->tu_si->giaoHat->ten_giao_hat,
-                'ten_giao_xu' => $this->tu_si->giaoXu->ten_giao_xu,
-                'bat_dau_phuc_vu' => $this->tu_si->bat_dau_phuc_vu,
-                'ket_thuc_phuc_vu' => $this->tu_si->ket_thuc_phuc_vu,
-                'ten_vi_tri' => $this->tu_si->viTri->ten_vi_tri
+                'nguoi_khoi_tao' => Auth::id(),
             ]);
-            $this->tu_si->update(array_merge($validatedData,
-                ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $this->dang_du_hoc]
-            ));
-            Toastr::success('Cập nhập thành công', 'Thành công');
-            return redirect()->route('tu-si.edit', $this->tu_si);
         }
+        $this->tu_si->update(array_merge($validatedData,
+            ['nguoi_khoi_tao' => Auth::id(), 'dang_du_hoc' => $this->dang_du_hoc]
+        ));
+        Toastr::success('Cập nhập thành công', 'Thành công');
+        return redirect()->route('tu-si.edit', $this->tu_si);
     }
 
-    public  function validateForChuyenXu($validatedData){
-        if ($validatedData['bat_dau_phuc_vu'] == null) {
-            throw ValidationException::withMessages(['bat_dau_phuc_vu' => 'Ngày bắt đầu phục vụ không được phép trống']);
+    public function endNhiemSo(){
+        if($this->tu_si->ket_thuc_phuc_vu){
+            throw ValidationException::withMessages(['ket_thuc_phuc_vu' => 'Ngày kết thúc đã tồn tại hãy chọn chức năng cập nhập']);
         }
-        if ($validatedData['ket_thuc_phuc_vu'] == null) {
-            throw ValidationException::withMessages(['ket_thuc_phuc_vu' => 'Ngày kết thúc phục vụ không được phép trống']);
+        if ($this->ket_thuc_phuc_vu == null) {
+            throw ValidationException::withMessages(['ket_thuc_phuc_vu' => 'Ngày kết thúc nhiệm sở không được phép trống']);
         }
-        if ($validatedData['giao_xu_id'] == null) {
-            throw ValidationException::withMessages(['giao_xu_id' => 'Giáo xứ không được phép trống']);
+        if ($this->tu_si->bat_dau_phuc_vu == null){
+            throw ValidationException::withMessages(['ket_thuc_phuc_vu' => 'Không có nhiệm sở nào để kết thúc.']);
         }
-        if ($validatedData['vi_tri_id'] == null) {
-            throw ValidationException::withMessages(['giao_xu_id' => 'Vị trí không được phép trống']);
-        }
+        LichSuCongTac::create([
+            'tu_si_id' => $this->tu_si->id,
+            'ten_giao_phan' => $this->tu_si->giaoPhan->ten_giao_phan,
+            'ten_giao_hat' =>$this->tu_si->giaoHat->ten_giao_hat,
+            'ten_giao_xu' => $this->tu_si->giaoXu->ten_giao_xu,
+            'bat_dau_phuc_vu' => $this->tu_si->bat_dau_phuc_vu,
+            'ket_thuc_phuc_vu' => $this->ket_thuc_phuc_vu,
+            'ten_vi_tri' => $this->tu_si->viTri->ten_vi_tri
+        ]);
+        $this->tu_si->update(
+            [
+                'bat_dau_phuc_vu' => null,
+                'ket_thuc_phuc_vu' => null,
+                'vi_tri_phuc_vu' => null,
+                'giao_hat_id' => null,
+                'giao_xu_id' => null,
+            ]
+        );
+        Toastr::success('Cập nhập thành công', 'Thành công');
+        return redirect()->route('tu-si.edit', $this->tu_si);
     }
+
+    public function startNhiemSo(){
+        $this->validate([
+            'giao_xu_id' => 'required',
+            'giao_hat_id' => 'required',
+            'vi_tri_id' => 'required',
+            'bat_dau_phuc_vu' => 'required|date',
+
+        ], [
+            'giao_xu_id.required' => 'Giáo xứ không được phép trống',
+            'vi_tri_id.required' => 'Vị trí không được phép trống',
+            'giao_hat_id.required' => 'Giáo hạt không được phép trống',
+            'bat_dau_phuc_vu.required' => 'Ngày bắt đầu không được phép trống',
+            'bat_dau_phuc_vu.date' => 'Ngày bắt đầu phải đúng dạng ngày tháng năm',
+        ]);
+        if(!$this->tu_si->ket_thuc_phuc_vu && $this->tu_si->bat_dau_phuc_vu){
+            throw ValidationException::withMessages(['ket_thuc_phuc_vu' => 'Kết thúc nhiệm sở cũ mới được phép chuyển nhiệm sở']);
+        }
+        $this->tu_si->update([
+                'giao_xu_id' => $this->giao_xu_id,
+                'giao_hat_id' => $this->giao_hat_id,
+                'vi_tri_id' => $this->vi_tri_id,
+                'bat_dau_phuc_vu' => $this->bat_dau_phuc_vu,
+                'ket_thuc_phuc_vu' => null
+                ]
+        );
+        Toastr::success('Cập nhập thành công', 'Thành công');
+        return redirect()->route('tu-si.edit', $this->tu_si);
+    }
+
 }

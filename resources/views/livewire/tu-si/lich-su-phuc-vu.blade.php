@@ -27,12 +27,15 @@
                 <td>@if($tu_si->giao_xu_id)
                         {{  $tu_si->giaoXu->ten_giao_xu}}
                     @endif</td>
-                <td>{{ \Carbon\Carbon::parse($tu_si->bat_dau_phuc_vu)->format('d-m-Y')}}
+                <td>
+                    @if($tu_si->bat_dau_phuc_vu)
+                    {{ \Carbon\Carbon::parse($tu_si->bat_dau_phuc_vu)->format('d-m-Y')}}
+                    @endif
                     @if($tu_si->ket_thuc_phuc_vu)
                         - {{\Carbon\Carbon::parse($tu_si->ket_thuc_phuc_vu)->format('d-m-Y')}}
-                        @endif
+                    @endif
                 </td>
-                <td><span class="badge badge-rounded badge-success">Đang phục vụ</span></td>
+                <td><span class="badge badge-rounded badge-success">Hiện tại</span></td>
                 <td class="text-center">
                 </td>
             </tr>
@@ -43,7 +46,7 @@
                     <td>{{ $ls->ten_giao_hat }}</td>
 
                     <td>{{ $ls->ten_giao_xu }}</td>
-                    <td>{{ \Carbon\Carbon::parse($ls->bat_dau_phuc_vu)->format('d-m-Y') .'-'. \Carbon\Carbon::parse($ls->ket_thuc_phuc_vu)->format('d-m-Y')}}</td>
+                    <td>{{ \Carbon\Carbon::parse($ls->bat_dau_phuc_vu)->format('d/m/Y') .' - '. \Carbon\Carbon::parse($ls->ket_thuc_phuc_vu)->format('d/m/Y')}}</td>
                     <td><span class="badge badge-rounded badge-dark">Đã phục vụ</span></td>
                     <td class="text-center">
                         <button data-toggle="modal"

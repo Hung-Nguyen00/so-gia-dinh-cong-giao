@@ -210,7 +210,7 @@
             </div>
             <div class="col-lg-12 mt-2 col-md-12 col-sm-12 mt-3">
                 <div id="cong_tac" class="form-group ">
-                    <h5 class="font-weight-bold">Thông tin về phục vụ giáo xứ</h5>
+                    <h5 class="font-weight-bold">Chuyển nhiệm sở mới</h5>
                 </div>
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -229,6 +229,9 @@
                         </select>
                     </div>
                 </div>
+                @if($errors->has('giao_hat_id'))
+                    <span class="text-danger font-weight-bold">{{ $errors->first('giao_hat_id') }}</span>
+                @endif
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group ">
@@ -246,6 +249,9 @@
                         </select>
                     </div>
                 </div>
+                @if($errors->has('giao_xu_id'))
+                    <span class="text-danger font-weight-bold">{{ $errors->first('giao_xu_id') }}</span>
+                @endif
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group ">
@@ -261,6 +267,9 @@
                         </select>
                     </div>
                 </div>
+                @if($errors->has('vi_tri_id'))
+                    <span class="text-danger font-weight-bold">{{ $errors->first('vi_tri_id') }}</span>
+                @endif
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group">
@@ -274,7 +283,11 @@
                     <span class="text-danger font-weight-bold">{{ $errors->first('bat_dau_phuc_vu') }}</span>
                 @endif
             </div>
-
+            <div class="col-lg-12 mt-2 col-md-12 col-sm-12 mt-3">
+                <div id="cong_tac" class="form-group ">
+                    <h5 class="font-weight-bold">Kết thúc nhiệm sở cũ</h5>
+                </div>
+            </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="form-label">Ngày kết thúc nhiệm sở cũ</label>
@@ -287,29 +300,16 @@
                     <span class="text-danger font-weight-bold">{{ $errors->first('ket_thuc_phuc_vu') }}</span>
                 @endif
             </div>
-            <div class="col-lg-6 pt-2 col-md-6 col-sm-12">
-                <div class="form-group ">
-                    <div>
-                        <label class="form-label">Chọn phương thức lưu thông tin</label>
-                        <select class="select form-control" value="{{ old('check_save_info') }}"
-                                wire:model="check_save_info">
-                            <option selected value=""> Chọn phương thức lưu thông tin</option>
-                            <option value="1"> Lưu thông tin cập nhập</option>
-                            <option value="2"> Lưu thông tin chuyển giáo xứ phục vụ</option>
-                        </select>
-                    </div>
-                </div>
-                @if($errors->has('check_save_info'))
-                    <span class="text-danger font-weight-bold">{{ $errors->first('check_save_info') }}</span>
-                @endif
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 mt-3">
-                <div>
-                    <button type="submit" class="btn btn-primary mr-2">Lưu lại</button>
+            <div class="col-lg-12 col-md-12 col-sm-6 mt-3">
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-primary mr-2">Cập nhập thông tin</button>
+                    <button type="button"  wire:click.prevent="endNhiemSo()" class="btn btn-info mr-2">Kết thúc nhiệm sở cũ</button>
+                    <button type="button" wire:click.prevent="startNhiemSo()" class="btn btn-info mr-2">Chuyển nhiệm sở mới</button>
                 </div>
             </div>
         </div>
     </form>
+
     <form action="{{ route('tu-si.destroy', $tu_si) }}" style="margin-top: -36px;" method="POST">
         @csrf
         @method('DELETE')

@@ -87,7 +87,7 @@
                             </select>
                         </div>
                     </div>
-                    @if(!$active)
+                    @if($active==0)
                     <div class="table-responsive">
                         <table class="table display" style="min-width: 950px">
                             <thead>

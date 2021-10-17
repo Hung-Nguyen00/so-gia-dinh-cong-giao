@@ -26,7 +26,7 @@ class ShowTuSiByGiaoXu extends Component
         $ten_tu_si,
         $chuc_vu_id,
         $tu_si_id,
-        $active = false,
+        $active = 0,
         $date_of_birth,
         $paginate_number = 20;
 
@@ -90,7 +90,7 @@ class ShowTuSiByGiaoXu extends Component
         ]);
     }
     public function changeView(){
-        $this->active = !$this->active;
+        $this->active = $this->active==1 ? 0 : 1;
     }
 
     public function edit($id){
