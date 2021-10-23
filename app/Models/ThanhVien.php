@@ -74,4 +74,11 @@ class ThanhVien extends Model
     public function getUser(){
         return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
     }
+
+    public function doanCa(){
+        return $this->belongsToMany(ThanhVien::class,
+            'tv_doan_ca',
+            'thanh_vien_id',
+            'doan_ca_id')->withTimestamps()->withPivot('truong_doan');
+    }
 }

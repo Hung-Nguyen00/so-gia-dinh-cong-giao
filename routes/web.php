@@ -16,7 +16,7 @@ use App\Http\Controllers\SoGiaDinhController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NhaDongController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\DoanCaController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -76,6 +76,9 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
         Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
         Route::get('giao-ho-/thong-ke', [GiaoHoController::class, 'statistic'])->name('giao-ho.statistic');
+        Route::get('ca-doan', [DoanCaController::class, 'index'])->name('ca-doan.index');
+        Route::get('ca-doan/{ca_doan}/thanh_vien', [DoanCaController::class, 'indexThanhVien'])->name('ca-doan-thanh-vien.index');
+        Route::get('ca-doan/{ca_doan}/thanh_vien/them-moi', [DoanCaController::class, 'addThanhVien'])->name('ca-doan-thanh-vien-add.index');
         Route::resources([
             'so-gia-dinh' => SoGiaDinhController::class,
             'thanh-vien' => ThanhVienController::class,

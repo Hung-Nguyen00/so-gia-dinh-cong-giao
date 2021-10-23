@@ -11,9 +11,9 @@
                     <li>
                         <a href="{{ route('home.giaoPhan') }}">
                             Thống kê giáo phận</a></li>
-                    {{--<li>--}}
-                        {{--<a href="{{ route('home.giaoXu')}}">--}}
-                            {{--Thống kê giáo xứ</a></li>--}}
+                    <li>
+                        <a href="{{ route('home.giaoXu')}}">
+                            Thống kê giáo xứ</a></li>
                 </ul>
             </li>
             @if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')
@@ -62,6 +62,15 @@
                     <li><a href="{{ route('giao-ho.index') }}">Giáo họ</a></li>
                     <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
                     <li><a href="{{ route('thanh-vien.index') }}">Giáo dân</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-users"></i>
+                    <span class="nav-text">Thiếu nhi và ca đoàn </span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('so-gia-dinh.index') }}">Thiếu nhi</a></li>
+                    <li><a href="{{ route('ca-doan.index') }}">Ca đoàn</a></li>
                 </ul>
             </li>
             <li class="nav-label">Quản trị</li>

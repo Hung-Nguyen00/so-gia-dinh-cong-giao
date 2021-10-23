@@ -119,10 +119,10 @@
     </div>
 </div>
 
-@section('scripts')
+@push('scripts')
     <script>
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
     </script>
-@endsection
+@endpush

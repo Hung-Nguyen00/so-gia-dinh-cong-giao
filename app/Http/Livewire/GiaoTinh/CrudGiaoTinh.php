@@ -21,12 +21,12 @@ class CrudGiaoTinh extends Component
         $nam_thanh_lap;
 
     protected $rules = [
-        'ten_giao_tinh' => 'required:max:45',
+        'ten_giao_tinh' => 'required|max:45',
     ];
 
     protected $messages = [
         'ten_giao_tinh.required' => ':attribute không được phép trống',
-        'ten_giao_tinh.max' => ':attribute không được vượt quá 100 kí tự',
+        'ten_giao_tinh.max' => ':attribute không được vượt quá :max kí tự',
     ];
 
     protected $validationAttributes = [

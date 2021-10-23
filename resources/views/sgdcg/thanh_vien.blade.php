@@ -36,7 +36,7 @@
                                             @livewire('sgdcg.search-tv-add-to-sgdcg',['soGiaDinh' => $soGiaDinh])
                                             @endif
                                             <a class="ml-1 btn btn-primary"
-                                               href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Thêm bí tích rửa tội
+                                               href="{{ route('so-gia-dinh.createTV', ['sgdId' => $soGiaDinh->id] )}}">Thêm thành viên mới
                                             </a>
                                         </div>
                                     </div>
