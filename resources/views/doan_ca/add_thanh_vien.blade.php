@@ -13,7 +13,7 @@
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Thiếu nhi và ca đoàn </a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('ca-doan.index') }}">Các ca đoàn</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Tất cả thành viên </a></li>
                     </ol>
                 </div>
@@ -32,11 +32,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        window.onload = function get_body() {
-            document.body.style.overflow = "hidden";
-        }
-    </script>
-@endpush

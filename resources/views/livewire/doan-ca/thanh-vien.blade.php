@@ -5,12 +5,14 @@
         <div class="col-md-12 col-xl-12 col-sm-12 d-flex justify-content-between">
             <h4 class="card-title">Danh sách các thành viên</h4>
             <div>
-                <a
-                    href="{{ route('ca-doan-thanh-vien-add.index', $ca_doan->id)}}"
+                <a href="{{ route('ca-doan-thanh-vien-add.index', $ca_doan) }}"
                     class="btn btn-primary">Thêm thành viên
                 </a>
             </div>
         </div>
+
+    </div>
+    <div  class="card-body" style="margin-top: -10px">
         <div class="col-md-6 col-xl-6 col-sm-6">
             <h4>Tìm kiếm</h4>
             <div class="d-flex">
@@ -31,9 +33,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div  class="card-body">
         <div class="table-responsive">
             <table class="table" style="min-width: 1080px;">
                 <thead>
@@ -45,7 +44,7 @@
                     <th class="text-center">Số điện thoại</th>
                     <th class="text-center">Chức vụ</th>
                     <th class="text-center">Thông tin</th>
-                    <th>Chỉnh sửa</th>
+                    <th>Xóa</th>
                 </tr>
                 </thead>
                 <tbody >
@@ -67,9 +66,9 @@
                         </td>
                         <td class="text-center">
                             @if($d->truong_doan == 1)
-                                <span class="badge badge-rounded badge-danger">Trưởng</span>
+                                <button wire:click="toggleTruongDoan({{ $d->tvdc_id }})" class="btn btn-danger btn-sm">Trưởng</button>
                             @else
-                                <span class="badge badge-rounded badge-success">Thành viên</span>
+                                <button wire:click="toggleTruongDoan({{ $d->tvdc_id }})" class="btn btn-success btn-sm">Thành viên</button>
                             @endif
                         </td>
                         <td class="text-center">
@@ -80,14 +79,7 @@
                             </a>
                         </td>
                         <td>
-                            <button type="button"
-                                    wire:click="edit({{ $d->tvdc_id }})"
-                                    class="btn btn-sm btn-primary mb-1"
-                                    data-toggle="modal"
-                                    data-target="#edit">
-                                <i class="la la-pencil"></i>
-                            </button>
-                            <button type="button" wire:click="edit({{ $d->tvdc_id }})"
+                            <button type="button" wire:click="edit({{ $d->tv_id }})"
                                     data-toggle="modal"
                                     data-target="#delete"
                                     class="btn btn-outline-danger btn-sm d-inline-block mb-1">
@@ -116,6 +108,9 @@
         });
         window.livewire.on('add', () => {
             $('#add').modal('hide');
+        });
+        window.livewire.on('delete', () => {
+            $('#delete').modal('hide');
         });
     </script>
     <script>

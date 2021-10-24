@@ -12,6 +12,7 @@ class tv_doan_ca extends Model
     protected $table = 'tv_doan_ca';
     protected $fillable = [
       'thanh_vien_id',
-      'doan_ca_id'
+      'doan_ca_id',
+      'truong_doan'
     ];
 }

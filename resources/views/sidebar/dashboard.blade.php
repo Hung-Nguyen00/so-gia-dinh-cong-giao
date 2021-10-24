@@ -69,7 +69,7 @@
                     <span class="nav-text">Thiếu nhi và ca đoàn </span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('so-gia-dinh.index') }}">Thiếu nhi</a></li>
+                    <li><a href="{{ route('thieu-nhi.index') }}">Thiếu nhi</a></li>
                     <li><a href="{{ route('ca-doan.index') }}">Ca đoàn</a></li>
                 </ul>
             </li>

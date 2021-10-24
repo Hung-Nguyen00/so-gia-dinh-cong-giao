@@ -105,6 +105,11 @@ class GiaoXuController extends Controller
 
     }
 
+    public function indexThieuNhi(){
+        return view('giao_xu.index_thieu_nhi');
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *

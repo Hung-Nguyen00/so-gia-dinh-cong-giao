@@ -79,6 +79,7 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         Route::get('ca-doan', [DoanCaController::class, 'index'])->name('ca-doan.index');
         Route::get('ca-doan/{ca_doan}/thanh_vien', [DoanCaController::class, 'indexThanhVien'])->name('ca-doan-thanh-vien.index');
         Route::get('ca-doan/{ca_doan}/thanh_vien/them-moi', [DoanCaController::class, 'addThanhVien'])->name('ca-doan-thanh-vien-add.index');
+        Route::get('thieu-nhi/', [GiaoXuController::class, 'indexThieuNhi'])->name('thieu-nhi.index');
         Route::resources([
             'so-gia-dinh' => SoGiaDinhController::class,
             'thanh-vien' => ThanhVienController::class,

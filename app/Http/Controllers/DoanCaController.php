@@ -22,4 +22,5 @@ class DoanCaController extends Controller
         return view('doan_ca.add_thanh_vien', compact('ca_doan'));
     }
 
+
 }

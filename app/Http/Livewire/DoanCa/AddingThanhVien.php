@@ -14,7 +14,7 @@ class AddingThanhVien extends Component
 
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $ca_doan, $ho_va_ten, $ngay_sinh, $ten_thanh_id, $so_dien_thoai;
+    public $ca_doan, $ho_va_ten, $ngay_sinh, $ten_thanh_id, $so_dien_thoai, $paginate_number=20;
     protected $queryString = ['ho_va_ten', 'ngay_sinh', 'ten_thanh_id', 'so_dien_thoai'];
 
 
@@ -35,6 +35,12 @@ class AddingThanhVien extends Component
         $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
             ->orWhere('id', Auth::user()->giao_xu_id)
             ->pluck('id')->toArray();
+
+
+        $ca_doan_id = $this->ca_doan->id;
+        $tv_ca_doan = \App\Models\ThanhVien::whereHas('doanCa', function ($q) use ($ca_doan_id){
+           $q->where('doan_ca_id', $ca_doan_id);
+        })->pluck('id');
 
         $all_tv_adding = DB::table('thanh_vien as tv')
             ->leftJoin('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
@@ -64,11 +70,22 @@ class AddingThanhVien extends Component
             $all_tv_adding->where('ten_thanh_id', $this->ten_thanh_id);
         }
 
-        $all_tv_adding = $all_tv_adding->paginate(10, ['*'], $pageName ='all_tv_adding');
+        $all_tv_adding = $all_tv_adding->paginate($this->paginate_number);
         $all_ten_thanh = TenThanh::select('id', 'ten_thanh')->get();
         return view('livewire.doan-ca.adding-thanh-vien')
-            ->with(compact('all_tv_adding', 'all_ten_thanh'));
+            ->with(compact('all_tv_adding', 'all_ten_thanh', 'tv_ca_doan'));
     }
 
 
+    public function addThanhVien($id){
+        $this->ca_doan->thanhVien()->attach($id);
+        $this->dispatchBrowserEvent('alert',
+            ['type' => 'success', 'message' => 'Thêm thành công']);
+    }
+
+    public function deleteThanhVien($id){
+        $this->ca_doan->thanhVien()->detach($id);
+        $this->dispatchBrowserEvent('alert',
+            ['type' => 'success', 'message' => 'Xóa thành công']);
+    }
 }
