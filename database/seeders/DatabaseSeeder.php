@@ -9,6 +9,7 @@ use App\Models\GiaoTinh;
 use App\Models\GiaoXu;
 use App\Models\QuyenQuanTri;
 use App\Models\TenThanh;
+use App\Models\ThanhVien;
 use App\Models\TuSi;
 use Illuminate\Database\Seeder;
 
@@ -21,15 +22,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        QuyenQuanTri::create(['ten_quyen' => 'admin']);
-        QuyenQuanTri::create(['ten_quyen' => 'Giáo phận']);
-        QuyenQuanTri::create(['ten_quyen' => 'Giáo xứ']);
-        $this->call(GiaoTinhSeeder::class);
-        $this->call(GiaoPhanSeeder::class);
-        $this->call(GiaoHatSeeder::class);
-        $this->call(NhaDongSeeder::class);
-        $this->call(GiaoXuSeeder::class);
-        $this->call(BiTichSeeder::class);
-         $this->call(UserSeeder::class);
+//        QuyenQuanTri::create(['ten_quyen' => 'admin']);
+//        QuyenQuanTri::create(['ten_quyen' => 'Giáo phận']);
+//        QuyenQuanTri::create(['ten_quyen' => 'Giáo xứ']);
+//        $this->call(GiaoTinhSeeder::class);
+//        $this->call(GiaoPhanSeeder::class);
+//        $this->call(GiaoHatSeeder::class);
+//        $this->call(NhaDongSeeder::class);
+//        $this->call(GiaoXuSeeder::class);
+//        $this->call(BiTichSeeder::class);
+//         $this->call(UserSeeder::class);
+        #ThanhVien::truncate();
+        $tv = ThanhVien::factory(40000)->make();
+
+        $chunks = $tv->chunk(5000);
+        $chunks->each(function ($chunk){
+            ThanhVien::insert($chunk->toArray());
+        });
     }
 }

@@ -41,35 +41,7 @@ class GiaoPhanController extends Controller
     }
 
     public function indexGiaoXu(){
-        $giao_xu = GiaoXu::with(['giaoDan.biTich', 'giaoHo'])->withCount(['tuSi', 'giaoDan', 'giaoHo'])
-            ->where('id', Auth::user()->giao_xu_id)
-            ->first();
-        $static_ket_hon = 0;
-        $static_tu = 0;
-        $static_sinh = 0;
-        if ($giao_xu != null && $giao_xu->giaoDan->count() > 0){
-            foreach($giao_xu->giaoDan as $g){
-                if ( $g->biTich->count() == 4){
-                     $static_ket_hon ++;
-                }
-                if ( $g->biTich->count() == 1){
-                    $static_sinh ++;
-                }
-                if ($g->ngay_mat !== null){
-                    $static_tu ++;
-                }
-            }
-        }
-        $linh_muc = TuSi::with('tenThanh')->whereHas('viTri', function ($q){
-            $q->where('ten_vi_tri', 'Cha xứ');
-        })->where('giao_xu_id', Auth::user()->giao_xu_id)->first();
-
-        return view('dashboard.static_giao_xu', compact(
-            'giao_xu',
-            'static_tu',
-            'static_ket_hon',
-            'static_sinh',
-            'linh_muc'));
+        return view('dashboard.static_giao_xu');
     }
 
     public function fileImport(Request $request){

@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white" style="font-size: 16px"> {{ $analytics_bi_tich['rua_toi'] }}</p>
+                            <p class="text-white" style="font-size: 16px"> {{ $statistic_bi_tich['rua_toi'] }}</p>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['xung_toi'] }} </p>
+                            <p class="text-white fs-16" style="font-size: 16px"> {{ $statistic_bi_tich['xung_toi'] }} </p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['them_suc']}}</p>
+                            <p class="text-white fs-16" style="font-size: 16px"> {{ $statistic_bi_tich['them_suc']}}</p>
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['hon_phoi']}}</p>
+                            <p class="text-white fs-16" style="font-size: 16px"> {{ $statistic_bi_tich['hon_phoi']}}</p>
                         </div>
                     </div>
                 </div>

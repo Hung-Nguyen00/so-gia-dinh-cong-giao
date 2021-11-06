@@ -88,7 +88,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Số lượng hộ gia đình</p>
-                                <h4 class="mb-0">{{ $analytics_bi_tich['count_sgd'] }}</h4>
+                                <h4 class="mb-0">{{ $statistics_giao_phan->ho_va_dinh_count }}</h4>
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1 width-card">Tổng số giáo dân</p>
-                                <h4 class="mb-0" >{{ $analytics_bi_tich['count_tv'] }}</h4>
+                                <h4 class="mb-0" >{{ $statistics_giao_phan->giao_dan_count }}</h4>
                             </div>
                         </div>
                     </div>

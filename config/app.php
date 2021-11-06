@@ -233,6 +233,7 @@ return [
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
         'Excel' => \Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

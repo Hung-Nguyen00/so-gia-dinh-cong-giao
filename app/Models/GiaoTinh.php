@@ -49,4 +49,5 @@ class GiaoTinh extends Model
     public function getUser(){
         return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
     }
+
 }

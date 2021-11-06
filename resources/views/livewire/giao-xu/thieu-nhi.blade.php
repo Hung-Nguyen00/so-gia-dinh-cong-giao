@@ -1,6 +1,6 @@
 <div>
     <div class="card-header d-flex flex-wrap">
-        <h4 class="font-weight-bold col-12">Tìm kiếm</h4>
+        <h4 class="font-weight-bold col-12">Danh sách các thiếu nhi</h4>
         <div class="col-md-3 mt-3">
             <label>Xem theo cấp bậc thiếu nhi</label>
             <select class="selectpicker  select form-control" wire:model="select_level">

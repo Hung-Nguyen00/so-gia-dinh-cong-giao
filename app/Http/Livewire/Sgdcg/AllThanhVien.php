@@ -78,7 +78,7 @@ class AllThanhVien extends Component
             $all_thanh_vien = $all_thanh_vien->whereBetween('ngay_mat', [$this->start_date, $this->end_date]);
         }
         return view('livewire.sgdcg.all-thanh-vien', [
-                'all_thanh_vien' => $all_thanh_vien->paginate($this->paginate_number),
+                'all_thanh_vien' => $all_thanh_vien->simplePaginate($this->paginate_number),
                 'all_bi_tich' => BiTich::all(),
                 'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
             ]

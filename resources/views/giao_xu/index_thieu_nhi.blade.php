@@ -8,7 +8,7 @@
             <div class="row page-titles d-flex justify-content-between flex-wrap mx-0">
                 <div class="col-sm-3 p-md-0 d-flex align-items-center">
                     <div class="welcome-text ">
-                        <h4>Các tu sĩ</h4>
+                        <h4>Danh sách thiếu nhi</h4>
                     </div>
                 </div>
                 {{--<div class="col-sm-5 p-md-0">--}}

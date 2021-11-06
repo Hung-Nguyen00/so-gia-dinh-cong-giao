@@ -56,7 +56,6 @@ class StatictisGiaoXu extends Component
             $q->where('ten_vi_tri', 'Cha xứ');
         })->where('giao_xu_id',$this->giao_xu_id)
             ->first();
-
         // get Year for Form in interface start date - end Date (filter: sinh_hoac_tu)
         $start = (int)Carbon::parse($this->start_date)->format('Y');
         $end = (int)Carbon::parse($this->end_date)->format('Y');
@@ -67,22 +66,23 @@ class StatictisGiaoXu extends Component
             $key++;
         }
         // statistics GiaoXu
-        $statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
-            ->where('id', $this->giao_xu_id)
-            ->first();
-        // get all_giao_ho
-        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $statistics_giao_xu->id)
-            ->withCount('giaoDan')
-            ->with(['tuSi' => function ($q) {
-                    $q->with('tenThanh');
-            }])->get();
-        // all giao xu
-        $all_giao_xu = GiaoXu::with('giaoHat')
-            ->where('giao_xu_hoac_giao_ho', 0)
-            ->get();
+//        $statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
+//            ->where('id', $this->giao_xu_id)
+//            ->first();
+//        // get all_giao_ho
+//        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $statistics_giao_xu->id)
+//            ->withCount('giaoDan')
+//            ->with(['tuSi' => function ($q) {
+//                    $q->with('tenThanh');
+//            }])->get();
+//        // all giao xu
+//        $all_giao_xu = GiaoXu::with('giaoHat')
+//            ->where('giao_xu_hoac_giao_ho', 0)
+//            ->get();
 
          // statistic age
         $statistic_age = $this->statisticAge();
+        dd(213);
         // statistic Chuyen Xu
         $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho',$this->giao_xu_id)
             ->orWhere('id',  $this->giao_xu_id)
@@ -197,7 +197,7 @@ class StatictisGiaoXu extends Component
             ->orderBy('btdn.created_at', 'DESC')
             ->select('tv.id as ThanhVien', 'btdn.ngay_dien_ra', 'bt.ten_bi_tich as BiTich',
                 DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
-            ->chunk(1000, function ($value)
+            ->chunk(5000, function ($value)
                 use(&$count_rua_toi,
                     &$count_xung_toi,
                     &$count_them_suc,
@@ -230,7 +230,7 @@ class StatictisGiaoXu extends Component
             ->orderBy('tv.created_at', 'DESC')
             ->select('tv.id as ThanhVien',
                 DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
-            ->chunk(1000, function ($value)
+            ->chunk(5000, function ($value)
             use(
                 &$count_so_sinh,
                 &$count_thieu_nhi,
