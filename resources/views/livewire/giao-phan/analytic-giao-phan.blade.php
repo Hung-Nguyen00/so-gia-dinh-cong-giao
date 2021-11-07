@@ -223,7 +223,7 @@
                                     wire:model="giao_hat_id"
                                     data-live-search="true">
                                 <option value="" selected>Chọn giáo hạt</option>
-                                @foreach($statistics_giao_phan->giaoHat as $h)
+                                @foreach($all_giao_hat as $h)
                                     <option value="{{ $h->id }}"> {{ $h->ten_giao_hat }}</option>
                                 @endforeach
                             </select>

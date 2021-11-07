@@ -8,6 +8,7 @@ use App\Models\TuSi;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -19,10 +20,11 @@ class AnalyticGiaoPhan extends Component
 
     public $giao_phan_id,
         $giam_muc,
-        $paginate_number = 5,
         $giao_hat_id,
         $sinh_hoac_tu = 1,
+        $paginate_number = 20,
         $start_date,
+        $all_giao_phan,
         $sinh_tu_follow_year,
         $end_date;
     protected $queryString = ['giao_phan_id', 'start_date', 'end_date','sinh_hoac_tu', 'sinh_tu_follow_year'];
@@ -45,7 +47,10 @@ class AnalyticGiaoPhan extends Component
         if (!$this->end_date){
             $this->end_date = Carbon::now()->format('Y-m-d');
         }
-
+        $this->sinh_tu_follow_year = 2031;
+        $this->all_giao_phan = GiaoPhan::with('giaoTinh')
+            ->orderBy('ten_giao_phan', 'DESC')
+            ->get();
     }
 
     public function render()
@@ -56,6 +61,7 @@ class AnalyticGiaoPhan extends Component
         })->where('la_tong_giam_muc', 'T')
             ->where('giao_phan_id',$this->giao_phan_id)
             ->first();
+
         // get Year in from start date - end Date
         $start = (int)Carbon::parse($this->start_date)->format('Y');
         $end = (int)Carbon::parse($this->end_date)->format('Y');
@@ -66,23 +72,19 @@ class AnalyticGiaoPhan extends Component
             $key++;
         }
 
+        $analytic_gender = $this->getGenderSinhOrTu($this->sinh_hoac_tu, $this->sinh_tu_follow_year);
+
+        $statistic_tu_si = $this->statisticChuCVu();
         // get Giao Phan
-        $statistics_giao_phan = GiaoPhan::select('id', 'dia_chi', 'ten_nha_tho')
-            ->with('giaoHat')
-            ->withCount(['giaoXu', 'giaoHat', 'tuSi', 'giaoDan', 'hoGiaDinh'])
-            ->where('id', $this->giao_phan_id)
-            ->first();
+        $statistics_giao_phan =  Cache::get('statistic_giao_tinh')->where('id', $this->giao_phan_id)->first();
+        $statistic_bi_tich = $this->statisticBiTich();
+
         // draw chart
         if (!$this->sinh_tu_follow_year){
             $this->sinh_tu_follow_year = $start_end_year[0];
         }
-        $analytic_gender = $this->getGender($this->sinh_hoac_tu, $this->sinh_tu_follow_year);
-        $analytic_tu_si = $this->getTuSi();
         $this->emit('updateLineChart', json_encode($analytic_gender));
-        $this->emit('updatePieChart', json_encode($analytic_tu_si));
-        // show Statistic BiTich to Card
-        $analytics_bi_tich = $this->analyticBiTich();
-
+        $this->emit('updatePieChart', json_encode($statistic_tu_si));
         // show GiaoHat to table
         $all_giao_hat = GiaoHat::withCount(['giaoXu', 'giaoDan'])
                         ->with('tuSi', function ($q) {
@@ -93,53 +95,49 @@ class AnalyticGiaoPhan extends Component
                         ->where('giao_phan_id', $this->giao_phan_id);
         // search GiaoHat By Id
         if ($this->giao_hat_id){
-            $all_giao_hat = $all_giao_hat->where('id', $this->giao_hat_id)->get();
+            $all_giao_hat = $all_giao_hat->where('id', $this->giao_hat_id);
         }
-        // all giao phan
-        $all_giao_phan = GiaoPhan::with('giaoTinh')
-            ->orderBy('ten_giao_phan', 'DESC')
-            ->get();
         return view('livewire.giao-phan.analytic-giao-phan',
-            compact('statistics_giao_phan', 'analytics_bi_tich', 'start_end_year'))
-            ->with(['all_giao_phan' => $all_giao_phan,
+            compact('statistics_giao_phan', 'start_end_year'))
+            ->with(['all_giao_phan' => $this->all_giao_phan,
                 'giam_muc' => $this->giam_muc,
                 'all_giao_hat' => $this->giao_hat_id ? $all_giao_hat : $all_giao_hat->paginate($this->paginate_number),
+                'analytics_bi_tich' => $statistic_bi_tich,
                 'analytic_gender' => json_encode($analytic_gender),
-                'analytic_tu_si' => json_encode($analytic_tu_si)]);
+                'analytic_tu_si' => json_encode($statistic_tu_si)]);
     }
 
-
-
-    // get gender to Chart
-    public function getGender($id, $year){
+    public function  getGenderSinhOrTu($id, $year){
         $get_current_year = $year;
-        $gender_all_giao_phan = DB::table('giao_phan as p')
-            ->leftJoin('giao_hat as h', 'p.id', '=', 'h.giao_phan_id')
-            ->leftJoin('giao_xu as x', 'h.id', '=', 'x.giao_hat_id')
-            ->leftJoin('so_gia_dinh_cong_giao as sgd', 'x.id', '=', 'sgd.giao_xu_id')
-            ->leftJoin('thanh_vien as tv', 'sgd.id', '=', 'tv.so_gia_dinh_id')
-            ->where('p.id', $this->giao_phan_id);
+        $gender_all_giao_phan =  DB::table('giao_phan as gp')
+            ->join('giao_hat as gh', 'gh.giao_phan_id', '=', 'gp.id')
+            ->join('giao_xu as gx', 'gx.giao_hat_id', '=', 'gh.id')
+            ->join('so_gia_dinh_cong_giao as sgd', 'sgd.giao_xu_id', '=', 'gx.id')
+            ->join('thanh_vien as tv', 'tv.so_gia_dinh_id', '=', 'sgd.id')
+            ->where('gp.id', $this->giao_phan_id);
+
         if ($id == 1){
             $gender_all_giao_phan = $gender_all_giao_phan->select(
-                DB::raw('count(IF(tv.gioi_tinh = 1,1,NULL)) as males'),
-                DB::raw('count(IF(tv.gioi_tinh = 0,1,NULL)) as females'),
-                DB::raw('MONTH(tv.ngay_sinh) as ThangSinh')
+                DB::raw('count(IF(gioi_tinh = 1,1,NULL)) as males'),
+                DB::raw('count(IF(gioi_tinh = 0,1,NULL)) as females'),
+                DB::raw('MONTH(ngay_sinh) as ThangSinh')
             )
-                ->orderBy(DB::raw("MONTH(tv.ngay_sinh)"))
-                ->groupBy('tv.ngay_sinh')
-                ->havingRaw('YEAR(tv.ngay_sinh) ='. $get_current_year)
+                ->orderBy(DB::raw("MONTH(ngay_sinh)"))
+                ->groupBy('ngay_sinh')
+                ->havingRaw('YEAR(ngay_sinh) ='. $get_current_year)
                 ->get();
         }else{
             $gender_all_giao_phan = $gender_all_giao_phan->select(
-                DB::raw('count(IF(tv.gioi_tinh = 1,1,NULL)) as males'),
-                DB::raw('count(IF(tv.gioi_tinh = 0,1,NULL)) as females'),
-                DB::raw('MONTH(tv.ngay_mat) as ThangSinh')
+                DB::raw('count(IF(gioi_tinh = 1,1,NULL)) as males'),
+                DB::raw('count(IF(gioi_tinh = 0,1,NULL)) as females'),
+                DB::raw('MONTH(ngay_mat) as ThangSinh')
             )
-                ->orderBy(DB::raw("MONTH(tv.ngay_mat)"))
-                ->groupBy('tv.ngay_mat')
-                ->havingRaw('YEAR(tv.ngay_mat) ='. $get_current_year)
+                ->orderBy(DB::raw("MONTH(ngay_mat)"))
+                ->groupBy('ngay_mat')
+                ->havingRaw('YEAR(ngay_mat) ='. $get_current_year)
                 ->get();
         }
+
         $res['month'] = ['Tháng 1',
             'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
             'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
@@ -160,62 +158,52 @@ class AnalyticGiaoPhan extends Component
         return $res;
     }
 
-    public function getTuSi(){
-        $count_ts= DB::table('giao_phan as p')
-            ->leftJoin('tu_si as ts', 'ts.giao_phan_id', '=', 'p.id')
-            ->leftJoin('chuc_vu as c', 'c.id', '=', 'ts.chuc_vu_id')
-            ->select( DB::raw('count(ts.id) as TuSi'), 'c.ten_chuc_vu as chuc_vu', 'ngay_nhan_chuc')
-            ->groupBy( 'chuc_vu', 'ngay_nhan_chuc')
-            ->whereBetween('ngay_nhan_chuc', [$this->start_date, $this->end_date])
-            ->where('p.id', $this->giao_phan_id)
+
+    public function statisticChuCVu(){
+        $all_chuc_vu = DB::table('chuc_vu as cv')
+            ->join('tu_si as ts', 'ts.chuc_vu_id', '=', 'cv.id')
+            ->join('giao_phan as gp', 'gp.id', '=', 'ts.giao_phan_id')
+            ->select(
+                DB::raw('COUNT(DISTINCT(ts.id)) as tu_si_count'),
+                'cv.ten_chuc_vu')
+            ->groupBy('cv.ten_chuc_vu')
+            ->where('gp.id', $this->giao_phan_id)
             ->get();
-        $count_giam_muc = $count_ts->where('chuc_vu', 'Giám mục')->sum('TuSi');
-        $count_linh_muc = $count_ts->where('chuc_vu', 'Linh mục')->sum('TuSi');
-        $count_chung_sinh = $count_ts->where('chuc_vu', 'Chủng sinh')->sum('TuSi');
-        $count_so = $count_ts->where('chuc_vu', 'Sơ')->sum('TuSi');
-
-        $analytic_tu_si = ['Giám mục' => $count_giam_muc,
-            'Linh mục' => $count_linh_muc,
-            'Chủng sinh' => $count_chung_sinh,
-            'Sơ' => $count_so];
-
+        $analytic_tu_si = [];
+        foreach($all_chuc_vu as $cv)
+        {
+            $analytic_tu_si[$cv->ten_chuc_vu] = $cv->tu_si_count;
+        }
         return $analytic_tu_si;
     }
 
-    public function analyticBiTich(){
-        $count_rua_toi  = 0;
-        $count_xung_toi = 0;
-        $count_them_suc = 0;
-        $count_hon_phoi = 0;
-        $count_sgd = 0;
-        $count_tv = 0;
-         DB::table('giao_phan as p')
-            ->join('giao_hat as h', 'p.id', '=', 'h.giao_phan_id')
-            ->join('giao_xu as x', 'h.id', '=', 'x.giao_hat_id')
-            ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
-            ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
-            ->leftJoin('bi_tich_da_nhan as btdn', 'tv.id', '=', 'btdn.thanh_vien_id')
-            ->leftJoin('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
-            ->where('p.id', $this->giao_phan_id)
-            ->whereBetween('ngay_dien_ra', [$this->start_date, $this->end_date])
-            ->orderBy('btdn.created_at', 'DESC')
-            ->select('tv.id as ThanhVien', 'bt.ten_bi_tich as BiTich','btdn.ngay_dien_ra', 'sgdcg.id as sgd')
-            ->chunk(1000, function ($value)
-            use(&$count_rua_toi, &$count_xung_toi, &$count_them_suc, &$count_hon_phoi, &$count_tv, &$count_sgd){
-                $count_rua_toi += $value->where('BiTich', 'Rửa tội')->count();
-                $count_them_suc += $value->where('BiTich', 'Thêm sức')->count();
-                $count_hon_phoi += $value->where('BiTich', 'Hôn phối')->count();
-                $count_xung_toi += $value->where('BiTich', 'Xưng tội')->count();
-                $count_sgd  += $value->whereNotNull('sgd')->groupBy('sgd')->count();
-                $count_tv += $value->whereNotNull('ThanhVien')->groupBy('ThanhVien')->count();
-            });
-        $analytics_bi_tich = ['rua_toi' => $count_rua_toi,
-            'xung_toi' => $count_xung_toi,
-            'them_suc' => $count_them_suc,
-            'hon_phoi' => $count_them_suc];
+    public function statisticBiTich(){
+        $bi_tich_query_set = DB::table('giao_phan as gp')
+            ->join('giao_hat as gh', 'gh.giao_phan_id', '=', 'gp.id')
+            ->join('giao_xu as gx', 'gx.giao_hat_id', '=', 'gh.id')
+            ->join('so_gia_dinh_cong_giao as sgd', 'sgd.giao_xu_id', '=', 'gx.id')
+            ->join('thanh_vien as tv', 'tv.so_gia_dinh_id', '=','sgd.id')
+            ->join('bi_tich_da_nhan as btdn', 'btdn.thanh_vien_id', '=', 'tv.id')
+            ->join('bi_tich as bt', 'bt.id', '=', 'btdn.bi_tich_id')
+            ->where('gp.id', $this->giao_phan_id)
+            ->select(DB::raw('COUNT(btdn.id) as thanh_vien_count'),
+                'bt.ten_bi_tich as ten_bi_tich')
+            ->groupBy('ten_bi_tich', 'gp.id')
+            ->get();
 
-        $count_tv_sgd = ['count_tv' => $count_tv, 'count_sgd' => $count_sgd];
+        $analytics_bi_tich = [];
+        foreach ($bi_tich_query_set as $bt){
+            if ($bt->ten_bi_tich == 'Rửa tội') $analytics_bi_tich['rua_toi'] = $bt->thanh_vien_count;
+            if ($bt->ten_bi_tich == 'Xưng tội') $analytics_bi_tich['xung_toi'] = $bt->thanh_vien_count;
+            if ($bt->ten_bi_tich == 'Thêm sức') $analytics_bi_tich['them_suc'] = $bt->thanh_vien_count;
+            if ($bt->ten_bi_tich == 'Hôn phối') $analytics_bi_tich['hon_phoi'] = $bt->thanh_vien_count;
+        }
 
-        return array_merge($analytics_bi_tich, $count_tv_sgd);
+        $analytics_bi_tich['rua_toi']  = array_key_exists('rua_toi', $analytics_bi_tich) ? $analytics_bi_tich['rua_toi'] : 0;
+        $analytics_bi_tich['xung_toi'] =array_key_exists('xung_toi', $analytics_bi_tich) ? $analytics_bi_tich['xung_toi'] : 0;
+        $analytics_bi_tich['them_suc'] = array_key_exists('them_suc', $analytics_bi_tich) ? $analytics_bi_tich['them_suc'] : 0;
+        $analytics_bi_tich['hon_phoi'] = array_key_exists('hon_phoi', $analytics_bi_tich) ? $analytics_bi_tich['hon_phoi'] : 0;
+
+        return $analytics_bi_tich;
     }
 }

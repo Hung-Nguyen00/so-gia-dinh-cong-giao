@@ -216,14 +216,6 @@
                     <div class="card-body">
                         <div class="col-md-12 d-flex align-items-center justify-content-between p-0" style="margin-top: -10px">
                             <div>
-                                <label for="" class="ml-2">Hiển thị</label>
-                                <select class="ml-2 form-control w-auto select" wire:model="paginate_number">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                </select>
-                            </div>
-                            <div>
                                 <lable>Tìm kiếm giáo phận</lable>
                                 <select class="select form-control w-auto" wire:model="giao_phan_id" data-live-search="true">
                                     <option value="" selected>Tìm kiếm giáo phận</option>
@@ -263,9 +255,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="d-flex justify-content-end">
-                                {{ $statistics_giao_phan->links() }}
-                            </div>
                         </div>
                     </div>
                 </div>
