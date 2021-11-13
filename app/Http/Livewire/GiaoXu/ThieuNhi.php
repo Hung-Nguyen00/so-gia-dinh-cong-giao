@@ -15,10 +15,11 @@ class ThieuNhi extends Component
     use WithPagination;
     public $all_thieu_nhi,
         $giao_ho,
-        $select_level='thieu_nhi',
+        $select_level='chien_non',
         $ten_thanh_id,
         $ho_va_ten,
         $paginate_number,
+
         $ngay_sinh;
 
     protected $paginationTheme = 'bootstrap';
@@ -36,45 +37,43 @@ class ThieuNhi extends Component
         $this->giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
             ->orWhere('id', Auth::user()->giao_xu_id)
             ->pluck('id')->toArray();
-        $this->all_thieu_nhi = $this->getThieuNhiByAge($this->giao_ho);
     }
 
 
     public function render()
     {
-        $statistic_age = $this->statisticAge($this->giao_ho);
         $this->dispatchBrowserEvent('contentChanged');
-        if ($this->select_level=='chien_non'){
-            $get_level = $this->all_thieu_nhi->whereBetween('age', [3, 5]);
-        }
-        if ($this->select_level=='au_nhi'){
-            $get_level = $this->all_thieu_nhi->whereBetween('age', [6, 10]);
-        }
-        if ($this->select_level=='thieu_nhi'){
-            $get_level = $this->all_thieu_nhi->whereBetween('age', [11, 13]);
-        }
-        if ($this->select_level=='nghia_si'){
-            $get_level = $this->all_thieu_nhi->whereBetween('age', [14, 16]);
-        }
-        if ($this->select_level=='hiep_si'){
-            $get_level = $this->all_thieu_nhi->whereBetween('age', [17, 18]);
-        }
-
+        $timestamps = 'TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date)';
         $all_ten_thanh = TenThanh::all();
-        $get_all_id = $get_level->pluck('tv_id')->toArray();
         $showing_follow_level = DB::table('thanh_vien as tv')
             ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
             ->join('so_gia_dinh_cong_giao as sgd', 'sgd.id', '=', 'tv.so_gia_dinh_id')
             ->select('tv.id as tv_id',
-                'tv.so_gia_dinh_id',
+                'tv.so_gia_dinh_id as sgd_id',
                 'tv.ho_va_ten',
-                'tv.ngay_sinh',
-                'sgd.id as sgd_id',
                 'tv.ten_thanh_id',
+                'tv.ngay_sinh',
                 't.ten_thanh',
                 'tv.dia_chi_hien_tai',
-                'tv.so_dien_thoai')
-            ->whereIn('tv.id', $get_all_id);
+                'tv.so_dien_thoai',
+                DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age")
+                );
+        // 3-5 6-10 11-13 14-16 17-18
+        if ($this->select_level=='chien_non'){
+            $showing_follow_level = $showing_follow_level->whereRaw("{$timestamps} > 2 and {$timestamps} < 6");
+        }
+        if ($this->select_level=='au_nhi'){
+            $showing_follow_level = $showing_follow_level->whereRaw("{$timestamps} > 5 and {$timestamps} < 11");
+        }
+        if ($this->select_level=='thieu_nhi'){
+            $showing_follow_level = $showing_follow_level->whereRaw("{$timestamps} > 10 and {$timestamps} < 14");
+        }
+        if ($this->select_level=='nghia_si'){
+            $showing_follow_level =$showing_follow_level->whereRaw("{$timestamps} > 13 and {$timestamps} < 17");
+        }
+        if ($this->select_level=='hiep_si'){
+            $showing_follow_level = $showing_follow_level->whereRaw("{$timestamps} > 16 and {$timestamps} < 19");
+        }
 
         if ($this->ten_thanh_id){
             $showing_follow_level->where('ten_thanh_id', $this->ten_thanh_id);
@@ -84,64 +83,29 @@ class ThieuNhi extends Component
             $showing_follow_level->where('ngay_sinh', $this->ngay_sinh);
         }
         return view('livewire.giao-xu.thieu-nhi')->with([
-            'showing_follow_level' => $showing_follow_level->paginate(20),
+            'showing_follow_level' => $showing_follow_level->simplePaginate(20),
             'all_ten_thanh' => $all_ten_thanh,
         ]);
     }
 
 
     public function statisticAge($giao_ho){
-        $count_chien_non = 0;
-        $count_au_nhi = 0;
-        $count_thieu_nhi = 0;
-        $count_nghia_si = 0;
-        $count_hiep_xi = 0;
-        DB::table('giao_xu as x')
+        $statistic_thieu_nhi = DB::table('giao_xu as x')
             ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
             ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
             ->whereIn('x.id', $giao_ho)
             ->orderBy('tv.created_at', 'DESC')
             ->select('tv.id as ThanhVien',
                 DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
-            ->chunk(1000, function ($value)
-            use(
-                &$count_chien_non,
-                &$count_thieu_nhi,
-                &$count_au_nhi,
-                &$count_nghia_si,
-                &$count_hiep_xi){
-                $count_chien_non += $value->whereBetween('age', [3, 5])->count();
-                $count_thieu_nhi += $value->whereBetween('age', [6, 10])->count();
-                $count_au_nhi += $value->whereBetween('age', [11, 13])->count();
-                $count_nghia_si += $value->whereBetween('age', [14, 16])->count();
-                $count_hiep_xi += $value->whereBetween('age', [17, 18])->count();
-            });
-        $statistic_thieu_nhi = ['count_chien_non' => $count_chien_non,
-            'count_thieu_nhi' => $count_thieu_nhi,
-            'count_au_nhi' => $count_au_nhi,
-            'count_nghia_si' => $count_nghia_si,
-            'count_hiep_xi' => $count_hiep_xi];
+            ->get();
+        $statistic_thieu_nhi = [
+            'count_chien_non' => $statistic_thieu_nhi->whereBetween('age', [3, 5])->count(),
+            'count_au_nhi' => $statistic_thieu_nhi->whereBetween('age', [6, 10])->count(),
+            'count_thieu_nhi' => $statistic_thieu_nhi->whereBetween('age', [11, 13])->count(),
+            'count_nghia_si' => $statistic_thieu_nhi->whereBetween('age', [14, 16])->count(),
+            'count_hiep_xi' => $statistic_thieu_nhi->whereBetween('age', [17, 18])->count()
+        ];
 
         return $statistic_thieu_nhi;
-    }
-
-    public function getThieuNhiByAge($giao_ho){
-        $thieu_nhi = DB::table('giao_xu as x')
-            ->join('so_gia_dinh_cong_giao as sgdcg', 'x.id', '=', 'sgdcg.giao_xu_id')
-            ->join('thanh_vien as tv', 'sgdcg.id', '=', 'tv.so_gia_dinh_id')
-            ->join('ten_thanh as t', 't.id', '=','tv.ten_thanh_id')
-            ->whereIn('x.id', $giao_ho)
-            ->orderBy('tv.ngay_sinh', 'ASC')
-            ->select('tv.id as tv_id',
-                'ho_va_ten',
-                'ngay_sinh',
-                'so_gia_dinh_id as sgd_id',
-                'ten_thanh',
-                'so_dien_thoai',
-                'dia_chi',
-                DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age"))
-            ->get()
-            ->whereBetween('age', [3, 18]);
-        return $thieu_nhi;
     }
 }

@@ -30,7 +30,7 @@
                             @endif
                         </div>
                         <div class="form-group ">
-                            <label>Ngày bồn mạng</label>
+                            <label>Ngày bổn mạng</label>
                             <div class="d-flex justify-content-between align-items-center">
                                 <input type="date" wire:model="ngay_bon_mang" class="form-control col-md-5">
                             </div>

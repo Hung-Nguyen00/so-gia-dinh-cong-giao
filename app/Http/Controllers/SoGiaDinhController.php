@@ -48,10 +48,20 @@ class SoGiaDinhController extends Controller
 
 
 
-    public  function downloadPDF($id){
+    public function downloadPDF($id){
+        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)->pluck('id')->toArray();
+        $gx_gh = array_merge($all_giao_ho, [Auth::user()->giao_xu_id]);
         $sgdcg = SoGiaDinh::with(['giaoXu.giaoPhan'])->withCount(['thanhVien', 'thanhVienSo2'])->find($id);
+        if (!$sgdcg){
+            Toastr::warning('Không có quyền truy cập!', 'Cảnh báo');
+            return back();
+        }
         if ($sgdcg->thanh_vien_count == 0 && $sgdcg->thanh_vien_so2_count == 0){
             Toastr::warning('Không có dữ liệu', 'Cảnh báo');
+            return back();
+        }
+        if (!in_array($sgdcg->giao_xu_id, $gx_gh)){
+            Toastr::warning('Không có quyền truy cập!', 'Cảnh báo');
             return back();
         }
         $query_so_gia_dinh_id = DB::table('thanh_vien as tv')
@@ -69,6 +79,7 @@ class SoGiaDinhController extends Controller
                 'ho_va_ten',
                 'ten_thanh',
                 'ngay_sinh')->get();
+
         $query_so_gia_dinh_id_2 = DB::table('thanh_vien as tv')
             ->join('ten_thanh as t', 't.id', '=', 'tv.ten_thanh_id')
             ->where('so_gia_dinh_id_2', $sgdcg->id)

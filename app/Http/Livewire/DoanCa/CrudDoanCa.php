@@ -5,6 +5,7 @@ namespace App\Http\Livewire\DoanCa;
 use App\Models\DoanCa;
 use App\Models\TenThanh;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -30,7 +31,8 @@ class CrudDoanCa extends Component
         $all_doan_ca = DoanCa::with(['tenThanh', 'thanhVien' => function($q) {
             $q->wherePivot('truong_doan', 1)->select('ho_va_ten')->first();
         }])->withCount('thanhVien')
-            ->orderBy('created_at', 'DESC');
+            ->orderBy('created_at', 'DESC')
+            ->where('giao_xu_id', Auth::user()->giao_xu_id);
 
         if ($this->ten_ca_doan != '' && $this->ten_ca_doan != null){
             $all_doan_ca->where('ten_doan_ca', 'like', "%$this->ten_ca_doan%");
@@ -82,7 +84,7 @@ class CrudDoanCa extends Component
 
     public function store(){
         $validatedData = $this->validate();
-        DoanCa::create($validatedData);
+        DoanCa::create(array_merge($validatedData, ['giao_xu_id' => Auth::user()->giao_xu_id]));
         Toastr::success('Tạo ca đoàn mới thành công','Thành công');
         $this->emit('add');
         $this->dispatchBrowserEvent('alert',

@@ -14,7 +14,8 @@ class DoanCa extends Model
     protected $fillable = [
       'ten_doan_ca',
       'ngay_bon_mang',
-      'ten_thanh_id'
+      'ten_thanh_id',
+        'giao_xu_id',
     ];
 
     public function tenThanh(){

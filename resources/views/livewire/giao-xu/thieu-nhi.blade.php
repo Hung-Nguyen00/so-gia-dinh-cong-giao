@@ -50,11 +50,11 @@
                     <th style="width: 50px">STT</th>
                     <th >Tên thánh</th>
                     <th >Họ và tên</th>
-                    <th >Ngày sinh</th>
+                    <th style="width: 100px">Ngày sinh</th>
                     <th >Số điện thoại</th>
                     <th >Địa chỉ</th>
-                    <th >Thông tin gia đình</th>
-                    <th >Xem chi tiết</th>
+                    <th style="width: 100px">Thông tin <br> gia đình</th>
+                    <th style="width: 150px" class="text-center">Thông tin <br> thành viên</th>
                 </tr>
                 </thead>
                 <tbody >
@@ -80,7 +80,10 @@
                             {{ $th->dia_chi_hien_tai}}
                         </td>
                         <td class="text-center">
-                            {{--<a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}" class="text-primary">Xem </a>--}}
+                            @if($th->sgd_id)
+                            <a href="{{ route('so-gia-dinh.show', ['so_gia_dinh' => \App\Models\SoGiaDinh::find($th->sgd_id)])}}"
+                               class="text-primary">Xem</a>
+                            @endif
                         </td>
 
                         <td class="text-center">

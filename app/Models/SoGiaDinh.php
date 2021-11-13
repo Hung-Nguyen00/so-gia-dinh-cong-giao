@@ -55,4 +55,9 @@ class SoGiaDinh extends Model
     public function getUser(){
         return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
     }
+
+    public function getTenGiaoXu($id){
+        $gx = GiaoXu::find($id);
+        return $gx ? $gx->ten_giao_xu : '';
+    }
 }

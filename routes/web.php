@@ -46,36 +46,45 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
 
     Route::group(['middleware'=> ['roleGiaoXu', 'revalidate']], function (){
         // create and update Bi Tich
-        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
-        // href bookmark
-        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua#them_bi_tich', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editBTTV');
+        Route::group(['prefix' => 'so-gia-dinh/{sgdId}/thanh-vien/{tvId}/chinh-sua'], function (){
+            Route::get('', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editTV');
+            // href bookmark
+            Route::get('#them_bi_tich', [SoGiaDinhController::class, 'editThanhVien'])->name('so-gia-dinh.editBTTV');
+        });
+
         Route::get('tu-si/{tuSi}/edit/#cong_tac', [TuSiController::class, 'edit'])->name('tu-si.editCongTac');
 
-        Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
-        Route::post('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
-        Route::get('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
-        Route::patch('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
-        Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
+        #sogiadinh
+        Route::group(['prefix' => 'so-gia-dinh/{sgdId}/thanh-vien/{thanh_vien}/'], function (){
+            Route::patch('', [SoGiaDinhController::class, 'updateThanhVien'])->name('so-gia-dinh.updateTV');
+            Route::post('', [SoGiaDinhController::class, 'storeBiTich'])->name('so-gia-dinh.storeBT');
+            Route::get('bi-tich/{bi_tich_id}/chinh-sua', [SoGiaDinhController::class, 'editBiTich'])->name('so-gia-dinh.editBT');
+            Route::patch('bi-tich/{bi_tich_id}', [SoGiaDinhController::class, 'updateBiTich'])->name('so-gia-dinh.updateBT');
+            Route::delete('bi-tich/{bi_tich_id}/delete', [SoGiaDinhController::class, 'deleteBiTich'])->name('so-gia-dinh.deleteBT');
+        });
 
-        //statistic
-
-
-        Route::get('giao-xu/tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
-        Route::get('giao-xu/tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
-        Route::post('giao-xu/tu-dong', [GiaoXuController::class, 'storeTuDong'])->name('giaoXu.storeTuDong');
-        Route::get('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'editTuDong'])->name('giaoXu.editTuDong');
-        Route::patch('giao-xu/tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'updateTuDong'])->name('giaoXu.updateTuDong');
-        Route::delete('giao-xu/tu-dong/{tu_si}/xoa', [GiaoXuController::class, 'deleteTuDong'])->name('giaoXu.deleteTuDong');
+        #giaoXu
+        Route::group(['prefix' => 'giao-xu/'], function (){
+            Route::get('tu-si', [GiaoXuController::class, 'showTuSiByGiaoXu'])->name('giaoXu.showTuSi');
+            Route::get('tu-dong/tao-moi', [GiaoXuController::class, 'createTuDong'])->name('giaoXu.createTuDong');
+            Route::post('tu-dong', [GiaoXuController::class, 'storeTuDong'])->name('giaoXu.storeTuDong');
+            Route::get('tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'editTuDong'])->name('giaoXu.editTuDong');
+            Route::patch('tu-dong/{tu_si}/chinh-sua', [GiaoXuController::class, 'updateTuDong'])->name('giaoXu.updateTuDong');
+            Route::delete('tu-dong/{tu_si}/xoa', [GiaoXuController::class, 'deleteTuDong'])->name('giaoXu.deleteTuDong');
+        });
 
         //import SoGiaDinh Thanh vien, BiTichDaNhan
         Route::post('file-import-so-gia-dinh', [SoGiaDinhController::class, 'fileImport'])->name('bi-tich-received-import');
         //import SoGiaDinh Thanh vien, BiTichDaNhan
         Route::post('file-import-them-bi-tich', [SoGiaDinhController::class, 'fileImportXTTS'])->name('bi-tich-added-import');
         // add ThanhVien to SoGiaDinh
-        Route::post('so-gia-dinh/{sgdId}/thanh-vien', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
-        Route::get('so-gia-dinh/{sgdId}/thanh-vien/tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
-        Route::delete('so-gia-dinh/{sgdId}/thanh-vien/{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
+        Route::group(['prefix' => 'so-gia-dinh/{sgdId}/thanh-vien/'], function (){
+            Route::post('', [SoGiaDinhController::class, 'storeThanhVien'])->name('so-gia-dinh.storeTV');
+            Route::get('tao-moi', [SoGiaDinhController::class, 'createThanhVien'])->name('so-gia-dinh.createTV');
+            Route::delete('{id}', [SoGiaDinhController::class, 'deleteThanhVien'])->name('so-gia-dinh.deleteTV');
+        });
         Route::get('giao-ho-/thong-ke', [GiaoHoController::class, 'statistic'])->name('giao-ho.statistic');
+        #Ca doan
         Route::get('ca-doan', [DoanCaController::class, 'index'])->name('ca-doan.index');
         Route::get('ca-doan/{ca_doan}/thanh_vien', [DoanCaController::class, 'indexThanhVien'])->name('ca-doan-thanh-vien.index');
         Route::get('ca-doan/{ca_doan}/thanh_vien/them-moi', [DoanCaController::class, 'addThanhVien'])->name('ca-doan-thanh-vien-add.index');
@@ -87,10 +96,13 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         ]);
     });
     // ----------------------------- main dashboard ------------------------------//
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/home/giao-phan', [GiaoPhanController::class, 'indexGiaoPhan'])->name('home.giaoPhan');
-    Route::get('/home/giao-xu', [GiaoPhanController::class, 'indexGiaoXu'])->name('home.giaoXu');
-    Route::get('home/sinh-hoac-tu/{id}', [HomeController::class, 'getGenderSinhOrTu']);
+    Route::group(['prefix'=> '/home/'], function (){
+        Route::get('', [HomeController::class, 'index'])->name('home');
+        Route::get('giao-phan', [GiaoPhanController::class, 'indexGiaoPhan'])->name('home.giaoPhan');
+        Route::get('giao-xu', [GiaoPhanController::class, 'indexGiaoXu'])->name('home.giaoXu');
+        Route::get('sinh-hoac-tu/{id}', [HomeController::class, 'getGenderSinhOrTu']);
+    });
+
     // request Ajax for select option
     Route::get('tu-si/giao-hat/{id}', [GiaoHatController::class, 'getGiaoHat']);
     Route::get('tu-si/giao-xu/{id}', [GiaoHatController::class, 'getGiaoXu']);
@@ -117,19 +129,18 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
 
 Auth::routes();
 
-
-Route::get('/test', function (){
-    return view('dashboard.student_dashboard');
-});
-// -----------------------------login----------------------------------------//
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('user.logout');
+Route::group(['middleware' => 'guest'], function (){
+    // -----------------------------login----------------------------------------//
+    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login')->middleware(['guest']);
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->middleware(['guest']);
+    Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('user.logout');
 
 // ----------------------------- forget password ----------------------------//
-Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('user.forget-password');
-Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('user.forget-password.send');
+    Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('user.forget-password');
+    Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('user.forget-password.send');
 
 // ----------------------------- reset password -----------------------------//
-Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
-Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+    Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
+    Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
+
+});
