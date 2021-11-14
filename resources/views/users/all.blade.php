@@ -78,6 +78,7 @@
                                                         </td>
 
                                                         <td class="text-center">
+                                                            @if($th->id !== \Illuminate\Support\Facades\Auth::user()->id)
                                                             <form action="{{ route('tai-khoan.destroy', $th->id) }}" method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -87,6 +88,7 @@
                                                                     <i class="la la-trash"></i>
                                                                 </button>
                                                             </form>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -39,7 +39,7 @@ class AnalyticGiaoPhan extends Component
         $this->sinh_tu_follow_year = request()->query('sinh_tu_follow_year', $this->sinh_tu_follow_year);
         $this->sinh_hoac_tu = request()->query('sinh_hoac_tu', $this->sinh_hoac_tu);
         if (!$this->giao_phan_id){
-            $this->giao_phan_id = GiaoPhan::find(Auth::user()->giao_xu_id)->id;
+            $this->giao_phan_id = GiaoPhan::find(Auth::user()->giao_phan_id)->id;
         }
         if (!$this->start_date){
             $this->start_date = Carbon::now()->subYear(1)->format('Y-m-d');

@@ -25,12 +25,18 @@ class UserController extends Controller
                 ->get();
         }elseif (Auth::user()->quanTri->ten_quyen == 'Giáo phận'){
             $users = User::with(['quanTri', 'giaoXu.giaoHat', 'giaoPhan'])
+                ->whereHas('quanTri', function ($q){
+                    $q->where('ten_quyen', 'Giáo phận');
+                })
                 ->where('giao_phan_id', Auth::user()->giao_phan_id)
                 ->get();
         }else{
             $users = User::with(['quanTri', 'giaoXu.giaoHat', 'giaoPhan'])
-                            ->where('giao_xu_id', Auth::user()->giao_xu_id)
-                            ->get();
+                ->whereHas('quanTri', function ($q){
+                    $q->where('ten_quyen', 'Giáo xứ');
+                })
+                ->where('giao_xu_id', Auth::user()->giao_xu_id)
+                ->get();
         }
         return view('users.all', compact('users'));
     }
@@ -60,22 +66,28 @@ class UserController extends Controller
             'giao_phan_id' => Auth::user()->giao_phan_id,
             'giao_xu_id' => Auth::user()->giao_xu_id]));
         Toastr::success('Tạo tài khoản thành công','Thành công');
-        return back();
+        return redirect()->route('tai-khoan.index');
     }
 
 
     public function validateRegister($request){
         $validateData = $request->validate([
-            'ho_va_ten'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:255|unique:users',
+            'ho_va_ten'      => 'required|max:45',
+            'email'     => 'required|email|max:45|unique:users',
             'so_dien_thoai' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'password'  => 'required|string|min:8|confirmed',
+            'password'  => 'required|min:8|confirmed',
             'password_confirmation' => 'required',
         ], [
             'ho_va_ten.required' => 'Họ và tên không được phép trống',
+            'ho_va_ten.max' => 'Họ và tên không được vượt quá 45 kí tự',
             'email.required' => 'Tài khoản không được phép trống',
+            'email.unique' => 'Tên tài khoản đã tồn tại',
+            'email.email' => 'Tài khoản phải đúng dạng email',
+            'email.max' => 'Email không được vượt quá 45 kí tự',
             'password.required' => 'Mật khẩu không được phép trống',
             'password.confirmed' => 'Mật khẩu không trùng khớp',
+            'password.min' => 'Mật khẩu không được nhỏ hơn :min',
+            'password_confirmation.required' => 'Mật khẩu nhập lại không được phép trống',
             'so_dien_thoai.regex' => 'Số điện thoại phải nhập bằng số',
             'so_dien_thoai.min' => 'Độ dài số điện thoại không được nhỏ hơn :min'
         ]);
@@ -129,7 +141,31 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        if ($id == Auth::id()){
+            Toastr::warming('Không được phép xóa tài khoản hiện tại','Cảnh báo');
+            return back();
+        }
+        if (Auth::user()->quanTri->ten_quyen == 'admin'){
+            $user = User::with(['quanTri', 'giaoXu.giaoHat', 'giaoPhan'])
+                ->whereId($id)
+                ->first();
+        }elseif (Auth::user()->quanTri->ten_quyen == 'Giáo phận'){
+            $user = User::with(['quanTri'])
+                ->whereHas('quanTri', function ($q){
+                    $q->where('ten_quyen', 'Giáo phận');
+                })
+                ->whereId($id)
+                ->where('giao_phan_id', Auth::user()->giao_phan_id)
+                ->first();
+        }else{
+            $user = User::with(['quanTri'])
+                ->whereHas('quanTri', function ($q){
+                    $q->where('ten_quyen', 'Giáo xứ');
+                })
+                ->whereId($id)
+                ->where('giao_xu_id', Auth::user()->giao_xu_id)
+                ->first();
+        }
         if ($user){
             $user->delete();
             Toastr::success('Xóa thành công','Thành công');

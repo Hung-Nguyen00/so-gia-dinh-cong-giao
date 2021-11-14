@@ -51,6 +51,7 @@
                     <li><a href="{{ route('nha-dong.index') }}">Nhà dòng</a></li>
                 </ul>
             </li>
+            @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'Giáo xứ' || \Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'admin')
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-book"></i>
                     <span class="nav-text">Quản lý giáo xứ</span>
@@ -73,6 +74,7 @@
                     <li><a href="{{ route('ca-doan.index') }}">Ca đoàn</a></li>
                 </ul>
             </li>
+            @endif
             <li class="nav-label">Quản trị</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-user"></i>

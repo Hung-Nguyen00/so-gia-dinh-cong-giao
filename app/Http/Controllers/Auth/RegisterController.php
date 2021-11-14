@@ -35,21 +35,24 @@ class RegisterController extends Controller
 
 
     public function validateRegister($request){
+
         $validateData = $request->validate([
-            'ho_va_ten'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:100|unique:users',
+            'ho_va_ten'      => 'required|string|max:45',
+            'email'     => 'required|email|max:45|unique:users',
             'quyen_quan_tri_id' => 'required',
             'giao_phan_id' => 'required',
             'giao_xu_id' => 'nullable',
-            'password'  => 'required|string|min:8|confirmed',
+            'password'  => 'required|min:8|confirmed',
             'password_confirmation' => 'required',
         ], [
             'ho_va_ten.required' => 'Họ và tên không được phép trống',
+            'ho_va_ten.max' => 'Họ và tên không được vượt quá :max kí tự',
             'email.required' => 'Tài khoản không được phép trống',
             'email.email' => 'Tài khoản phải đúng dạng email ví dụ: abc@gmail.com',
             'email.unique' => 'Tài khoản đã tồn tại',
-            'email.max' => 'Tài khoản không được vượt quá 100 ký tự',
+            'email.max' => 'Tài khoản không được vượt quá :max ký tự',
             'quyen_quan_tri_id.required' => 'Quyền hạn không được phép trống',
+            'password.min' => 'Mật khẩu không được nhỏ hơn :min',
             'password.required' => 'Mật khẩu không được phép trống',
             'password.confirmed' => 'Mật khẩu không trùng khớp',
             'giao_phan_id.required' => 'Không được phép trống',

@@ -47,7 +47,11 @@ class StatictisGiaoXu extends Component
             $this->end_date = Carbon::now()->format('Y-m-d');
         }
         if (!$this->giao_xu_id){
-            $this->giao_xu_id = GiaoXu::find(Auth::user()->giao_xu_id)->id;
+            if(Auth::user()->giao_xu_id){
+                $this->giao_xu_id = GiaoXu::find(Auth::user()->giao_xu_id)->id;
+            }else{
+                $this->giao_xu_id = GiaoXu::take(1)->first()->id;
+            }
         }
         $this->giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho',$this->giao_xu_id)
             ->orWhere('id',  $this->giao_xu_id)
