@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>['auth',  'revalidate']],function()
 {
+    Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('user.logout');
     Route::group(['middleware'=> ['roleGiaoPhan', 'revalidate']], function (){
         // import TuSi, ChucVu, ViTri
         Route::post('file-import-tu-si', [TuSiController::class, 'fileImport'])->name('tu-si-import');
@@ -133,7 +134,7 @@ Route::group(['middleware' => 'guest'], function (){
     // -----------------------------login----------------------------------------//
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login')->middleware(['guest']);
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->middleware(['guest']);
-    Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('user.logout');
+
 
 // ----------------------------- forget password ----------------------------//
     Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('user.forget-password');
@@ -146,6 +147,3 @@ Route::group(['middleware' => 'guest'], function (){
 });
 
 
-Route::get('/test', function (){
-    event(new \App\Events\SendingEmailAfterChuyenXu(3, 3));
-});

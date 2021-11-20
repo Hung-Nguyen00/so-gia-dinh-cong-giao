@@ -42,11 +42,10 @@ class CrudDoanCa extends Component
         if ($this->ten_ca_doan != '' && $this->ten_ca_doan != null){
             $all_doan_ca->where('ten_doan_ca', 'like', "%$this->ten_ca_doan%");
         }
-
         $all_ten_thanh = TenThanh::select('id', 'ten_thanh')->get();
         return view('livewire.doan-ca.crud-doan-ca')->with(
             [
-                'all_doan_ca' => $all_doan_ca->paginate($this->paginate_number),
+                'all_doan_ca' => $all_doan_ca ? $all_doan_ca->paginate($this->paginate_number) : null,
                 'all_ten_thanh' => $all_ten_thanh
             ]
         );

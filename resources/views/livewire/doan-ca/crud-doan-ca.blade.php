@@ -104,7 +104,9 @@
                     @endif
                 </tbody>
             </table>
+            @if($all_doan_ca)
             {{ $all_doan_ca->links()}}
+            @endif
         </div>
     </div>
 </div>
