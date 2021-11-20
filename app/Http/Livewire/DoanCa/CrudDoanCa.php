@@ -24,11 +24,10 @@ class CrudDoanCa extends Component
         $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
         $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
         $this->all_giao_xu = GiaoXu::with('giaoHat')->get();
-        if (!$this->giao_xu_id){
+        if (!$this->giao_xu_id && Auth::user()->giao_xu_id){
             $this->giao_xu_id = Auth::user()->giao_xu_id;
         }
     }
-
 
     public function render()
     {

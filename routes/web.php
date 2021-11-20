@@ -144,3 +144,8 @@ Route::group(['middleware' => 'guest'], function (){
     Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
 
 });
+
+
+Route::get('/test', function (){
+    event(new \App\Events\SendingEmailAfterChuyenXu(3, 3));
+});

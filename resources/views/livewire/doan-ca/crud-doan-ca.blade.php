@@ -60,46 +60,48 @@
                 </thead>
                 <tbody >
                 @php $i= 0; @endphp
-                @foreach($all_doan_ca as $d)
-                    <tr >
-                        <td class="text-center"> {{ ++$i }}</td>
-                        <td>
-                            {{ $d->tenThanh->ten_thanh }}
-                        </td>
-                        <td>{{ $d->ten_doan_ca }}</td>
-                        <td class="text-center">
-                            @if($d->ngay_bon_mang)
-                                {{ \Illuminate\Support\Carbon::parse($d->ngay_bon_mang)->format('d-m-y') }}
-                            @endif
-                        </td>
-                        <td>
-                            @if($d->thanhVien)
-                                @foreach($d->thanhVien as $tv)
-                                    {{ $tv->ho_va_ten }}
-                                @endforeach
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            {{ $d->thanh_vien_count }}
-                            <a href="{{ route('ca-doan-thanh-vien.index', $d) }}" class="text-primary">Xem chi tiết</a>
-                        </td>
-                        <td>
-                            <button type="button"
-                                    wire:click="edit({{ $d->id }})"
-                                    class="btn btn-sm btn-primary mb-1"
-                                    data-toggle="modal"
-                                    data-target="#edit">
-                                <i class="la la-pencil"></i>
-                            </button>
-                            <button type="button" wire:click="edit({{ $d->id }})"
-                                    data-toggle="modal"
-                                    data-target="#delete"
-                                    class="btn btn-outline-danger btn-sm d-inline-block mb-1">
-                                <i class="la la-trash-o"></i>
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
+                @if($all_doan_ca)
+                    @foreach($all_doan_ca as $d)
+                        <tr >
+                            <td class="text-center"> {{ ++$i }}</td>
+                            <td>
+                                {{ $d->tenThanh->ten_thanh }}
+                            </td>
+                            <td>{{ $d->ten_doan_ca }}</td>
+                            <td class="text-center">
+                                @if($d->ngay_bon_mang)
+                                    {{ \Illuminate\Support\Carbon::parse($d->ngay_bon_mang)->format('d-m-y') }}
+                                @endif
+                            </td>
+                            <td>
+                                @if($d->thanhVien)
+                                    @foreach($d->thanhVien as $tv)
+                                        {{ $tv->ho_va_ten }}
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                {{ $d->thanh_vien_count }}
+                                <a href="{{ route('ca-doan-thanh-vien.index', $d) }}" class="text-primary">Xem chi tiết</a>
+                            </td>
+                            <td>
+                                <button type="button"
+                                        wire:click="edit({{ $d->id }})"
+                                        class="btn btn-sm btn-primary mb-1"
+                                        data-toggle="modal"
+                                        data-target="#edit">
+                                    <i class="la la-pencil"></i>
+                                </button>
+                                <button type="button" wire:click="edit({{ $d->id }})"
+                                        data-toggle="modal"
+                                        data-target="#delete"
+                                        class="btn btn-outline-danger btn-sm d-inline-block mb-1">
+                                    <i class="la la-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    @endif
                 </tbody>
             </table>
             {{ $all_doan_ca->links()}}

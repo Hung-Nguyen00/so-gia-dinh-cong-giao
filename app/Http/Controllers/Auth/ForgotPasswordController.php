@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPasswordEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +32,13 @@ class ForgotPasswordController extends Controller
         DB::table('password_resets')->insert(
             ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
         );
-        Mail::send('auth.verify',['token' => $token], function($message) use ($request) {
-                  $message->from('thanhhung041100@gmail.com');
-                  $message->to($request->email);
-                  $message->subject('Thay đổi mật khẩu');
-               });
+        \Mail::to($request->email)->send(new ResetPasswordEmail($token));
+
+//        Mail::send('auth.verify',['token' => $token], function($message) use ($request) {
+//                  $message->from('exmaple@gmail.com');
+//                  $message->to($request->email);
+//                  $message->subject('Thay đổi mật khẩu');
+//               });
 
         return back()->with('message', 'Đã gửi mật khẩu qua email');
     }

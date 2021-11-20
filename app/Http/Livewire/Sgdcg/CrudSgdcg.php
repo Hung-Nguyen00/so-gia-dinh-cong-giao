@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sgdcg;
 
+use App\Events\SendingEmailAfterChuyenXu;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
@@ -69,21 +70,19 @@ class CrudSgdcg extends Component
         if (!$this->page_number){
             $this->page_number = 20;
         }
-        $this->all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)
-                            ->get();
         $this->all_giao_xu_search = GiaoXu::with('giaoHat')
                             ->where('giao_xu_hoac_giao_ho', 0)
                             ->get();
         $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();
         $this->all_ten_thanh = TenThanh::select('id', 'ten_thanh')->get();
+        $this->all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->get();
     }
 
     public function render()
     {
         $this->dispatchBrowserEvent('contentChanged');
-
             if($this->giao_hat_id){
-                $this->all_giao_xu = $this->all_giao_xu->where('giao_hat_id', $this->giao_hat_id);
+                $this->all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->where('giao_hat_id', $this->giao_hat_id)->get();
             }
             if ($this->gx_id_search){
                 $giao_xu_id = $this->gx_id_search;
@@ -370,6 +369,7 @@ class CrudSgdcg extends Component
                     'ngay_tao_so' => $this->ngay_tao_so,
                     'nguoi_khoi_tao' => Auth::id()
                 ]);
+                event(new SendingEmailAfterChuyenXu($this->giao_xu_id, $this->sgdcg_modal->id));
                 Toastr::success('Cập nhập thành công','Thành công');
                 return redirect()->route('so-gia-dinh.index');
             }else{
