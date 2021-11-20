@@ -478,15 +478,18 @@ class SoGiaDinhController extends Controller
             'ngay_dien_ra.date' => 'Ngày diễn ra phải đúng dạng ngày tháng năm',
             ]
         );
-        if ($request->linh_muc_ngoai && $request->tu_si_id ){
+        if ($request->linh_muc_ngoai && $request->tu_si_id){
             throw ValidationException::withMessages(['linh_muc_ngoai' => 'Linh mục trong lựa chọn ở trên không được phép có giá trị']);
+        }
+        if (!$request->linh_muc_ngoai && !$request->tu_si_id){
+            throw ValidationException::withMessages(['tu_si_id' => 'Linh mục không được phép trống']);
         }
         return $validateData;
     }
     public function validateCreateThanhVien($request){
         $validateData =  $this->validate($request, [
             'ho_va_ten' => 'required|max:100',
-            'ten_thanh_id' => 'nullable',
+            'ten_thanh_id' => 'required',
             'ngay_sinh' => 'date|nullable',
             'noi_sinh' => 'required|max:50',
             'gioi_tinh' => 'required',
@@ -494,9 +497,10 @@ class SoGiaDinhController extends Controller
             'chuc_vu_gd' => 'required',
             'nam_sinh' => 'numeric|nullable',
             'dia_chi_hien_tai' => 'max:250',
-            'so_dien_thoai' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
+            'so_dien_thoai' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
         ],[
             'ho_va_ten.required' => ':attribute không được phép trống',
+            'ten_thanh_id.required' => 'Tên thánh không được phép trống',
             'ngay_sinh.date' => ':attribute phải là giá trị ngày tháng năm',
             'ngay_mat.date' => ':attribute phải là giá trị ngày tháng năm',
             'nam_sinh.numeric' => ':attribute phải là giá trị số',
