@@ -43,8 +43,8 @@
                                                <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                    <div class="form-group">
                                                        <label class="form-label ">Email</label>
-                                                       <input type="text" class="form-control"
-                                                              value="{{ old('email') ?? $user->email }}" name="email">
+                                                       <input type="text" class="form-control bg-light"
+                                                              value="{{ old('email') ?? $user->email }}" name="email" disabled>
                                                    </div>
                                                    @if($errors->has('email'))
                                                        <span class="text-danger font-weight-bold">{{ $errors->first('email') }}</span>

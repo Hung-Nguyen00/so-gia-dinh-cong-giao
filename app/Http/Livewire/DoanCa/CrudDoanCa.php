@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\DoanCa;
 
 use App\Models\DoanCa;
+use App\Models\GiaoXu;
 use App\Models\TenThanh;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
@@ -14,13 +15,18 @@ class CrudDoanCa extends Component
 
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $ten_doan_ca, $ngay_bon_mang, $ten_thanh_id, $doan_ca, $ten_ca_doan, $paginate_number=20;
-    protected $queryString = ['ten_ca_doan', 'paginate_number'];
+    public $ten_doan_ca, $ngay_bon_mang, $all_giao_xu, $giao_xu_id, $ten_thanh_id, $doan_ca, $ten_ca_doan, $paginate_number=20;
+    protected $queryString = ['ten_ca_doan','giao_xu_id', 'paginate_number'];
 
 
     public function mount(){
         $this->ten_ca_doan = request()->query('ten_ca_doan', $this->ten_ca_doan);
+        $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
         $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
+        $this->all_giao_xu = GiaoXu::with('giaoHat')->get();
+        if (!$this->giao_xu_id){
+            $this->giao_xu_id = Auth::user()->giao_xu_id;
+        }
     }
 
 
@@ -32,7 +38,7 @@ class CrudDoanCa extends Component
             $q->wherePivot('truong_doan', 1)->select('ho_va_ten')->first();
         }])->withCount('thanhVien')
             ->orderBy('created_at', 'DESC')
-            ->where('giao_xu_id', Auth::user()->giao_xu_id);
+            ->where('giao_xu_id', $this->giao_xu_id);
 
         if ($this->ten_ca_doan != '' && $this->ten_ca_doan != null){
             $all_doan_ca->where('ten_doan_ca', 'like', "%$this->ten_ca_doan%");

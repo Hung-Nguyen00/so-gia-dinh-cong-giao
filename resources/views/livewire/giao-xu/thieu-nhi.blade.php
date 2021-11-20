@@ -84,7 +84,7 @@
                     <tr >
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>
-                            {{ $th->ten_thanh }}
+                            {{ $th->tenThanh->ten_thanh }}
                         </td>
                         <td class="text-break"> {{ $th->ho_va_ten }}</td>
                         <td>
@@ -101,15 +101,15 @@
                             {{ $th->dia_chi_hien_tai}}
                         </td>
                         <td class="text-center">
-                            @if($th->sgd_id)
-                            <a href="{{ route('so-gia-dinh.show', ['so_gia_dinh' => \App\Models\SoGiaDinh::find($th->sgd_id)])}}"
+                            @if($th->soGiaDinh)
+                            <a href="{{ route('so-gia-dinh.show', ['so_gia_dinh' => $th->soGiaDinh ])}}"
                                class="text-primary">Xem</a>
                             @endif
                         </td>
 
                         <td class="text-center">
                             <a type="button"
-                               href="{{ route('so-gia-dinh.editTV', ['sgdId' => $th->sgd_id, 'tvId' => $th->tv_id]) }}"
+                               href="{{ route('so-gia-dinh.editTV', ['sgdId' => $th->soGiaDinh->id, 'tvId' => $th->id]) }}"
                                class="btn btn-sm btn-primary">
                                 <i class="la la-pencil"></i>
                             </a>

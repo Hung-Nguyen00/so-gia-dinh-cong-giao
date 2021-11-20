@@ -14,7 +14,17 @@
         </div>
         <div class="col-md-6 col-xl-6 col-sm-6">
             <h4>Tìm kiếm</h4>
-            <div class="d-flex">
+            @if(\Auth::user()->quanTri->ten_quyen == 'admin')
+                <div>
+                    <label>Chọn giáo xứ</label>
+                    <select data-live-search="true" class="selectpicker  w-auto select form-control" wire:model="giao_xu_id">
+                        @foreach($all_giao_xu as $t)
+                            <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+            <div class="d-flex mt-1">
                 <div class="form-group">
                     <label>Tên ca đoàn</label>
                     <input type="text" wire:model="ten_ca_doan" class="form-control" placeholder="Nhập tên ca đoàn">
