@@ -40,14 +40,19 @@ class CrudSgdcg extends Component
         $search_ten_thanh_id,
         $giao_xu_id_old,
         $ten_chu_ho,
+        $gx_id_search,
         $chuyen_xu_nhap_xu = 1,
         $all_giao_phan,
         $all_giao_hat,
         $giao_phan_id,
+        $all_giao_xu_search,
         $page_number,
+        $all_ten_thanh,
+        $loading = 0,
+        $all_giao_ho,
         $giao_hat_id;
     public  $queryString = ['giao_ho_id', 'ten_chu_ho',
-        'search_ten_thanh_id',
+        'search_ten_thanh_id', 'gx_id_search',
         'chuyen_xu_nhap_xu','start_date', 'end_date', 'page_number'];
 
     public function mount()
@@ -55,6 +60,7 @@ class CrudSgdcg extends Component
         $this->giao_ho_id = request()->query('giao_ho_id', $this->giao_ho_id);
         $this->ten_chu_ho = request()->query('ten_chu_ho', $this->ten_chu_ho);
         $this->start_date = request()->query('start_date', $this->start_date);
+        $this->gx_id_search = request()->query('gx_id_search', $this->gx_id_search);
         $this->search_ten_thanh_id = request()->query('search_ten_thanh_id', $this->search_ten_thanh_id);
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->page_number = request()->query('page_number', $this->page_number);
@@ -63,116 +69,49 @@ class CrudSgdcg extends Component
         if (!$this->page_number){
             $this->page_number = 20;
         }
+        $this->all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)
+                            ->get();
+        $this->all_giao_xu_search = GiaoXu::with('giaoHat')
+                            ->where('giao_xu_hoac_giao_ho', 0)
+                            ->get();
+        $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();
+        $this->all_ten_thanh = TenThanh::select('id', 'ten_thanh')->get();
     }
 
     public function render()
     {
         $this->dispatchBrowserEvent('contentChanged');
-        $this->all_giao_xu = GiaoXu::where('giao_hat_id', $this->giao_hat_id)
-                                ->where('giao_xu_hoac_giao_ho', 0)
-                                ->get();
-        $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
-            ->orWhere('id', Auth::user()->giao_xu_id)
-            ->pluck('id')->toArray();
-        $giao_ho = array_values($giao_ho);
 
-        $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])
-            ->where('id', Auth::user()->giao_xu_id)->first();
-        //create ma_code from GP GH GX
-        if (!$this->ma_so){
-            $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
-            $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
-            $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
-
-            $ma_giao_xu = $name_GP. '-'.$name_GH. '-'. $name_GX .'-';
-            $last_sgdcg = SoGiaDinh::latest('id')->withTrashed()
-                ->where('ma_so', 'like', $ma_giao_xu.'%')
-                ->orderBy('created_at', 'ASC')
-                ->first();
-            // get number max ma_code
-            $max_number = null;
-            if($last_sgdcg){
-                preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
-                $max_number = $matches[0][0];
+            if($this->giao_hat_id){
+                $this->all_giao_xu = $this->all_giao_xu->where('giao_hat_id', $this->giao_hat_id);
             }
-            $number = $max_number ? $max_number : 0;
-            $this->ma_so = $ma_giao_xu.($number + 1);
-        }
-
-        $this->all_giao_phan = GiaoPhan::orderBy('ten_giao_phan')->get();
-        $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
-        // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
-        // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
-        // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
-        // search By Chu Ho or not
-
-        // search By GiaoHo or not
-        $all_so_gia_dinh = SoGiaDinh::with(['getUser', 'lichSuChuyenXu','giaoXu', 'thanhVien' => function($q){
-            $q->with('tenThanh')
-                ->where('chuc_vu_gd', 'Cha');
-        }, 'thanhVienSo2' => function($q){
-            $q->with('tenThanh')
-                ->where('chuc_vu_gd_2', 'Cha');
-        }])
-            ->withCount(['thanhVien', 'thanhVienSo2'])
-            ->orderBy('created_at', 'DESC');
-
-        if ($this->giao_ho_id){
-            $giao_ho_id = $this->giao_ho_id;
-            $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $giao_ho_id);
-        }
-        if (!$this->giao_ho_id){
-                // search by All
-            if ($this->chuyen_xu_nhap_xu == 2){
-                $all_so_gia_dinh = $all_so_gia_dinh
-                    ->whereIn('giao_xu_id', $giao_ho)
-                    ->Where('la_nhap_xu',  1)
-                    ->orWhereHas('lichSuChuyenXu', function ($q){
-                        $q->where('so_gia_dinh_cong_giao.giao_xu_id', Auth::user()->giao_xu_id);
-                    });
+            if ($this->gx_id_search){
+                $giao_xu_id = $this->gx_id_search;
+            }else{
+                $giao_xu_id = Auth::user()->giao_xu_id;
             }
-            if ($this->chuyen_xu_nhap_xu == 3){
-                $all_so_gia_dinh = $all_so_gia_dinh->WhereHas('lichSuChuyenXu', function ($q){
-                    $q->where('lich_su_sgdcg.giao_xu_id', Auth::user()->giao_xu_id);
-                })->whereNotIn('giao_xu_id', $giao_ho);
-            }
-        }
-        if ($this->start_date && $this->end_date){
-            $all_so_gia_dinh = $all_so_gia_dinh->whereBetween('ngay_tao_so',[$this->start_date, $this->end_date]);
-        }
-        if ($this->chuyen_xu_nhap_xu == 1 && !$this->ten_chu_ho ){
-            $all_so_gia_dinh = $all_so_gia_dinh->orWhereHas('lichSuChuyenXu', function ($q){
-                $q->where('giao_xu_id', Auth::user()->giao_xu_id);
-            })->orWhereIn('giao_xu_id', $giao_ho);
-        }
-        if ($this->ten_chu_ho || $this->search_ten_thanh_id){
-        $chu_ho = $this->ten_chu_ho;
-        $search_ten_thanh = $this->search_ten_thanh_id;
-        $all_so_gia_dinh = $all_so_gia_dinh
-            ->whereHas('thanhVien', function($q) use($chu_ho, $search_ten_thanh){
-                $q->with('tenThanh')
-                    ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
-                    ->where('chuc_vu_gd', 'Cha');
-                if ($search_ten_thanh){
-                    $q->where('ten_thanh_id', $search_ten_thanh);
-                }
-            })
-            ->orWhereHas('thanhVienSo2',function($q) use($chu_ho, $search_ten_thanh){
-                $q->with('tenThanh')
-                    ->where('ho_va_ten', 'like', '%' . $chu_ho . '%')
-                    ->where('chuc_vu_gd_2', 'Cha');
-                if ($search_ten_thanh) {
-                    $q->where('ten_thanh_id', $search_ten_thanh);
-                }
-            })
-            ->orderBy('created_at', 'DESC');
+            $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)
+                ->orWhere('id', $giao_xu_id)
+                ->pluck('id')->toArray();
+            $giao_ho = array_values($giao_ho);
 
-    }
-        $all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)->select('ten_giao_xu', 'id')->get();
+            $this->createSoGiaDinh($giao_xu_id);
+            $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
+            // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
+            // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
+            // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
+            // search By Chu Ho or not
+
+            // search By GiaoHo or not
+            if ($this->loading == 0){
+                $all_so_gia_dinh = $this->getSoGiaDinh($giao_xu_id, $giao_ho);
+            }
+            else{
+                $all_so_gia_dinh = null;
+            }
+            $this->all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)->select('ten_giao_xu', 'id')->get();
         return view('livewire.sgdcg.crud-sgdcg')->with([
-            'all_so_gia_dinh' => $all_so_gia_dinh->paginate($this->page_number),
-            'all_giao_ho' => $all_giao_ho,
-            'all_ten_thanh' => TenThanh::select('id', 'ten_thanh')->get(),
+            'all_so_gia_dinh' => $all_so_gia_dinh ? $all_so_gia_dinh->paginate($this->page_number) : null,
         ]);
     }
 
@@ -217,8 +156,113 @@ class CrudSgdcg extends Component
         $this->giao_hat_id = '';
         $this->giao_phan_id = '';
         $this->note = '';
+        $this->loading = 0;
         $this->ngay_chuyen_xu = null;
     }
+
+    public function getSoGiaDinh($giao_xu_id, $giao_ho){
+        $all_so_gia_dinh = SoGiaDinh::with(['getUser' => function ($q){
+            $q->select('id', 'giao_xu_id');
+        }, 'lichSuChuyenXu','giaoXu' => function($q){
+            $q->select('id', 'ten_giao_xu');
+        }, 'thanhVien' => function($q){
+            $q->with('tenThanh')
+                ->where('chuc_vu_gd', 'Cha');
+        }, 'thanhVienSo2' => function($q){
+            $q->with('tenThanh')
+                ->where('chuc_vu_gd_2', 'Cha');
+        }])
+            ->withCount(['thanhVien', 'thanhVienSo2'])
+            ->where('giao_xu_id', 6)
+            ->orderBy('created_at', 'DESC');
+
+
+        if (!$this->giao_ho_id){
+            // search by All
+            if ($this->chuyen_xu_nhap_xu == 2){
+                $all_so_gia_dinh = $all_so_gia_dinh
+                    ->whereIn('giao_xu_id', $giao_ho)
+                    ->Where('la_nhap_xu',  1)
+                    ->orWhereHas('lichSuChuyenXu', function ($q) use($giao_xu_id){
+                        $q->where('so_gia_dinh_cong_giao.giao_xu_id', $giao_xu_id);
+                    });
+            }
+            if ($this->chuyen_xu_nhap_xu == 3){
+                $all_so_gia_dinh = $all_so_gia_dinh->WhereHas('lichSuChuyenXu', function ($q) use($giao_xu_id){
+                    $q->where('lich_su_sgdcg.giao_xu_id',$giao_xu_id);
+                })->whereNotIn('giao_xu_id', $giao_ho);
+            }
+        }
+
+        if ($this->start_date && $this->end_date){
+            $all_so_gia_dinh = $all_so_gia_dinh->whereBetween('ngay_tao_so',[$this->start_date, $this->end_date]);
+        }
+        if ($this->chuyen_xu_nhap_xu == 1 && !$this->ten_chu_ho ){
+            $all_so_gia_dinh = $all_so_gia_dinh->orWhereHas('lichSuChuyenXu', function ($q) use($giao_xu_id){
+                $q->where('giao_xu_id', $giao_xu_id);
+            })->orWhereIn('giao_xu_id', $giao_ho);
+        }
+
+        if ($this->ten_chu_ho || $this->search_ten_thanh_id){
+            $chu_ho = $this->ten_chu_ho;
+            $search_ten_thanh = $this->search_ten_thanh_id;
+            if (!$this->giao_ho_id){
+                $all_so_gia_dinh = $all_so_gia_dinh->WhereIn('giao_xu_id', $giao_ho);
+            }else{
+                $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $this->giao_ho_id);
+            }
+                $all_so_gia_dinh = $all_so_gia_dinh
+                    ->whereHas('thanhVien', function($q) use($chu_ho, $search_ten_thanh){
+                    $q->with('tenThanh')
+                        ->where('ho_va_ten','like',  '%'.$chu_ho . '%')
+                        ->where('chuc_vu_gd', 'Cha');
+                    if ($search_ten_thanh){
+                        $q->where('ten_thanh_id', $search_ten_thanh);
+                    }
+                })
+                ->orWhereHas('thanhVienSo2',function($q) use($chu_ho, $search_ten_thanh){
+                    $q->with('tenThanh')
+                        ->where('ho_va_ten', 'like', '%' . $chu_ho . '%')
+                        ->where('chuc_vu_gd_2', 'Cha');
+                    if ($search_ten_thanh) {
+                        $q->where('ten_thanh_id', $search_ten_thanh);
+                    }
+                })
+                ->orderBy('created_at', 'DESC');
+        }
+        if ($this->giao_ho_id){
+            $giao_ho_id = $this->giao_ho_id;
+            $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $giao_ho_id);
+        }
+        return $all_so_gia_dinh;
+    }
+
+    public function createSoGiaDinh($giao_xu_id){
+        $get_giao_xu = GiaoXu::with(['giaoPhan', 'giaoHat'])
+            ->where('id', $giao_xu_id)->first();
+
+        //create ma_code from GP GH GX
+        if (!$this->ma_so){
+            $name_GP = $this->getUpperCase($get_giao_xu->giaoPhan->ten_giao_phan);
+            $name_GH = $this->getUpperCase($get_giao_xu->giaoHat->ten_giao_hat);
+            $name_GX = $this->getUpperCase($get_giao_xu->ten_giao_xu);
+
+            $ma_giao_xu = $name_GP. '-'.$name_GH. '-'. $name_GX .'-';
+            $last_sgdcg = SoGiaDinh::latest('id')->withTrashed()
+                ->where('ma_so', 'like', $ma_giao_xu.'%')
+                ->orderBy('created_at', 'ASC')
+                ->first();
+            // get number max ma_code
+            $max_number = null;
+            if($last_sgdcg){
+                preg_match_all('!\d+!', $last_sgdcg->ma_so, $matches);
+                $max_number = $matches[0][0];
+            }
+            $number = $max_number ? $max_number : 0;
+            $this->ma_so = $ma_giao_xu.($number + 1);
+        }
+    }
+
     public function store()
     {
         $validatedData = $this->validate();
@@ -244,6 +288,7 @@ class CrudSgdcg extends Component
     }
 
     public function setCurrentTime(){
+        $this->clearData();
         $this->ma_so =  null;
         $this->ngay_tao_so = Carbon::now()->format('Y-m-d');
     }
@@ -268,6 +313,7 @@ class CrudSgdcg extends Component
     }
 
     public function edit($id){
+        $this->loading = 1;
         $this->clearData();
         $this->sgdcg_modal = SoGiaDinh::with(['lichSuChuyenXu' => function ($q){
             $q->where('giao_xu_id', Auth::user()->giao_xu_id);

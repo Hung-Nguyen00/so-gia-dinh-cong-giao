@@ -24,6 +24,16 @@
     <div  class="card-body">
         <div class="table-responsive">
             <h5>Tìm kiếm</h5>
+            @if(\Auth::user()->quanTri->ten_quyen == 'admin')
+            <div class="col-md-3">
+                <label>Chọn giáo xứ</label>
+                <select data-live-search="true" class="selectpicker  select form-control" wire:model="gx_id_search">
+                    @foreach($all_giao_xu_search as $t)
+                        <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
             <div class="d-flex flex-wrap ">
                 <div class="form-group col-md-3 ">
                     <label for="">Giáo họ</label>
@@ -38,7 +48,7 @@
                     <label>
                         Tên thánh
                     </label>
-                    <select class="form-control select " data-live-search="true"   wire:model="search_ten_thanh_id">
+                    <select class="form-control select " data-live-search="true" wire:model="search_ten_thanh_id">
                         <option value="" selected>Chọn tên thánh</option>
                         @foreach($all_ten_thanh as $t)
                             <option value="{{ $t->id }}">{{$t->ten_thanh }}</option>
@@ -47,7 +57,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="">Chủ hộ</label>
-                    <input type="text" wire:model="ten_chu_ho" class="form-control">
+                    <input type="text" wire:model.lazy="ten_chu_ho" class="form-control">
                 </div>
                 <div class="form-group col-md-3">
                     <label>
@@ -79,6 +89,15 @@
                     </select>
                 </div>
             </div>
+            <div wire:loading>
+                <div id="loadingAddTVSgdcg" class="la-ball-circus la-2x" style="top: 50% !important;">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <table class="table display" style="min-width: 1280px;">
                 <thead>
                 <tr>
@@ -96,6 +115,7 @@
                 </tr>
                 </thead>
                 <tbody >
+                @if($all_so_gia_dinh)
                 @php $flag= 0; @endphp
                 @foreach($all_so_gia_dinh as $g)
                     <tr>
@@ -217,10 +237,13 @@
                         </td>
                     </tr>
                 @endforeach
+                @endif
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
+                @if($all_so_gia_dinh)
                 {{ $all_so_gia_dinh->links() }}
+                @endif
             </div>
         </div>
     </div>

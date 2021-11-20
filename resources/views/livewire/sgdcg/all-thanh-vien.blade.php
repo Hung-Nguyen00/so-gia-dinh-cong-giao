@@ -1,5 +1,18 @@
 <div>
-    <h4 class="font-weight-bold">Tìm kiếm</h4>
+
+    <div class="col-md-3">
+        <h4 class="font-weight-bold">Tìm kiếm</h4>
+    </div>
+    @if(\Auth::user()->quanTri->ten_quyen == 'admin')
+    <div class="col-md-3">
+        <label>Chọn giáo xứ</label>
+        <select data-live-search="true" class="selectpicker  select form-control" wire:model="giao_xu_id">
+            @foreach($all_giao_xu as $t)
+                <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
+            @endforeach
+        </select>
+    </div>
+    @endif
     <div class="d-flex flex-wrap mb-3">
         <div class="col-md-3 mt-3">
             <label>Tên thánh</label>

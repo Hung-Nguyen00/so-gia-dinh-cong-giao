@@ -16,7 +16,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Giáo họ (nếu thuộc giáo họ)</label>
-                                <select class="form-control select" wire:model="is_giao_ho_id">
+                                <select class="form-control select" wire:model.defer="is_giao_ho_id">
                                     <option value="" selected>Chọn giáo họ</option>
                                     @foreach($all_giao_ho as $h)
                                         <option value="{{ $h->id }}">{{ $h->ten_giao_xu }}</option>
@@ -27,7 +27,7 @@
                                 <label >Ngày tạo sổ</label>
                                     <input  id="ngay_tao_so"
                                             type="date"
-                                            wire:model="ngay_tao_so"
+                                            wire:model.defer="ngay_tao_so"
                                             name="ngay_tao_so"
                                             value="{{ $ngay_tao_so }}"
                                             class="form-control col-md-5">
@@ -36,7 +36,7 @@
                                 @endif
                             </div>
                             <div class="form-check col-md-6 d-flex align-items-start pt-2">
-                                <input class="form-check-input" type="checkbox" wire:model="la_nhap_xu">
+                                <input class="form-check-input" type="checkbox" wire:model.defer="la_nhap_xu">
                                 <label class="form-check-label">
                                    Sổ gia đình nhập xứ
                                 </label>

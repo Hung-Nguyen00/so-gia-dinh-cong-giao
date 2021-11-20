@@ -16,7 +16,6 @@ class TuSi extends Model
     protected $fillable = [
         'ho_va_ten',
         'la_tong_giam_muc',
-        'giao_tinh_id',
         'ngay_sinh',
         'ngay_mat',
         'email',

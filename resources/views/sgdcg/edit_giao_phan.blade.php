@@ -1,5 +1,7 @@
 <div>
-    <div wire:ignore.self class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" style="overflow: hidden" id="editModal" tabindex="-1"
+         data-backdrop="static" data-keyboard="false"
+         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,7 +68,7 @@
                         <div class="form-group d-flex flex-wrap justify-content-between">
                             <div class="col-md-5 mt-1 p-0">
                                 <label class="pl-1">Ngày chuyển xứ</label>
-                                <input type="date" wire:model="ngay_chuyen_xu" class="form-control">
+                                <input type="date" wire:model.defer="ngay_chuyen_xu" class="form-control">
                                 @if($errors->has('ngay_chuyen_xu'))
                                     <span class="text-danger">{{ $errors->first('ngay_chuyen_xu') }}</span>
                                 @endif
@@ -74,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Chú thích</label>
-                            <textarea wire:model.lazy="note" class="form-control" rows="3"> {{ $note }}</textarea>
+                            <textarea wire:model.defer="note" class="form-control" rows="3"> {{ $note }}</textarea>
                             @if($errors->has('note'))
                                 <span class="text-danger">{{ $errors->first('note') }}</span>
                             @endif

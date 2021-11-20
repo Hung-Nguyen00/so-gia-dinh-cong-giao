@@ -22,10 +22,14 @@ class AllThanhVien extends Component
         $ho_va_ten,
         $sinh_or_tu = null,
         $paginate_number,
+        $all_ten_thanh,
+        $all_bi_tich,
+        $giao_xu_id,
+        $all_giao_xu,
         $ten_thanh;
 
     // can use $updatesQueryString to encode url
-    protected $queryString  = ['ho_va_ten', 'ten_thanh_id', 'start_date', 'paginate_number','end_date', 'sinh_or_tu'];
+    protected $queryString  = ['ho_va_ten', 'ten_thanh_id', 'giao_xu_id','start_date', 'paginate_number','end_date', 'sinh_or_tu'];
 
     public function updatingSearch()
     {
@@ -36,6 +40,7 @@ class AllThanhVien extends Component
     {
         $this->ho_va_ten = request()->query('ho_va_ten', $this->ho_va_ten);
         $this->ten_thanh_id = request()->query('ten_thanh_id', $this->ten_thanh_id);
+        $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
         $this->start_date = Carbon::parse(request()->query('start_date', $this->start_date))->format('Y-m-d');
         $this->end_date = request()->query('end_date', $this->end_date);
         $this->sinh_or_tu = request()->query('sinh_or_tu', $this->sinh_or_tu);
@@ -47,6 +52,9 @@ class AllThanhVien extends Component
         if (!$this->paginate_number){
             $this->paginate_number = 20;
         }
+        $this->all_ten_thanh = TenThanh::orderBy('ten_thanh')->get('id');
+        $this->all_bi_tich = BiTich::all();
+        $this->all_giao_xu = GiaoXu::with('giaoHat')->get();
 
     }
 
@@ -54,13 +62,22 @@ class AllThanhVien extends Component
     public function render()
     {
         $this->dispatchBrowserEvent('contentChanged');
-        $this->ten_thanh = TenThanh::get('id')->toArray();
-        $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
-            ->orWhere('id', Auth::user()->giao_xu_id)
+        $this->ten_thanh = $this->all_ten_thanh->toArray();
+
+        if ($this->giao_xu_id){
+            $giao_xu_id = $this->giao_xu_id;
+        }else{
+            $giao_xu_id = Auth::user()->giao_xu_id;
+        }
+
+        $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)
+            ->orWhere('id', $giao_xu_id)
             ->pluck('id');
+
         if ($this->ten_thanh_id !== null && $this->ten_thanh_id !== ''){
             $this->ten_thanh = TenThanh::where('id', $this->ten_thanh_id)->first('id')->toArray();
         }
+
         $all_thanh_vien = ThanhVien::with(['soGiaDinh', 'soGiaDinh2','tenThanh'])
             ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
                 $q->whereIn('giao_xu_id', $giao_ho);
@@ -79,8 +96,9 @@ class AllThanhVien extends Component
         }
         return view('livewire.sgdcg.all-thanh-vien', [
                 'all_thanh_vien' => $all_thanh_vien->simplePaginate($this->paginate_number),
-                'all_bi_tich' => BiTich::all(),
-                'all_ten_thanh' => TenThanh::orderBy('ten_thanh')->get(),
+                'all_bi_tich' => $this->all_bi_tich,
+                'all_ten_thanh' => $this->all_ten_thanh,
+                'all_giao_xu' => $this->all_giao_xu
             ]
         );
     }
