@@ -1,5 +1,4 @@
 <div>
-
     <div class="col-md-3">
         <h4 class="font-weight-bold">Tìm kiếm</h4>
     </div>
@@ -25,7 +24,7 @@
         </div>
         <div class="col-md-3 mt-3">
             <label>Họ và tên</label>
-            <input type="text" wire:model="ho_va_ten" class="form-control">
+            <input type="text" wire:model.lazy="ho_va_ten" class="form-control">
         </div>
         <div class="col-md-3 mt-3">
             <label>Sinh hoặc tử</label>
@@ -37,11 +36,11 @@
         </div>
         <div class="col-md-3 mt-3">
             <label>Ngày bắt đầu</label>
-            <input type="date" wire:model="start_date" class="form-control">
+            <input type="date" wire:model.lazy="start_date" class="form-control">
         </div>
         <div class="col-md-3 mt-3">
             <label>Ngày kết thúc</label>
-            <input type="date"  wire:model="end_date"  class="form-control">
+            <input type="date"  wire:model.lazy="end_date"  class="form-control">
         </div>
         <div class="col-md-2 mt-3">
             <div id="ShowGD">

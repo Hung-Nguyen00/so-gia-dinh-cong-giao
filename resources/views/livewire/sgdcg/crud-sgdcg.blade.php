@@ -72,9 +72,9 @@
                 <div class="form-group col-md-6">
                     <label for="">Ngày lập sổ</label>
                    <div class="d-flex flex-wrap justify-content-start">
-                       <input type="date" wire:model="start_date" class="form-control mr-2 w-auto">
+                       <input type="date" wire:model.lazy="start_date" class="form-control mr-2 w-auto">
                        <span style="font-size: 20px" class="font-weight-bold"> - </span>
-                       <input type="date" wire:model="end_date" class="ml-2 form-control w-auto">
+                       <input type="date" wire:model.lazy="end_date" class="ml-2 form-control w-auto">
                    </div>
                 </div>
 

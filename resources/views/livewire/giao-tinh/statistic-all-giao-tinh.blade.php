@@ -4,18 +4,17 @@
             <div class="col-sm-8 p-md-0">
                 <div class="welcome-text">
                     <h4>Thống kê toàn giáo phận</h4>
-                    <div class="d-flex col-sm-12 col-md-12 flex-wrap justify-content-start pt-2 pl-0">
-                        <div class="col-md-4 col-sm-3 col-xs-3 form-group" style="max-width: 50%;">
-                            <label>Ngày bắt đầu</label>
-                            <input type="date" wire:model="start_date" class="form-control w-auto">
-                        </div>
-                        <div class="col-md-4 col-xs-3 col-sm-3 form-group" style="max-width: 50%;">
-                            <label>Ngày kết thúc</label>
-                            <input type="date" class="form-control w-auto" wire:model="end_date">
-                        </div>
-                    </div>
+                    {{--<div class="d-flex col-sm-12 col-md-12 flex-wrap justify-content-start pt-2 pl-0">--}}
+                        {{--<div class="col-md-4 col-sm-3 col-xs-3 form-group" style="max-width: 50%;">--}}
+                            {{--<label>Ngày bắt đầu</label>--}}
+                            {{--<input type="date" wire:model="start_date" class="form-control w-auto">--}}
+                        {{--</div>--}}
+                        {{--<div class="col-md-4 col-xs-3 col-sm-3 form-group" style="max-width: 50%;">--}}
+                            {{--<label>Ngày kết thúc</label>--}}
+                            {{--<input type="date" class="form-control w-auto" wire:model="end_date">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
-
             </div>
             <div class="col-sm-4 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">

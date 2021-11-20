@@ -1,6 +1,18 @@
 <div>
     <div class="card-header d-flex flex-wrap">
-        <h4 class="font-weight-bold col-12">Danh sách các thiếu nhi</h4>
+        <div class="col-md-12">
+            <h4 class="font-weight-bold">Danh sách các thiếu nhi</h4>
+            @if(\Auth::user()->quanTri->ten_quyen == 'admin')
+                <div>
+                    <label>Chọn giáo xứ</label>
+                    <select data-live-search="true" class="selectpicker w-auto select form-control" wire:model="giao_xu_id">
+                        @foreach($all_giao_xu as $t)
+                            <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+        </div>
         <div class="col-md-3 mt-3">
             <label>Xem theo cấp bậc thiếu nhi</label>
             <select class="selectpicker  select form-control" wire:model="select_level">
@@ -22,11 +34,11 @@
         </div>
         <div class="col-md-3 mt-3">
             <label>Họ và tên</label>
-            <input type="text" wire:model="ho_va_ten" class="form-control">
+            <input type="text" wire:model.lazy="ho_va_ten" class="form-control">
         </div>
         <div class="col-md-3 mt-3">
             <label>Ngày sinh</label>
-            <input type="date" wire:model="ngay_sinh" class="form-control">
+            <input type="date" wire:model.lazy="ngay_sinh" class="form-control">
         </div>
         <div class="col-md-2 mt-3">
             <div class="align-items-end mt-3">
@@ -40,6 +52,15 @@
                     <option value="100">100</option>
                 </select>
             </div>
+        </div>
+    </div>
+    <div wire:loading>
+        <div id="loadingAddTVSgdcg" class="la-ball-circus la-2x" style="top: 50% !important;">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
     <div  class="card-body">

@@ -27,11 +27,11 @@
                 </div>
                 <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <label>Họ và tên</label>
-                    <input type="text" wire:model="ho_va_ten" class="form-control">
+                    <input type="text" wire:model.lazy="ho_va_ten" class="form-control">
                 </div>
                 <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <label>Ngày sinh</label>
-                    <input type="date" wire:model="date_of_birth" class="form-control">
+                    <input type="date" wire:model.lazy="date_of_birth" class="form-control">
                 </div>
                 <div class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <lable class="col-form-label">Chức vụ</lable>
@@ -100,11 +100,11 @@
                 </div>
                 <div class="col-md-3 mt-3">
                     <label>Ngày bắt đầu</label>
-                    <input type="date" wire:model="start_date" class="form-control">
+                    <input type="date" wire:model.lazy="start_date" class="form-control">
                 </div>
                 <div class="col-md-3 mt-3">
                     <label>Ngày kết thúc</label>
-                    <input type="date"  wire:model="end_date"  class="form-control">
+                    <input type="date"  wire:model.lazy="end_date"  class="form-control">
                 </div>
             </div>
         @if($active==0)

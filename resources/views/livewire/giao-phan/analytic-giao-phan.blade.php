@@ -28,11 +28,11 @@
                 </div>
                 <div class="col-md-3 col-sm-6  form-group">
                     <label>Ngày bắt đầu</label>
-                    <input type="date" wire:model="start_date" class="form-control w-100">
+                    <input type="date" wire:model.lazy="start_date" class="form-control w-100">
                 </div>
                 <div class="col-md-3  col-sm-6  form-group">
                     <label>Ngày kết thúc</label>
-                    <input type="date" class="form-control w-100" wire:model="end_date">
+                    <input type="date" class="form-control w-100" wire:model.lazy="end_date">
                 </div>
             </div>
         </div>

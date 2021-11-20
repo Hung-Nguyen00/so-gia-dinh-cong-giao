@@ -18,30 +18,42 @@ class ThieuNhi extends Component
         $select_level='chien_non',
         $ten_thanh_id,
         $ho_va_ten,
+        $giao_xu_id,
         $paginate_number,
-
+        $all_giao_xu,
         $ngay_sinh;
 
     protected $paginationTheme = 'bootstrap';
-    protected $queryString = ['select_level', 'ten_thanh_id', 'ho_va_ten', 'paginate_number', 'ngay_sinh'];
+    protected $queryString = ['select_level', 'ten_thanh_id', 'giao_xu_id', 'ho_va_ten', 'paginate_number', 'ngay_sinh'];
 
 
 
     public function mount(){
         $this->select_level = request()->query('select_level', $this->select_level);
         $this->ten_thanh_id = request()->query('ten_thanh_id', $this->ten_thanh_id);
+        $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
         $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
         $this->ho_va_ten = request()->query('ho_va_ten', $this->ho_va_ten);
         $this->ngay_sinh = request()->query('ngay_sinh', $this->ngay_sinh);
 
-        $this->giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', Auth::user()->giao_xu_id)
-            ->orWhere('id', Auth::user()->giao_xu_id)
-            ->pluck('id')->toArray();
+        $this->all_giao_xu = GiaoXu::with('giaoHat')->where('giao_xu_hoac_giao_ho', 0)->get();
+        if (!$this->giao_xu_id){
+            $this->giao_xu_id = Auth::user()->giao_xu_id;
+        }
     }
 
 
     public function render()
     {
+        if ($this->giao_xu_id !== Auth::user()->giao_xu_id){
+            $giao_xu_id = $this->giao_xu_id;
+        }else{
+            $giao_xu_id = Auth::user()->giao_xu_id;
+        }
+
+        $this->giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)
+            ->orWhere('id', $giao_xu_id)
+            ->pluck('id')->toArray();
         $this->dispatchBrowserEvent('contentChanged');
         $timestamps = 'TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date)';
         $all_ten_thanh = TenThanh::all();
@@ -51,13 +63,15 @@ class ThieuNhi extends Component
             ->select('tv.id as tv_id',
                 'tv.so_gia_dinh_id as sgd_id',
                 'tv.ho_va_ten',
+                'sgd.giao_xu_id as giao_xu_id',
                 'tv.ten_thanh_id',
                 'tv.ngay_sinh',
                 't.ten_thanh',
                 'tv.dia_chi_hien_tai',
                 'tv.so_dien_thoai',
                 DB::raw("TIMESTAMPDIFF(YEAR, DATE(tv.ngay_sinh), current_date) AS age")
-                );
+                )
+            ->whereIn('giao_xu_id', $this->giao_ho);
         // 3-5 6-10 11-13 14-16 17-18
         if ($this->select_level=='chien_non'){
             $showing_follow_level = $showing_follow_level->whereRaw("{$timestamps} > 2 and {$timestamps} < 6");
