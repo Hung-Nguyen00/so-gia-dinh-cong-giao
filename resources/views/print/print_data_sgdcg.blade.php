@@ -87,8 +87,8 @@
                         @endif
                         <p class="fs-25">Giáo Phận: {{ $sgdcg->giaoXu->giaoPhan->ten_giao_phan }} </p>
                         <p class="fs-25" style="margin-top: 80px">
-                            Địa chỉ hành chính:{{ $thanh_vien_cha->dia_chi_hien_tai ? $thanh_vien_cha->dia_chi_hien_tai : '........................................................' }} </p>
-                        <p class="fs-25">Điện thoại:{{ $thanh_vien_cha->so_dien_thoai ? $thanh_vien_cha->so_dien_thoai : '.....................................................................' }}</p>
+                            Địa chỉ hành chính: {{ $thanh_vien_cha->dia_chi_hien_tai ? $thanh_vien_cha->dia_chi_hien_tai : '........................................................' }} </p>
+                        <p class="fs-25">Điện thoại: {{ $thanh_vien_cha->so_dien_thoai ? $thanh_vien_cha->so_dien_thoai : '.....................................................................' }}</p>
                     </div>
                     <div class="page-break"></div>
                     <h4 class="title text-left fs-25">Chứng nhận</h4>

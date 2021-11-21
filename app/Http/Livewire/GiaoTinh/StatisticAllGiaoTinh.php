@@ -40,7 +40,7 @@ class StatisticAllGiaoTinh extends Component
         $this->sinh_hoac_tu = request()->query('sinh_hoac_tu', $this->sinh_hoac_tu);
         $this->giao_phan_id = request()->query('giao_phan_id', $this->giao_phan_id);
         if (!$this->start_date){
-            $this->start_date = Carbon::now()->subYear(10)->format('Y-m-d');
+            $this->start_date = Carbon::now()->subYear(45)->format('Y-m-d');
         }
         if (!$this->end_date){
             $this->end_date = Carbon::now()->format('Y-m-d');

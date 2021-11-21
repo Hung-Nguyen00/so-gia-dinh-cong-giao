@@ -23,7 +23,7 @@ class CrudDoanCa extends Component
         $this->ten_ca_doan = request()->query('ten_ca_doan', $this->ten_ca_doan);
         $this->giao_xu_id = request()->query('giao_xu_id', $this->giao_xu_id);
         $this->paginate_number = request()->query('paginate_number', $this->paginate_number);
-        $this->all_giao_xu = GiaoXu::with('giaoHat')->get();
+        $this->all_giao_xu = GiaoXu::with('giaoHat')->where('giao_xu_hoac_giao_ho', 0)->get();
         if (!$this->giao_xu_id && Auth::user()->giao_xu_id){
             $this->giao_xu_id = Auth::user()->giao_xu_id;
         }

@@ -58,9 +58,7 @@ class StatictisGiaoXu extends Component
             ->pluck('id')->toArray();
 
         $this->statistic_bi_tich = $this->getStaticBiTich();
-        $this->statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
-            ->where('id', $this->giao_xu_id)
-            ->first();
+
     }
 
     public function render()
@@ -83,7 +81,9 @@ class StatictisGiaoXu extends Component
             $start_end_year[$key] = $start++;
             $key++;
         }
-
+        $this->statistics_giao_xu = GiaoXu::withCount(['giaoHo','giaoDan', 'tuSi', 'hoGiaDinh'])
+            ->where('id', $this->giao_xu_id)
+            ->first();
        //  statistics GiaoXu
         $statistics_giao_xu = $this->statistics_giao_xu;
 

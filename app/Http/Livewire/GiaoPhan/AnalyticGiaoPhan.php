@@ -24,6 +24,7 @@ class AnalyticGiaoPhan extends Component
         $sinh_hoac_tu = 1,
         $paginate_number = 20,
         $start_date,
+        $static_gp,
         $all_giao_phan,
         $sinh_tu_follow_year,
         $end_date;
@@ -76,7 +77,9 @@ class AnalyticGiaoPhan extends Component
 
         $statistic_tu_si = $this->statisticChuCVu();
         // get Giao Phan
-        $statistics_giao_phan =  Cache::get('statistic_giao_tinh')->where('id', $this->giao_phan_id)->first();
+        $statistics_giao_phan =  GiaoPhan::withCount(['tuSi', 'giaoDan', 'hoGiaDinh', 'giaoHat'])
+            ->where('id', $this->giao_phan_id)
+            ->first();
         $statistic_bi_tich = $this->statisticBiTich();
 
         // draw chart

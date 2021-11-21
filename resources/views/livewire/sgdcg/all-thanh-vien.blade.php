@@ -7,7 +7,11 @@
         <label>Chọn giáo xứ</label>
         <select data-live-search="true" class="selectpicker  select form-control" wire:model="giao_xu_id">
             @foreach($all_giao_xu as $t)
-                <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
+                <option value="{{ $t->id }}"> @if($t->giaoHat) {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}
+                    @else
+                       {{'GX: '. $t->ten_giao_xu }}
+                    @endif
+                </option>
             @endforeach
         </select>
     </div>

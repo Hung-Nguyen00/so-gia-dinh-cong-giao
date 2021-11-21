@@ -187,7 +187,7 @@
                             <div class="w-75">
                                 <label class="form-label">Chọn thống kê sinh hoặc tử năm
                                 </label>
-                                <select  class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
+                                <select data-live-search="true"  class="form-control select w-auto mr-1"  wire:model="sinh_tu_follow_year">
                                     @for($i = 0; $i < sizeof($start_end_year); $i++)
                                         <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
                                     @endfor

@@ -54,7 +54,7 @@ class AllThanhVien extends Component
         }
         $this->all_ten_thanh = TenThanh::orderBy('ten_thanh')->get('id');
         $this->all_bi_tich = BiTich::all();
-        $this->all_giao_xu = GiaoXu::with('giaoHat')->get();
+        $this->all_giao_xu = GiaoXu::with('giaoHat')->where('giao_xu_hoac_giao_ho', 0)->get();
 
     }
 
