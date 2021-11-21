@@ -55,6 +55,7 @@
                     <th>Ngày mừng bổn mạng</th>
                     <th>Trưởng ca đoàn</th>
                     <th>Số lượng thành viên</th>
+                    <th>Thêm thành viên</th>
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
@@ -83,6 +84,12 @@
                             <td class="text-center">
                                 {{ $d->thanh_vien_count }}
                                 <a href="{{ route('ca-doan-thanh-vien.index', $d) }}" class="text-primary">Xem chi tiết</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('ca-doan-thanh-vien-add.index', $d) }}"
+                                   class="btn btn-success btn-sm d-inline-block mb-1">
+                                    <i class="la la-plus"></i>
+                                </a>
                             </td>
                             <td>
                                 <button type="button"
