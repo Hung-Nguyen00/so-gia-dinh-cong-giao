@@ -23,14 +23,17 @@
                     <form wire:submit.prevent="update">
                         <div class="form-group">
                             <label for="giao_phan">Mã sổ</label>
-                            <input type="text" wire:model="ma_so" disabled class="select bg-light form-control" placeholder="Nhập mã sổ">
+                            <input type="text" wire:model="ma_so" disabled class="select bg-light form-control"
+                                   placeholder="Nhập mã sổ">
                             @if($errors->has('ma_so'))
                                 <span class="text-danger">{{ $errors->first('ma_so') }}</span>
                             @endif
                         </div>
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label for="giao_phan">Tên giáo phận</label>
-                            <select data-live-search="true" {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }} class="select form-control bg-light" name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
+                            <select data-live-search="true"
+                                    {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }} class="select form-control bg-light"
+                                    name="giao_phan_id" wire:change="changeGiaoHat" wire:model="giao_phan_id">
                                 <option selected>Chọn giáo phận</option>
                                 @foreach($all_giao_phan as $gt)
                                     <option value="{{ $gt->id }}"> {{ $gt->ten_giao_phan  }}</option>
@@ -39,9 +42,11 @@
                         </div>
                         <div class="form-group">
                             <label for="giao_phan">Tên giáo hạt</label>
-                            <select data-live-search="true"   {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }} class="select form-control bg-light" name="giao_hat_id"  wire:model="giao_hat_id">
+                            <select data-live-search="true"
+                                    {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }} class="select form-control bg-light"
+                                    name="giao_hat_id" wire:model="giao_hat_id">
                                 @if($giao_hat_id == null)
-                                <option selected value="">Chọn giáo hạt</option>
+                                    <option selected value="">Chọn giáo hạt</option>
                                 @endif
                                 @if($all_giao_hat->count() > 0)
                                     @foreach($all_giao_hat as $gt)
@@ -50,10 +55,11 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label for="giao_phan">Tên giáo xứ</label>
-                            <select data-live-search="true"  {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }}
-                            class="form-control select " name="giao_xu_id" wire:model="giao_xu_id">
+                            <select data-live-search="true"
+                                    {{ $giao_xu_id_old !== \Auth::user()->giao_xu_id ? 'disabled' : '' }}
+                                    class="form-control select " name="giao_xu_id" wire:model="giao_xu_id">
                                 @if($giao_xu_id == null)
                                     <option selected value="">Chọn giáo xứ</option>
                                 @endif
@@ -82,7 +88,8 @@
                             @endif
                         </div>
                         <button type="submit" class="btn btn-primary float-right">Lưu lại</button>
-                        <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy
+                        </button>
                     </form>
                 </div>
             </div>
@@ -95,5 +102,6 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
 @endsection

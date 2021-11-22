@@ -11,7 +11,7 @@
             </button>
         </div>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div class="card-body" wire:ignore>
         <div class="table-responsive">
             <table id="example3" class="display" style="min-width: 1080px;">
                 <thead>
@@ -21,14 +21,14 @@
                     <th style="width: 120px">Địa chỉ</th>
                     <th>Linh mục</th>
                     <th class="text-center">Năm thành lập</th>
-                    <th >Số lượng người dân</th>
+                    <th>Số lượng người dân</th>
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_giao_ho as $giao_ho)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>{{ $giao_ho->ten_giao_xu }}</td>
                         <td class="text-break">{{ $giao_ho->dia_chi }}</td>
@@ -36,8 +36,8 @@
                             @if($giao_ho->tuSi)
                                 @foreach($giao_ho->tuSi as $g)
                                     @if($g->chucVu->ten_chuc_vu == 'Linh mục')
-                                    {{ $g->tenThanh->ten_thanh . ' '. $g->ho_va_ten }}
-                                    <br>
+                                        {{ $g->tenThanh->ten_thanh . ' '. $g->ho_va_ten }}
+                                        <br>
                                     @endif
                                 @endforeach
                             @endif

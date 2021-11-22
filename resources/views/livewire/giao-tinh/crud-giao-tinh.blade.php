@@ -4,7 +4,7 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo tỉnh </h4>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div class="card-body" wire:ignore>
         <div class="table-responsive">
             <table id="example3" class="display" style="min-width: 845px;">
                 <thead>
@@ -17,7 +17,7 @@
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_giao_tinh as $giao_tinh)
                     <tr>

@@ -13,16 +13,19 @@
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu p-2 w-100">
-                <div class="custom-control custom-switch" >
-                    <input type="checkbox" @click="ten_thanh = !ten_thanh" checked class="custom-control-input" id="customSwitch1">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" @click="ten_thanh = !ten_thanh" checked class="custom-control-input"
+                           id="customSwitch1">
                     <label class="custom-control-label" for="customSwitch1">Tên thánh</label>
                 </div>
                 <div class="custom-control custom-switch mt-1">
-                    <input type="checkbox" @click="ho_va_ten = !ho_va_ten" checked class="custom-control-input" id="customSwitch2">
+                    <input type="checkbox" @click="ho_va_ten = !ho_va_ten" checked class="custom-control-input"
+                           id="customSwitch2">
                     <label class="custom-control-label" for="customSwitch2">Họ và tên</label>
                 </div>
                 <div class="custom-control custom-switch mt-1">
-                    <input type="checkbox"  @click="sinh_hoac_tu = !sinh_hoac_tu" class="custom-control-input" id="customSwitch5">
+                    <input type="checkbox" @click="sinh_hoac_tu = !sinh_hoac_tu" class="custom-control-input"
+                           id="customSwitch5">
                     <label class="custom-control-label" for="customSwitch5">Sinh hoặc tử</label>
                 </div>
             </ul>
@@ -69,7 +72,7 @@
             </div>
             <div x-show="sinh_hoac_tu" x-transition class="col-md-3">
                 <label>Ngày kết thúc</label>
-                <input type="date"  wire:model.lazy="end_date"  class="form-control">
+                <input type="date" wire:model.lazy="end_date" class="form-control">
             </div>
         </div>
         <div class="col-md-2 ">
@@ -83,7 +86,7 @@
                 <option value="100">100</option>
             </select>
         </div>
-        <div  class="card-body">
+        <div class="card-body">
             <div class="table-responsive">
                 <table class="display table" style="min-width: 1180px; margin-top: -10px">
                     <thead>
@@ -94,16 +97,16 @@
                         <th style="width: 110px">Ngày sinh</th>
                         <th style="width: 110px">Ngày mất</th>
                         <th style="width: 80px">Số điện thoại</th>
-                        <th  style="width: 150px">Địa chỉ</th>
+                        <th style="width: 150px">Địa chỉ</th>
                         <th style="width: 100px">Sổ gia đình hiện tại</th>
                         <th style="width: 100px">Sổ gia đình gốc</th>
                         <th style="width: 50px">Xem chi tiết</th>
                     </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                     @php $i= 0; @endphp
                     @foreach($all_thanh_vien as $th)
-                        <tr >
+                        <tr>
                             <td class="text-center"> {{ ++$i }}</td>
                             <td>
                                 {{ $th->tenThanh->ten_thanh }}
@@ -126,15 +129,18 @@
                                 {{ $th->dia_chi_hien_tai}}
                             </td>
                             @if($th->soGiaDinh2)
-                            <td class="text-center">
-                                <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh2)}}" class="text-primary">Xem </a>
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}" class="text-primary">Xem </a>
-                            </td>
+                                <td class="text-center">
+                                    <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh2)}}"
+                                       class="text-primary">Xem </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}"
+                                       class="text-primary">Xem </a>
+                                </td>
                             @else
                                 <td class="text-center">
-                                    <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}" class="text-primary">Xem </a>
+                                    <a href="{{ route('so-gia-dinh.show', $th->soGiaDinh)}}"
+                                       class="text-primary">Xem </a>
                                 </td>
                                 <td class="text-center">
 
@@ -167,5 +173,7 @@
         $(document).on('click', '.dropdown-menu', function(e) {
            e.stopPropagation();
         });
+
+
     </script>
 @endpush

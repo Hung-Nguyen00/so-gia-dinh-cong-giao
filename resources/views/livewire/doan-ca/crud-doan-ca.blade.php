@@ -17,7 +17,8 @@
             @if(\Auth::user()->quanTri->ten_quyen == 'admin')
                 <div>
                     <label>Chọn giáo xứ</label>
-                    <select data-live-search="true" class="selectpicker  w-auto select form-control" wire:model="giao_xu_id">
+                    <select data-live-search="true" class="selectpicker  w-auto select form-control"
+                            wire:model="giao_xu_id">
                         @foreach($all_giao_xu as $t)
                             <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
                         @endforeach
@@ -44,7 +45,7 @@
         </div>
     </div>
 
-    <div  class="card-body">
+    <div class="card-body">
         <div class="table-responsive">
             <table class="table" style="min-width: 1080px;">
                 <thead>
@@ -59,11 +60,11 @@
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @if($all_doan_ca)
                     @foreach($all_doan_ca as $d)
-                        <tr >
+                        <tr>
                             <td class="text-center"> {{ ++$i }}</td>
                             <td>
                                 {{ $d->tenThanh->ten_thanh }}
@@ -83,7 +84,8 @@
                             </td>
                             <td class="text-center">
                                 {{ $d->thanh_vien_count }}
-                                <a href="{{ route('ca-doan-thanh-vien.index', $d) }}" class="text-primary">Xem chi tiết</a>
+                                <a href="{{ route('ca-doan-thanh-vien.index', $d) }}" class="text-primary">Xem chi
+                                    tiết</a>
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('ca-doan-thanh-vien-add.index', $d) }}"
@@ -108,11 +110,11 @@
                             </td>
                         </tr>
                     @endforeach
-                    @endif
+                @endif
                 </tbody>
             </table>
             @if($all_doan_ca)
-            {{ $all_doan_ca->links()}}
+                {{ $all_doan_ca->links()}}
             @endif
         </div>
     </div>
@@ -123,6 +125,8 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
+
 
     </script>
     <script type="text/javascript">
@@ -135,6 +139,8 @@
         window.livewire.on('delete', () => {
             $('#delete').modal('hide');
         });
+
+
     </script>
     <script>
         window.addEventListener('alert', event => {
@@ -144,5 +150,7 @@
                 "progressBar": true,
             }
         });
+
+
     </script>
 @endpush

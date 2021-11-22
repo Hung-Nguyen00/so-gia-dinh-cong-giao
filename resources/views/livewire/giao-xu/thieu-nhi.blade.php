@@ -5,7 +5,8 @@
             @if(\Auth::user()->quanTri->ten_quyen == 'admin')
                 <div>
                     <label>Chọn giáo xứ</label>
-                    <select data-live-search="true" class="selectpicker w-auto select form-control" wire:model="giao_xu_id">
+                    <select data-live-search="true" class="selectpicker w-auto select form-control"
+                            wire:model="giao_xu_id">
                         @foreach($all_giao_xu as $t)
                             <option value="{{ $t->id }}"> {{ 'GH: '. $t->giaoHat->ten_giao_hat . ' - '. 'GX: '. $t->ten_giao_xu }}</option>
                         @endforeach
@@ -63,25 +64,25 @@
             <div></div>
         </div>
     </div>
-    <div  class="card-body">
+    <div class="card-body">
         <div class="table-responsive">
             <table class="display table" style="min-width: 1180px; margin-top: -10px">
                 <thead>
                 <tr>
                     <th style="width: 50px">STT</th>
-                    <th >Tên thánh</th>
-                    <th >Họ và tên</th>
+                    <th>Tên thánh</th>
+                    <th>Họ và tên</th>
                     <th style="width: 100px">Ngày sinh</th>
-                    <th >Số điện thoại</th>
-                    <th >Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
                     <th style="width: 100px">Thông tin <br> gia đình</th>
                     <th style="width: 150px" class="text-center">Thông tin <br> thành viên</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($showing_follow_level as $th)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>
                             {{ $th->tenThanh->ten_thanh }}
@@ -102,8 +103,8 @@
                         </td>
                         <td class="text-center">
                             @if($th->soGiaDinh)
-                            <a href="{{ route('so-gia-dinh.show', ['so_gia_dinh' => $th->soGiaDinh ])}}"
-                               class="text-primary">Xem</a>
+                                <a href="{{ route('so-gia-dinh.show', ['so_gia_dinh' => $th->soGiaDinh ])}}"
+                                   class="text-primary">Xem</a>
                             @endif
                         </td>
 
@@ -130,5 +131,6 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
 @endpush

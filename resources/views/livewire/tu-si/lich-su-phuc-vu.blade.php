@@ -3,19 +3,19 @@
     @include('tu_si.delete_phuc_vu')
     <div class="table-responsive">
         <table id="example3" class="table verticle-middle table-responsive-md mt-2">
-        <thead>
-        <tr>
-            <th>STT</th>
-            <th>Giáo phận</th>
-            <th>Giáo hạt</th>
-            <th>Giáo xứ</th>
-            <th>Thời gian phục vụ</th>
-            <th>Trạng thái</th>
-            <th class="text-center" style="width: 105px">Xóa</th>
-        </tr>
-        </thead>
-        <tbody>
-         @php $i = 0; @endphp
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>Giáo phận</th>
+                <th>Giáo hạt</th>
+                <th>Giáo xứ</th>
+                <th>Thời gian phục vụ</th>
+                <th>Trạng thái</th>
+                <th class="text-center" style="width: 105px">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>
+            @php $i = 0; @endphp
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $tu_si->giaoPhan->ten_giao_phan }}</td>
@@ -29,7 +29,7 @@
                     @endif</td>
                 <td>
                     @if($tu_si->bat_dau_phuc_vu)
-                    {{ \Carbon\Carbon::parse($tu_si->bat_dau_phuc_vu)->format('d-m-Y')}}
+                        {{ \Carbon\Carbon::parse($tu_si->bat_dau_phuc_vu)->format('d-m-Y')}}
                     @endif
                     @if($tu_si->ket_thuc_phuc_vu)
                         - {{\Carbon\Carbon::parse($tu_si->ket_thuc_phuc_vu)->format('d-m-Y')}}
@@ -58,7 +58,7 @@
                     </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </div>
 </div>

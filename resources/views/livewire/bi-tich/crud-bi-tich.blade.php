@@ -12,7 +12,7 @@
             </button>
         </div>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div class="card-body" wire:ignore>
         <div class="table-responsive">
             <table id="example3" class="display" style="min-width: 845px">
                 <thead>
@@ -24,10 +24,10 @@
                     <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_bi_tich as $th)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td> {{ $th->ten_bi_tich }}</td>
                         <td>{{ $th->getUser->ho_va_ten }}</td>

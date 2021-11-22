@@ -12,7 +12,7 @@
             </button>
         </div>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div class="card-body" wire:ignore>
         <div class="table-responsive">
             <table id="example3" class="display" style="min-width: 845px; width: 1180px">
                 <thead>
@@ -27,10 +27,10 @@
                     <th style="width: 50px">Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_giao_xu as $giao_xu)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>{{ $giao_xu->ten_giao_xu }}</td>
                         <td>{{ $giao_xu->dia_chi }}</td>
@@ -72,5 +72,7 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
+
     </script>
 @endpush

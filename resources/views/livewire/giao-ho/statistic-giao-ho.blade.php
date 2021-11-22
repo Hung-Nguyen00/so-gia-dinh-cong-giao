@@ -18,8 +18,8 @@
             <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
                 <div class="col-md-3 form-group mr-2">
                     <label>Thống kê giáo họ</label>
-                    <select class="selectpicker w-100 select form-control"  wire:model="giao_xu_id"
-                            value="{{ old('giao_xu_id') }}"  data-live-search="true" >
+                    <select class="selectpicker w-100 select form-control" wire:model="giao_xu_id"
+                            value="{{ old('giao_xu_id') }}" data-live-search="true">
                         @foreach($all_giao_xu as $cv)
                             <option value="{{ $cv->id }}">{{ $cv->ten_giao_xu }} </option>
                         @endforeach
@@ -50,7 +50,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                         <span class="mr-3">
-                            <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/linhmuc.jpg') }}" alt="Linh mục">
+                            <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/linhmuc.jpg') }}"
+                                 alt="Linh mục">
                         </span>
                             <div class="media-body">
                                 <p class="mb-1">Linh mục</p>
@@ -65,7 +66,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media">
                              <span class="mr-3">
-                                <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
+                                <img style="max-width: 60px; border-radius: 50%"
+                                     src="{{ asset('images/gia_dinh.png') }}" alt="Hộ gia đình">
                             </span>
                             <div class="media-body">
                                 <p class="mb-1">Hộ gia đình</p>
@@ -80,7 +82,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/chuyen_xu.jpg') }}" alt="Đã chuyển xứ">
+                                 <img style="max-width: 60px; border-radius: 50%"
+                                      src="{{ asset('images/chuyen_xu.jpg') }}" alt="Đã chuyển xứ">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Đã chuyển xứ</p>
@@ -95,7 +98,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/chuyen_xu.jpg') }}" alt="Đã chuyển xứ">
+                                 <img style="max-width: 60px; border-radius: 50%"
+                                      src="{{ asset('images/chuyen_xu.jpg') }}" alt="Đã chuyển xứ">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Đã nhập xứ</p>
@@ -110,11 +114,12 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                  <span class="mr-3">
-                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/danso.jpg') }}" alt="Giáo dân">
+                                  <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/danso.jpg') }}"
+                                       alt="Giáo dân">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Giáo dân</p>
-                                <h4 class="mb-0" >{{ $statistics_giao_xu->giao_dan_count }}</h4>
+                                <h4 class="mb-0">{{ $statistics_giao_xu->giao_dan_count }}</h4>
                             </div>
                         </div>
                     </div>
@@ -125,7 +130,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                  <span class="mr-3">
-                                   <img style="max-width: 50px; border-radius: 50%" src="{{ asset('images/tre_so_sinh.jpg') }}" alt="Trẻ sơ sinh">
+                                   <img style="max-width: 50px; border-radius: 50%"
+                                        src="{{ asset('images/tre_so_sinh.jpg') }}" alt="Trẻ sơ sinh">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Trẻ sơ sinh (1)</p>
@@ -140,10 +146,11 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media">
                              <span class="mr-3">
-                                <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}" alt="Trẻ em">
+                                <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tre_em.png') }}"
+                                     alt="Trẻ em">
                             </span>
                             <div class="media-body">
-                                <p class="mb-1 width-card" >Nhi đồng (2t - 5t) </p>
+                                <p class="mb-1 width-card">Nhi đồng (2t - 5t) </p>
                                 <h4 class="mb-0">{{ $statistic_age['nhi_dong'] }}</h4>
                             </div>
                         </div>
@@ -155,7 +162,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
+                                 <img style="max-width: 60px; border-radius: 50%"
+                                      src="{{ asset('images/vi_thanh_nien.jpg') }}" alt="Thiếu nhi">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1 width-card">Thiếu nhi (6t - 17t)</p>
@@ -170,7 +178,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/thanh_nien.jpg') }}" alt="Thanh niên">
+                                 <img style="max-width: 60px; border-radius: 50%"
+                                      src="{{ asset('images/thanh_nien.jpg') }}" alt="Thanh niên">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1 w-auto">Thanh niên (18t - 39t)</p>
@@ -185,7 +194,8 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                 <span class="mr-3">
-                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/trung_nien.png') }}" alt="Trung niên">
+                                 <img style="max-width: 60px; border-radius: 50%"
+                                      src="{{ asset('images/trung_nien.png') }}" alt="Trung niên">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1 w-auto">Trung niên (40t - 64t)</p>
@@ -200,11 +210,12 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="media ai-icon">
                                  <span class="mr-3">
-                                 <img style="max-width: 60px; border-radius: 50%" src="{{ asset('images/tuoi_gia.jpg') }}" alt="Tuổi già">
+                                 <img style="max-width: 60px; border-radius: 50%"
+                                      src="{{ asset('images/tuoi_gia.jpg') }}" alt="Tuổi già">
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Tuổi già (>65t)</p>
-                                <h4 class="mb-0" >{{ $statistic_age['tuoi_gia'] }}</h4>
+                                <h4 class="mb-0">{{ $statistic_age['tuoi_gia'] }}</h4>
                             </div>
                         </div>
                     </div>
@@ -220,18 +231,19 @@
                             <div class="w-75">
                                 <label class="form-label">Chọn thống kê sinh hoặc tử năm
                                 </label>
-                                <select  class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
+                                <select class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
                                     @for($i = 0; $i < sizeof($start_end_year); $i++)
                                         <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
                                     @endfor
                                 </select>
-                                <select  class="form-control select w-auto" wire:model="sinh_hoac_tu">
+                                <select class="form-control select w-auto" wire:model="sinh_hoac_tu">
                                     <option value="1" selected>Sinh</option>
                                     <option value="2">Tử</option>
                                 </select>
                             </div>
                             <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
-                            <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;" height="50"></canvas>
+                            <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;"
+                                    height="50"></canvas>
                         </div>
                         <div class="col-xl-6 col-xxl-6 col-sm-12">
                             <h5>Thông kê bí tích</h5>
@@ -255,7 +267,7 @@
                                     <td>Linh mục:</td>
                                     <td class="font-medium  text-break text-dark-medium">
                                         @if($linh_muc_chanh_xu)
-                                        {{ $linh_muc_chanh_xu->tenThanh->ten_thanh }} {{ $linh_muc_chanh_xu->ho_va_ten }}
+                                            {{ $linh_muc_chanh_xu->tenThanh->ten_thanh }} {{ $linh_muc_chanh_xu->ho_va_ten }}
                                         @endif
                                     </td>
                                 </tr>
@@ -359,5 +371,6 @@
             pieChart.data.labels = Object.keys(dataBiTich)
             pieChart.update();
         });
+
     </script>
 @endpush

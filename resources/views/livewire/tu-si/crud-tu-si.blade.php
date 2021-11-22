@@ -18,7 +18,7 @@
                     Xem bảng
                 </button>
             @else
-                <button  wire:click.prevent="changeView" class="font-weight-bold btn btn-sm btn-outline-danger">
+                <button wire:click.prevent="changeView" class="font-weight-bold btn btn-sm btn-outline-danger">
                     Xem dạng thẻ
                 </button>
             @endif
@@ -28,40 +28,48 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu p-2 w-100">
-                    <div class="custom-control custom-switch" >
-                        <input type="checkbox" @click="ten_thanh = !ten_thanh" checked class="custom-control-input" id="customSwitch1">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" @click="ten_thanh = !ten_thanh" checked class="custom-control-input"
+                               id="customSwitch1">
                         <label class="custom-control-label" for="customSwitch1">Tên thánh</label>
                     </div>
                     <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox" @click="ho_va_ten = !ho_va_ten" checked class="custom-control-input" id="customSwitch2">
+                        <input type="checkbox" @click="ho_va_ten = !ho_va_ten" checked class="custom-control-input"
+                               id="customSwitch2">
                         <label class="custom-control-label" for="customSwitch2">Họ và tên</label>
                     </div>
                     <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox" @click="ngay_sinh = !ngay_sinh" class="custom-control-input" id="customSwitch3">
+                        <input type="checkbox" @click="ngay_sinh = !ngay_sinh" class="custom-control-input"
+                               id="customSwitch3">
                         <label class="custom-control-label" for="customSwitch3">Ngày sinh</label>
                     </div>
                     <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox"  @click="chuc_vu = !chuc_vu" class="custom-control-input" id="customSwitch4">
+                        <input type="checkbox" @click="chuc_vu = !chuc_vu" class="custom-control-input"
+                               id="customSwitch4">
                         <label class="custom-control-label" for="customSwitch4">Chức vụ</label>
                     </div>
-                @if(\Auth::user()->quanTri->ten_quyen === 'admin')
+                    @if(\Auth::user()->quanTri->ten_quyen === 'admin')
+                        <div class="custom-control custom-switch mt-1">
+                            <input type="checkbox" @click="giao_phan = !giao_phan" class="custom-control-input"
+                                   id="customSwitch5">
+                            <label class="custom-control-label" for="customSwitch5">Giáo Phận</label>
+                        </div>
+                    @endif
                     <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox"  @click="giao_phan = !giao_phan" class="custom-control-input" id="customSwitch5">
-                        <label class="custom-control-label" for="customSwitch5">Giáo Phận</label>
-                    </div>
-                @endif
-                    <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox"  @click="giao_hat = !giao_hat" class="custom-control-input" id="customSwitch6">
+                        <input type="checkbox" @click="giao_hat = !giao_hat" class="custom-control-input"
+                               id="customSwitch6">
                         <label class="custom-control-label" for="customSwitch6">Giáo Hạt</label>
                     </div>
 
                     <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox"  @click="ten_dong = !ten_dong" class="custom-control-input" id="customSwitch7">
+                        <input type="checkbox" @click="ten_dong = !ten_dong" class="custom-control-input"
+                               id="customSwitch7">
                         <label class="custom-control-label" for="customSwitch7">Dòng</label>
                     </div>
 
                     <div class="custom-control custom-switch mt-1">
-                        <input type="checkbox"  @click="sinh_hoac_tu = !sinh_hoac_tu" class="custom-control-input" id="customSwitch8">
+                        <input type="checkbox" @click="sinh_hoac_tu = !sinh_hoac_tu" class="custom-control-input"
+                               id="customSwitch8">
                         <label class="custom-control-label" for="customSwitch8">Sinh hoặc tử</label>
                     </div>
                 </ul>
@@ -91,29 +99,30 @@
                 <div x-show="chuc_vu" x-transition class="col-lg-3 pt-2 col-md-3 col-sm-6">
                     <lable class="col-form-label">Chức vụ</lable>
                     <select class="selectpicker select form-control pt-2" wire:model="chuc_vu_id" name="chuc_vu_id">
-                        <option  value=""  selected>Hiển thị tất cả</option>
+                        <option value="" selected>Hiển thị tất cả</option>
                         @foreach($all_chuc_vu as $cv)
-                            <option  value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
+                            <option value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
                         @endforeach
                     </select>
                 </div>
                 @if(\Auth::user()->quanTri->ten_quyen === 'admin')
                     <div x-show="giao_phan" x-transition class="col-lg-3 pt-2 col-md-3 col-sm-6 pt-3">
                         <lable class="col-form-label">Giáo phận</lable>
-                        <select class="selectpicker select form-control pt-2" wire:change="changeGiaoPhan" wire:model="giao_phan_id" >
-                            <option  value=""  selected>Hiển thị tất cả</option>
+                        <select class="selectpicker select form-control pt-2" wire:change="changeGiaoPhan"
+                                wire:model="giao_phan_id">
+                            <option value="" selected>Hiển thị tất cả</option>
                             @foreach($all_giao_phan as $cv)
-                                <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }}</option>
+                                <option value="{{ $cv->id }}"> {{ $cv->ten_giao_phan }}</option>
                             @endforeach
                         </select>
                     </div>
                 @endif
                 <div x-show="giao_hat" x-transition class="col-lg-3 pt-3 col-md-3 col-sm-6">
                     <lable class="col-form-label">Giáo hạt</lable>
-                    <select class="selectpicker select form-control pt-2" wire:model="giao_hat_id" >
-                        <option  value=""  selected>Hiển thị tất cả</option>
+                    <select class="selectpicker select form-control pt-2" wire:model="giao_hat_id">
+                        <option value="" selected>Hiển thị tất cả</option>
                         @foreach($all_giao_hat as $cv)
-                            <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
+                            <option value="{{ $cv->id }}"> {{ $cv->ten_giao_hat }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -122,7 +131,7 @@
                     <select class="selectpicker select form-control pt-2" wire:model="giao_xu_id">
                         <option value="" selected>Hiển thị tất cả</option>
                         @foreach($all_giao_xu as $cv)
-                            <option  value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
+                            <option value="{{ $cv->id }}"> {{ $cv->ten_giao_xu }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -131,7 +140,7 @@
                     <select class="selectpicker select form-control pt-2" wire:model="nha_dong_id">
                         <option value="" selected>Hiển thị tất cả</option>
                         @foreach($all_nha_dong as $cv)
-                            <option  value="{{ $cv->id }}"> {{ $cv->ten_nha_dong }}</option>
+                            <option value="{{ $cv->id }}"> {{ $cv->ten_nha_dong }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -150,7 +159,7 @@
                 </div>
                 <div x-show="sinh_hoac_tu" x-transition class="col-md-3 mt-3">
                     <label>Ngày kết thúc</label>
-                    <input type="date"  wire:model.lazy="end_date"  class="form-control">
+                    <input type="date" wire:model.lazy="end_date" class="form-control">
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
@@ -165,11 +174,11 @@
             </div>
             @if($active==0)
                 <div>
-                    <div class="table-responsive" >
+                    <div class="table-responsive">
                         <table class="table display" style="min-width: 1080px;  margin-top: 10px">
                             <thead>
                             <tr>
-                                <th style="width: 20px;" >STT</th>
+                                <th style="width: 20px;">STT</th>
                                 <th>Tên thánh</th>
                                 <th>Họ và tên</th>
                                 <th>Ngày sinh</th>
@@ -180,10 +189,10 @@
                                 <th>Chỉnh sửa</th>
                             </tr>
                             </thead>
-                            <tbody >
+                            <tbody>
                             @php $i= 0; @endphp
                             @foreach($all_tu_si as $th)
-                                <tr >
+                                <tr>
                                     <td class="text-center"> {{ ++$i }}</td>
                                     <td>
                                         {{ $th->tenThanh->ten_thanh }}
@@ -249,10 +258,13 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border py-0">
                                                 <div class="py-2">
-                                                    <a class="dropdown-item font-weight-bold" href="{{ route('tu-si.edit', $th)}}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item font-weight-bold"
+                                                       href="{{ route('tu-si.edit', $th)}}">Chỉnh sửa</a>
                                                     <button class="dropdown-item font-weight-bold"
                                                             wire:click="edit({{ $th->id }})"
-                                                            data-toggle="modal" data-target="#uploadAvatar" >Đổi ảnh đại diện</button>
+                                                            data-toggle="modal" data-target="#uploadAvatar">Đổi ảnh đại
+                                                        diện
+                                                    </button>
                                                     <a type="button"
                                                        href="{{ route('tu-si.editCongTac', $th)}}"
                                                        class="dropdown-item font-weight-bold">
@@ -260,7 +272,8 @@
                                                     </a>
                                                     <button class="dropdown-item font-weight-bold text-danger"
                                                             wire:click="edit({{ $th->id }})"
-                                                            data-toggle="modal" data-target="#deleteTuSi">Xóa</button>
+                                                            data-toggle="modal" data-target="#deleteTuSi">Xóa
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,12 +282,17 @@
                                         <div class="text-center">
                                             <div class="profile-photo">
                                                 @if($th->avatar)
-                                                    <img class="rounded-circle"  style="width: 100px; height: 100px" src="{{ asset($th->avatar) }}" alt="{{ $th->ho_va_ten }}">
+                                                    <img class="rounded-circle" style="width: 100px; height: 100px"
+                                                         src="{{ asset($th->avatar) }}" alt="{{ $th->ho_va_ten }}">
                                                 @else
                                                     @if($th->gioi_tinh == 1)
-                                                        <img class="rounded-circle" style="width: 100px; height: 100px" src="{{ asset('images/tusi.jpg') }}" alt="{{ $th->ho_va_ten }}">
+                                                        <img class="rounded-circle" style="width: 100px; height: 100px"
+                                                             src="{{ asset('images/tusi.jpg') }}"
+                                                             alt="{{ $th->ho_va_ten }}">
                                                     @else
-                                                        <img class="rounded-circle" style="width: 100px; height: 100px" src="{{ asset('images/tusiNu.png') }}" alt="{{ $th->ho_va_ten }}">
+                                                        <img class="rounded-circle" style="width: 100px; height: 100px"
+                                                             src="{{ asset('images/tusiNu.png') }}"
+                                                             alt="{{ $th->ho_va_ten }}">
                                                     @endif
                                                 @endif
                                             </div>
@@ -284,11 +302,14 @@
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
                                                     <span>Email</span><strong>{{ $th->email }}</strong></li>
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
-                                                    <span>Số điện thoại</span><strong>{{ $th->so_dien_thoai }}</strong></li>
+                                                    <span>Số điện thoại</span><strong>{{ $th->so_dien_thoai }}</strong>
+                                                </li>
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
-                                                    <span>Ngày nhận chức</span><strong>{{ \Carbon\Carbon::parse($th->ngay_nhan_chuc)->format('d-m-Y') }}</strong></li>
+                                                    <span>Ngày nhận chức</span><strong>{{ \Carbon\Carbon::parse($th->ngay_nhan_chuc)->format('d-m-Y') }}</strong>
+                                                </li>
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
-                                                    <span class="mb-0">Ngày sinh</span><strong>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}  </strong></li>
+                                                    <span class="mb-0">Ngày sinh</span><strong>{{ \Carbon\Carbon::parse($th->ngay_sinh)->format('d-m-Y') }}  </strong>
+                                                </li>
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
                                                     <span class="mb-0">Ngày mất</span><strong>
                                                         @if($th->ngay_mat)
@@ -328,6 +349,8 @@
         $(document).on('click', '.dropdown-menu', function(e) {
            e.stopPropagation();
         });
+
+
     </script>
     <script>
         window.addEventListener('alert', event => {
@@ -337,5 +360,7 @@
                 "progressBar": true,
             }
         });
+
+
     </script>
 @endpush

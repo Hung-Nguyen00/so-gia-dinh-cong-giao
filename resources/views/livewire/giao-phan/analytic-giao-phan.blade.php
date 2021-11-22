@@ -19,10 +19,11 @@
             <div class="col-md-12 d-flex align-items-center justify-content-start flex-wrap p-0">
                 <div class="col-md-4 form-group">
                     <label for="">Tên giáo phận</label>
-                    <select class="selectpicker w-100 select form-control"  wire:model="giao_phan_id"
-                            value="{{ old('giao_phan_id') }}"  data-live-search="true" >
+                    <select class="selectpicker w-100 select form-control" wire:model="giao_phan_id"
+                            value="{{ old('giao_phan_id') }}" data-live-search="true">
                         @foreach($all_giao_phan as $cv)
-                            <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}</option>
+                            <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} -
+                                GP: {{ $cv->ten_giao_phan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -104,7 +105,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1 width-card">Tổng số giáo dân</p>
-                                <h4 class="mb-0" >{{ $statistics_giao_phan->giao_dan_count }}</h4>
+                                <h4 class="mb-0">{{ $statistics_giao_phan->giao_dan_count }}</h4>
                             </div>
                         </div>
                     </div>
@@ -141,7 +142,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['xung_toi'] }} </p>
+                            <p class="text-white fs-16"
+                               style="font-size: 16px"> {{ $analytics_bi_tich['xung_toi'] }} </p>
                         </div>
                     </div>
                 </div>
@@ -183,35 +185,36 @@
                 </div>
             </div>
         </div>
-       <div class="row">
-           <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
-               <div class="card">
-                   <div class="card-body" id="chart-responsive">
-                       <div class="col-xl-6 col-xxl-6 col-sm-12">
-                           <div class="w-75">
-                               <label class="form-label">Chọn thống kê sinh hoặc tử năm
-                               </label>
-                               <select  class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
-                                   @for($i = 0; $i < sizeof($start_end_year); $i++)
-                                       <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
-                                   @endfor
-                               </select>
-                               <select  class="form-control select w-auto" wire:model="sinh_hoac_tu">
-                                   <option value="1" selected>Sinh</option>
-                                   <option value="2">Tử</option>
-                               </select>
-                           </div>
-                           <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
-                           <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;" height="50"></canvas>
-                       </div>
-                       <div class="col-xl-6 col-xxl-6 col-sm-12">
-                           <h5>Thông kê tu sĩ</h5>
-                           <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body" id="chart-responsive">
+                        <div class="col-xl-6 col-xxl-6 col-sm-12">
+                            <div class="w-75">
+                                <label class="form-label">Chọn thống kê sinh hoặc tử năm
+                                </label>
+                                <select class="form-control select w-auto mr-1" wire:model="sinh_tu_follow_year">
+                                    @for($i = 0; $i < sizeof($start_end_year); $i++)
+                                        <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
+                                    @endfor
+                                </select>
+                                <select class="form-control select w-auto" wire:model="sinh_hoac_tu">
+                                    <option value="1" selected>Sinh</option>
+                                    <option value="2">Tử</option>
+                                </select>
+                            </div>
+                            <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
+                            <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;"
+                                    height="50"></canvas>
+                        </div>
+                        <div class="col-xl-6 col-xxl-6 col-sm-12">
+                            <h5>Thông kê tu sĩ</h5>
+                            <canvas id="pieChart" width="50" style="height: 100px !important;" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xl-7 col-lg-7 col-xxl-7 col-md-12">
                 <div class="card">
@@ -257,9 +260,9 @@
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $th->ten_giao_hat }}</td>
                                             @if($th->tuSi->count() > 0)
-                                               @foreach($th->tuSi as $ts)
+                                                @foreach($th->tuSi as $ts)
                                                     <td> {{ $ts->tenThanh->ten_thanh}} {{$ts->ho_va_ten }}</td>
-                                               @endforeach
+                                                @endforeach
                                             @else
                                                 <td></td>
                                             @endif
@@ -429,6 +432,7 @@
             pieChart.data.labels = Object.keys(dataBiTich);
             pieChart.update();
         });
+
 
     </script>
 @endpush

@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent="store"  method="post" >
+    <form wire:submit.prevent="store" method="post">
         @csrf
         <div class="row">
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
@@ -8,10 +8,10 @@
                         <lable class="form-label ">Tên thánh</lable>
                         <select class="select form-control pt-2"
                                 wire:model="ten_thanh_id"
-                                data-live-search="true" >
+                                data-live-search="true">
                             <option selected value=""> Chọn tên thánh</option>
                             @foreach($all_ten_thanh as $cv)
-                                <option  value="{{ $cv->id }}" > {{ $cv->ten_thanh }}</option>
+                                <option value="{{ $cv->id }}"> {{ $cv->ten_thanh }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -28,7 +28,7 @@
                 </div>
                 @if($errors->has('ho_va_ten'))
                     <div style="margin-top: -10px">
-                    <span class="text-danger font-weight-bold" >{{ $errors->first('ho_va_ten') }}</span>
+                        <span class="text-danger font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
                     </div>
                 @endif
             </div>
@@ -38,10 +38,10 @@
                         <lable class="form-label ">Chức vụ</lable>
                         <select class="select form-control pt-2"
                                 wire:model="chuc_vu_id"
-                                data-live-search="true" >
+                                data-live-search="true">
                             <option selected value=""> Chọn tên chức vụ</option>
                             @foreach($all_chuc_vu as $cv)
-                                <option  value="{{ $cv->id }}" > {{ $cv->ten_chuc_vu }}</option>
+                                <option value="{{ $cv->id }}"> {{ $cv->ten_chuc_vu }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -57,9 +57,12 @@
                         <select class="select form-control pt-2"
                                 wire:model="la_tong_giam_muc">
                             <option selected value=""> Chọn tên chức vị</option>
-                            <option value="T" {{ old('la_tong_giam_muc') == 'T' ? 'selected' : '' }}>Tổng giám mục</option>
-                            <option value="P" {{ old('la_tong_giam_muc') == 'P' ? 'selected' : '' }}>Giám mục phụ tá</option>
-                            <option value="Q" {{ old('la_tong_giam_muc') == 'Q' ? 'selected' : '' }}>Cha quản hạt</option>
+                            <option value="T" {{ old('la_tong_giam_muc') == 'T' ? 'selected' : '' }}>Tổng giám mục
+                            </option>
+                            <option value="P" {{ old('la_tong_giam_muc') == 'P' ? 'selected' : '' }}>Giám mục phụ tá
+                            </option>
+                            <option value="Q" {{ old('la_tong_giam_muc') == 'Q' ? 'selected' : '' }}>Cha quản hạt
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -120,10 +123,10 @@
                     <label class="form-label">Tên dòng (nếu thuộc nhà dòng)</label>
                     <select class="select form-control pt-2"
                             wire:model="nha_dong_id"
-                            data-live-search="true" >
+                            data-live-search="true">
                         <option selected value="">Chọn tên nhà dòng</option>
                         @foreach($all_nha_dong as $cv)
-                            <option  value="{{ $cv->id }}">
+                            <option value="{{ $cv->id }}">
                                 {{ $cv->ten_nha_dong }}
                             </option>
                         @endforeach
@@ -182,10 +185,10 @@
                         <lable class="form-label ">Giáo phận</lable>
                         <select class="select form-control pt-2"
                                 wire:model="giao_phan_id"
-                                data-live-search="true" >
+                                data-live-search="true">
                             <option selected value="">Chọn tên giáo phận</option>
                             @foreach($all_giao_phan as $cv)
-                                <option  value="{{ $cv->id }}">
+                                <option value="{{ $cv->id }}">
                                     Giáo Tỉnh: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}
                                 </option>
                             @endforeach
@@ -214,5 +217,6 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
 @endpush

@@ -1,5 +1,6 @@
 <div>
-    <div wire:ignore.self class="modal fade" id="editSgdcg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="editSgdcg" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,7 +22,8 @@
                     <form wire:submit.prevent="updateSGD">
                         <div class="form-group">
                             <label for="giao_phan">Mã sổ</label>
-                            <input type="text" wire:model="ma_so" disabled class="select bg-light form-control" placeholder="Nhập mã sổ">
+                            <input type="text" wire:model="ma_so" disabled class="select bg-light form-control"
+                                   placeholder="Nhập mã sổ">
                             @if($errors->has('ma_so'))
                                 <span class="text-danger">{{ $errors->first('ma_so') }}</span>
                             @endif
@@ -36,7 +38,7 @@
                             </select>
                         </div>
                         <div class="form-group ">
-                            <label >Ngày tạo sổ</label>
+                            <label>Ngày tạo sổ</label>
                             <input type="date" wire:model="ngay_tao_so" class="form-control col-md-5">
                             @if($errors->has('ngay_tao_so'))
                                 <span class="text-danger">{{ $errors->first('ngay_tao_so') }}</span>
@@ -50,7 +52,8 @@
 
                         </div>
                         <button type="submit" class="btn btn-primary float-right">Lưu lại</button>
-                        <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy
+                        </button>
                     </form>
                 </div>
             </div>
@@ -63,5 +66,6 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
 @endsection

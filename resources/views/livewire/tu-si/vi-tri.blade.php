@@ -19,22 +19,22 @@
             </button>
         </div>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div class="card-body" wire:ignore>
         <div class="table-responsive">
             <table id="example3" class="display" style="min-width: 845px">
                 <thead>
                 <tr>
-                    <th style="width: 20px" >STT</th>
+                    <th style="width: 20px">STT</th>
                     <th>Tên vị trí</th>
                     <th>Người cập nhập</th>
                     <th>Cập nhập lần cuối</th>
-                    <th >Chỉnh sửa</th>
+                    <th>Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_vi_tri as $th)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td> {{ $th->ten_vi_tri }}</td>
                         <td>{{ $th->getUser->ho_va_ten }}</td>

@@ -5,7 +5,7 @@
             <div>
                 <a
                         href="{{ route('ca-doan-thanh-vien.index', $ca_doan) }}"
-                    class="btn btn-primary">Danh sách thành viên
+                        class="btn btn-primary">Danh sách thành viên
                 </a>
             </div>
         </div>
@@ -60,10 +60,10 @@
                     <th class="text-center">Thêm</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_tv_adding as $d)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>
                             {{ $d->ten_thanh }}
@@ -114,6 +114,7 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
     <script>
         window.addEventListener('alert', event => {
@@ -123,5 +124,6 @@
                 "progressBar": true,
             }
         });
+
     </script>
 @endsection

@@ -1,5 +1,6 @@
 <div>
-    <div wire:ignore.self class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="importModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,7 +22,8 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary float-right">Lưu lại</button>
-                        <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Hủy
+                        </button>
                     </form>
                 </div>
             </div>

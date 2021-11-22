@@ -13,8 +13,10 @@
                 <div class="col-sm-8 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $sgdcg)}}">Thông tin sổ gia đình</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ route('so-gia-dinh.show', $sgdcg)}}">Thông tin sổ gia
+                                đình</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0);">Chỉnh sửa thành viên</a></li>
                     </ol>
                 </div>
@@ -28,8 +30,9 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Thông tin thành viên</h4>
                                     </div>
-                                    <div  class="card-body">
-                                        <form action="{{ route('so-gia-dinh.updateTV', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien])}}" method="post" >
+                                    <div class="card-body">
+                                        <form action="{{ route('so-gia-dinh.updateTV', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien])}}"
+                                              method="post">
                                             @csrf
                                             @method('PATCH')
                                             <div class="row">
@@ -37,10 +40,11 @@
                                                     <div class="form-group">
                                                         <div>
                                                             <lable class="form-label text-capitalize">Tên thánh</lable>
-                                                            <select class="selectpicker  form-control pt-2" name="ten_thanh_id" data-live-search="true" >
+                                                            <select class="selectpicker  form-control pt-2"
+                                                                    name="ten_thanh_id" data-live-search="true">
                                                                 <option selected value=""> Chọn tên thánh</option>
                                                                 @foreach($all_ten_thanh as $cv)
-                                                                    <option  value="{{ $cv->id }}" {{ old('ten_thanh_id') || $thanh_vien->ten_thanh_id == $cv->id ? 'selected' : '' }}> {{ $cv->ten_thanh }}</option>
+                                                                    <option value="{{ $cv->id }}" {{ old('ten_thanh_id') || $thanh_vien->ten_thanh_id == $cv->id ? 'selected' : '' }}> {{ $cv->ten_thanh }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -51,9 +55,11 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Họ và tên</label>
+                                                        <label class="form-label text-capitalize"
+                                                               style="margin-bottom: 7px;">Họ và tên</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ old('ho_va_ten') ?? $thanh_vien->ho_va_ten}}" name="ho_va_ten">
+                                                               value="{{ old('ho_va_ten') ?? $thanh_vien->ho_va_ten}}"
+                                                               name="ho_va_ten">
                                                     </div>
                                                     @if($errors->has('ho_va_ten'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('ho_va_ten') }}</span>
@@ -63,9 +69,15 @@
                                                     <div class="form-group ">
                                                         <div>
                                                             <lable class="form-label">Giới tính</lable>
-                                                            <select class="selectpicker form-control pt-2" name="gioi_tinh">
-                                                                <option value="0" {{ old('gioi_tinh') == 0 || $thanh_vien->gioi_tinh == 0 ? 'selected' : '' }}>Nữ</option>
-                                                                <option selected value="1" {{ old('gioi_tinh') == 1 || $thanh_vien->gioi_tinh == 1 ? 'selected' : '' }}>Nam</option>
+                                                            <select class="selectpicker form-control pt-2"
+                                                                    name="gioi_tinh">
+                                                                <option value="0" {{ old('gioi_tinh') == 0 || $thanh_vien->gioi_tinh == 0 ? 'selected' : '' }}>
+                                                                    Nữ
+                                                                </option>
+                                                                <option selected
+                                                                        value="1" {{ old('gioi_tinh') == 1 || $thanh_vien->gioi_tinh == 1 ? 'selected' : '' }}>
+                                                                    Nam
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -75,17 +87,32 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Chức vụ trong gia đình</label>
-                                                        <select class="selectpicker form-control pt-2" name="{{ $thanh_vien->chuc_vu_gd_2 ? 'chuc_vu_gd_2' : 'chuc_vu_gd'}}">
+                                                        <label class="form-label text-capitalize"
+                                                               style="margin-bottom: 7px;">Chức vụ trong gia
+                                                            đình</label>
+                                                        <select class="selectpicker form-control pt-2"
+                                                                name="{{ $thanh_vien->chuc_vu_gd_2 ? 'chuc_vu_gd_2' : 'chuc_vu_gd'}}">
                                                             <option value="" selected>Chọn chức vụ gia đình</option>
                                                             @if($thanh_vien->chuc_vu_gd_2)
-                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd_2 == 'Cha' || old('chuc_vu_gd_2') == 'Cha' ? 'selected' : '' }}>Cha</option>
-                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd_2 == 'Mẹ' || old('chuc_vu_gd_2') == 'Mẹ' ? 'selected' : '' }}>Mẹ</option>
-                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd_2 == 'Con' || old('chuc_vu_gd_2') == 'Con' ? 'selected' : '' }}>Con</option>
+                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd_2 == 'Cha' || old('chuc_vu_gd_2') == 'Cha' ? 'selected' : '' }}>
+                                                                    Cha
+                                                                </option>
+                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd_2 == 'Mẹ' || old('chuc_vu_gd_2') == 'Mẹ' ? 'selected' : '' }}>
+                                                                    Mẹ
+                                                                </option>
+                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd_2 == 'Con' || old('chuc_vu_gd_2') == 'Con' ? 'selected' : '' }}>
+                                                                    Con
+                                                                </option>
                                                             @else
-                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd == 'Cha' || old('chuc_vu_gd') == 'Cha' ? 'selected' : '' }}>Cha</option>
-                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd == 'Mẹ' || old('chuc_vu_gd') == 'Mẹ' ? 'selected' : '' }}>Con</option>
-                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd == 'Con' || old('chuc_vu_gd') == 'Con' ? 'selected' : '' }}>Con</option>
+                                                                <option value="Cha" {{ $thanh_vien->chuc_vu_gd == 'Cha' || old('chuc_vu_gd') == 'Cha' ? 'selected' : '' }}>
+                                                                    Cha
+                                                                </option>
+                                                                <option value="Mẹ" {{ $thanh_vien->chuc_vu_gd == 'Mẹ' || old('chuc_vu_gd') == 'Mẹ' ? 'selected' : '' }}>
+                                                                    Con
+                                                                </option>
+                                                                <option value="Con" {{ $thanh_vien->chuc_vu_gd == 'Con' || old('chuc_vu_gd') == 'Con' ? 'selected' : '' }}>
+                                                                    Con
+                                                                </option>
                                                             @endif
                                                         </select>
                                                     </div>
@@ -97,15 +124,18 @@
                                                     <label>Ngày sinh</label>
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         @if(\Carbon\Carbon::parse($thanh_vien->ngay_sinh)->format('d-m') == '01-01' && strtotime($thanh_vien->ngay_sinh) < strtotime(1980))
-                                                            <input type="date" value="{{ old('ngay_sinh')}}" name="ngay_sinh" class="form-control col-md-5">
-                                                            <label >Hoặc nhập năm:</label>
+                                                            <input type="date" value="{{ old('ngay_sinh')}}"
+                                                                   name="ngay_sinh" class="form-control col-md-5">
+                                                            <label>Hoặc nhập năm:</label>
                                                             <input type="number"
                                                                    value="{{ old('nam_sinh') ?? \Carbon\Carbon::parse($thanh_vien->ngay_sinh)->format('Y')}}"
                                                                    name="nam_sinh"
                                                                    class="form-control col-md-3">
                                                         @else
-                                                            <input type="date" value="{{ old('ngay_sinh') ?? $thanh_vien->ngay_sinh}}" name="ngay_sinh" class="form-control col-md-5">
-                                                            <label >Hoặc nhập năm:</label>
+                                                            <input type="date"
+                                                                   value="{{ old('ngay_sinh') ?? $thanh_vien->ngay_sinh}}"
+                                                                   name="ngay_sinh" class="form-control col-md-5">
+                                                            <label>Hoặc nhập năm:</label>
                                                             <input type="number"
                                                                    value="{{ old('nam_sinh')}}"
                                                                    name="nam_sinh"
@@ -135,7 +165,8 @@
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize">Số điện thoại</label>
                                                         <input type="tel" class="form-control "
-                                                               value="{{ old('so_dien_thoai') ?? $thanh_vien->so_dien_thoai}}" name="so_dien_thoai">
+                                                               value="{{ old('so_dien_thoai') ?? $thanh_vien->so_dien_thoai}}"
+                                                               name="so_dien_thoai">
                                                     </div>
                                                     @if($errors->has('so_dien_thoai'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('so_dien_thoai') }}</span>
@@ -145,7 +176,8 @@
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize">Địa chỉ</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ old('dia_chi_hien_tai') ?? $thanh_vien->dia_chi_hien_tai }}" name="dia_chi_hien_tai">
+                                                               value="{{ old('dia_chi_hien_tai') ?? $thanh_vien->dia_chi_hien_tai }}"
+                                                               name="dia_chi_hien_tai">
                                                     </div>
                                                     @if($errors->has('dia_chi_hien_tai'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('dia_chi_hien_tai') }}</span>
@@ -161,34 +193,40 @@
                                             </div>
                                         </form>
                                         <hr>
-                                        <form action="{{ route('so-gia-dinh.updateBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_detail->bi_tich_id ] ) }}" method="post" >
+                                        <form action="{{ route('so-gia-dinh.updateBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $bi_tich_detail->bi_tich_id ] ) }}"
+                                              method="post">
                                             @csrf
                                             @method('PATCH')
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
-                                                    <h4><strong>Thông tin bí tích {{ $bi_tich_detail->getBiTich($bi_tich_detail->bi_tich_id)->ten_bi_tich }}</strong></h4>
+                                                    <h4><strong>Thông tin bí
+                                                            tích {{ $bi_tich_detail->getBiTich($bi_tich_detail->bi_tich_id)->ten_bi_tich }}</strong>
+                                                    </h4>
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         <div>
-                                                            <lable class="form-label text-capitalize">Tên linh mục hoặc giám mục</lable>
-                                                            <select class="selectpicker  form-control pt-2" name="tu_si_id" id="tu_si" data-live-search="true" >
+                                                            <lable class="form-label text-capitalize">Tên linh mục hoặc
+                                                                giám mục
+                                                            </lable>
+                                                            <select class="selectpicker  form-control pt-2"
+                                                                    name="tu_si_id" id="tu_si" data-live-search="true">
                                                                 <option value="" selected>Chọn tu sĩ</option>
                                                                 @foreach($all_tu_si as $cv)
-                                                                        @if($cv->giaoXu)
-                                                                            @if($cv->id == $bi_tich_detail->tu_si_id)
-                                                                                <option  value="{{ $cv->id }}" selected>
-                                                                                    {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
-                                                                            @else
-                                                                                <option  value="{{ $cv->id }}"
-                                                                                        {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
-                                                                                    {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
-                                                                            @endif
+                                                                    @if($cv->giaoXu)
+                                                                        @if($cv->id == $bi_tich_detail->tu_si_id)
+                                                                            <option value="{{ $cv->id }}" selected>
+                                                                                {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
                                                                         @else
-                                                                            <option  value="{{ $cv->id }}"
+                                                                            <option value="{{ $cv->id }}"
                                                                                     {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
-                                                                                {{ $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                                {{ 'Giáo xứ '. $cv->giaoXu->ten_giao_xu.': '. $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
                                                                         @endif
+                                                                    @else
+                                                                        <option value="{{ $cv->id }}"
+                                                                                {{ old('tu_si_id') == $cv->id ? 'selected' : '' }}>
+                                                                            {{ $cv->tenThanh->ten_thanh .' '. $cv->ho_va_ten }}</option>
+                                                                    @endif
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -199,9 +237,11 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Ngày diễn ra</label>
+                                                        <label class="form-label text-capitalize"
+                                                               style="margin-bottom: 7px;">Ngày diễn ra</label>
                                                         <input type="date" class="form-control"
-                                                               value="{{ old('ngay_dien_ra') ?? $bi_tich_detail->ngay_dien_ra }}" name="ngay_dien_ra">
+                                                               value="{{ old('ngay_dien_ra') ?? $bi_tich_detail->ngay_dien_ra }}"
+                                                               name="ngay_dien_ra">
                                                     </div>
                                                     @if($errors->has('ngay_dien_ra'))
                                                         <span class="text-danger  font-weight-bold">{{ $errors->first('ngay_dien_ra') }}</span>
@@ -209,7 +249,9 @@
                                                 </div>
                                                 <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-label text-capitalize" style="margin-bottom: 7px;">Hoặc nhập tên linh mục</label>
+                                                        <label class="form-label text-capitalize"
+                                                               style="margin-bottom: 7px;">Hoặc nhập tên linh
+                                                            mục</label>
                                                         <input type="text" class="form-control"
                                                                value="{{ old('linh_muc_ngoai') ?? $bi_tich_detail->linh_muc_ngoai }}"
                                                                name="linh_muc_ngoai">
@@ -222,25 +264,32 @@
                                                     <div class="form-group">
                                                         <label class="form-label text-capitalize">Nơi diễn ra</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ old('noi_dien_ra') ?? $bi_tich_detail->noi_dien_ra }}" name="noi_dien_ra">
+                                                               value="{{ old('noi_dien_ra') ?? $bi_tich_detail->noi_dien_ra }}"
+                                                               name="noi_dien_ra">
                                                     </div>
                                                     @if($errors->has('noi_dien_ra'))
                                                         <span class="text-danger font-weight-bold">{{ $errors->first('noi_dien_ra') }}</span>
                                                     @endif
                                                 </div>
                                                 @if($bi_tich_detail->getBiTich($bi_tich_detail->bi_tich_id)->la_hon_nhan)
-                                                    <div id="hon_nhan" class="mt-2 col-md-12 d-flex flex-wrap col-sm-12">
+                                                    <div id="hon_nhan"
+                                                         class="mt-2 col-md-12 d-flex flex-wrap col-sm-12">
                                                         <div class="col-md-12  col-sm-12">
                                                             <h5><strong>Thông tin người làm chứng 1</strong></h5>
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <div>
-                                                                    <lable class="form-label text-capitalize">Tên thánh</lable>
-                                                                    <select class="selectpicker  form-control pt-2" name="ten_thanh_nguoi_lam_chung_1" data-live-search="true" >
-                                                                        <option selected value=""> Chọn tên thánh</option>
+                                                                    <lable class="form-label text-capitalize">Tên
+                                                                        thánh
+                                                                    </lable>
+                                                                    <select class="selectpicker  form-control pt-2"
+                                                                            name="ten_thanh_nguoi_lam_chung_1"
+                                                                            data-live-search="true">
+                                                                        <option selected value=""> Chọn tên thánh
+                                                                        </option>
                                                                         @foreach($all_ten_thanh as $cv)
-                                                                            <option  value="{{ $cv->ten_thanh }}"
+                                                                            <option value="{{ $cv->ten_thanh }}"
                                                                                     {{ old('ten_thanh_nguoi_lam_chung_1') || $bi_tich_detail->ten_thanh_nguoi_lam_chung_1 == $cv->ten_thanh ? 'selected' : '' }}>
                                                                                 {{ $cv->ten_thanh }}</option>
                                                                         @endforeach
@@ -253,9 +302,11 @@
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="form-label text-capitalize">Họ và tên</label>
+                                                                <label class="form-label text-capitalize">Họ và
+                                                                    tên</label>
                                                                 <input type="text" class="form-control"
-                                                                       value="{{ old('ten_nguoi_lam_chung_1') ?? $bi_tich_detail->ten_nguoi_lam_chung_1 }}" name="ten_nguoi_lam_chung_1">
+                                                                       value="{{ old('ten_nguoi_lam_chung_1') ?? $bi_tich_detail->ten_nguoi_lam_chung_1 }}"
+                                                                       name="ten_nguoi_lam_chung_1">
                                                             </div>
                                                             @if($errors->has('ten_nguoi_lam_chung_1'))
                                                                 <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_1')}}</span>
@@ -266,19 +317,21 @@
                                                             <label>Ngày sinh</label>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if(\Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_lam_chung_1)->format('d-m') == '01-01' && strtotime($bi_tich_detail->ngay_sinh_nguoi_lam_chung_1) < strtotime(1980))
-                                                                    <input type="date" value="{{ old('ngay_sinh_nguoi_lam_chung_1')}}"
+                                                                    <input type="date"
+                                                                           value="{{ old('ngay_sinh_nguoi_lam_chung_1')}}"
                                                                            name="ngay_sinh_nguoi_lam_chung_1"
                                                                            class="form-control col-md-5">
-                                                                    <label >Hoặc nhập năm:</label>
+                                                                    <label>Hoặc nhập năm:</label>
                                                                     <input type="number"
                                                                            value="{{ old('nam_sinh_nguoi_lam_chung_1') ?? \Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_lam_chung_1)->format('Y')}}"
                                                                            name="nam_sinh_nguoi_lam_chung_1"
                                                                            class="form-control col-md-3">
                                                                 @else
-                                                                    <input type="date" value="{{ old('ngay_sinh_nguoi_lam_chung_1') ?? $bi_tich_detail->ngay_sinh_nguoi_lam_chung_1 }}"
+                                                                    <input type="date"
+                                                                           value="{{ old('ngay_sinh_nguoi_lam_chung_1') ?? $bi_tich_detail->ngay_sinh_nguoi_lam_chung_1 }}"
                                                                            name="ngay_sinh_nguoi_lam_chung_1"
                                                                            class="form-control col-md-5">
-                                                                    <label >Hoặc nhập năm:</label>
+                                                                    <label>Hoặc nhập năm:</label>
                                                                     <input type="number"
                                                                            value="{{ old('nam_sinh_nguoi_lam_chung_1') }}"
                                                                            name="nam_sinh_nguoi_lam_chung_1"
@@ -295,9 +348,11 @@
                                                         </div>
                                                         <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="form-label" style="margin-bottom: 7px;">Nơi sinh</label>
+                                                                <label class="form-label" style="margin-bottom: 7px;">Nơi
+                                                                    sinh</label>
                                                                 <input type="text" class="form-control"
-                                                                       value="{{ old('noi_sinh') ?? $thanh_vien->noi_sinh }}" name="noi_sinh">
+                                                                       value="{{ old('noi_sinh') ?? $thanh_vien->noi_sinh }}"
+                                                                       name="noi_sinh">
                                                             </div>
                                                             @if($errors->has('noi_sinh'))
                                                                 <span class="text-danger  font-weight-bold">{{ $errors->first('noi_sinh') }}</span>
@@ -309,11 +364,16 @@
                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <div>
-                                                                    <lable class="form-label text-capitalize">Tên thánh</lable>
-                                                                    <select class="selectpicker  form-control pt-2" name="ten_thanh_nguoi_lam_chung_2" data-live-search="true" >
-                                                                        <option selected value=""> Chọn tên thánh</option>
+                                                                    <lable class="form-label text-capitalize">Tên
+                                                                        thánh
+                                                                    </lable>
+                                                                    <select class="selectpicker  form-control pt-2"
+                                                                            name="ten_thanh_nguoi_lam_chung_2"
+                                                                            data-live-search="true">
+                                                                        <option selected value=""> Chọn tên thánh
+                                                                        </option>
                                                                         @foreach($all_ten_thanh as $cv)
-                                                                            <option  value="{{ $cv->ten_thanh }}"
+                                                                            <option value="{{ $cv->ten_thanh }}"
                                                                                     {{ old('ten_thanh_nguoi_lam_chung_2') || $bi_tich_detail->ten_thanh_nguoi_lam_chung_2 == $cv->ten_thanh ? 'selected' : '' }}>
                                                                                 {{ $cv->ten_thanh }}</option>
                                                                         @endforeach
@@ -326,9 +386,11 @@
                                                         </div>
                                                         <div class="col-lg-6  col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="form-label text-capitalize">Họ và tên</label>
+                                                                <label class="form-label text-capitalize">Họ và
+                                                                    tên</label>
                                                                 <input type="text" class="form-control"
-                                                                       value="{{ old('ten_nguoi_lam_chung_2') ?? $bi_tich_detail->ten_nguoi_lam_chung_2 }}" name="ten_nguoi_lam_chung_2">
+                                                                       value="{{ old('ten_nguoi_lam_chung_2') ?? $bi_tich_detail->ten_nguoi_lam_chung_2 }}"
+                                                                       name="ten_nguoi_lam_chung_2">
                                                             </div>
                                                             @if($errors->has('ten_nguoi_lam_chung_2'))
                                                                 <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_lam_chung_2')}}</span>
@@ -338,19 +400,21 @@
                                                             <label>Ngày sinh</label>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if(\Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_lam_chung_2)->format('d-m') == '01-01' && strtotime($bi_tich_detail->ngay_sinh_nguoi_lam_chung_2) < strtotime(1980))
-                                                                    <input type="date" value="{{ old('ngay_sinh_nguoi_lam_chung_2')}}"
+                                                                    <input type="date"
+                                                                           value="{{ old('ngay_sinh_nguoi_lam_chung_2')}}"
                                                                            name="ngay_sinh_nguoi_lam_chung_2"
                                                                            class="form-control col-md-5">
-                                                                    <label >Hoặc nhập năm:</label>
+                                                                    <label>Hoặc nhập năm:</label>
                                                                     <input type="number"
                                                                            value="{{ old('nam_sinh_nguoi_lam_chung_2') ?? \Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_lam_chung_2)->format('Y') }}"
                                                                            name="nam_sinh_nguoi_lam_chung_2"
                                                                            class="form-control col-md-3">
                                                                 @else
-                                                                    <input type="date" value="{{ old('ngay_sinh_nguoi_lam_chung_2') ?? $bi_tich_detail->ngay_sinh_nguoi_lam_chung_2}}"
+                                                                    <input type="date"
+                                                                           value="{{ old('ngay_sinh_nguoi_lam_chung_2') ?? $bi_tich_detail->ngay_sinh_nguoi_lam_chung_2}}"
                                                                            name="ngay_sinh_nguoi_lam_chung_2"
                                                                            class="form-control col-md-5">
-                                                                    <label >Hoặc nhập năm:</label>
+                                                                    <label>Hoặc nhập năm:</label>
                                                                     <input type="number"
                                                                            value="{{ old('nam_sinh_nguoi_lam_chung_2') }}"
                                                                            name="nam_sinh_nguoi_lam_chung_2"
@@ -367,15 +431,18 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div id="them_suc" class=" mt-2 col-md-12 d-flex flex-wrap col-sm-12" >
+                                                    <div id="them_suc"
+                                                         class=" mt-2 col-md-12 d-flex flex-wrap col-sm-12">
                                                         <div class="col-md-12 col-sm-12">
                                                             <h5><strong> Thông tin người đỡ đầu </strong></h5>
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="form-label text-capitalize">Họ và tên</label>
+                                                                <label class="form-label text-capitalize">Họ và
+                                                                    tên</label>
                                                                 <input type="text" class="form-control"
-                                                                       value="{{ old('ten_nguoi_do_dau') ?? $bi_tich_detail->ten_nguoi_do_dau }}" name=Ten_nguoi_do_dau">
+                                                                       value="{{ old('ten_nguoi_do_dau') ?? $bi_tich_detail->ten_nguoi_do_dau }}"
+                                                                       name=Ten_nguoi_do_dau">
                                                             </div>
                                                             @if($errors->has('ten_nguoi_do_dau'))
                                                                 <span class="text-danger font-weight-bold">{{ $errors->first('ten_nguoi_do_dau')}}</span>
@@ -384,11 +451,16 @@
                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                             <div class="form-group">
                                                                 <div>
-                                                                    <lable class="form-label text-capitalize">Tên thánh</lable>
-                                                                    <select class="selectpicker  form-control pt-2" name="ten_thanh_nguoi_do_dau" data-live-search="true" >
-                                                                        <option selected value=""> Chọn tên thánh</option>
+                                                                    <lable class="form-label text-capitalize">Tên
+                                                                        thánh
+                                                                    </lable>
+                                                                    <select class="selectpicker  form-control pt-2"
+                                                                            name="ten_thanh_nguoi_do_dau"
+                                                                            data-live-search="true">
+                                                                        <option selected value=""> Chọn tên thánh
+                                                                        </option>
                                                                         @foreach($all_ten_thanh as $cv)
-                                                                            <option  value="{{ $cv->ten_thanh }}"
+                                                                            <option value="{{ $cv->ten_thanh }}"
                                                                                     {{ old('ten_thanh_nguoi_do_dau') || $bi_tich_detail->ten_thanh_nguoi_do_dau == $cv->ten_thanh ? 'selected' : '' }}>
                                                                                 {{ $cv->ten_thanh }}</option>
                                                                         @endforeach
@@ -403,23 +475,25 @@
                                                             <label>Ngày sinh</label>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if(\Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_do_dau)->format('d-m') == '01-01' && strtotime($bi_tich_detail->ngay_sinh_nguoi_do_dau) < strtotime(1980))
-                                                                <input type="date" value="{{ old('ngay_sinh_nguoi_do_dau') }}"
-                                                                       name="ngay_sinh_nguoi_do_dau"
-                                                                       class="form-control col-md-5">
-                                                                <label >Hoặc nhập năm:</label>
-                                                                <input type="number"
-                                                                       value="{{ old('nam_sinh_nguoi_do_dau') ?? \Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_do_dau)->format('Y')}}"
-                                                                       name="nam_sinh_nguoi_do_dau"
-                                                                       class="form-control col-md-3">
-                                                                    @else
-                                                                <input type="date" value="{{ old('ngay_sinh_nguoi_do_dau') ?? $bi_tich_detail->ngay_sinh_nguoi_do_dau }}"
-                                                                       name="ngay_sinh_nguoi_do_dau"
-                                                                       class="form-control col-md-5">
-                                                                <label >Hoặc nhập năm:</label>
-                                                                <input type="number"
-                                                                       value="{{ old('nam_sinh_nguoi_do_dau') }}"
-                                                                       name="nam_sinh_nguoi_do_dau"
-                                                                       class="form-control col-md-3">
+                                                                    <input type="date"
+                                                                           value="{{ old('ngay_sinh_nguoi_do_dau') }}"
+                                                                           name="ngay_sinh_nguoi_do_dau"
+                                                                           class="form-control col-md-5">
+                                                                    <label>Hoặc nhập năm:</label>
+                                                                    <input type="number"
+                                                                           value="{{ old('nam_sinh_nguoi_do_dau') ?? \Carbon\Carbon::parse($bi_tich_detail->ngay_sinh_nguoi_do_dau)->format('Y')}}"
+                                                                           name="nam_sinh_nguoi_do_dau"
+                                                                           class="form-control col-md-3">
+                                                                @else
+                                                                    <input type="date"
+                                                                           value="{{ old('ngay_sinh_nguoi_do_dau') ?? $bi_tich_detail->ngay_sinh_nguoi_do_dau }}"
+                                                                           name="ngay_sinh_nguoi_do_dau"
+                                                                           class="form-control col-md-5">
+                                                                    <label>Hoặc nhập năm:</label>
+                                                                    <input type="number"
+                                                                           value="{{ old('nam_sinh_nguoi_do_dau') }}"
+                                                                           name="nam_sinh_nguoi_do_dau"
+                                                                           class="form-control col-md-3">
                                                                 @endif
                                                             </div>
                                                             @if($errors->has('ngay_sinh_nguoi_do_dau'))
@@ -434,13 +508,15 @@
                                                 <div class="col-lg-12 mt-4 col-md-12 col-sm-12">
                                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                                     <a class="btn btn-light"
-                                                       href="{{ route('so-gia-dinh.editTV', ['sgdId' => $sgdcg->id, 'tvId' => $thanh_vien->id])  }}">Quay lại
+                                                       href="{{ route('so-gia-dinh.editTV', ['sgdId' => $sgdcg->id, 'tvId' => $thanh_vien->id])  }}">Quay
+                                                        lại
                                                     </a>
                                                 </div>
                                             </div>
                                         </form>
                                         <hr>
-                                        <div class="mt-2 col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+                                        <div class="mt-2 col-lg-12 col-md-12 col-sm-12"
+                                             style="padding-left: 0px; padding-right: 0px;">
                                             <h4>Các bí tích đã nhận</h4>
                                             <div class="table-responsive">
                                                 <table id="example3" class="display" style="min-width: 845px">
@@ -454,10 +530,10 @@
                                                         <th>Xem chi tiết</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody >
+                                                    <tbody>
                                                     @php $i= 0; @endphp
                                                     @foreach($all_bi_tich_received as $th)
-                                                        <tr >
+                                                        <tr>
                                                             <td class="text-center"> {{ ++$i }}</td>
                                                             <td> {{ $th->getBiTich($th->bi_tich_id)->ten_bi_tich }}</td>
                                                             <td>
@@ -468,7 +544,7 @@
                                                             </td>
                                                             <td>
                                                                 @if($th->tuSi)
-                                                                 {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
+                                                                    {{ $th->tuSi->tenThanh->ten_thanh .' '. $th->tuSi->ho_va_ten}}
                                                                 @endif
                                                                 @if($th->linh_muc_ngoai)
                                                                     {{ $th->linh_muc_ngoai}}
@@ -476,12 +552,15 @@
                                                             </td>
                                                             <td class="text-center d-flex justify-content-center">
                                                                 @if($th->id == $bi_tich_detail->id)
-                                                                    <form action=" {{ route('so-gia-dinh.deleteBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id] ) }}" method="POST">
+                                                                    <form action=" {{ route('so-gia-dinh.deleteBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id] ) }}"
+                                                                          method="POST">
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         <button type="submit"
                                                                                 onclick="return window.confirm('Bạn chắc chắn muốn xóa bí tích này chứ?')"
-                                                                                class="btn btn-sm btn-danger mr-2 "><i class="text-white la la-trash-o"></i></button>
+                                                                                class="btn btn-sm btn-danger mr-2 "><i
+                                                                                    class="text-white la la-trash-o"></i>
+                                                                        </button>
                                                                     </form>
 
                                                                 @else
@@ -492,12 +571,15 @@
                                                                     >
                                                                         <i class="la la-pencil"></i>
                                                                     </a>
-                                                                    <form action=" {{ route('so-gia-dinh.deleteBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id] ) }}" method="POST">
+                                                                    <form action=" {{ route('so-gia-dinh.deleteBT', ['sgdId' => $sgdcg->id, 'thanh_vien' => $thanh_vien, 'bi_tich_id' => $th->id] ) }}"
+                                                                          method="POST">
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         <button type="submit"
-                                                                           onclick="return window.confirm('Bạn chắc chắn muốn xóa bí tích này chứ?')"
-                                                                           class="btn btn-sm btn-danger mr-2 "><i class="text-white la la-trash-o"></i></button>
+                                                                                onclick="return window.confirm('Bạn chắc chắn muốn xóa bí tích này chứ?')"
+                                                                                class="btn btn-sm btn-danger mr-2 "><i
+                                                                                    class="text-white la la-trash-o"></i>
+                                                                        </button>
                                                                     </form>
                                                                 @endif
                                                             </td>
@@ -536,5 +618,6 @@
                 then_suc.classList.remove('d-lg-none', 'd-sm-none');
             }
         }
+
     </script>
 @endsection

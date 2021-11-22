@@ -5,14 +5,14 @@
                 <div class="welcome-text">
                     <h4>Thống kê toàn giáo phận</h4>
                     {{--<div class="d-flex col-sm-12 col-md-12 flex-wrap justify-content-start pt-2 pl-0">--}}
-                        {{--<div class="col-md-4 col-sm-3 col-xs-3 form-group" style="max-width: 50%;">--}}
-                            {{--<label>Ngày bắt đầu</label>--}}
-                            {{--<input type="date" wire:model="start_date" class="form-control w-auto">--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-4 col-xs-3 col-sm-3 form-group" style="max-width: 50%;">--}}
-                            {{--<label>Ngày kết thúc</label>--}}
-                            {{--<input type="date" class="form-control w-auto" wire:model="end_date">--}}
-                        {{--</div>--}}
+                    {{--<div class="col-md-4 col-sm-3 col-xs-3 form-group" style="max-width: 50%;">--}}
+                    {{--<label>Ngày bắt đầu</label>--}}
+                    {{--<input type="date" wire:model="start_date" class="form-control w-auto">--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-4 col-xs-3 col-sm-3 form-group" style="max-width: 50%;">--}}
+                    {{--<label>Ngày kết thúc</label>--}}
+                    {{--<input type="date" class="form-control w-auto" wire:model="end_date">--}}
+                    {{--</div>--}}
                     {{--</div>--}}
                 </div>
             </div>
@@ -127,7 +127,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white fs-16" style="font-size: 16px"> {{ $statistic_bi_tich['xung_toi'] }} </p>
+                            <p class="text-white fs-16"
+                               style="font-size: 16px"> {{ $statistic_bi_tich['xung_toi'] }} </p>
                         </div>
                     </div>
                 </div>
@@ -187,18 +188,20 @@
                             <div class="w-75">
                                 <label class="form-label">Chọn thống kê sinh hoặc tử năm
                                 </label>
-                                <select data-live-search="true"  class="form-control select w-auto mr-1"  wire:model="sinh_tu_follow_year">
+                                <select data-live-search="true" class="form-control select w-auto mr-1"
+                                        wire:model="sinh_tu_follow_year">
                                     @for($i = 0; $i < sizeof($start_end_year); $i++)
                                         <option value="{{ $start_end_year[$i] }}" {{ $i == 0 ? 'selected' : '' }}> {{ $start_end_year[$i] }}</option>
                                     @endfor
                                 </select>
-                                <select  class="form-control select w-auto" wire:model="sinh_hoac_tu">
+                                <select class="form-control select w-auto" wire:model="sinh_hoac_tu">
                                     <option value="1" selected>Sinh</option>
                                     <option value="2">Tử</option>
                                 </select>
                             </div>
                             <label class="position-absolute mt-2" style="font-size: 14px;">Số lượng</label>
-                            <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;" height="50"></canvas>
+                            <canvas id="myChart" class="pt-2" width="50" style="height: 100px !important;"
+                                    height="50"></canvas>
                         </div>
                         <div class="col-xl-6 col-xxl-6 col-sm-12 p-0">
                             <label>Thông kê tu sĩ toàn giáo phận</label>
@@ -213,10 +216,12 @@
                         <h4 class="card-title">Danh sách thống kê giáo phận</h4>
                     </div>
                     <div class="card-body">
-                        <div class="col-md-12 d-flex align-items-center justify-content-between p-0" style="margin-top: -10px">
+                        <div class="col-md-12 d-flex align-items-center justify-content-between p-0"
+                             style="margin-top: -10px">
                             <div>
                                 <lable>Tìm kiếm giáo phận</lable>
-                                <select class="select form-control w-auto" wire:model="giao_phan_id" data-live-search="true">
+                                <select class="select form-control w-auto" wire:model="giao_phan_id"
+                                        data-live-search="true">
                                     <option value="" selected>Tìm kiếm giáo phận</option>
                                     @foreach($all_giao_phan as $gp)
                                         <option value="{{ $gp->id }}">{{ $gp->ten_giao_phan }}</option>
@@ -225,7 +230,7 @@
                             </div>
                         </div>
                         <div class="table-responsive recentOrderTable">
-                            <table class="table display"  style="min-width: 100%;">
+                            <table class="table display" style="min-width: 100%;">
                                 <thead>
                                 <tr>
                                     <th scope="col">STT</th>
@@ -248,7 +253,8 @@
                                         <td class="text-center">{{ $th->tu_si_count }}</td>
                                         <td class="text-center">{{ $th->giao_dan_count }}</td>
                                         <td class="text-center">
-                                            <a href="home/giao-phan?giao_phan_id={{ $th->id }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+                                            <a href="home/giao-phan?giao_phan_id={{ $th->id }}"
+                                               class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -361,5 +367,6 @@
             pieChart.data.labels = Object.keys(dataBiTich);
             pieChart.update();
         });
+
     </script>
 @endpush

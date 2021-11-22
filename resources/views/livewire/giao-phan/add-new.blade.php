@@ -20,7 +20,7 @@
             </button>
         </div>
     </div>
-    <div  class="card-body" wire:ignore>
+    <div class="card-body" wire:ignore>
         <div class="table-responsive">
             <table id="example3" class="display" style="min-width: 845px; width: 1100px !important;">
                 <thead>
@@ -35,7 +35,7 @@
                     <th style="width: 50px">Chỉnh sửa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_giao_phan as $giao_phan)
                     <tr>
@@ -44,7 +44,7 @@
                         <td>
                             @if(\Carbon\Carbon::parse($giao_phan->ngay_thanh_lap)->format('d-m') == '01-01')
                                 {{ \Carbon\Carbon::parse($giao_phan->ngay_thanh_lap)->format('Y') }}
-                                @else
+                            @else
                                 {{ \Carbon\Carbon::parse($giao_phan->ngay_thanh_lap)->format('d-m-Y') }}
                             @endif
                         </td>
@@ -81,5 +81,6 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
 @endpush

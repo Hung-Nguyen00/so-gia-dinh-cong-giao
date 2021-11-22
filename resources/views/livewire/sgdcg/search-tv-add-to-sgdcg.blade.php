@@ -3,7 +3,7 @@
     <button class="btn btn-outline-danger"
             data-toggle="modal"
             data-target="#thanhVienModal"
-       >Lập bí tích hôn phối
+    >Lập bí tích hôn phối
     </button>
 </div>
 
@@ -13,5 +13,6 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
+
     </script>
 @endsection

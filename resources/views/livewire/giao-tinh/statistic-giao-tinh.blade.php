@@ -4,10 +4,11 @@
             <div class="col-sm-7 p-md-0">
                 <div class="welcome-text d-flex justify-content-start align-items-center">
                     <h4>Thống kê giáo phận</h4>
-                    <select class="selectpicker w-50 select form-control ml-2"  wire:model="giao_phan_id"
-                            value="{{ old('giao_phan_id') }}"  data-live-search="true" >
+                    <select class="selectpicker w-50 select form-control ml-2" wire:model="giao_phan_id"
+                            value="{{ old('giao_phan_id') }}" data-live-search="true">
                         @foreach($all_giao_phan as $cv)
-                            <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} - GP: {{ $cv->ten_giao_phan }}</option>
+                            <option value="{{ $cv->id }}">GT: {{ $cv->giaoTinh->ten_giao_tinh }} -
+                                GP: {{ $cv->ten_giao_phan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -83,7 +84,7 @@
                                 </span>
                             <div class="media-body">
                                 <p class="mb-1">Tổng số <br> giáo dân</p>
-                                <h4 class="mb-0" >{{ $analytics_bi_tich['count_tv'] }}</h4>
+                                <h4 class="mb-0">{{ $analytics_bi_tich['count_tv'] }}</h4>
                             </div>
                         </div>
                     </div>
@@ -118,7 +119,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <p class="text-white fs-16" style="font-size: 16px"> {{ $analytics_bi_tich['xung_toi'] }} </p>
+                            <p class="text-white fs-16"
+                               style="font-size: 16px"> {{ $analytics_bi_tich['xung_toi'] }} </p>
                         </div>
                     </div>
                 </div>
@@ -356,5 +358,6 @@
             pieChart.data.labels = Object.keys(dataBiTich);
             pieChart.update();
         });
+
     </script>
 @endpush

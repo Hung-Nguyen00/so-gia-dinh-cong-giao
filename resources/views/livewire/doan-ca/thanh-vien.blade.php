@@ -6,19 +6,20 @@
             <h4 class="card-title">Danh sách các thành viên</h4>
             <div>
                 <a href="{{ route('ca-doan-thanh-vien-add.index', $ca_doan) }}"
-                    class="btn btn-primary">Thêm thành viên
+                   class="btn btn-primary">Thêm thành viên
                 </a>
             </div>
         </div>
 
     </div>
-    <div  class="card-body" style="margin-top: -10px">
+    <div class="card-body" style="margin-top: -10px">
         <div class="col-md-6 col-xl-6 col-sm-6">
             <h4>Tìm kiếm</h4>
             <div class="d-flex">
                 <div class="form-group">
                     <label>Tên thành viên</label>
-                    <input type="text" wire:model="ten_thanh_vien" class="form-control" placeholder="Nhập tên thành viên">
+                    <input type="text" wire:model="ten_thanh_vien" class="form-control"
+                           placeholder="Nhập tên thành viên">
                 </div>
                 <div class="form-group d-flex align-items-end ml-2">
                     <label>Hiển thị</label>
@@ -47,10 +48,10 @@
                     <th>Xóa</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 @php $i= 0; @endphp
                 @foreach($all_thanh_vien as $d)
-                    <tr >
+                    <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td>
                             {{ $d->ten_thanh }}
@@ -66,9 +67,13 @@
                         </td>
                         <td class="text-center">
                             @if($d->truong_doan == 1)
-                                <button wire:click="toggleTruongDoan({{ $d->tvdc_id }})" class="btn btn-danger btn-sm">Trưởng</button>
+                                <button wire:click="toggleTruongDoan({{ $d->tvdc_id }})" class="btn btn-danger btn-sm">
+                                    Trưởng
+                                </button>
                             @else
-                                <button wire:click="toggleTruongDoan({{ $d->tvdc_id }})" class="btn btn-success btn-sm">Thành viên</button>
+                                <button wire:click="toggleTruongDoan({{ $d->tvdc_id }})" class="btn btn-success btn-sm">
+                                    Thành viên
+                                </button>
                             @endif
                         </td>
                         <td class="text-center">
@@ -101,6 +106,7 @@
             $('.select').selectpicker();
         });
 
+
     </script>
     <script type="text/javascript">
         window.livewire.on('edit', () => {
@@ -112,6 +118,7 @@
         window.livewire.on('delete', () => {
             $('#delete').modal('hide');
         });
+
     </script>
     <script>
         window.addEventListener('alert', event => {
@@ -121,5 +128,6 @@
                 "progressBar": true,
             }
         });
+
     </script>
 @endpush
