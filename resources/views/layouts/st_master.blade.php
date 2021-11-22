@@ -82,6 +82,7 @@
 
     @livewireScripts
     <!-- Required vendors -->
+    <script defer src="https://unpkg.com/alpinejs@3.5.1/dist/cdn.min.js"></script>
     <script src="{{ URL::to('assets/vendor/global/global.min.js') }}"></script>
     {{--chart--}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

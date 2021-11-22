@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="row tab-content">
+                    <div class="">
                         @livewire('giao-xu.show-tu-si-by-giao-xu')
                     </div>
                 </div>
