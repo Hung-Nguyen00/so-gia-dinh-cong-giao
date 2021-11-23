@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sgdcg;
 
 use App\Events\SendingEmailAfterChuyenXu;
+use App\Jobs\SendEmailAfterChuyenXu;
 use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
 use App\Models\GiaoXu;
@@ -369,7 +370,7 @@ class CrudSgdcg extends Component
                     'ngay_tao_so' => $this->ngay_tao_so,
                     'nguoi_khoi_tao' => Auth::id()
                 ]);
-                event(new SendingEmailAfterChuyenXu($this->giao_xu_id, $this->sgdcg_modal->id));
+                dispatch( new SendEmailAfterChuyenXu($this->sgdcg_modal->id, $this->giao_xu_id));
                 Toastr::success('Cập nhập thành công','Thành công');
                 return redirect()->route('so-gia-dinh.index');
             }else{
