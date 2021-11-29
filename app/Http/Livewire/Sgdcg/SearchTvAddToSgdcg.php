@@ -55,9 +55,9 @@ class SearchTvAddToSgdcg extends Component
                     'chuc_vu_gd_2',
                     'sgd.giao_xu_id'
                )
-                ->where('ngay_sinh', $this->ngay_sinh)
-                ->where('ten_thanh_id', $this->ten_thanh_id)
-                ->where('giao_xu_id', $this->giao_xu_id)
+                ->orwhere('ngay_sinh', $this->ngay_sinh)
+                ->orwhere('ten_thanh_id', $this->ten_thanh_id)
+                ->orwhere('giao_xu_id', $this->giao_xu_id)
                 ->get();
         $info_thanh_vien = array();
 

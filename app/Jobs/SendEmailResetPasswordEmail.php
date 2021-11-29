@@ -23,6 +23,7 @@ class SendEmailResetPasswordEmail implements ShouldQueue
      *
      * @return void
      */
+    public $tries = 3;
     protected $token, $email;
 
     public function __construct($token, $email)
@@ -42,6 +43,7 @@ class SendEmailResetPasswordEmail implements ShouldQueue
     {
         Mail::to($this->email)->send(new ResetPasswordEmail($this->token));
     }
+
     public function failed()
     {
         // Called when the job is failing...

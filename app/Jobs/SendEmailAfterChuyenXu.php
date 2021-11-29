@@ -22,6 +22,7 @@ class SendEmailAfterChuyenXu implements ShouldQueue
      *
      * @return void
      */
+    public $tries = 3;
     protected $sgd_id, $giao_xu_id;
 
     public function __construct($sgd_id, $giao_xu_id)

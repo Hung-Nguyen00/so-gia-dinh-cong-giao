@@ -36,7 +36,10 @@ Route::group(['middleware'=>['auth',  'revalidate']],function()
         //// ------------------------------ register ---------------------------------//
         Route::get('them-tai-khoan', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.user');
         Route::post('dang-ki', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register.store');
-
+        // Sending Email for GiaoPhan's User
+        Route::get('mail/send-email', [UserController::class, 'sendingEmail'])->name('user.send-email');
+        Route::post('mail/send-email', [UserController::class, 'postSendingEmail'])->name('user.post-send-email');
+        Route::get('mail/history-email', [UserController::class, 'historyEmail'])->name('user.history-email');
         Route::resources([
             'giao-tinh' => GiaoTinhController::class,
             'giao-phan' => GiaoPhanController::class,

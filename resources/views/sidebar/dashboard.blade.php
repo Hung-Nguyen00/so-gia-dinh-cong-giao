@@ -74,6 +74,12 @@
                     <li><a href="{{ route('ca-doan.index') }}">Ca đoàn</a></li>
                 </ul>
             </li>
+            <li>
+                <a class="" href="{{ route('user.send-email') }}" aria-expanded="false">
+                    <i class="la la-bullhorn"></i>
+                    Gửi thông báo
+                </a>
+            </li>
             @endif
             <li class="nav-label">Quản trị</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

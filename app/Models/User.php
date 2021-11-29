@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\LockableTrait;
 
-class User extends Authenticatable
+class   User extends Authenticatable
 {
     use HasFactory, Notifiable;
     use LockableTrait;
@@ -59,5 +58,25 @@ class User extends Authenticatable
 
     public function giaoPhan(){
         return $this->belongsTo(GiaoPhan::class, 'giao_phan_id', 'id');
+    }
+
+    public function sendEmails(){
+        return $this->belongsToMany(Email::class, 'user_email', 'create_by', 'mail_id')
+                    ->withTimestamps()->withPivot([
+                    'status',
+                    'send_to',
+                    'mail_id',
+                    'create_by'
+            ]);
+    }
+
+    public function ownEmails(){
+        return $this->belongsToMany(Email::class, 'user_email', 'send_to', 'mail_id')
+            ->withTimestamps()->withPivot([
+                'status',
+                'send_to',
+                'mail_id',
+                'create_by'
+            ]);
     }
 }

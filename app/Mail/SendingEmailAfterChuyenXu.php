@@ -29,6 +29,6 @@ class SendingEmailAfterChuyenXu extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail từ giaophan.app')->view('emails.email_after_chuyen_xu');
+        return $this->subject('Có người đã nhập xứ')->view('emails.email_after_chuyen_xu');
     }
 }

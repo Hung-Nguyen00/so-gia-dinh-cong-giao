@@ -14,7 +14,7 @@ display: flex; justify-content: center;
     <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Có hộ gia đình mới vừa nhập xứ</h1>
     <p style="margin-bottom: 20px;">Hãy click vào đường dẫn bên dưới để xem chi tiet</p>
     <a style="margin-top: 20px; text-decoration: none; color: white; z-index: 3; border: none; padding: 10px 20px; background-color: orange;"
-       href="{{url('/so-gia-dinh?chuyen_xu_nhap_xu=2&page_number=20&search_ten_thanh_id='.$data['ten_thanh_id'].'&ten_chu_ho='. $data['ho_va_ten'])}}">Chọn vào đây</a>
+       href="{{'http://127.0.0.1:8000/so-gia-dinh?chuyen_xu_nhap_xu=2&page_number=20&search_ten_thanh_id='.$data['ten_thanh_id'].'&ten_chu_ho='. $data['ho_va_ten']}}">Chọn vào đây</a>
 
 </div>
 <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->

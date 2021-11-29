@@ -14,7 +14,7 @@ display: flex; justify-content: center;
     <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Lấy lại mật khẩu!</h1>
     <p style="margin-bottom: 20px;">Hãy click vào đường dẫn bên dưới để lấy lại mật khẩu</p>
     <a style="margin-top: 20px; text-decoration: none; color: white; z-index: 3; border: none; padding: 10px 20px; background-color: orange;"
-       href="{{url('/reset-password/'.$token)}}">Chọn vào đây</a>
+       href="http://127.0.0.1:8000/reset-password/{{$token}}">Chọn vào đây</a>
 
 </div>
 <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->

@@ -157,7 +157,7 @@ class EditTuSi extends Component
         $this->dang_du_hoc = $this->dang_du_hoc ? 1 : 0;
         if ($validatedData['chuc_vu_id'] !== $this->tu_si->chuc_vu_id
             && $validatedData['ngay_nhan_chuc'] !== $this->tu_si->ngay_nhan_chuc) {
-            LichSuNhanChuc::create([
+            \App\Models\LichSuNhanChuc::create([
                 'ngay_nhan_chuc' => $this->tu_si->ngay_nhan_chuc,
                 'noi_nhan_chuc' => $this->tu_si->noi_nhan_chuc,
                 'chuc_vu' => $this->tu_si->chucVu->ten_chuc_vu,

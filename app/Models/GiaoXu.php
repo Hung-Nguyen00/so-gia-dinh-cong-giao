@@ -35,7 +35,7 @@ class GiaoXu extends Model
         return $this->hasMany(GiaoXu::class ,'giao_xu_hoac_giao_ho')->with('giaoHo');
     }
 
-    public  function giaoPhan(){
+    public function giaoPhan(){
         return $this->belongsToThrough(GiaoPhan::class, GiaoHat::class);
     }
 
@@ -71,6 +71,10 @@ class GiaoXu extends Model
         }else{
             return null;
         }
+    }
+
+    public function getOwnUser(){
+        return $this->hasMany(User::class);
     }
 
     public function getUser(){

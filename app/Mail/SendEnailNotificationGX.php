@@ -7,29 +7,30 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ResetPasswordEmail extends Mailable
+class SendEnailNotificationGX extends Mailable
 {
     use Queueable, SerializesModels;
 
-
-    public $token;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public $title, $content;
+
+    public function __construct($email_content)
     {
-        $this->token = $token;
+        $this->title = $email_content['title'];
+        $this->content = $email_content['content'];
     }
 
     /**
      * Build the message.
-*
+     *
      * @return $this
      */
     public function build()
     {
-        return $this->subject('Lấy tại tài khoản')->view('emails.reset_password');
+        return $this->subject($this->title)->view('emails.email_notification_GX');
     }
 }

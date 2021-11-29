@@ -103,12 +103,9 @@ class CrudSgdcg extends Component
             // search By Chu Ho or not
 
             // search By GiaoHo or not
-            if ($this->loading == 0){
-                $all_so_gia_dinh = $this->getSoGiaDinh($giao_xu_id, $giao_ho);
-            }
-            else{
-                $all_so_gia_dinh = null;
-            }
+
+            $all_so_gia_dinh = $this->getSoGiaDinh($giao_xu_id, $giao_ho);
+
             $this->all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)->select('ten_giao_xu', 'id')->get();
         return view('livewire.sgdcg.crud-sgdcg')->with([
             'all_so_gia_dinh' => $all_so_gia_dinh ? $all_so_gia_dinh->paginate($this->page_number) : null,
@@ -203,6 +200,7 @@ class CrudSgdcg extends Component
             })->orWhereIn('giao_xu_id', $giao_ho);
         }
 
+
         if ($this->ten_chu_ho || $this->search_ten_thanh_id){
             $chu_ho = $this->ten_chu_ho;
             $search_ten_thanh = $this->search_ten_thanh_id;
@@ -211,7 +209,8 @@ class CrudSgdcg extends Component
             }else{
                 $all_so_gia_dinh = $all_so_gia_dinh->where('giao_xu_id', $this->giao_ho_id);
             }
-                $all_so_gia_dinh = $all_so_gia_dinh
+
+            $all_so_gia_dinh = $all_so_gia_dinh
                     ->whereHas('thanhVien', function($q) use($chu_ho, $search_ten_thanh){
                     $q->with('tenThanh')
                         ->where('ho_va_ten','like',  '%'.$chu_ho . '%')

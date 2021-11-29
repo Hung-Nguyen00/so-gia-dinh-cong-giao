@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendingEmailRequest;
+use App\Jobs\SendEnailNotificationGX;
+use App\Models\Email;
 use App\Models\GiaoPhan;
+use App\Models\GiaoXu;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -214,5 +220,37 @@ class UserController extends Controller
             Toastr::error('Mật khẩu cũ không đúng', 'Lỗi');
             return redirect()->back();
         }
+    }
+
+    public function sendingEmail(Request $request){
+         $gxs = GiaoXu::with(['giaoHat'])
+             ->whereHas('giaoPhan', function ($q){
+             $q->where('giao_phan_id', Auth::user()->giao_phan_id);
+            })->whereHas('getOwnUser')->get();
+        return view('users.notification_email', compact('gxs'));
+    }
+
+    public function postSendingEmail(SendingEmailRequest $request){
+        $validatedata = $request->validated();
+        $email = Email::create($validatedata);
+        $users = User::whereIn('giao_xu_id', $request->gx)->select('id', 'email')->get();
+        $data_to_insert = [];
+        foreach ($users as $user)
+        {
+            array_push($data_to_insert, [
+                'create_by' => Auth::id(),
+                'send_to' => $user->id,
+                'mail_id' => $email->id,
+                'status' => 'PENDING'
+            ]);
+        }
+        DB::table('user_email')->insert($data_to_insert);
+
+        SendEnailNotificationGX::dispatch($request->gx, $validatedata, $email->id);
+        return redirect()->route('user.history-email');
+    }
+
+    public function historyEmail(Request $request){
+        return view('users.history_email');
     }
 }
