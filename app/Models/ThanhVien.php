@@ -65,9 +65,8 @@ class ThanhVien extends Model
 
 
     public function scopeSearch($query, $term){
-        $term = "%$term%";
         $query->where(function ($query) use ($term){
-           $query->where('ho_va_ten', 'like', $term);
+           $query->where('ho_va_ten', 'like', "%".$term. "%");
         });
     }
 

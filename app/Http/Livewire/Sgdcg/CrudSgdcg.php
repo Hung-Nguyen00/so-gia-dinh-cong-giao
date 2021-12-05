@@ -82,31 +82,31 @@ class CrudSgdcg extends Component
     public function render()
     {
         $this->dispatchBrowserEvent('contentChanged');
-            if($this->giao_hat_id){
-                $this->all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->where('giao_hat_id', $this->giao_hat_id)->get();
-            }
-            if ($this->gx_id_search){
-                $giao_xu_id = $this->gx_id_search;
-            }else{
-                $giao_xu_id = Auth::user()->giao_xu_id;
-            }
-            $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)
-                ->orWhere('id', $giao_xu_id)
-                ->pluck('id')->toArray();
-            $giao_ho = array_values($giao_ho);
+        if($this->giao_hat_id){
+            $this->all_giao_xu = GiaoXu::where('giao_xu_hoac_giao_ho', 0)->where('giao_hat_id', $this->giao_hat_id)->get();
+        }
+        if ($this->gx_id_search){
+            $giao_xu_id = $this->gx_id_search;
+        }else{
+            $giao_xu_id = Auth::user()->giao_xu_id;
+        }
+        $giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)
+            ->orWhere('id', $giao_xu_id)
+            ->pluck('id')->toArray();
+        $giao_ho = array_values($giao_ho);
 
-            $this->createSoGiaDinh($giao_xu_id);
-            $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
-            // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
-            // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
-            // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
-            // search By Chu Ho or not
+        $this->createSoGiaDinh($giao_xu_id);
+        $this->all_giao_hat = GiaoHat::where('giao_phan_id', $this->giao_phan_id)->get();
+        // get value match GiaoXu because Account has role which is GiaoXU and then only see it's data
+        // thanhVienSo2 is ThanhVien from a existing SoGiaDinh and He or she will have new SoGiDinh.
+        // Thus, We need show number of thanhvien from that SogiaDinh by so_gia_dinh_id_2
+        // search By Chu Ho or not
 
-            // search By GiaoHo or not
+        // search By GiaoHo or not
 
-            $all_so_gia_dinh = $this->getSoGiaDinh($giao_xu_id, $giao_ho);
+        $all_so_gia_dinh = $this->getSoGiaDinh($giao_xu_id, $giao_ho);
 
-            $this->all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)->select('ten_giao_xu', 'id')->get();
+        $this->all_giao_ho = GiaoXu::where('giao_xu_hoac_giao_ho', $giao_xu_id)->select('ten_giao_xu', 'id')->get();
         return view('livewire.sgdcg.crud-sgdcg')->with([
             'all_so_gia_dinh' => $all_so_gia_dinh ? $all_so_gia_dinh->paginate($this->page_number) : null,
         ]);
@@ -170,9 +170,8 @@ class CrudSgdcg extends Component
                 ->where('chuc_vu_gd_2', 'Cha');
         }])
             ->withCount(['thanhVien', 'thanhVienSo2'])
-            ->where('giao_xu_id', 6)
+            ->where('giao_xu_id', $giao_xu_id)
             ->orderBy('created_at', 'DESC');
-
 
         if (!$this->giao_ho_id){
             // search by All
@@ -199,8 +198,6 @@ class CrudSgdcg extends Component
                 $q->where('giao_xu_id', $giao_xu_id);
             })->orWhereIn('giao_xu_id', $giao_ho);
         }
-
-
         if ($this->ten_chu_ho || $this->search_ten_thanh_id){
             $chu_ho = $this->ten_chu_ho;
             $search_ten_thanh = $this->search_ten_thanh_id;

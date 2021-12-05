@@ -23,7 +23,7 @@ class CreateUserEmailTable extends Migration
 
             $table->string('status', 10)->nullable();
 
-            $table->foreign('mail_id')->references('id')->on('mail')->onDelete('cascade');
+            $table->foreign('mail_id')->references('id')->on('email')->onDelete('cascade');
             $table->foreign('create_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('send_to')->references('id')->on('users')->onDelete('cascade');
 

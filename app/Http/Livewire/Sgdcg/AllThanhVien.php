@@ -54,13 +54,12 @@ class AllThanhVien extends Component
         }
         $this->all_ten_thanh = TenThanh::orderBy('ten_thanh')->get('id');
         $this->all_bi_tich = BiTich::all();
-        $this->all_giao_xu = GiaoXu::with('giaoHat')->where('giao_xu_hoac_giao_ho', 0)->get();
-
     }
 
 
     public function render()
     {
+        $this->all_giao_xu = GiaoXu::with('giaoHat')->where('giao_xu_hoac_giao_ho', 0)->get();
         $this->dispatchBrowserEvent('contentChanged');
         $this->ten_thanh = $this->all_ten_thanh->toArray();
 
@@ -74,19 +73,20 @@ class AllThanhVien extends Component
             ->orWhere('id', $giao_xu_id)
             ->pluck('id');
 
-        if ($this->ten_thanh_id !== null && $this->ten_thanh_id !== ''){
-            $this->ten_thanh = TenThanh::where('id', $this->ten_thanh_id)->first('id')->toArray();
-        }
 
-        $all_thanh_vien = ThanhVien::with(['soGiaDinh', 'soGiaDinh2','tenThanh'])
-            ->whereHas('soGiaDinh', function ($q) use ($giao_ho){
+        $all_thanh_vien = ThanhVien::with(['soGiaDinh', 'soGiaDinh2','tenThanh']);
+        if ($this->ho_va_ten){
+            $all_thanh_vien->where('ho_va_ten', 'like', "%$this->ho_va_ten%");
+        }
+        $all_thanh_vien = $all_thanh_vien->whereHas('soGiaDinh', function ($q) use ($giao_ho){
                 $q->whereIn('giao_xu_id', $giao_ho);
             })
             ->orWhereHas('soGiaDinh2', function ($q) use ($giao_ho){
                 $q->whereIn('giao_xu_id', $giao_ho);
-            })
-            ->search(trim($this->ho_va_ten))
-            ->WhereIn('ten_thanh_id', array_values($this->ten_thanh));
+            });
+        if($this->ten_thanh_id){
+            $all_thanh_vien->Where('ten_thanh_id', $this->ten_thanh_id);
+        }
 
         if ($this->sinh_or_tu == 1){
             $all_thanh_vien = $all_thanh_vien->whereBetween('ngay_sinh', [$this->start_date, $this->end_date]);
@@ -94,6 +94,7 @@ class AllThanhVien extends Component
         }elseif ($this->sinh_or_tu == 2){
             $all_thanh_vien = $all_thanh_vien->whereBetween('ngay_mat', [$this->start_date, $this->end_date]);
         }
+
         return view('livewire.sgdcg.all-thanh-vien', [
                 'all_thanh_vien' => $all_thanh_vien->simplePaginate($this->paginate_number),
                 'all_bi_tich' => $this->all_bi_tich,
