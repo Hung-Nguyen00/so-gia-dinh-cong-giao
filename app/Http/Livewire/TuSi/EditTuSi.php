@@ -189,7 +189,7 @@ class EditTuSi extends Component
             'ten_giao_xu' => $this->tu_si->giaoXu->ten_giao_xu,
             'bat_dau_phuc_vu' => $this->tu_si->bat_dau_phuc_vu,
             'ket_thuc_phuc_vu' => $this->ket_thuc_phuc_vu,
-            'ten_vi_tri' => $this->tu_si->viTri->ten_vi_tri
+            'ten_vi_tri' => $this->tu_si->viTri ? $this->tu_si->viTri->ten_vi_tri : ''
         ]);
         $this->tu_si->update(
             [

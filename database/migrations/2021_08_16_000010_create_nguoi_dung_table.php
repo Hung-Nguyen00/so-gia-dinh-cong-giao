@@ -33,21 +33,20 @@ class CreateNguoiDungTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('quyen_quan_tri_id')->index();
-            $table->unsignedBigInteger('giao_phan_id')->index();
-            $table->unsignedBigInteger('giao_xu_id')->index()->nullable();
-
-            $table->foreign('quyen_quan_tri_id')
-                ->references('id')->on('quyen_quan_tri')
+            $table->foreignId('quyen_quan_tri_id')
+                ->constrained('quyen_quan_tri')
                 ->onDelete('cascade');
 
-            $table->foreign('giao_phan_id')
-                ->references('id')->on('giao_phan')
+            $table->foreignId('giao_phan_id')->nullable()
+                ->constrained('giao_phan')
                 ->onDelete('cascade');
 
-            $table->foreign('giao_xu_id')
-                ->references('id')->on('giao_xu')
+            $table->foreignId('giao_xu_id')->nullable()
+                ->constrained('giao_xu')
                 ->onDelete('cascade');
+
+            $table->index(['id', 'giao_xu_id', 'giao_phan_id', 'quyen_quan_tri_id'],
+                'idx_user');
         });
     }
 

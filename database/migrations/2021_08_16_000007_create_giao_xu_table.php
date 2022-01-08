@@ -31,12 +31,12 @@ class CreateGiaoXuTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('giao_hat_id')->index();
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
 
-            $table->foreign('giao_hat_id')
-                ->references('id')->on('giao_hat')
+            $table->foreignId('giao_hat_id')->nullable()
+                ->constrained('giao_hat')
                 ->onDelete('cascade');
+
         });
     }
 

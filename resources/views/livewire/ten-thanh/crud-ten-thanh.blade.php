@@ -11,7 +11,7 @@
             </a>
             <button
                     data-toggle="modal" data-target="#importModal"
-                    class="btn btn-info mt-1">Import tên thánh, chức vụ, vị trí giáo xứ
+                    class="btn btn-info mt-1">Nhập Excel tên thánh, chức vụ, vị trí Giáo Xứ
             </button>
             <button
                     data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
@@ -47,12 +47,14 @@
                                     data-target="#editGiaoHat">
                                 <i class="la la-pencil"></i>
                             </button>
-                            <button type="button" wire:click="edit({{ $th->id }})"
-                                    data-toggle="modal"
-                                    data-target="#deleteGiaoHat"
-                                    class="btn btn-outline-danger btn-sm d-inline-block mb-1">
-                                <i class="la la-trash-o"></i>
-                            </button>
+                            @if($th->giao_dan_count == 0)
+                                <button type="button" wire:click="edit({{ $th->id }})"
+                                        data-toggle="modal"
+                                        data-target="#deleteGiaoHat"
+                                        class="btn btn-outline-danger btn-sm d-inline-block mb-1">
+                                    <i class="la la-trash-o"></i>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

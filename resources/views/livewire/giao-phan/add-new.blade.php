@@ -12,7 +12,7 @@
             </a>
             <button
                     data-toggle="modal" data-target="#importModal"
-                    class="btn btn-primary">Import giáo phận, giáo hạt, giáo xứ
+                    class="btn btn-primary">Nhập Excel Giáo Phận, Giáo Hạt, Giáo Xứ
             </button>
             <button
                     data-toggle="modal" wire:click="clearData()" data-target="#exampleModal"
@@ -30,8 +30,8 @@
                     <th style="width: 92px">Ngày thành lập</th>
                     <th style="width: 103px">Nhà thờ chính tòa</th>
                     <th style="width: 50px">Số lượng giáo hạt</th>
+                    <th style="width: 60px">Giáo Tỉnh</th>
                     <th style="width: 90px">Người cập nhập</th>
-                    <th style="width: 60px">Cập nhập lần cuối</th>
                     <th style="width: 50px">Chỉnh sửa</th>
                 </tr>
                 </thead>
@@ -50,8 +50,8 @@
                         </td>
                         <td>{{ $giao_phan->ten_nha_tho }}</td>
                         <td class="text-center">{{ $giao_phan->giao_hat_count }}</td>
+                        <td>{{ $giao_phan->giaoTinh->ten_giao_tinh }}</td>
                         <td>{{ $giao_phan->getUser->ho_va_ten }}</td>
-                        <td>{{\Carbon\Carbon::parse($giao_phan->updated_at)->format('d-m-Y  H:i') }}</td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $giao_phan->id }})"

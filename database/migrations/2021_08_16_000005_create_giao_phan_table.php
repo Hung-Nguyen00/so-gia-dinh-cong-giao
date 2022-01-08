@@ -31,10 +31,9 @@ class CreateGiaoPhanTable extends Migration
             $table->softDeletes();
 
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
-            $table->unsignedBigInteger('giao_tinh_id')->index();
 
-            $table->foreign('giao_tinh_id')
-                ->references('id')->on('giao_tinh')
+            $table->foreignId('giao_tinh_id')->index()->nullable()
+                ->constrained('giao_tinh')
                 ->onDelete('cascade');
         });
     }

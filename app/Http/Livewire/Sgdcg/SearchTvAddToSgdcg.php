@@ -37,12 +37,6 @@ class SearchTvAddToSgdcg extends Component
                 $q->where('giao_phan_id', $giao_phan_id);
         })->select('id', 'ten_giao_xu', 'giao_hat_id')->get();
 
-        if ($this->chuc_vu_gd == 'Cha'){
-            $this->gioi_tinh = 1;
-        }
-        if ($this->chuc_vu_gd == 'Mẹ'){
-            $this->gioi_tinh = 0;
-        }
         $thanh_vien = DB::table('so_gia_dinh_cong_giao as sgd')
                 ->join('thanh_vien as tv', 'sgd.id', '=', 'tv.so_gia_dinh_id')
                 ->join('ten_thanh as tt' , 'tv.ten_thanh_id', '=', 'tt.id')
@@ -55,10 +49,12 @@ class SearchTvAddToSgdcg extends Component
                     'chuc_vu_gd_2',
                     'sgd.giao_xu_id'
                )
-                ->orwhere('ngay_sinh', $this->ngay_sinh)
-                ->orwhere('ten_thanh_id', $this->ten_thanh_id)
-                ->orwhere('giao_xu_id', $this->giao_xu_id)
+                ->where('ngay_sinh', $this->ngay_sinh)
+                ->where('gioi_tinh', $this->gioi_tinh)
+                ->where('ten_thanh_id', $this->ten_thanh_id)
+                ->where('giao_xu_id', $this->giao_xu_id)
                 ->get();
+
         $info_thanh_vien = array();
 
         $key = 0;
@@ -102,6 +98,12 @@ class SearchTvAddToSgdcg extends Component
     }
 
     public function store(){
+        if($this->gioi_tinh == 1){
+            $this->chuc_vu_gd = "Cha";
+        }
+        if($this->gioi_tinh == 0){
+            $this->chuc_vu_gd = "Mẹ";
+        }
         $thanh_vien_found = DB::table('thanh_vien')
             ->select('id', 'so_gia_dinh_id_2', 'chuc_vu_gd_2')
             ->where('id', $this->thanh_vien_id)->limit(1);
@@ -125,7 +127,6 @@ class SearchTvAddToSgdcg extends Component
                         ->where('ten_bi_tich', 'Hôn phối')
                         ->first();
         if ($thanh_vien_found){
-
             try{
                 DB::transaction(function () use($thanh_vien_found, $exist_tv_sgd){
                     $thanh_vien_found->update([

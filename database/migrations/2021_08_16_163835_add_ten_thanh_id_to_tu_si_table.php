@@ -14,12 +14,9 @@ class AddTenThanhIdToTuSiTable extends Migration
     public function up()
     {
         Schema::table('tu_si', function (Blueprint $table) {
-            $table->unsignedBigInteger('ten_thanh_id')->index();
-
-            $table->foreign('ten_thanh_id')
-                ->references('id')->on('ten_thanh')
+            $table->foreignId('ten_thanh_id')->index()
+                ->constrained('ten_thanh')
                 ->onDelete('cascade');
-
         });
     }
 

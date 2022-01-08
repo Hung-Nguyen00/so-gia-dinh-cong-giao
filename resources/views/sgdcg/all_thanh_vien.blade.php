@@ -33,8 +33,7 @@
                                             </a>
                                             <button type="button"
                                                     data-toggle="modal" data-target="#importModal"
-                                                    class="btn btn-primary" style="margin-top: 11px !important;">Import
-                                                thêm sức hoặc xưng tội
+                                                    class="btn btn-primary" style="margin-top: 11px !important;">Nhập Excel thêm sức hoặc xưng tội
                                             </button>
                                         </div>
                                     </div>

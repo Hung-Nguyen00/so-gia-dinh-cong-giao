@@ -58,16 +58,16 @@
                             </div>
                             <div class="col-md-6 pr-0">
                                 <label>Giới tính</label>
-                                <select class="select form-control selectpicker" wire:model="chuc_vu_gd">
+                                <select class="select form-control selectpicker" wire:model="gioi_tinh">
                                     <option value="" selected>Chọn giới tính</option>
-                                    <option value="Cha">Nam</option>
-                                    <option value="Mẹ">Nữ</option>
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Ngày sinh</label>
-                            <input type="date" class="form-control" wire:model="ngay_sinh">
+                            <input type="date" class="form-control" wire:model.lazy="ngay_sinh">
                         </div>
                         <div class="form-group">
                             <label>Tìm kiếm nam hoặc nữ</label>

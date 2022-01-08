@@ -4,28 +4,28 @@
             <li class="nav-label first">Các menu chính</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-home"></i>
-                    <span class="nav-text">Bảng thống kê</span>
+                    <span class="nav-text">Thống kê</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('home') }}">Toàn giáo hội công giáo</a></li>
+                    <li><a href="{{ route('home') }}">Toàn giáo Hội</a></li>
                     <li>
                         <a href="{{ route('home.giaoPhan') }}">
-                            Thống kê giáo phận</a></li>
+                            Thống kê Giáo Phận</a></li>
                     <li>
                         <a href="{{ route('home.giaoXu')}}">
-                            Thống kê giáo xứ</a></li>
+                            Thống kê Giáo Xứ</a></li>
                 </ul>
             </li>
             @if(\Auth::user()->quanTri->ten_quyen == 'Giáo phận' || \Auth::user()->quanTri->ten_quyen == 'admin')
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-home"></i>
-                    <span class="nav-text">Quản lý giáo phận</span>
+                    <span class="nav-text">Quản lý Giáo Phận</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('giao-tinh.index') }}">Các giáo tỉnh</a></li>
-                    <li><a href="{{ route('giao-phan.index')}}">Các giáo phận</a></li>
-                    <li><a href="{{ route('giao-hat.index') }}">Các giáo hạt</a></li>
-                    <li><a href="{{ route('giao-xu.index') }}">Các giáo xứ</a></li>
+                    <li><a href="{{ route('giao-tinh.index') }}">Các Giáo Tỉnh</a></li>
+                    <li><a href="{{ route('giao-phan.index')}}">Các Giáo Phận</a></li>
+                    <li><a href="{{ route('giao-hat.index') }}">Các Giáo Hạt</a></li>
+                    <li><a href="{{ route('giao-xu.index') }}">Các Giáo Xứ</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -54,14 +54,14 @@
             @if(\Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'Giáo xứ' || \Illuminate\Support\Facades\Auth::user()->quanTri->ten_quyen == 'admin')
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-book"></i>
-                    <span class="nav-text">Quản lý giáo xứ</span>
+                    <span class="nav-text">Quản lý Giáo Xứ</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('giaoXu.showTuSi') }}">Tu sĩ</a></li>
-                    <li><a href="{{ route('giaoXu.statistic') }}">Thống kê giáo xứ</a></li>
-                    <li><a href="{{ route('giao-ho.statistic') }}">Thống kê giáo họ</a></li>
+                    <li><a href="{{ route('giaoXu.statistic') }}">Thống kê Giáo Xứ</a></li>
+                    <li><a href="{{ route('giao-ho.statistic') }}">Thống kê Giáo Họ</a></li>
                     <li><a href="{{ route('giao-ho.index') }}">Giáo họ</a></li>
-                    <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình công giáo</a></li>
+                    <li><a href="{{ route('so-gia-dinh.index') }}">Sổ gia đình Công Giáo</a></li>
                     <li><a href="{{ route('thanh-vien.index') }}">Giáo dân</a></li>
                 </ul>
             </li>

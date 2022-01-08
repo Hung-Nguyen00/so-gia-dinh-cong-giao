@@ -29,6 +29,7 @@ class CreateBiTichTable extends Migration
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 

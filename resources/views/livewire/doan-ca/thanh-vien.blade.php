@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table" style="min-width: 1080px;">
+            <table class="table" style="width: 100%">
                 <thead>
                 <tr>
                     <th class="text-center" style="width: 100px">STT</th>

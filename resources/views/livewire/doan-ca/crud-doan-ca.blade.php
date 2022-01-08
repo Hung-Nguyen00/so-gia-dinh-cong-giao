@@ -47,15 +47,15 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table" style="min-width: 1080px;">
+            <table class="table" style="width:  100%">
                 <thead>
                 <tr>
                     <th class="text-center" style="width: 100px">STT</th>
-                    <th>Tên thánh bổn mạng</th>
+                    <th>Tên thánh <br> bổn mạng</th>
                     <th>Tên ca đoàn</th>
-                    <th>Ngày mừng bổn mạng</th>
-                    <th>Trưởng ca đoàn</th>
-                    <th>Số lượng thành viên</th>
+                    <th>Ngày mừng <br> bổn mạng</th>
+                    <th style="width: 150px">Trưởng ca đoàn</th>
+                    <th>Số lượng <br> thành viên</th>
                     <th>Thêm thành viên</th>
                     <th>Chỉnh sửa</th>
                 </tr>

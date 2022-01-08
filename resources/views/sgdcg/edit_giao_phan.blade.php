@@ -1,5 +1,5 @@
 <div>
-    <div wire:ignore.self class="modal fade" style="overflow: hidden" id="editModal" tabindex="-1"
+    <div wire:ignore.self class="modal fade" style="" id="editModal" tabindex="-1"
          data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
         <div class="modal-dialog" role="document">

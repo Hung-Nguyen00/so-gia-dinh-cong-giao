@@ -29,11 +29,12 @@ class CreateSoGiaDinhCongGiaoTable extends Migration
             $table->softDeletes();
 
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
-            $table->unsignedBigInteger('giao_xu_id')->index();
 
-            $table->foreign('giao_xu_id')
-                ->references('id')->on('giao_xu')
+            $table->foreignid('giao_xu_id')->nullable()
+                ->constrained('giao_xu')
                 ->onDelete('cascade');
+
+            $table->index(['id', 'ma_so', 'giao_xu_id']);
         });
     }
 

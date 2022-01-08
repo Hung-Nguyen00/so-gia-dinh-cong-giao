@@ -39,22 +39,20 @@ class CreateBiTichDaNhanTable extends Migration
             $table->softDeletes();
 
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
-            $table->unsignedBigInteger('thanh_vien_id')->index();
-            $table->unsignedBigInteger('bi_tich_id')->index();
-            $table->unsignedBigInteger('tu_si_id')->index()->nullable();
 
-
-            $table->foreign('bi_tich_id')
-                ->references('id')->on('bi_tich')
+            $table->foreignId('bi_tich_id')
+                ->constrained('bi_tich')
                 ->onDelete('cascade');
 
-            $table->foreign('thanh_vien_id')
-                ->references('id')->on('thanh_vien')
+            $table->foreignId('thanh_vien_id')
+                ->constrained('thanh_vien')
                 ->onDelete('cascade');
 
-            $table->foreign('tu_si_id')
-                ->references('id')->on('tu_si')
-                ->onDelete('cascade');
+            $table->foreignId('tu_si_id')->nullable()
+                ->constrained('tu_si')
+                ->onDelete('set null');
+
+            $table->index(['bi_tich_id', 'thanh_vien_id', 'tu_si_id'], 'idx_btdn');
         });
     }
 

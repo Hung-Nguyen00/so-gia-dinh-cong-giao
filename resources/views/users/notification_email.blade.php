@@ -53,7 +53,7 @@
                                                             <div class="form-group">
                                                                 <label for="form_message">Nội dung</label>
                                                                 <textarea id="form_message" name="content"
-                                                                          class="form-control"
+                                                                          class="form-control ckeditor"
                                                                           placeholder="Nhập nội dung" rows="6"
                                                                 >{{ old('content') }}</textarea>
                                                                 @if($errors->has('content'))
@@ -64,7 +64,7 @@
                                                         </div>
                                                         <div class="col-md-12">
                                                             <input type="submit" class="btn btn-success btn-send"
-                                                                   value="Send message">
+                                                                   value="Gửi thông báo">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,5 +128,11 @@
             $("input[name='gx[]']").attr("checked", this.checked);
         });
     });
+    </script>
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.ckeditor').ckeditor();
+        });
     </script>
 @endpush

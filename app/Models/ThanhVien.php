@@ -33,15 +33,26 @@ class ThanhVien extends Model
       'nguoi_khoi_tao',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($q) {
+            $q->lichSuSgdcg();
+            $q->biTich()->delete();
+        });
+    }
+
+
+
     public function tenThanh(){
         return $this->belongsTo(TenThanh::class, 'ten_thanh_id');
     }
 
     public function soGiaDinh(){
-        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id','id');
+        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id');
     }
     public function soGiaDinh2(){
-        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id_2', 'id');
+        return $this->belongsTo(SoGiaDinh::class, 'so_gia_dinh_id_2');
     }
 
     public function biTich(){
@@ -71,7 +82,7 @@ class ThanhVien extends Model
     }
 
     public function getUser(){
-        return $this->belongsTo(User::class, 'nguoi_khoi_tao', 'id');
+        return $this->belongsTo(User::class, 'nguoi_khoi_tao');
     }
 
     public function doanCa(){

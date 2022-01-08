@@ -22,6 +22,18 @@ class SoGiaDinh extends Model
       'giao_xu_id',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($q) {
+            $q->thanhVien()->delete();
+            $q->lichSuChuyenXu()->delete();
+            $q->lichSuSgdcg();
+            $q->thanhVienSo2()->update(['so_gia_dinh_id_2' => null]);
+        });
+    }
+
+
     public function giaoXu(){
         return $this->belongsTo(GiaoXu::class, 'giao_xu_id');
     }

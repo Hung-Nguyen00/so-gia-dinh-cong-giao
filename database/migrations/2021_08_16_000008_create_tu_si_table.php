@@ -40,33 +40,32 @@ class CreateTuSiTable extends Migration
             $table->softDeletes();
 
             $table->unsignedBigInteger('nguoi_khoi_tao')->index();
-            $table->unsignedBigInteger('chuc_vu_id')->index()->nullable();
-            $table->unsignedBigInteger('giao_phan_id')->index()->nullable();
-            $table->unsignedBigInteger('giao_hat_id')->index()->nullable();
-            $table->unsignedBigInteger('giao_xu_id')->index()->nullable();
 
-            $table->unsignedBigInteger('vi_tri_id')->index()->nullable();
-
-
-            $table->foreign('chuc_vu_id')
-                ->references('id')->on('chuc_vu')
+            $table->foreignId('chuc_vu_id')->nullable()
+                ->constrained('chuc_vu')
                 ->onDelete('cascade');
 
-            $table->foreign('giao_phan_id')
-                ->references('id')->on('giao_phan')
+            $table->foreignId('giao_phan_id')->nullable()
+                ->constrained('giao_phan')
                 ->onDelete('cascade');
 
-            $table->foreign('giao_hat_id')
-                ->references('id')->on('giao_hat')
+            $table->foreignId('giao_hat_id')->nullable()
+                ->constrained('giao_hat')
                 ->onDelete('cascade');
 
-            $table->foreign('giao_xu_id')
-                ->references('id')->on('giao_xu')
-                ->onDelete('cascade');
-            $table->foreign('vi_tri_id')
-                ->references('id')->on('vi_tri')
+            $table->foreignId('giao_xu_id')->nullable()
+                ->constrained('giao_xu')
+                ->onDelete('set null');
+            $table->foreignId('vi_tri_id')
+                ->constrained('vi_tri')
                 ->onDelete('cascade');
 
+            $table->index(
+                ['chuc_vu_id',
+                    'giao_phan_id',
+                    'giao_hat_id',
+                    'giao_xu_id',
+                    'vi_tri_id'], 'idx_tu_si');
         });
     }
 

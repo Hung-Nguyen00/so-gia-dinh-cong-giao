@@ -8,11 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Testing\Fluent\Concerns\Has;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use Session;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -45,11 +42,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        \Illuminate\Support\Facades\Session::put('url.intended',URL::previous());
         $this->middleware('guest')->except([
             'logout',
             'locked',
             'unlock'
         ]);
+
     }
 
     public function login()
@@ -71,17 +70,15 @@ class LoginController extends Controller
 
         $email    = $request->email;
         $password = $request->password;
-
         $remember_me    =   $request->has('remember_me')? true:false;
         if(auth()->attempt(['email'=>$email,'password'=>$password],$remember_me))
         {
-            return redirect()->route('home');
+            return Redirect::to(\Illuminate\Support\Facades\Session::get('url.intended'));
         }else{
             Toastr::error('Tài khoản hoặc mật khẩu không chính xác','Error');
             return back();
         }
     }
-
 
 
     public function logout()

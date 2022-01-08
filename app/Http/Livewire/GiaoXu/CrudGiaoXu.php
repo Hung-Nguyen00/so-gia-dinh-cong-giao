@@ -81,7 +81,7 @@ class CrudGiaoXu extends Component
         $validatedData = $this->validate();
         $validatedData['ngay_thanh_lap'] = Carbon::parse($validatedData['ngay_thanh_lap'])->format('Y-m-d');
         GiaoXu::create(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
-        Toastr::success('Tạo giáo xứ mới thành công','Thành công');
+        Toastr::success('Tạo Giáo Xứ mới thành công','Thành công');
         return redirect()->route('giao-xu.index');
     }
 
@@ -118,7 +118,7 @@ class CrudGiaoXu extends Component
         GiaoXu::find($this->giao_xu_id)
             ->update(array_merge($validatedData, ['nguoi_khoi_tao' => Auth::id()]));
         $this->cancel();
-        Toastr::success('Cập nhập giáo xứ thành công','Thành công');
+        Toastr::success('Cập nhập Giáo Xứ thành công','Thành công');
         return redirect()->route('giao-xu.index');
     }
 
@@ -126,10 +126,10 @@ class CrudGiaoXu extends Component
         $giao_xu = GiaoXu::find($this->giao_xu_id );
         if ($giao_xu){
             $giao_xu->delete();
-            Toastr::success('Xóa giáo xứ thành công','Thành công');
+            Toastr::success('Xóa Giáo Xứ thành công','Thành công');
             return redirect()->route('giao-xu.index');
         }else{
-            Toastr::error('Không tìm thấy giáo xứ','Lỗi');
+            Toastr::error('Không tìm thấy Giáo Xứ','Lỗi');
             return redirect()->route('giao-xu.index');
         }
     }

@@ -72,6 +72,19 @@
             </div>
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group">
+                    <label class="form-label ">Ngày nhận chức</label>
+                    <input type="date" class="form-control"
+                           value="{{ old('ngay_nhan_chuc') ?? $tu_si->ngay_nhan_chuc  }}"
+                           wire:model="ngay_nhan_chuc"
+                    >
+                </div>
+                @if($errors->has('ngay_nhan_chuc'))
+                    <span class="text-danger font-weight-bold">{{ $errors->first('ngay_nhan_chuc') }}</span>
+                @endif
+            </div>
+
+            <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
+                <div class="form-group">
                     <label class="form-label ">Email</label>
                     <input type="text" class="form-control"
                            value="{{ old('email') ?? $tu_si->email }}"
@@ -97,18 +110,7 @@
                     <span class="text-danger font-weight-bold">{{ $errors->first('gioi_tinh') }}</span>
                 @endif
             </div>
-            <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label class="form-label ">Ngày nhận chức</label>
-                    <input type="date" class="form-control"
-                           value="{{ old('ngay_nhan_chuc') ?? $tu_si->ngay_nhan_chuc  }}"
-                           wire:model="ngay_nhan_chuc"
-                    >
-                </div>
-                @if($errors->has('ngay_nhan_chuc'))
-                    <span class="text-danger font-weight-bold">{{ $errors->first('ngay_nhan_chuc') }}</span>
-                @endif
-            </div>
+
 
             <div class="col-lg-6 mt-2 col-md-6 col-sm-12">
                 <div class="form-group">

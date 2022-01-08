@@ -48,7 +48,6 @@ class SendNotification extends Component
         })->whereHas('giaoPhan', function ($q){
             $q->where('id', Auth::user()->giao_phan_id);
         })->pluck('giao_xu_id');
-
         $users_error = User::whereHas('ownEmails', function ($q) use ($email_id){
             $q->where('user_email.mail_id', $email_id)->where('user_email.status', 'ERROR');
         })->whereHas('giaoPhan', function ($q){
@@ -59,12 +58,13 @@ class SendNotification extends Component
         $gx_pending = GiaoXu::whereIn('id', $users_pending)->with('giaoHat')->get();
         $gx_error = GiaoXu::whereIn('id', $users_error)->with('giaoHat')->get();
 
-        $current_email = Email::where('id', $this->email_id)->first();
+        $current_email = Email::find($this->email_id);
+
         if ($current_email){
             $this->content = $current_email->content;
             $this->title = $current_email->title;
         }
-
+        $this->emit('updateContent', $this->content);
         return view('livewire.sending-email.send-notification')->with([
             'gxs' => $gx_success->paginate($this->paginate_number),
             'gx_pending' => $gx_pending,

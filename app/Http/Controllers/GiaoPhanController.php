@@ -26,7 +26,7 @@ class GiaoPhanController extends Controller
      */
     public function index()
     {
-        $all_giao_phan = GiaoPhan::with('getUser')
+        $all_giao_phan = GiaoPhan::with(['getUser', 'giaoTinh'])
             ->withCount('giaoHat')
             ->orderBy('created_at', 'DESC')
             ->get();

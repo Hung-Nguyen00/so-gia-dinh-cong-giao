@@ -33,13 +33,11 @@ class CreateLichSuCongTacTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('tu_si_id')->index();
-
-
-
-            $table->foreign('tu_si_id')
-                ->references('id')->on('tu_si')
+            $table->foreignId('tu_si_id')
+                ->constrained('tu_si')
                 ->onDelete('cascade');
+
+            $table->index(['id', 'tu_si_id'], 'idx_lsct');
         });
     }
 

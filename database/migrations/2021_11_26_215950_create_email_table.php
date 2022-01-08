@@ -17,8 +17,6 @@ class CreateEmailTable extends Migration
             $table->id();
             $table->string('title', 255);
             $table->text('content');
-
-
             $table->timestamps();
         });
     }

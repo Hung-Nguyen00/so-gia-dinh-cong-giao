@@ -14,8 +14,8 @@ class AddGiaoXuToDoanCa extends Migration
     public function up()
     {
         Schema::table('doan_ca', function (Blueprint $table) {
-            $table->unsignedBigInteger('giao_xu_id')->index();
-            $table->foreign('giao_xu_id')->references('id')->on('giao_xu')->onDelete('cascade');
+            $table->foreignId('giao_xu_id')->index()
+                ->constrained('giao_xu')->onDelete('cascade');
         });
     }
 

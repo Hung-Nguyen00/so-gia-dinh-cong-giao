@@ -22,6 +22,10 @@ class TenThanh extends Model
         return $this->hasMany(TuSi::class, 'ten_thanh_id', 'id');
     }
 
+    public function giaoDan(){
+        return $this->hasMany(ThanhVien::class, 'ten_thanh_id', 'id');
+    }
+
     public function user($id){
         return User::find($id)->ho_va_ten;
     }

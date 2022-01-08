@@ -20,8 +20,8 @@
                     <th style="width: 90px">Tên giáo hạt</th>
                     <th style="width: 60px">Năm thành lập</th>
                     <th style="width: 50px">Số lượng giáo xứ</th>
+                    <th style="width: 50px">Giáo Phận</th>
                     <th style="width: 90px">Người cập nhập</th>
-                    <th style="width: 50px">Cập nhập lần cuối</th>
                     <th style="width: 50px">Chỉnh sửa</th>
                 </tr>
                 </thead>
@@ -39,8 +39,8 @@
                             @endif
                         </td>
                         <td class="text-center">{{ $giao_hat->giao_xu_count }}</td>
+                        <td>{{ $giao_hat->giaoPhan->ten_giao_phan }}</td>
                         <td>{{ $giao_hat->getUser->ho_va_ten }}</td>
-                        <td>{{ \Carbon\Carbon::parse($giao_hat->updated_at)->format('d-m-Y  H:i') }}</td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $giao_hat->id }})"

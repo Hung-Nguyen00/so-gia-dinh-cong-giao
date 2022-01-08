@@ -11,7 +11,7 @@
             </a>
             <button
                     data-toggle="modal" data-target="#importModal"
-                    class="btn btn-info mt-1">Import dữ liệu
+                    class="btn btn-info mt-1">Nhập Excel
             </button>
             <button
                     data-toggle="modal" wire:click="clearData" data-target="#giaoHatModal"
@@ -26,9 +26,10 @@
                 <tr>
                     <th style="width: 20px">STT</th>
                     <th>Tên vị trí</th>
+                    <th class="text-center">Số lượng tu sĩ</th>
                     <th>Người cập nhập</th>
                     <th>Cập nhập lần cuối</th>
-                    <th>Chỉnh sửa</th>
+                    <th class="text-center">Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,9 +38,10 @@
                     <tr>
                         <td class="text-center"> {{ ++$i }}</td>
                         <td> {{ $th->ten_vi_tri }}</td>
+                        <td class="text-center"> {{ $th->tu_si_count }}</td>
                         <td>{{ $th->getUser->ho_va_ten }}</td>
                         <td>{{ \Carbon\Carbon::parse($th->updated_at)->format('d-m-Y  H:i') }}</td>
-                        <td>
+                        <td class="text-center">
                             <button type="button"
                                     wire:click="edit({{ $th->id }})"
                                     class="btn btn-sm btn-primary mb-1"
@@ -47,12 +49,14 @@
                                     data-target="#editGiaoHat">
                                 <i class="la la-pencil"></i>
                             </button>
+                            @if($th->tu_si_count == 0)
                             <button type="button" wire:click="edit({{ $th->id }})"
                                     data-toggle="modal"
                                     data-target="#deleteGiaoHat"
                                     class="btn btn-outline-danger btn-sm d-inline-block mb-1">
                                 <i class="la la-trash-o"></i>
                             </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -66,7 +66,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="display table" style="min-width: 1180px; margin-top: -10px">
+            <table class="display table" style="width: 100%; margin-top: -10px">
                 <thead>
                 <tr>
                     <th style="width: 50px">STT</th>

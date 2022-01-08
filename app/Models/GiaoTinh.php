@@ -19,6 +19,18 @@ class GiaoTinh extends Model
         'nguoi_khoi_tao',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($q) {
+            $q->giaoPhan()->delete();
+            $q->giaoHat()->delete();
+            $q->giaoDan()->delete();
+            $q->tuSi()->delete();
+            $q->giaoDan()->delete();
+            $q->giaoXu()->delete();
+        });
+    }
 
     public function giaoPhan(){
         return $this->hasMany(GiaoPhan::class);

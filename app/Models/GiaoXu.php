@@ -23,6 +23,19 @@ class GiaoXu extends Model
         'giao_hat_id',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($q) {
+            $q->giaoHo()->delete();
+            $q->giaoDan()->delete();
+            $q->hoGiaDinh()->delete();
+            $q->tuSi()->update(['giao_xu_id' => null]);
+            $q->hoGiaDinh()->delete();
+            $q->lichSuSgdcg();
+        });
+    }
+
     public function giaoHat(){
         return $this->belongsTo(GiaoHat::class);
     }

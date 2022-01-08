@@ -17,16 +17,16 @@ class CreateUserEmailTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->unsignedBigInteger('create_by')->index()->nullable();
-            $table->unsignedBigInteger('send_to')->index()->nullable();
-            $table->unsignedBigInteger('mail_id')->index()->nullable();
-
             $table->string('status', 10)->nullable();
 
-            $table->foreign('mail_id')->references('id')->on('email')->onDelete('cascade');
-            $table->foreign('create_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('send_to')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('mail_id')->nullable()
+                ->constrained('email')->onDelete('cascade');
+            $table->foreignId('create_by')->nullable()
+                ->constrained('users')->onDelete('cascade');
+            $table->foreignId('send_to')->nullable()
+                ->constrained('users')->onDelete('cascade');
 
+            $table->index(['mail_id', 'create_by']);
         });
     }
 

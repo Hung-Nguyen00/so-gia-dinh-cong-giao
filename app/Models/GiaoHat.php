@@ -22,6 +22,17 @@ class GiaoHat extends Model
         'giao_phan_id'
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($q) {
+            $q->giaoXu()->delete();
+            $q->giaoDan()->delete();
+            $q->tuSi()->delete();
+            $q->hoGiaDinh()->delete();
+        });
+    }
+
     public function giaoPhan(){
         return $this->belongsTo(GiaoPhan::class);
     }
@@ -34,11 +45,11 @@ class GiaoHat extends Model
         return $this->hasMany(TuSi::class);
     }
 
-    public  function giaoDan(){
+    public function giaoDan(){
         return $this->hasManyDeep(ThanhVien::class, [GiaoXu::class, SoGiaDinh::class]);
     }
 
-    public  function hoGiaDinh(){
+    public function hoGiaDinh(){
         return $this->hasManyThrough(SoGiaDinh::class, GiaoXu::class);
     }
 

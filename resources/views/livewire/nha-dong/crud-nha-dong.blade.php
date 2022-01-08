@@ -61,12 +61,14 @@
                                     data-target="#editGiaoHat">
                                 <i class="la la-pencil"></i>
                             </button>
+                            @if($nha_dong->tu_si_count == 0)
                             <button type="button" wire:click="edit({{ $nha_dong->id }})"
                                     data-toggle="modal"
                                     data-target="#deleteGiaoHat"
                                     class="btn btn-outline-danger btn-sm d-inline-block mb-1">
                                 <i class="la la-trash-o"></i>
                             </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -17,9 +17,11 @@ class CreateDoanCaTable extends Migration
             $table->id();
             $table->string('ten_doan_ca', 50)->nullable();
             $table->date('ngay_bon_mang')->nullable();
-            $table->unsignedBigInteger('ten_thanh_id')->index();
 
-            $table->foreign('ten_thanh_id')->references('id')->on('ten_thanh')->onDelete('cascade');
+            $table->foreignId('ten_thanh_id')
+                ->constrained('ten_thanh')->onDelete('cascade');
+
+            $table->index(['ten_thanh_id']);
             $table->timestamps();
         });
     }

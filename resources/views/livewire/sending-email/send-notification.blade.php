@@ -1,7 +1,7 @@
 <div>
     <div class="card-header d-flex flex-wrap">
-        <div class="col-md-3 mt-3">
-            <label>Tìm kiếm email</label>
+        <div class="col-md-8 mt-3 d-flex">
+            <label class="mr-2">Tìm kiếm email</label>
             <select data-live-search="true" class="selectpicker w-auto select form-control" wire:model="email_id">
                 @foreach($all_emails as $t)
                     @if($t->id == $email_id)
@@ -12,7 +12,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-2 mt-3">
+        <div class="col-md-2">
             <div class="align-items-end mt-3">
                 <label>Hiển thị</label>
                 <select class="form-control select w-auto" wire:model="paginate_number">
@@ -50,14 +50,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div wire:ignore class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="form_message">Nội dung</label>
                                 <textarea id="form_message" name="content"
-                                          class="form-control"
+                                          class="form-control ckeditor"
                                           placeholder="Nhập nội dung" rows="6"
-                                >{{ $content }}</textarea>
+                                >{!! $content !!}</textarea>
                             </div>
 
                         </div>
@@ -116,10 +116,20 @@
 </div>
 
 @push('scripts')
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script>
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
 
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.ckeditor').ckeditor();
+        });
+        Livewire.on('updateContent', data => {
+            CKEDITOR.instances['form_message'].setData(data);
+        });
+    </script>
+
 @endpush

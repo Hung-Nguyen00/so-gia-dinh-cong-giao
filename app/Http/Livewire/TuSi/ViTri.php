@@ -17,6 +17,7 @@ class ViTri extends Component
 
     public function mount(){
         $this->all_vi_tri = \App\Models\ViTri::with('getUser')
+            ->withCount('tuSi')
             ->orderBy('created_at', 'DESC')
             ->get();
     }

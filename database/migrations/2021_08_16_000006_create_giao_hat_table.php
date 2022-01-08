@@ -29,10 +29,9 @@ class CreateGiaoHatTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('giao_phan_id')->index();
 
-            $table->foreign('giao_phan_id')
-                ->references('id')->on('giao_phan')
+            $table->foreignId('giao_phan_id')->nullable()->index()
+                ->constrained('giao_phan')
                 ->onDelete('cascade');
         });
     }

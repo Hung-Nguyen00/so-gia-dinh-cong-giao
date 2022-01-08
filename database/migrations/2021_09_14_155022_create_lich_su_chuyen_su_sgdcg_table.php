@@ -15,16 +15,13 @@ class CreateLichSuChuyenSuSgdcgTable extends Migration
     {
         Schema::create('lich_su_sgdcg', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('giao_xu_id')->index();
-            $table->unsignedBigInteger('sgdcg_id')->index();
+            $table->foreignId('sgdcg_id')
+                ->constrained('so_gia_dinh_cong_giao')->onDelete('cascade');
+            $table->foreignId('giao_xu_id')
+                ->constrained('giao_xu')->onDelete('cascade');
 
-            $table->foreign('sgdcg_id')
-                ->references('id')
-                ->on('so_gia_dinh_cong_giao')->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('giao_xu_id')
-                ->references('id')
-                ->on('giao_xu')->onDelete('cascade');
+            $table->index(['giao_xu_id', 'sgdcg_id']);
         });
     }
 

@@ -29,7 +29,6 @@ class UpdateThanhVienRequest extends FormRequest
             'ngay_sinh' => 'date|nullable',
             'gioi_tinh' => 'required',
             'noi_sinh' => 'required|max:50',
-            'chuc_vu_gd' => 'required',
             'ngay_mat' => 'date|nullable',
             'nam_sinh' => 'numeric|nullable',
             'dia_chi_hien_tai' => 'max:250',
@@ -49,7 +48,6 @@ class UpdateThanhVienRequest extends FormRequest
             'gioi_tinh.required' => 'Giới tính không được phép trống',
             'so_dien_thoai.regex' =>':attribute phải là giá trị số',
             'dia_chi_hien_tai.max' => ':attribute không vượt quá :max ký tự',
-            'chuc_vu_gd.required' => 'Chức vụ trong gia đình không được trống',
             'noi_sinh.max' => 'Nơi sinh không được phép vượt quá :max ký tự'
         ];
     }

@@ -23,6 +23,18 @@ class GiaoPhan extends Model
         'giao_tinh_id',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($q) {
+            $q->giaoXu()->delete();
+            $q->giaoHat()->delete();
+            $q->giaoDan()->delete();
+            $q->tuSi()->delete();
+            $q->hoGiaDinh()->delete();
+        });
+    }
+
 
     public function giaoTinh(){
         return $this->belongsTo(GiaoTinh::class);

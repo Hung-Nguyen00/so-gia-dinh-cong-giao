@@ -219,7 +219,7 @@
                                         @if($th->giao_xu_id)
                                             Giáo hạt: {{ $th->giaoHat ? $th->giaoHat->ten_giao_hat : '' }}
                                             <br>
-                                            Giáo xứ: {{ $th->giaoXu->ten_giao_xu }}
+                                            Giáo xứ: {{ $th->giaoXu ? $th->giaoXu->ten_giao_xu : '' }}
                                         @else
 
                                         @endif

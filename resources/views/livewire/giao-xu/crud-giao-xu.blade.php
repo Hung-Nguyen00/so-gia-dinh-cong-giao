@@ -5,7 +5,6 @@
     <div class="card-header">
         <h4 class="card-title">Danh sách các giáo xứ </h4>
         <div>
-            {{--<a class="btn btn-success" href="{{ route('GP-file-export') }}">Export data</a>--}}
             <button
                     data-toggle="modal" wire:click="clearData()" data-target="#giaoHatModal"
                     class="btn btn-primary">Thêm giáo xứ mới
@@ -14,17 +13,16 @@
     </div>
     <div class="card-body" wire:ignore>
         <div class="table-responsive">
-            <table id="example3" class="display" style="min-width: 845px; width: 1180px">
+            <table id="example3" class="display" style="min-width: 845px; width: 100%">
                 <thead>
                 <tr>
-                    <th style="width: 10px">STT</th>
-                    <th style="width: 90px">Tên giáo xứ</th>
-                    <th style="width: 120px">Địa chỉ</th>
-                    <th style="width: 80px">Năm thành lập</th>
-                    <th style="width: 50px">Số lượng giáo họ</th>
-                    <th style="width: 90px">Người cập nhập</th>
-                    <th style="width: 50px">Cập nhập lần cuối</th>
-                    <th style="width: 50px">Chỉnh sửa</th>
+                    <th style="width: 20px">STT</th>
+                    <th >Tên giáo xứ</th>
+                    <th >Địa chỉ</th>
+                    <th class="text-center" style="width: 120px">Năm thành lập</th>
+                    <th class="text-center" style="width: 100px">Tổng giáo họ</th>
+                    <th >Giáo Phận <br> Giáo Hạt</th>
+                    <th >Chỉnh sửa</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,8 +40,11 @@
                             @endif
                         </td>
                         <td class="text-center">{{ $giao_xu->giao_ho_count }}</td>
-                        <td>{{ $giao_xu->getUser->ho_va_ten }}</td>
-                        <td>{{ \Carbon\Carbon::parse($giao_xu->updated_at)->format('d-m-Y  H:i') }}</td>
+                        <td>
+                            @if($giao_xu->giaoHat)
+                                {{ $giao_xu->giaoHat->giaoPhan->ten_giao_phan}} <br> {{$giao_xu->giaoHat->ten_giao_hat }}
+                            @endif
+                        </td>
                         <td>
                             <button type="button"
                                     wire:click="edit({{ $giao_xu->id }})"
@@ -72,7 +73,5 @@
         window.addEventListener('contentChanged', event => {
             $('.select').selectpicker();
         });
-
-
     </script>
 @endpush

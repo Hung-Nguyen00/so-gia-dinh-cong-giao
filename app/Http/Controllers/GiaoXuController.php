@@ -19,11 +19,11 @@ class GiaoXuController extends Controller
 {
     public  function index(){
         if (Auth::user()->quanTri->ten_quyen == 'admin' || Auth::user()->quanTri->ten_quyen == 'Giáo phận' ){
-            $all_giao_xu = GiaoXu::with('getUser')
+            $all_giao_xu = GiaoXu::with(['getUser', 'giaoHat.giaoPhan'])
                 ->withCount('giaoHo')
                 ->where('giao_xu_hoac_giao_ho', 0)
                 ->orderBy('created_at', 'DESC')
-                ->get();;
+                ->get();
             return view('giao_xu.all_giao_xu', compact('all_giao_xu'));
         }else{
             return back();

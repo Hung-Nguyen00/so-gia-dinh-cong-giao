@@ -20,7 +20,7 @@
                 </a>
                 <button
                         data-toggle="modal" data-target="#importModal"
-                        class="btn btn-info mt-1">Import dữ liệu
+                        class="btn btn-info mt-1">Nhập Excel
                 </button>
                 <button
                         data-toggle="modal" wire:click="setCurrentTime" data-target="#createModal"
